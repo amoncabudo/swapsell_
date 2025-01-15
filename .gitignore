@@ -22,3 +22,4 @@ yarn-error.log
 /.vscode
 /.zed
 boostrap/app.php
+/public/adminer.php
