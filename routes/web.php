@@ -14,6 +14,11 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/Cart', function () {return Inertia::render('Cart');});
+
+Route::get('/ProducteAmpliat', function () {return Inertia::render('ProducteAmpliat');});
+
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -41,5 +46,7 @@ Route::get('/footer', function(){
 Route::get('/aboutus', function(){
     return Inertia::render('AboutUs');
 });
+
+Route::get('/products', function () {return Inertia::render('Products');});
 
 require __DIR__.'/auth.php';
