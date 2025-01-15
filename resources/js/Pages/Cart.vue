@@ -11,7 +11,7 @@ const total = computed(() => {
 
 <template>
   <div class="flex flex-col lg:flex-row h-screen overflow-hidden">
-    <!-- Columna izquierdaa -->
+    <!-- Columna izquierdax -->
     <div class="w-full lg:w-1/2 p-4">
       <h2 class="text-xl flex justify-center font-extrabold mb-4 text-center">Lista de Productos</h2>
       <div class="bg-gray-300 p-4 min-h-[200px] overflow-y-auto rounded">
