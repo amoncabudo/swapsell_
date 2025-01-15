@@ -15,6 +15,10 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                SubastaButton1: '#004266',
+                SubastaButton2: '#E9A209',
+            },
         },
     },
 

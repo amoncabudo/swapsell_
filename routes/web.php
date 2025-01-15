@@ -16,6 +16,9 @@ Route::get('/', function () {
 
 Route::get('/Cart', function () {return Inertia::render('Cart');});
 
+Route::get('/ProducteAmpliat', function () {return Inertia::render('ProducteAmpliat');});
+
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
