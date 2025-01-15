@@ -31,6 +31,23 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/favorites', function () {
+    return Inertia::render('Favorites');
+});
+
+Route::get('/events', function () {
+    return Inertia::render('Events');
+});
+Route::get('/auctions', function () {
+    return Inertia::render('Auctions');
+});
+Route::get('/footer', function(){
+    return Inertia::render('Footer');
+});
+
+Route::get('/aboutus', function(){
+    return Inertia::render('AboutUs');
+});
 
 Route::get('/products', function () {return Inertia::render('Products');});
 
