@@ -1,3 +1,19 @@
+<script setup>
+import { useForm } from '@inertiajs/vue3';
+
+const form = useForm({
+    email: '',
+    password: '',
+    remember: false
+});
+
+const submit = () => {
+    form.post(route('login'), {
+        onFinish: () => form.reset('password'),
+    });
+};
+</script>
+
 <template>
   <div class="wave-bg min-h-screen">
     <section class="min-h-screen flex items-center justify-center p-4 relative">
@@ -12,10 +28,11 @@
           <p class="text-gray-400">Accedeix al teu compte</p>
         </div>
 
-        <form class="space-y-6">
+        <form @submit.prevent="submit" class="space-y-6">
           <!-- Input Correu -->
           <div class="form-group relative">
             <input type="email" 
+                   v-model="form.email"
                    required
                    class="w-full px-4 py-3 pl-10 rounded-xl border-2 border-gray-200 
                           bg-white/5 backdrop-blur-sm text-gray-700 
@@ -27,11 +44,16 @@
                 <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
               </svg>
             </div>
+            <!-- Mensaje de error -->
+            <div v-if="form.errors.email" class="text-red-500 text-sm mt-1">
+              {{ form.errors.email }}
+            </div>
           </div>
 
           <!-- Input Contrasenya -->
           <div class="form-group relative">
             <input type="password"
+                   v-model="form.password"
                    required
                    class="w-full px-4 py-3 pl-10 rounded-xl border-2 border-gray-200 
                           bg-white/5 backdrop-blur-sm text-gray-700 
@@ -43,26 +65,37 @@
                 <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
               </svg>
             </div>
+            <!-- Mensaje de error -->
+            <div v-if="form.errors.password" class="text-red-500 text-sm mt-1">
+              {{ form.errors.password }}
+            </div>
           </div>
 
           <!-- Opcions d'inici de sessió -->
           <div class="flex items-center justify-between">
             <label class="flex items-center space-x-2 cursor-pointer">
-              <input type="checkbox" class="w-4 h-4 rounded border-2 border-gray-300 focus:ring-custom-blue text-custom-blue transition-colors">
+              <input type="checkbox" 
+                     v-model="form.remember"
+                     class="w-4 h-4 rounded border-2 border-gray-300 focus:ring-custom-blue text-custom-blue transition-colors">
               <span class="text-sm text-gray-600">Recorda'm</span>
             </label>
-            <a href="#" class="text-sm text-custom-blue hover:text-opacity-80 transition-colors">
+            <Link :href="route('password.request')" 
+                  class="text-sm text-custom-blue hover:text-opacity-80 transition-colors">
               Has oblidat la contrasenya?
-            </a>
+            </Link>
           </div>
 
           <!-- Botó d'inici de sessió -->
           <button type="submit" 
+                  :disabled="form.processing"
                   class="w-full py-3 px-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl
                          transform hover:-translate-y-1 hover:shadow-lg
                          active:scale-95 transition-all duration-300
-                         relative overflow-hidden group">
-            <span class="relative z-10">Iniciar Sessió</span>
+                         relative overflow-hidden group
+                         disabled:opacity-50">
+            <span class="relative z-10">
+              {{ form.processing ? 'Iniciant sessió...' : 'Iniciar Sessió' }}
+            </span>
             <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-700 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
           </button>
         </form>
