@@ -47,6 +47,10 @@ Route::get('/aboutus', function(){
     return Inertia::render('AboutUs');
 });
 
+Route::get('/profile2', function(){
+    return Inertia::render('Profile');
+});
+
 Route::get('/products', function () {return Inertia::render('Products');});
 
 require __DIR__.'/auth.php';
