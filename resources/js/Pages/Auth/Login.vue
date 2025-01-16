@@ -21,9 +21,10 @@ const submit = () => {
         <!-- Logo estàtic -->
         <div class="text-center space-y-4">
           <div>
-            <img class="w-24 h-24 mx-auto rounded-full shadow-2xl p-2 bg-white" 
-                 src="/uploads/img/logo.png"
-                 alt="SwapSell Logo">
+            <img class="w-24 h-24 mx-auto rounded-full shadow-2xl p-2 bg-white width=" 
+                 src="/images/logo.png"
+                 alt="SwapSell Logo"
+                 style="width: 170px; height: 150px;">
           </div>
           <p class="text-gray-400">Accedeix al teu compte</p>
         </div>
