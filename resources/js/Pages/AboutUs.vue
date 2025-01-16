@@ -120,6 +120,9 @@
 <script>
 import Footer from "../Components/Footer.vue";
 export default {
+    components: {
+        Footer
+    },
     data() {
         return {
             teamMembers: [
