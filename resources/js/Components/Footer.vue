@@ -1,58 +1,65 @@
 <template>
-    <footer class="bg-regal-blue dark:bg-gray-900">
+    <footer class="bg-color-footer">
         <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
             <div class="md:flex md:justify-between">
                 <div class="mb-6 md:mb-0">
                     <a href="/" class="flex items-center">
-                        <img src="img/logo.png" class="h-8 me-3" alt="Logo SwapSell" />
+                        <img src="images/logo.png" class="h-8 me-3" alt="Logo SwapSell" />
                         <span
-                            class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">SwapSell</span>
+                            class="self-center text-2xl font-semibold whitespace-nowrap text-white">SwapSell</span>
                     </a>
                 </div>
-                <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
+                <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3 text-white">
                     <div>
-                        <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Resources</h2>
+                        <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase text-white">Sobre Nosaltres</h2>
                         <ul class="text-gray-500 dark:text-gray-400 font-medium">
                             <li class="mb-4">
-                                <a href="https://flowbite.com/" class="hover:underline">Flowbite</a>
+                                <a href="https://flowbite.com/" class="hover:underline text-white">Contacte</a>
+                            </li>
+                            <li class="mb-4">
+                                <a href="https://flowbite.com/" class="hover:underline text-white">Sobre Nosaltres</a>
                             </li>
                             <li>
-                                <a href="https://tailwindcss.com/" class="hover:underline">Tailwind CSS</a>
+                                <a href="https://tailwindcss.com/" class="hover:underline text-white">Projecte</a>
                             </li>
                         </ul>
                     </div>
                     <div>
-                        <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Follow us</h2>
+                        <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase text-white">Seguiex-nos!</h2>
                         <ul class="text-gray-500 dark:text-gray-400 font-medium">
                             <li class="mb-4">
-                                <a href="https://github.com/themesberg/flowbite" class="hover:underline ">Github</a>
+                                <a href="https://github.com/themesberg/flowbite" class="hover:underline text-white">Github</a>
                             </li>
                             <li>
-                                <a href="https://discord.gg/4eeurUVvTy" class="hover:underline">Discord</a>
+                                <a href="https://discord.gg/4eeurUVvTy" class="hover:underline text-white">Discord</a>
                             </li>
                         </ul>
                     </div>
                     <div>
-                        <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Legal</h2>
-                        <ul class="text-gray-500 dark:text-gray-400 font-medium">
+                        <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase text-white">Avisos Legals</h2>
+                        <ul class="text-gray-500 dark:text-gray-400 font-medium text-white">
                             <li class="mb-4">
-                                <a href="#" class="hover:underline">Privacy Policy</a>
+                                <a href="#" class="hover:underline text-white">Politica de privacidad                                </a>
                             </li>
-                            <li>
-                                <a href="#" class="hover:underline">Terms &amp; Conditions</a>
+                            <li class="mb-4">
+                                <a href="#" class="hover:underline text-white">Politica de Cookies</a>
                             </li>
+                            <li class="mb-4">
+                                <a href="#" class="hover:underline text-white">Termes i condicions</a>
+                            </li>
+
                         </ul>
                     </div>
                 </div>
             </div>
             <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
             <div class="sm:flex sm:items-center sm:justify-between">
-                <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2025 <a
+                <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400 text-white">© 2025 <a
                         href="https://flowbite.com/" class="hover:underline">SwapSell</a>. All Rights Reserved.
                 </span>
                 <div class="flex mt-4 sm:justify-center sm:mt-0 space-x-5">
                     <a href="https://es-es.facebook.com/institutcendrassos"
-                        class="text-gray-500 hover:text-blue-600 dark:hover:text-white transition-transform transform hover:scale-110">
+                        class="text-gray-500 hover:text-blue-600 text-white transition-transform transform hover:scale-110">
                         <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                             viewBox="0 0 8 19">
                             <path fill-rule="evenodd"
@@ -62,8 +69,8 @@
                         <span class="sr-only">Facebook page</span>
                     </a>
                     <a href="https://www.instagram.com/inscendrassos/?hl=es"
-                        class="text-gray-500 hover:text-purple-700 dark:hover:text-white transition-transform transform hover:scale-110">
-                        <svg class="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true"
+                        class=" hover:text-black text-white transition-transform transform hover:scale-110">
+                        <svg class="w-4 h-4 text-white" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path fill="currentColor" fill-rule="evenodd"
                                 d="M3 8a5 5 0 0 1 5-5h8a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8Zm5-3a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3H8Zm7.597 2.214a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2h-.01a1 1 0 0 1-1-1ZM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm-5 3a5 5 0 1 1 10 0 5 5 0 0 1-10 0Z"
@@ -73,7 +80,7 @@
                             <span class="sr-only">Instagram</span>
                     </a>
                     <a href="https://twitter.com/cendrassos?lang=es"
-                        class="text-gray-500 hover:text-blue-500 dark:hover:text-white transition-transform transform hover:scale-110 ms-5">
+                        class="text-gray-500 hover:text-blue-300 text-white transition-transform transform hover:scale-110 ms-5">
                         <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                             viewBox="0 0 20 17">
                             <path fill-rule="evenodd"
@@ -83,7 +90,7 @@
                         <span class="sr-only">Twitter page</span>
                     </a>
                     <a href="https://github.com/ABP-2n-DAW-24-25/4-SWAPSELL"
-                        class="text-gray-500 hover:text-blue-900 dark:hover:text-white transition-transform transform hover:scale-110 ms-5">
+                        class="hover:text-black text-white transition-transform transform hover:scale-110 ms-5">
                         <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                             viewBox="0 0 20 20">
                             <path fill-rule="evenodd"
@@ -104,3 +111,9 @@ export default {
     name: "Footer",
 };
 </script>
+
+<style>
+    .bg-color-footer {
+        background-color: #004266;
+    }
+</style>
