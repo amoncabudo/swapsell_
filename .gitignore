@@ -16,8 +16,14 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 /auth.json
+auth.json
+npm-debug.log
+yarn-error.log
 /.fleet
 /.idea
 /.nova
 /.vscode
 /.zed
+boostrap/app.php
+/public/adminer.php
+package-lock.json

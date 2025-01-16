@@ -1,5 +1,9 @@
 import '../css/app.css';
 import './bootstrap';
+import 'flowbite';
+
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // Importa el archivo de estilo
 
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
@@ -24,4 +28,9 @@ createInertiaApp({
     progress: {
         color: '#4B5563',
     },
+});
+AOS.init({
+    duration: 1000,
+    once: true,
+    offset: 100
 });
