@@ -53,6 +53,10 @@ Route::get('/profile2', function(){
     return Inertia::render('Profile');
 });
 
+Route::get('/legal', function(){
+    return Inertia::render('Legal');
+});
+
 Route::get('/products', function () {return Inertia::render('Products');});
 
 require __DIR__.'/auth.php';
