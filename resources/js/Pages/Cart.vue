@@ -1,6 +1,5 @@
 <script setup>
 import { ref, computed } from 'vue';
-import NavbarA from '@/Components/NavbarA.vue';
 
 const products = ref([]);
 const cart = ref([]);
@@ -11,7 +10,6 @@ const total = computed(() => {
 </script>
 
 <template>
-  <NavbarA></NavbarA>
   <div class="flex flex-col lg:flex-row h-screen overflow-hidden">
     <!-- Columna izquierdax -->
      
