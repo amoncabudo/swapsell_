@@ -57,6 +57,9 @@ Route::get('/legal', function(){
     return Inertia::render('Legal');
 });
 
+Route::get('/contact', function(){
+    return Inertia::render('Contact');
+});
 Route::get('/products', function () {return Inertia::render('Products');});
 
 require __DIR__.'/auth.php';
