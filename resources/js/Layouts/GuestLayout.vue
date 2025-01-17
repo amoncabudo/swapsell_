@@ -24,10 +24,10 @@ const showingNavigationDropdown = ref(false);
                     <!-- Links Section -->
                     <div class="hidden sm:flex items-center space-x-6">
                         <Link href="/login" class="text-gray-600 hover:text-blue-500 transition-colors">
-                            Login
+                            Iniciar sessió
                         </Link>
                         <Link href="/register" class="text-gray-600 hover:text-blue-500 transition-colors">
-                            Register
+                            Registra't
                         </Link>
                     </div>
 
