@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
+import NavbarS from '@/Layouts/NavbarS.vue';
 
 defineProps({
     isAuthenticated: Boolean,
@@ -8,7 +8,7 @@ defineProps({
 </script>
 
 <template>
-  <component :is="isAuthenticated ? AuthenticatedLayout : GuestLayout">
+  <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
     <div class="flex flex-col lg:flex-row h-screen overflow-y-auto space-y-4 lg:space-y-0 lg:space-x-4 md:ml-32">
       
       <!-- Primer bloque -->
