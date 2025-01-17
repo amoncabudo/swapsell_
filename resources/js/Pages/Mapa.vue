@@ -24,7 +24,7 @@
     await nextTick();
   
     // Inicializa el mapa centrado en una ubicación específica
-    const map = L.map('map').setView([42.265507, 2.958105], 13); // Ciudad de México
+    const map = L.map('map').setView([42.265507, 2.958105], 13); // Latitud, Longitud
   
     // Agrega la capa base de OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
