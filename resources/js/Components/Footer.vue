@@ -14,10 +14,10 @@
                         <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase text-white">Sobre Nosaltres</h2>
                         <ul class="text-gray-500 dark:text-gray-400 font-medium">
                             <li class="mb-4">
-                                <a href="https://flowbite.com/" class="hover:underline text-white">Contacte</a>
+                                <a href="/contact" class="hover:underline text-white">Contacte</a>
                             </li>
                             <li class="mb-4">
-                                <a href="https://flowbite.com/" class="hover:underline text-white">Sobre Nosaltres</a>
+                                <a href="/aboutus" class="hover:underline text-white">Sobre Nosaltres</a>
                             </li>
                             <li>
                                 <a href="https://tailwindcss.com/" class="hover:underline text-white">Projecte</a>
