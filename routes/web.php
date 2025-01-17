@@ -19,7 +19,7 @@ Route::get('/Cart', function () {return Inertia::render('Cart');});
 Route::get('/ProducteAmpliat', function () {return Inertia::render('ProducteAmpliat');});
 
 Route::get('/adminpanel', function () {return Inertia::render('AdminPanel');});
-
+Route::get('/mapa', function () {return Inertia::render('Mapa');});
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
