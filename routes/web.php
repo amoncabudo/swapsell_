@@ -16,8 +16,11 @@ Route::get('/', function () {
 
 Route::get('/Cart', function () {return Inertia::render('Cart');});
 
-Route::get('/ProducteAmpliat', function () {return Inertia::render('ProducteAmpliat');});
-
+Route::get('/productextend', function () {
+    return Inertia::render('ProducteAmpliat', [
+        'isAuthenticated' => auth()->check(),
+    ]);
+});
 Route::get('/adminpanel', function () {return Inertia::render('AdminPanel');});
 
 
