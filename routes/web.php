@@ -22,7 +22,7 @@ Route::get('/productextend', function () {
     ]);
 });
 Route::get('/adminpanel', function () {return Inertia::render('AdminPanel');});
-
+Route::get('/mapa', function () {return Inertia::render('Mapa');});
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
