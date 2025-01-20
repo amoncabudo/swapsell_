@@ -1,9 +1,16 @@
 <script setup>
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import NavbarS from '@/Layouts/NavbarS.vue';
+
+defineProps({
+    isAuthenticated: Boolean,
+});
 </script>
 
 <template>
+  <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
     <div class="flex flex-col lg:flex-row h-screen overflow-y-auto space-y-4 lg:space-y-0 lg:space-x-4 md:ml-32">
-  
+      
       <!-- Primer bloque -->
       <div class="w-full lg:w-2/3 p-4 flex flex-col items-center justify-center">
         <p class="text-xl font-bold mb-4">Nom del producte</p>
@@ -60,6 +67,7 @@
         </div>
       </div>
     </div>
-  </template>
+  </component>
+</template>
 
 <style scoped></style>

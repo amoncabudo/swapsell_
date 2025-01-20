@@ -5,7 +5,10 @@ import vue from '@vitejs/plugin-vue';
 export default defineConfig({
     plugins: [
         laravel({
-            input: 'resources/js/app.js',
+            input: [
+                'resources/js/app.js', // Asegúrate de que este archivo exista
+                'resources/css/app.css', // Agrega el archivo CSS aquí
+            ],
             refresh: true,
         }),
         vue({

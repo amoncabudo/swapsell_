@@ -28,11 +28,16 @@
         "vue": "^3.4.0"
     },
     "dependencies": {
+
         "@headlessui/vue": "^1.7.23",
         "@primevue/themes": "^4.2.5",
         "aos": "^2.3.4",
         "particles.js": "^2.0.0",
         "primeicons": "^7.0.0",
         "primevue": "^4.2.5"
+
+        "aos": "^2.3.4",
+        "leaflet": "^1.9.4"
+
     }
 }

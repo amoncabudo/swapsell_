@@ -3,7 +3,10 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Producte;
 use Inertia\Inertia;
+use App\Http\Controllers\SellController;
+use App\Http\Controllers\ControllerProducts;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -16,19 +19,22 @@ Route::get('/', function () {
 
 Route::get('/Cart', function () {return Inertia::render('Cart');});
 
-Route::get('/ProducteAmpliat', function () {return Inertia::render('ProducteAmpliat');});
-
+Route::get('/productextend', function () {
+    return Inertia::render('ProducteAmpliat', [
+        'isAuthenticated' => auth()->check(),
+    ]);
+});
 Route::get('/adminpanel', function () {return Inertia::render('AdminPanel');});
-
+Route::get('/mapa', function () {return Inertia::render('Mapa');});
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile2', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile2', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile2', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 Route::get('/favorites', function () {
@@ -49,7 +55,7 @@ Route::get('/aboutus', function(){
     return Inertia::render('AboutUs');
 });
 
-Route::get('/profile2', function(){
+Route::get('/profile', function(){
     return Inertia::render('Profile');
 });
 
@@ -61,5 +67,15 @@ Route::get('/contact', function(){
     return Inertia::render('Contact');
 });
 Route::get('/products', function () {return Inertia::render('Products');});
+
+Route::get('/eventInfo', function(){
+    return Inertia::render('EventInfo');
+});
+
+Route::get('/sell', [SellController::class, 'create'])->name('sell.create');
+
+Route::post('/product/store', [SellController::class, 'store'])->name('product.store');
+
+Route::get('/products', [ControllerProducts::class, 'index'])->name('products');
 
 require __DIR__.'/auth.php';
