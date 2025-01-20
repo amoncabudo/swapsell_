@@ -35,6 +35,8 @@
         "leaflet": "^1.9.4",
         "particles.js": "^2.0.0",
         "primeicons": "^7.0.0",
+        "primevue": "^4.2.5",
+        "leaflet": "^1.9.4",
         "primevue": "^4.2.5"
     }
 }
