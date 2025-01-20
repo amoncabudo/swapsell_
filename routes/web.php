@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ControllerProducts;
 use Inertia\Inertia;
 
 Route::get('/', function () {
@@ -57,6 +59,12 @@ Route::get('/eventInfo', function(){
     return Inertia::render('EventInfo');
 });
 
-Route::get('/products', function () {return Inertia::render('Products');});
+Route::get('/sell', function(){
+    return Inertia::render('Sell');
+});
+
+Route::post('/sell', [ProductController::class, "addProduct"])->name("sell");
+
+Route::get('/products', [ControllerProducts::class, "index"])->name("Products");
 
 require __DIR__.'/auth.php';
