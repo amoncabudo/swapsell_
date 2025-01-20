@@ -5,6 +5,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Producte;
 use Inertia\Inertia;
+use App\Http\Controllers\SellController;
+use App\Http\Controllers\ControllerProducts;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -60,5 +62,12 @@ Route::get('/profile', function(){
 Route::get('/eventInfo', function(){
     return Inertia::render('EventInfo');
 });
+
+Route::get('/sell', [SellController::class, 'create'])->name('sell.create');
+
+Route::post('/product/store', [SellController::class, 'store'])->name('product.store');
+
+Route::get('/products', [ControllerProducts::class, 'index'])->name('products');
+
 
 require __DIR__.'/auth.php';
