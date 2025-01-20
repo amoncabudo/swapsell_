@@ -23,7 +23,6 @@ const total = computed(() => {
         </ul>
       </div>
     </div>
-
     <!-- Columna derecha -->
     <div class="w-full lg:w-1/2 p-4 flex flex-col justify-between">
       <div>
