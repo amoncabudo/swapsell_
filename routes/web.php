@@ -59,6 +59,15 @@ Route::get('/profile', function(){
     return Inertia::render('Profile');
 });
 
+Route::get('/legal', function(){
+    return Inertia::render('Legal');
+});
+
+Route::get('/contact', function(){
+    return Inertia::render('Contact');
+});
+Route::get('/products', function () {return Inertia::render('Products');});
+
 Route::get('/eventInfo', function(){
     return Inertia::render('EventInfo');
 });
@@ -68,6 +77,5 @@ Route::get('/sell', [SellController::class, 'create'])->name('sell.create');
 Route::post('/product/store', [SellController::class, 'store'])->name('product.store');
 
 Route::get('/products', [ControllerProducts::class, 'index'])->name('products');
-
 
 require __DIR__.'/auth.php';
