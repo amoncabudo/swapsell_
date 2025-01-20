@@ -15,13 +15,14 @@
                     <h2 class="text-xl font-semibold mb-2">AFEGIR USUARIS</h2>
                     <p>Apartat per afegir usuaris</p>
                     <div class="mt-4">
-                        <button class="bg-SubastaButton1 text-white px-4 py-2 rounded hover:bg-blue-600">
+                        <button @click="openModalUsers" class="bg-SubastaButton1 text-white px-4 py-2 rounded hover:bg-blue-600">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                 viewBox="0 0 24 24">
                                 <path stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M5 12h14m-7 7V5" />
-                            </svg></button>
+                            </svg>
+                        </button>
                     </div>
                 </div>
                 <div class="bg-white p-6 rounded-lg shadow-lg text-center">
@@ -116,8 +117,7 @@
                     <h2 class="text-xl font-semibold mb-2">LLISTA DE PRODUCTES</h2>
                     <p>Apartat per visualitzar i gestionar els productes</p>
                     <div class="mt-4">
-                        <button
-                            class="bg-SubastaButton1 text-white px-4 py-2 rounded hover:bg-blue-600">
+                        <button class="bg-SubastaButton1 text-white px-4 py-2 rounded hover:bg-blue-600">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                 viewBox="0 0 24 24">
@@ -130,11 +130,58 @@
             </div>
         </div>
     </div>
+    <!-- Modal -->
+    <div v-if="isModalOpen" class="fixed inset-0 flex items-center justify-center z-50">
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-xl font-semibold mb-2">Crear Usuario</h2>
+            <form @submit.prevent="createUser">
+                <div>
+                    <label for="username" class="block">Nombre de Usuario:</label>
+                    <input type="text" id="username" v-model="name" class="border rounded w-full p-2" required />
+                </div>
+                <div class="mt-4">
+                    <label for="email" class="block">Correo Electrónico:</label>
+                    <input type="email" id="email" v-model="email" class="border rounded w-full p-2" required />
+                </div>
+                <div class="mt-4">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Crear</button>
+                    <button type="button" @click="closeModal"
+                        class="bg-red-500 text-white px-4 py-2 rounded">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </template>
 
 <script>
 export default {
     name: 'AdminPanel',
+    data() {
+        return {
+            isModalOpen: false,
+            name: '',
+            surname: '',
+            email: '',
+            password: '',
+        };
+    },
+    methods: {
+        openModalUsers() {
+            this.isModalOpen = true;
+        },
+        closeModal() {
+            this.isModalOpen = false;
+            this.name = '';
+            this.surname = '';
+            this.email = '';
+            this.password = '';
+        },
+        createUser() {
+            // Lógica para crear un usuario
+            console.log('Usuario creado:', this.name, this.surname, this.email, this.password);
+            this.closeModal();
+        },
+    },
 }
 </script>
 
