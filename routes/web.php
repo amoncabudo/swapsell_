@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Producte;
 use Inertia\Inertia;
 
 Route::get('/', function () {
@@ -59,7 +60,5 @@ Route::get('/profile', function(){
 Route::get('/eventInfo', function(){
     return Inertia::render('EventInfo');
 });
-
-Route::get('/products', function () {return Inertia::render('Products');});
 
 require __DIR__.'/auth.php';
