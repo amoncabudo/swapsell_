@@ -1,7 +1,7 @@
 <template>
     <div class="min-h-screen bg-gray-50">
         <main class="container mx-auto px-4 py-8">
-            <h1 class="text-4xl font-bold text-center mb-12 text-gray-800">Sobre Nosaltres</h1>
+            <h1 class="text-5xl font-bold text-center mb-12 text-gray-800">Sobre Nosaltres</h1>
 
             <!-- Info Section -->
             <div class="max-w-4xl mx-auto mb-16">
@@ -11,7 +11,7 @@
                             <img class="w-full h-full object-cover" src="/images/card2.png" alt="Equipo trabajando">
                         </div>
                         <div class="p-8 md:w-2/3">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-4">Grup 4</h2>
+                            <h2 class="text-3xl font-bold text-gray-800 mb-4">GRUP 4</h2>
                             <div class="prose prose-lg text-gray-600">
                                 <p class="mb-4">
                                     Som un grup d'estudiants apassionats de 2n de Desenvolupament d'Aplicacions Web
