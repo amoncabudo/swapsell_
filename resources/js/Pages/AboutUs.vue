@@ -1,13 +1,15 @@
 <script setup>
 import Footer from "../Components/Footer.vue";
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import NavbarS from '@/Layouts/NavbarS.vue';
 import { ref, computed } from 'vue';
 
 const teamMembers = ref([
-    { id: 1, name: 'Arnau', surname: 'Garcia', role: 'Programador Full Stack', rank: '', image: '/images/logo1.png' },
-    { id: 2, name: 'Marc', surname: 'Cufí', role: 'Programador Full Stack', rank: '', image: '/images/logo2.png' },
+    { id: 1, name: 'Arnau', surname: 'Garcia', role: 'Programador Backend', rank: '', image: '/images/logo1.png' },
+    { id: 2, name: 'Marc', surname: 'Cufí', role: 'Programador Backend', rank: '', image: '/images/logo2.png' },
     { id: 3, name: 'Alex', surname: 'Moncayo', role: 'Programador Full Stack', rank: '', image: '/images/logo3.png' },
-    { id: 4, name: 'Joel', surname: 'Pages', role: 'Programador Full Stack', rank: 'Scrum Master', image: '/images/logo4.png' },
-    { id: 5, name: 'Carla', surname: 'De Caprio', role: 'Programador Full Stack', rank: '', image: '/images/logo5.png' },
+    { id: 4, name: 'Joel', surname: 'Pages', role: 'Programador Backend', rank: 'Scrum Master', image: '/images/logo4.png' },
+    { id: 5, name: 'Carla', surname: 'De Caprio', role: 'Programador Frontend', rank: '', image: '/images/logo5.png' },
     { id: 6, name: 'Jhosep', surname: 'Espinoza ', role: 'Programador Full Stack', rank: '', image: '/images/logo6.png' },
 ]);
 
@@ -20,11 +22,19 @@ const scrollToTeam = () => {
         teamSection.scrollIntoView({ behavior: 'smooth' });
     }
 };
+const items = ref([
+    { label: 'Inici', url: '/' },
+    { label: 'Sobre Nosaltres' }
+]);
+
 </script>
 
 <template>
-    <div class="min-h-screen bg-gray-50">
+<component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
+<div class="min-h-screen bg-gray-50">
+
         <main class="container mx-auto px-4 py-8">
+            <Breadcrumb :model="items" class=" mt-12" />
             <h1 class="text-4xl font-bold text-center mb-12 text-gray-800">Sobre Nosaltres</h1>
 
             <!-- Info Section -->
@@ -37,7 +47,7 @@ const scrollToTeam = () => {
                         <div class="p-8 md:w-2/3">
                             <h2 class="text-3xl font-bold text-gray-800 mb-4">GRUP 4</h2>
                             <div class="prose prose-lg text-gray-600">
-                                <p class="mb-4">
+                                <p class="mb-2">
                                     Som un grup d'estudiants apassionats de 2n de Desenvolupament d'Aplicacions Web
                                     (DAW),
                                     compromesos amb aprendre, crear i innovar al món digital. Actualment,
@@ -50,10 +60,6 @@ const scrollToTeam = () => {
                                     dissenyada per a fomentar la sostenibilitat, la reutilització i la col·laboració
                                     entre
                                     persones.
-                                </p>
-                                <p>
-                                    El nostre objectiu és oferir una experiència intuïtiva, versàtil i segura per
-                                    els usuaris.
                                 </p>
                             </div>
                         </div>
@@ -135,8 +141,11 @@ const scrollToTeam = () => {
                 </div>
             </div>
         </main>
+        
         <Footer />
+        
     </div>
+</component>
 </template>
 
 <style scoped>
@@ -185,5 +194,15 @@ const scrollToTeam = () => {
 
 .team-title {
     margin-top: 80px;
+}
+:deep(.p-breadcrumb) {
+    background-color: transparent;
+}
+:deep(.p-breadcrumb-item-label) {
+    color: #004266;
+}
+
+:deep(.p-breadcrumb-item-label:hover) {
+    color: #060606 !important;
 }
 </style>
