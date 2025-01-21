@@ -95,4 +95,8 @@ Route::get('/project', function () {
     ]);
 });
 
+Route::get('/subasta', function(){
+    return Inertia::render('Subasta');
+});
+
 require __DIR__.'/auth.php';
