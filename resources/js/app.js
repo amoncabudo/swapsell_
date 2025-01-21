@@ -26,6 +26,14 @@ import AccordionHeader from 'primevue/accordionheader';//PrimeVue AccordionHeade
 import AccordionContent from 'primevue/accordioncontent';//PrimeVue AccordionContent
 
 
+
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import ColumnGroup from 'primevue/columngroup';   // optional
+import Row from 'primevue/row';                   // optional
+
+
+
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createApp, h } from 'vue';
