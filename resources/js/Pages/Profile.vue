@@ -1,4 +1,10 @@
+<script setup>
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import NavbarS from '@/Layouts/NavbarS.vue';
+</script>
+
 <template>
+  <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
   <div class="bg-gray-50 min-h-screen">
     <div class="container mx-auto p-6">
       <!-- Cabecera del perfil -->
@@ -98,6 +104,7 @@
       </div>
     </div>
   </div>
+</component>
 </template>
 
 <style scoped>
