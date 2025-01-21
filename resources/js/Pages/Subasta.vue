@@ -18,7 +18,7 @@
           <option>Ordenar por</option>
           <option>Precio más bajo</option>
           <option>Precio más alto</option>
-          <option>Tiempo restante</option>
+          <option>Tiempo restante</option> 
         </select>
       </div>
 
