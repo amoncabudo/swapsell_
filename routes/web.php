@@ -9,6 +9,7 @@ use App\Http\Controllers\ControllerEvents;
 use App\Http\Controllers\ControllerProject;
 use Inertia\Inertia;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\SellController;
 
 Route::get('/', function () {
@@ -30,6 +31,9 @@ Route::get('/productextend', function () {
 Route::get('/adminpanel', function () {return Inertia::render('AdminPanel');})->name("adminpanel");
 
 Route::post('/users', [UserController::class, "addUser"])->name("users");
+Route::middleware(['auth'])->group(function(){
+    Route::post('/events', [EventController::class, "addEvent"])->name("events");
+});
 
 Route::get('/mapa', function () {return Inertia::render('Mapa');});
 
