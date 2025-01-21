@@ -1,7 +1,40 @@
+<script setup lang="ts">
+import {ref} from 'vue';
+import { Head, Link, useForm } from '@inertiajs/vue3';
+import axios from 'axios';
+const flashMessage= ref(null);
+const isModalOpen=ref(false); 
+
+const openModal = () => {
+    isModalOpen.value = true;
+};
+const form = useForm({
+    name: '',
+    surname: '',
+    email:'',
+    password:'',
+});
+const closeModal = () => {
+    isModalOpen.value = false;
+};
+
+function addUser(){
+    console.log("dkasjg");
+    axios.post(route('users'), form).then(data => {
+        console.log(data.data);
+        closeModal();
+        flashMessage.value='Prova';
+        console.log("---prueba----");
+        })
+    };
+
+
+</script>
+
 <template>
     <div class="min-h-screen bg-gray-100">
         <div class="container mx-auto p-6">
-            <h1 class="text-4xl font-bold text-center mb-8">PANELL D'ADMINISTRADOR</h1>
+            <h1 class="text-4xl font-bold text-center mb-8 text-gray-800">PANELL D'ADMINISTRADOR</h1>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="bg-white p-6 rounded-lg shadow-lg text-center">
                     <svg class="mx-auto mb-2 w-12 h-12 text-gray-800 dark:text-white" aria-hidden="true"
@@ -12,16 +45,17 @@
                             clip-rule="evenodd" />
                     </svg>
                     <!-- <img src="" alt="AddUsers" class="mx-auto mb-2 w-12 h-12" /> -->
-                    <h2 class="text-xl font-semibold mb-2">AFEGIR USUARIS</h2>
-                    <p>Apartat per afegir usuaris</p>
+                    <h2 class="text-xl font-semibold mb-2 text-gray-800">AFEGIR USUARIS</h2>
+                    <p class="text-gray-800">Apartat per afegir usuaris</p>
                     <div class="mt-4">
-                        <button class="bg-SubastaButton1 text-white px-4 py-2 rounded hover:bg-blue-600">
+                        <button @click="openModal" class="bg-SubastaButton1 text-white px-4 py-2 rounded hover:bg-blue-600">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                 viewBox="0 0 24 24">
                                 <path stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M5 12h14m-7 7V5" />
-                            </svg></button>
+                            </svg>
+                        </button>
                     </div>
                 </div>
                 <div class="bg-white p-6 rounded-lg shadow-lg text-center">
@@ -32,8 +66,8 @@
                             d="M8 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1h2a2 2 0 0 1 2 2v15a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h2Zm6 1h-4v2H9a1 1 0 0 0 0 2h6a1 1 0 1 0 0-2h-1V4Zm-3 8a1 1 0 0 1 1-1h3a1 1 0 1 1 0 2h-3a1 1 0 0 1-1-1Zm-2-1a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H9Zm2 5a1 1 0 0 1 1-1h3a1 1 0 1 1 0 2h-3a1 1 0 0 1-1-1Zm-2-1a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H9Z"
                             clip-rule="evenodd" />
                     </svg>
-                    <h2 class="text-xl font-semibold mb-2">AFEGIR ESDEVENIMENTS</h2>
-                    <p>Apartat per afegir esdeveniments</p>
+                    <h2 class="text-xl font-semibold mb-2 text-gray-800">AFEGIR ESDEVENIMENTS</h2>
+                    <p class="text-gray-800">Apartat per afegir esdeveniments</p>
                     <div class="mt-4">
                         <button class="bg-SubastaButton1 text-white px-4 py-2 rounded hover:bg-blue-600">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
@@ -53,8 +87,8 @@
                             clip-rule="evenodd" />
                     </svg>
                     <!-- <img src="" alt="AddProducts" class="mx-auto mb-2 w-12 h-12" /> -->
-                    <h2 class="text-xl font-semibold mb-2">AFEGIR PRODUCTES</h2>
-                    <p>Apartat per afegir productes</p>
+                    <h2 class="text-xl font-semibold mb-2 text-gray-800">AFEGIR PRODUCTES</h2>
+                    <p class="text-gray-800">Apartat per afegir productes</p>
                     <div class="mt-4">
                         <button class="bg-SubastaButton1 text-white px-4 py-2 rounded hover:bg-blue-600">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
@@ -73,8 +107,8 @@
                             d="M9 8h10M9 12h10M9 16h10M4.99 8H5m-.02 4h.01m0 4H5" />
                     </svg>
                     <!-- <img src="" alt="ListUsers" class="mx-auto mb-2 w-12 h-12" /> -->
-                    <h2 class="text-xl font-semibold mb-2">LLISTA D'USUARIS</h2>
-                    <p>Apartat per visualitzar i gestionar els usuaris</p>
+                    <h2 class="text-xl font-semibold mb-2 text-gray-800">LLISTA D'USUARIS</h2>
+                    <p class="text-gray-800">Apartat per visualitzar i gestionar els usuaris</p>
                     <div class="mt-4">
                         <button class="bg-SubastaButton1 text-white px-4 py-2 rounded hover:bg-blue-600">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
@@ -93,8 +127,8 @@
                             d="M9 8h10M9 12h10M9 16h10M4.99 8H5m-.02 4h.01m0 4H5" />
                     </svg>
                     <!-- <img src="" alt="ListEvents" class="mx-auto mb-2 w-12 h-12" /> -->
-                    <h2 class="text-xl font-semibold mb-2">LLISTA D'ESDEVENIMENTS</h2>
-                    <p>Apartat per visualitzar i gestionar els esdeveniments</p>
+                    <h2 class="text-xl font-semibold mb-2 text-gray-800">LLISTA D'ESDEVENIMENTS</h2>
+                    <p class="text-gray-800">Apartat per visualitzar i gestionar els esdeveniments</p>
                     <div class="mt-4">
                         <button class="bg-SubastaButton1 text-white px-4 py-2 rounded hover:bg-blue-600">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
@@ -113,11 +147,10 @@
                             d="M9 8h10M9 12h10M9 16h10M4.99 8H5m-.02 4h.01m0 4H5" />
                     </svg>
                     <!-- <img src="" alt="ListProducts" class="mx-auto mb-2 w-12 h-12" /> -->
-                    <h2 class="text-xl font-semibold mb-2">LLISTA DE PRODUCTES</h2>
-                    <p>Apartat per visualitzar i gestionar els productes</p>
+                    <h2 class="text-xl font-semibold mb-2 text-gray-800">LLISTA DE PRODUCTES</h2>
+                    <p class="text-gray-800">Apartat per visualitzar i gestionar els productes</p>
                     <div class="mt-4">
-                        <button
-                            class="bg-SubastaButton1 text-white px-4 py-2 rounded hover:bg-blue-600">
+                        <button class="bg-SubastaButton1 text-white px-4 py-2 rounded hover:bg-blue-600">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                 viewBox="0 0 24 24">
@@ -130,14 +163,33 @@
             </div>
         </div>
     </div>
+    <!-- Modal -->
+    <div v-if="isModalOpen" class="fixed inset-0 flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-1/2">
+            <h2 class="text-xl font-semibold mb-2">Crear Usuario</h2>
+            <form @submit.prevent="addUser">
+                <div>
+                    <label for="name" class="block text-black">Nom de l'Usuari:</label>
+                    <input type="text" id="name" v-model="form.name" class="border rounded w-full p-2 text-black" required />
+                </div>
+                <div>
+                    <label for="surname" class="block text-black">Cognoms de l'Usuari:</label>
+                    <input type="text" id="surname" v-model="form.surname" class="border rounded w-full p-2 text-black" required />
+                </div>
+                
+                <div class="mt-4">
+                    <label for="email" class="block text-black">Correu Electrònic:</label>
+                    <input type="email" id="email" v-model="form.email" class="border rounded w-full p-2 text-black" required />
+                </div>
+                <div>
+                    <label for="password" class="block text-black">Contrasenya:</label>
+                    <input type="password" id="password" v-model="form.password" class="border rounded w-full p-2 text-black" required />
+                </div>
+                <div class="mt-4">
+                    <button type="submit" class="bg-SubastaButton1 text-white px-4 py-2 rounded">Crear</button>
+                    <button type="button" @click="closeModal" class="bg-red-500 text-white px-4 py-2 rounded ml-4">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </template>
-
-<script>
-export default {
-    name: 'AdminPanel',
-}
-</script>
-
-<style scoped>
-/* Estilos adicionales si es necesario */
-</style>
