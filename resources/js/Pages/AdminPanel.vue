@@ -1,3 +1,36 @@
+<script setup lang="ts">
+import {ref} from 'vue';
+import { Head, Link, useForm } from '@inertiajs/vue3';
+import axios from 'axios';
+const flashMessage= ref(null);
+const isModalOpen=ref(false); 
+
+const openModal = () => {
+    isModalOpen.value = true;
+};
+const form = useForm({
+    name: '',
+    surname: '',
+    email:'',
+    password:'',
+});
+const closeModal = () => {
+    isModalOpen.value = false;
+};
+
+function addUser(){
+    console.log("dkasjg");
+    axios.post(route('users'), form).then(data => {
+        console.log(data.data);
+        closeModal();
+        flashMessage.value='Prova';
+        console.log("---prueba----");
+        })
+    };
+
+
+</script>
+
 <template>
     <div class="min-h-screen bg-gray-100">
         <div class="container mx-auto p-6">
@@ -15,7 +48,7 @@
                     <h2 class="text-xl font-semibold mb-2 text-gray-800">AFEGIR USUARIS</h2>
                     <p class="text-gray-800">Apartat per afegir usuaris</p>
                     <div class="mt-4">
-                        <button @click="openModalUsers" class="bg-SubastaButton1 text-white px-4 py-2 rounded hover:bg-blue-600">
+                        <button @click="openModal" class="bg-SubastaButton1 text-white px-4 py-2 rounded hover:bg-blue-600">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                 viewBox="0 0 24 24">
@@ -134,23 +167,23 @@
     <div v-if="isModalOpen" class="fixed inset-0 flex items-center justify-center z-50">
         <div class="bg-white p-8 rounded-lg shadow-lg w-1/2">
             <h2 class="text-xl font-semibold mb-2">Crear Usuario</h2>
-            <form @submit.prevent="createUser">
+            <form @submit.prevent="addUser">
                 <div>
                     <label for="name" class="block text-black">Nom de l'Usuari:</label>
-                    <input type="text" id="name" v-model="name" class="border rounded w-full p-2 text-black" required />
+                    <input type="text" id="name" v-model="form.name" class="border rounded w-full p-2 text-black" required />
                 </div>
                 <div>
                     <label for="surname" class="block text-black">Cognoms de l'Usuari:</label>
-                    <input type="text" id="surname" v-model="surname" class="border rounded w-full p-2 text-black" required />
+                    <input type="text" id="surname" v-model="form.surname" class="border rounded w-full p-2 text-black" required />
                 </div>
                 
                 <div class="mt-4">
                     <label for="email" class="block text-black">Correu Electrònic:</label>
-                    <input type="email" id="email" v-model="email" class="border rounded w-full p-2 text-black" required />
+                    <input type="email" id="email" v-model="form.email" class="border rounded w-full p-2 text-black" required />
                 </div>
                 <div>
-                    <label for="password" class="block text-blacks">Contrasenya:</label>
-                    <input type="password" id="password" v-model="password" class="border rounded w-full p-2 text-black" required />
+                    <label for="password" class="block text-black">Contrasenya:</label>
+                    <input type="password" id="password" v-model="form.password" class="border rounded w-full p-2 text-black" required />
                 </div>
                 <div class="mt-4">
                     <button type="submit" class="bg-SubastaButton1 text-white px-4 py-2 rounded">Crear</button>
@@ -160,37 +193,3 @@
         </div>
     </div>
 </template>
-
-<script>
-export default {
-    name: 'AdminPanel',
-    data() {
-        return {
-            isModalOpen: false,
-            name: '',
-            surname: '',
-            email: '',
-            password: '',
-        };
-    },
-    methods: {
-        openModalUsers() {
-            this.isModalOpen = true;
-        },
-        closeModal() {
-            this.isModalOpen = false;
-            this.name = '';
-            this.surname = '';
-            this.email = '';
-            this.password = '';
-        },
-        createUser() {
-            
-            // Lógica para crear un usuario
-            console.log('Usuario creado:', this.name, this.surname, this.email, this.password);
-            this.closeModal();
-        },
-    },
-    
-}
-</script>
