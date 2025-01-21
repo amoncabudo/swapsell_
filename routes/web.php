@@ -6,7 +6,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ControllerProducts;
 use App\Http\Controllers\ControllerEvents;
+use App\Http\Controllers\ControllerProject;
 use Inertia\Inertia;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\SellController;
 
 Route::get('/', function () {
@@ -25,7 +27,10 @@ Route::get('/productextend', function () {
         'isAuthenticated' => auth()->check(),
     ]);
 });
-Route::get('/adminpanel', function () {return Inertia::render('AdminPanel');});
+Route::get('/adminpanel', function () {return Inertia::render('AdminPanel');})->name("adminpanel");
+
+Route::post('/users', [UserController::class, "addUser"])->name("users");
+
 Route::get('/mapa', function () {return Inertia::render('Mapa');});
 
 Route::get('/dashboard', function () {
@@ -83,5 +88,11 @@ Route::get('/products', [ControllerProducts::class, "index"])->name("Products");
 
 
 Route::get('/events', [ControllerEvents::class, "index"])->name("Events");
+
+Route::get('/project', function () {
+    return Inertia::render('Project', [
+        'isAuthenticated' => auth()->check(),
+    ]);
+});
 
 require __DIR__.'/auth.php';
