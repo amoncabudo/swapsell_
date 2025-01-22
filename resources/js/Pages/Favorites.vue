@@ -100,13 +100,14 @@ const removeFromFavorites = (product) => {
 };
 </script>
 
+
 <template>
     <div class="min-h-screen bg-gray-50">
         <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
             <main class="container mx-auto px-4 py-8">
-                <div class="max-w-5xl mx-auto">
-                    <Breadcrumb :model="items" class="" />
-                    <h1 class="text-4xl font-bold text-center  mb-12 text-gray-800">Favorits</h1>
+                <div class="max-w-7xl mx-auto">
+                    <Breadcrumb :model="items" class="mb-8" />
+                    <h1 class="text-4xl font-bold text-center mb-12 text-gray-800">Favorits</h1>
 
                     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div v-if="loading" class="flex justify-center items-center py-12">
@@ -122,28 +123,28 @@ const removeFromFavorites = (product) => {
                                 </div>
                                 <div class="p-6">
                                     <Link :href="`/product/${product.id}`" class="block">
-                                    <h2 class="text-xl font-semibold text-gray-900 mb-3">{{ product.name }}</h2>
-                                    <p class="text-gray-800 text-base mb-4 line-clamp-2">{{ product.description }}</p>
-                                    <div class="flex justify-between items-center mb-4">
-                                        <span class="text-blue-800 font-bold text-lg">{{ formatCurrency(product.price) }}</span>
-                                        <span class="text-sm text-gray-800">{{ product.category }}</span>
-                                    </div>
-
-                                    <div class="mt-2 flex items-center justify-between text-sm text-gray-500">
-                                        <div class="flex items-center">
-                                            <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                            </svg>
-                                            <span class="text-gray-800">{{ product.location }}</span>
-                                            <span class="mx-2 text-gray-800">•</span>
-                                            <span class="text-gray-800"> Hace {{ product.timestamp }}</span>
+                                        <h2 class="text-xl font-semibold text-gray-900 mb-3">{{ product.name }}</h2>
+                                        <p class="text-gray-800 text-base mb-4 line-clamp-2">{{ product.description }}</p>
+                                        <div class="flex justify-between items-center mb-4">
+                                            <span class="text-blue-800 font-bold text-lg">{{ formatCurrency(product.price) }}</span>
+                                            <span class="text-sm text-gray-800">{{ product.category }}</span>
                                         </div>
-                                        <Button icon="pi pi-heart-fill"
-                                        class="absolute !bg-white hover:!bg-red-50" severity="danger" text
-                                        rounded @click="removeFromFavorites(product)"
-                                        aria-label="Remove from favorites"  alt="Remove from favorites"/>
-                                    </div>
-                                    
+
+                                        <div class="mt-2 flex items-center justify-between text-sm text-gray-500">
+                                            <div class="flex items-center">
+                                                <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                                </svg>
+                                                <span class="text-gray-800">{{ product.location }}</span>
+                                                <span class="mx-2 text-gray-800">•</span>
+                                                <span class="text-gray-800">Hace {{ product.timestamp }}</span>
+                                            </div>
+                                            <Button icon="pi pi-heart-fill"
+                                                class="p-button-text p-button-danger !bg-white hover:!bg-red-50"
+                                                @click="removeFromFavorites(product)"
+                                                aria-label="Remove from favorites" />
+                                        </div>
                                     </Link>
                                 </div>
                             </div>
@@ -153,7 +154,7 @@ const removeFromFavorites = (product) => {
                             <p class="text-gray-500 text-lg">No tens cap producte a favorits</p>
                             <Link href="/"
                                 class="inline-block mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-                            Explorar productes
+                                Explorar productes
                             </Link>
                         </div>
                     </div>
