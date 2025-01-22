@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ControllerProducts;
 use App\Http\Controllers\ControllerEvents;
 use App\Http\Controllers\ControllerProject;
+use App\Http\Controllers\ControllerFavorites;
 use Inertia\Inertia;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventController;
