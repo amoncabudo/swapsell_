@@ -1,5 +1,6 @@
 <?php
 
+
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -68,9 +69,7 @@ Route::get('/aboutus', function(){
     return Inertia::render('AboutUs');
 });
 
-Route::get('/profile', function(){
-    return Inertia::render('Profile');
-});
+
 
 Route::get('/legal', function(){
     return Inertia::render('Legal');
@@ -99,6 +98,11 @@ Route::post('/updateProduct', [ProductController::class, "updateProduct"])->name
 
 Route::get('/products', [ProductController::class, "index"])->name("products");
 Route::get('/products', [ProductController::class, 'getAllProducts'])->name('Products');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
+});
+
 
 
 Route::get('/events', [ControllerEvents::class, "index"])->name("Events");
