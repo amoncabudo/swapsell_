@@ -65,7 +65,7 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
         $isAuthenticated = Auth::check();
-
+        // Aqui se le pasa los valores y el loged con el isAuthenticaded
         return Inertia::render("Profile", [
             "user" => $user,
             "isAuthenticated" => $isAuthenticated,
