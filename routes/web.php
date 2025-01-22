@@ -87,7 +87,7 @@ Route::get('/sell', function(){
 });
 
 Route::get('/updateProduct', function(){
-    return Inertia::render('updateProduct');
+    return Inertia::render('UpdateProduct');
 });
 
 Route::post('/sell', [ProductController::class, "addProduct"])->name("sell");
