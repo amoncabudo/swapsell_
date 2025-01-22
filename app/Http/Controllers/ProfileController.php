@@ -60,4 +60,15 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+    
+    public function profile()
+    {
+        $user = Auth::user();
+        $isAuthenticated = Auth::check();
+
+        return Inertia::render("Profile", [
+            "user" => $user,
+            "isAuthenticated" => $isAuthenticated,
+        ]);
+    }
 }
