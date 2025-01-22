@@ -1,7 +1,63 @@
+
+<script setup>
+import Footer from '../Components/Footer.vue';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import NavbarS from '@/Layouts/NavbarS.vue';
+import { ref } from 'vue';
+
+defineProps({
+    isAuthenticated: Boolean,
+    featuredProducts: {  
+        type: Array,
+        default: () => []
+    }
+});
+
+const featuredItems = ref([
+    { name: 'iPhone 12 Pro', price: '599€', image: '' },
+    { name: 'MacBook Air', price: '899€', image: '' },
+    { name: 'iPad Pro', price: '699€', image: '' },
+    { name: 'AirPods Max', price: '450€', image: '' }
+]);
+
+const stats = ref([
+    { value: '50K+', title: 'Usuaris actius', delay: 200 },
+    { value: '100K+', title: 'Productes', delay: 400 },
+    { value: '95%', title: 'Satisfacció', delay: 600 },
+    { value: '24/7', title: 'Suport', delay: 800 }
+]);
+
+const trendingCategories = ref([
+    { id: 1, name: 'Tecnologia', items: '2,534', image: '/images/3.jpeg', delay: 200 },
+    { id: 2, name: 'Moda Sostenible', items: '1,839', image: '/images/4.jpeg', delay: 400 },
+    { id: 3, name: 'Col·leccionables', items: '943', image: '/images/5.jpeg', delay: 600 }
+]);
+
+const steps = ref([
+    {
+        title: 'Crea el teu compte',
+        description: 'Registra\'t gratuïtament i verifica el teu perfil en menys d\'un minut.',
+        delay: 200
+    },
+    {
+        title: 'Publica o explora',
+        description: 'Puja els teus productes o navega per milers d\'articles únics.',
+        delay: 400
+    },
+    {
+        title: 'Compra o ven',
+        description: 'Realitza transaccions segures amb el nostre sistema de pagament protegit.',
+        delay: 600
+    }
+]);
+</script>
+
 <template>
+          <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
+
     <div class="min-h-screen bg-gray-50">
         <!-- Hero Section with Dynamic Grid -->
-        <section class="relative min-h-screen bg-gradient-to-br from-gray-900 to-gray-700 py-20">
+        <section class="relative min-h-screen py-20 sect-background">
             <div class="container mx-auto px-4">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     <div class="text-white" data-aos="fade-right">
@@ -9,7 +65,7 @@
                         <p class="text-xl text-gray-300 mb-8">La teva plataforma de confiança per comprar i vendre productes únics de segona mà.</p>
                         <div class="flex gap-4">
                             <button class="border border-white text-white px-8 py-3 rounded-lg hover:bg-white hover:text-gray-900 transition-all">
-                                Començar ara
+                               <a href="/login">Començar ara</a>
                             </button>
                         </div>
                     </div>
@@ -19,7 +75,7 @@
                              :data-aos-delay="200 * (index + 1)"
                              class="featured-item">
                             <img :src="item.image" :alt="item.name" class="w-full h-48 object-cover">
-                            <div class="p-4 bg-white">
+                            <div class="p-2 bg-white">
                                 <h2 class="text-black font-semibold">{{ item.name }}</h2>
                                 <p class="text-bold text-red-800">{{ item.price }}</p>
                             </div>
@@ -85,7 +141,7 @@
         </section>
 
         <!-- Join CTA -->
-        <section class="py-20 bg-blue-800">
+        <section class="py-20  sect-background">
             <div class="container mx-auto px-4 text-center" data-aos="fade-up">
                 <h2 class="text-4xl font-bold text-white mb-8">Uneix-te a la nostra comunitat</h2>
                 <p class="text-xl text-white mb-8 max-w-2xl mx-auto">
@@ -97,54 +153,19 @@
             </div>
         </section>
 
+        <hr class="border-gray-200">
+
         <Footer />
     </div>
+    </component>
 </template>
 
-<script setup>
-import Footer from '../Components/Footer.vue';
-import { ref } from 'vue';
-
-const featuredItems = ref([
-    { name: 'iPhone 12 Pro', price: '599€', image: '' },
-    { name: 'MacBook Air', price: '899€', image: '' },
-    { name: 'iPad Pro', price: '699€', image: '' },
-    { name: 'AirPods Max', price: '450€', image: '' }
-]);
-
-const stats = ref([
-    { value: '50K+', title: 'Usuaris actius', delay: 200 },
-    { value: '100K+', title: 'Productes', delay: 400 },
-    { value: '95%', title: 'Satisfacció', delay: 600 },
-    { value: '24/7', title: 'Suport', delay: 800 }
-]);
-
-const trendingCategories = ref([
-    { id: 1, name: 'Tecnologia', items: '2,534', image: '/images/3.jpeg', delay: 200 },
-    { id: 2, name: 'Moda Sostenible', items: '1,839', image: '/images/4.jpeg', delay: 400 },
-    { id: 3, name: 'Col·leccionables', items: '943', image: '/images/5.jpeg', delay: 600 }
-]);
-
-const steps = ref([
-    {
-        title: 'Crea el teu compte',
-        description: 'Registra\'t gratuïtament i verifica el teu perfil en menys d\'un minut.',
-        delay: 200
-    },
-    {
-        title: 'Publica o explora',
-        description: 'Puja els teus productes o navega per milers d\'articles únics.',
-        delay: 400
-    },
-    {
-        title: 'Compra o ven',
-        description: 'Realitza transaccions segures amb el nostre sistema de pagament protegit.',
-        delay: 600
-    }
-]);
-</script>
-
 <style scoped>
+.sect-background {
+    background: linear-gradient(to right, #004266, #004266);
+
+}
+
 .featured-item {
     @apply bg-gray-800/50 rounded-lg overflow-hidden transition-all duration-300 hover:bg-gray-800;
 }
@@ -158,8 +179,10 @@ const steps = ref([
 }
 
 .step-number {
-    @apply w-12 h-12 bg-blue-800 text-white rounded-full flex items-center justify-center text-xl font-bold
+    @apply w-12 h-12  text-white rounded-full flex items-center justify-center text-xl font-bold
     absolute -top-6 left-1/2 -translate-x-1/2;
+
+    background-color: #004266
 }
 
 /* Custom animations */
