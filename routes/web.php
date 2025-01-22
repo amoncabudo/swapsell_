@@ -95,7 +95,7 @@ Route::get('/updateProduct', function(){
 
 Route::post('/sell', [ProductController::class, "addProduct"])->name("sell");
 
-Route::post('/updateProduct', [ProductController::class, "UpdateProduct"])->name("UpdateProduct");
+Route::post('/updateProduct', [ProductController::class, "updateProduct"])->name("updateProduct");
 
 Route::get('/products', [ProductController::class, "index"])->name("products");
 Route::get('/products', [ProductController::class, 'getAllProducts'])->name('Products');
