@@ -1,3 +1,11 @@
+<script setup>
+import { Link } from '@inertiajs/vue3'
+import { defineProps } from 'vue'
+const props = defineProps({
+  products: Array
+})
+console.log(props.products)
+</script>
 <template>
   <div class="bg-gray-50 min-h-screen">
     <!-- Barra de navegación con efecto glass -->
@@ -73,23 +81,24 @@
     <!-- Grid de productos -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <!-- Producto de ejemplo -->
-        <div class="block">
+        <!-- Iteramos sobre los productos -->
+        <div v-for="product in products" :key="product.id" class="block">
           <div class="glass-effect rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-            <img src="https://images.unsplash.com/photo-1591337676887-a217a6970a8a?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
-                 alt="iPhone 13 Pro" 
-                 class="w-full h-48 object-cover">
+            <img 
+              :src="`/uploads/products/${product.image}`" 
+              :alt="product.name" 
+              class="w-full h-48 object-cover">
             <div class="p-4">
               <div class="flex justify-between items-start">
-                <h3 class="text-lg font-semibold text-custom-blue">iPhone 13 Pro</h3>
-                <span class="text-custom-blue font-bold">S/. 799</span>
+                <h3 class="text-lg font-semibold text-custom-blue">{{ product.name }}</h3>
+                <span class="text-custom-blue font-bold">S/. {{ product.price }}</span>
               </div>
               <div class="mt-4 flex items-center justify-between text-sm text-gray-500">
                 <div class="flex items-center">
                   <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                   </svg>
-                  Lima
+                  <span>{{ product.location || 'Ubicación no disponible' }}</span>
                   <span class="mx-2">•</span>
                   <span>Hace 2h</span>
                 </div>
@@ -102,7 +111,7 @@
             </div>
           </div>
         </div>
-        <!-- Fin producto de ejemplo -->
+        <!-- Fin del loop -->
       </div>
     </div>
 
@@ -116,11 +125,108 @@
   </div>
 </template>
 
-<script setup>
-import { Link } from '@inertiajs/vue3'
-import { ref, onMounted } from 'vue';
 
+<style scoped>
+/* Colores personalizados */
+.bg-custom-blue {
+    background-color: #004266;
+}
+.bg-custom-blue-dark {
+    background-color: #003252;
+}
+.bg-custom-blue-light {
+    background-color: #006699;
+}
+.text-custom-blue {
+    color: #004266;
+}
+.text-custom-blue-dark {
+    color: #003252;
+}
+.border-custom-blue {
+    border-color: #004266;
+}
 
+/* Efectos */
+.glass-effect {
+    background: rgb(255, 255, 255);
+    box-shadow: 0 8px 32px 0 rgba(0, 66, 102, 0.2);
+}
 
+/* Fondos y animaciones */
+.wave-bg {
+    background: linear-gradient(45deg, #004266, #006699);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
 
-</script>
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Categorías */
+.category-active {
+    background-color: #004266;
+    color: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+.category-inactive {
+    background-color: white;
+    color: #374151;
+}
+.category-inactive:hover {
+    background-color: #F9FAFB;
+    color: #004266;
+}
+
+/* Animaciones */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-2px); }
+}
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+/* Estilos para el login */
+.logo-container {
+    position: relative;
+    z-index: 1;
+}
+
+.logo-container::before {
+    content: '';
+    position: absolute;
+    inset: -5px;
+    background: linear-gradient(45deg, #004266, #006699);
+    border-radius: 50%;
+    z-index: -1;
+    filter: blur(15px);
+    opacity: 0.5;
+}
+
+/* Inputs personalizados */
+.form-group input {
+    backdrop-filter: blur(8px);
+}
+
+/* Botones */
+.btn-gradient {
+    background: linear-gradient(45deg, #004266, #006699);
+    transition: all 0.3s ease;
+}
+.btn-gradient:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 66, 102, 0.3);
+}
+
+/* Efectos hover */
+.hover-scale {
+    transition: transform 0.3s ease;
+}
+.hover-scale:hover {
+    transform: scale(1.05);
+}
+</style>

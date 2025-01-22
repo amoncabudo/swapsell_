@@ -3,12 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\product;
+use App\Models\Product;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class ProductController extends Controller
 {
+    public function index()
+    {
+        return Inertia::render('Products');
+    }
+
     public function addProduct(Request $request){
         $name = $request->get("name");
         $description = $request->get("description");
@@ -58,4 +65,10 @@ class ProductController extends Controller
         
         return redirect()->route('Products')->with('success', 'Producte actualitzat correctament');
     }
+
+    public function getAllProducts(){
+        $products = Product::all();
+        return Inertia::render("Products", ["products" => $products]);
+    }
+
 }
