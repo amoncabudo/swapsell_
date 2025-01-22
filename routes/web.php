@@ -33,6 +33,7 @@ Route::get('/adminpanel', function () {return Inertia::render('AdminPanel');})->
 Route::post('/users', [UserController::class, "addUser"])->name("users");
 Route::middleware(['auth'])->group(function(){
     Route::post('/events', [EventController::class, "addEvent"])->name("events");
+    Route::post('/products', [ProductController::class, "addProduct"])->name("products");
 });
 
 Route::get('/mapa', function () {return Inertia::render('Mapa');});
