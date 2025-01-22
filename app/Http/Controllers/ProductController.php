@@ -33,6 +33,12 @@ class ProductController extends Controller
         return redirect()->route('Products')->with('success', 'Producte publicat correctament');
     }
 
+    public function deleteProduct($id){
+        $product = Product::find($id);
+        $product->delete();
+        return redirect()->route('Products')->with('success', 'Producte eliminat correctament');
+    }
+    
     public function updateProduct(Request $request){
         $id = $request->get("id");
         $name = $request->get("name");
@@ -59,3 +65,4 @@ class ProductController extends Controller
         return redirect()->route('Products')->with('success', 'Producte actualitzat correctament');
     }
 }
+    
