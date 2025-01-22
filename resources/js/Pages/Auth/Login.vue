@@ -104,3 +104,95 @@ const submit = () => {
     </section>
   </div>
 </template>
+
+<style scoped>
+/* Colores personalizados */
+.bg-custom-blue {
+    background-color: #004266;
+}
+.bg-custom-blue-dark {
+    background-color: #003252;
+}
+.bg-custom-blue-light {
+    background-color: #006699;
+}
+.text-custom-blue {
+    color: #004266;
+}
+.text-custom-blue-dark {
+    color: #003252;
+}
+.border-custom-blue {
+    border-color: #004266;
+}
+
+/* Efectos */
+.glass-effect {
+    background: rgb(255, 255, 255);
+    box-shadow: 0 8px 32px 0 rgba(0, 66, 102, 0.2);
+}
+
+/* Fondos y animaciones */
+.wave-bg {
+    background: linear-gradient(45deg, #004266, #006699);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+
+/* Animaciones */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-2px); }
+}
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+/* Estilos para el login */
+.logo-container {
+    position: relative;
+    z-index: 1;
+}
+
+.logo-container::before {
+    content: '';
+    position: absolute;
+    inset: -5px;
+    background: linear-gradient(45deg, #004266, #006699);
+    border-radius: 50%;
+    z-index: -1;
+    filter: blur(15px);
+    opacity: 0.5;
+}
+
+/* Inputs personalizados */
+.form-group input {
+    backdrop-filter: blur(8px);
+}
+
+/* Botones */
+.btn-gradient {
+    background: linear-gradient(45deg, #004266, #006699);
+    transition: all 0.3s ease;
+}
+.btn-gradient:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 66, 102, 0.3);
+}
+
+/* Efectos hover */
+.hover-scale {
+    transition: transform 0.3s ease;
+}
+.hover-scale:hover {
+    transform: scale(1.05);
+}
+
+</style>
