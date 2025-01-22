@@ -73,6 +73,7 @@ Route::get('/contact', function(){
     return Inertia::render('Contact');
 });
 Route::get('/products', function () {return Inertia::render('Products');});
+Route::post('/products', [ProductController::class, 'store']);
 
 Route::get('/eventInfo', function(){
     return Inertia::render('EventInfo');
