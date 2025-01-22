@@ -22,7 +22,7 @@
                                 <a href="/aboutus" class="hover:underline text-white">Sobre Nosaltres</a>
                             </li>
                             <li>
-                                <a href="https://tailwindcss.com/" class="hover:underline text-white">Projecte</a>
+                                <a href="/project" class="hover:underline text-white">Projecte</a>
                             </li>
                         </ul>
                     </div>
@@ -34,7 +34,7 @@
                                     class="hover:underline text-white">Github</a>
                             </li>
                             <li>
-                                <a href="https://discord.gg/4eeurUVvTy" class="hover:underline text-white">Discord</a>
+                                <a href="https://twitter.com/cendrassos?lang=es" class="hover:underline text-white">Twitter</a>
                             </li>
                         </ul>
                     </div>
