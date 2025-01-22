@@ -109,7 +109,6 @@
             </div>
         </div>
     </footer>
-
 </template>
 <style>
 .bg-color-footer {
