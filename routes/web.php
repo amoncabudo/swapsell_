@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ControllerProducts;
 use App\Http\Controllers\ControllerEvents;
 use App\Http\Controllers\ControllerProject;
+use App\Http\Controllers\ControllerFavorites;
 use Inertia\Inertia;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventController;
@@ -87,7 +88,13 @@ Route::get('/sell', function(){
     return Inertia::render('Sell');
 });
 
+Route::get('/updateProduct', function(){
+    return Inertia::render('updateProduct');
+});
+
 Route::post('/sell', [ProductController::class, "addProduct"])->name("sell");
+
+Route::post('/updateProduct', [ProductController::class, "UpdateProduct"])->name("UpdateProduct");
 
 Route::get('/products', [ControllerProducts::class, "index"])->name("Products");
 
@@ -103,5 +110,8 @@ Route::get('/project', function () {
 Route::get('/subasta', function(){
     return Inertia::render('Subasta');
 });
+
+Route::get('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->name("deleteProduct");
+Route::post('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->name("deleteProduct");
 
 require __DIR__.'/auth.php';
