@@ -46,33 +46,33 @@ const initializeMap = () => {
 };
 
 // Carga productos desde el backend y agrega marcadores
-// const loadProducts = async () => {
-//   try {
-//     const response = await axios.get('/api/products');
-//     products.value = response.data;
-//     console.log('Productos cargados:', products.value);
+const loadProducts = async () => {
+  try {
+    const response = await axios.get('/api/products');
+    products.value = response.data;
+    console.log('Productos cargados:', products.value);
 
-//     products.value.forEach((product) => {
-//       L.marker([product.latitude, product.longitude])
-//         .addTo(map.value)
-//         .bindPopup(`<strong>${product.name}</strong><br>${product.description || ''}`)
-//         .getElement()
-//         .setAttribute(
-//           'aria-label',
-//           `Ubicación de ${product.name}: ${product.description || 'sin descripción'}`
-//         );
-//     });
-//   } catch (error) {
-//     console.error('Error al cargar los productos:', error);
-//   }
-// };
+    products.value.forEach((product) => {
+      L.marker([product.latitude, product.longitude])
+        .addTo(map.value)
+        .bindPopup(`<strong>${product.name}</strong><br>${product.description || ''}`)
+        .getElement()
+        .setAttribute(
+          'aria-label',
+          `Ubicación de ${product.name}: ${product.description || 'sin descripción'}`
+        );
+    });
+  } catch (error) {
+    console.error('Error al cargar los productos:', error);
+  }
+};
 
 // Ejecuta la inicialización al montar el componente
-// onMounted(async () => {
-//   await nextTick();
-//   initializeMap();
-//   await loadProducts();
-// });
+onMounted(async () => {
+  await nextTick();
+  initializeMap();
+  await loadProducts();
+});
 </script>
 
 <style>
