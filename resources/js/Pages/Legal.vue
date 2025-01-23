@@ -1,4 +1,22 @@
+<script setup>
+import Footer from '../Components/Footer.vue';
+import { ref } from 'vue';
+import Accordion from 'primevue/accordion';
+import AccordionTab from 'primevue/accordiontab';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import NavbarS from '@/Layouts/NavbarS.vue';
+
+defineProps({
+    isAuthenticated: Boolean,
+});
+
+const items = ref([
+    { label: 'Inici', url: '/' },
+    { label: 'Avis Legal' }
+]);
+</script>
 <template>
+    <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
     <div class="min-h-screen bg-gray-50">
         <main class="container mx-auto px-4 py-8">
             <div class="max-w-4xl mx-auto">
@@ -105,19 +123,10 @@
         </main>
         <Footer />
     </div>
+</component>
 </template>
 
-<script setup>
-import Footer from '../Components/Footer.vue';
-import { ref } from 'vue';
-import Accordion from 'primevue/accordion';
-import AccordionTab from 'primevue/accordiontab';
 
-const items = ref([
-    { label: 'Inici', url: '/' },
-    { label: 'Avis Legal' }
-]);
-</script>
 
 <style scoped>
 :deep(.p-accordion .p-accordion-header .p-accordion-header-link) {
@@ -192,7 +201,6 @@ const items = ref([
 :deep(.p-breadcrumb-item-label:hover) {
     color: #060606 !important;
 }
-
 
 
 </style>
