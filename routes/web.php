@@ -50,6 +50,8 @@ Route::middleware(['auth'])->group(function(){
 
 Route::get('/mapa', function () {return Inertia::render('Mapa');});
 
+// Route::get('/mapa',  [ProductController::class, 'getAllProducts']);
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -90,7 +92,10 @@ Route::get('/legal', function(){
 Route::get('/contact', function(){
     return Inertia::render('Contact');
 });
-
+Route::get('/products', function () {
+    return Inertia::render('Products');
+});
+Route::post('/products', [ProductController::class, 'store']);
 
 Route::get('/eventInfo', function(){
     return Inertia::render('EventInfo',[
