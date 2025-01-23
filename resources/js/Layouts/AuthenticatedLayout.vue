@@ -13,7 +13,7 @@ const showingNavigationDropdown = ref(false);
 <template>
     <div>
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            <nav class="fixed w-full z-50 bg-white shadow-md dark:bg-gray-800">
+            <nav class="w-full z-50 bg-white shadow-md dark:bg-gray-800">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between items-center h-16">
                         <!-- Logo Section -->

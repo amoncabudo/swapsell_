@@ -79,6 +79,11 @@ import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
+
+defineProps({
+    isAuthenticated: Boolean,
+});
+
 // Estado para los montos de las pujas
 const bidAmounts = ref({});
 

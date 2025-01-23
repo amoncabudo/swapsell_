@@ -11,10 +11,7 @@ use Inertia\Inertia;
 
 class ProductController extends Controller
 {
-    public function index()
-    {
-        return Inertia::render('Products');
-    }
+   
 
     public function addProduct(Request $request){
         $name = $request->get("name");
@@ -36,7 +33,6 @@ class ProductController extends Controller
         $product->image = 'default.jpg';
 
         $product->save();
-        
         return redirect()->route('Products')->with('success', 'Producte publicat correctament');
     }
 
@@ -74,7 +70,11 @@ class ProductController extends Controller
 
     public function getAllProducts(){
         $products = Product::all();
-        return Inertia::render("Products", ["products" => $products]);
+        $isAuthenticated = Auth::check();
+        return Inertia::render("Products", 
+        ["products" => $products,
+        "isAuthenticated" => $isAuthenticated
+    ]);
     }
 
 }
