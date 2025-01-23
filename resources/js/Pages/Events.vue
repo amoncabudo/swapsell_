@@ -1,5 +1,5 @@
-    
 <script setup>
+import { Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import Card from 'primevue/card';
 import Button from 'primevue/button';
@@ -75,11 +75,21 @@ const navigateToEvent = (event) => {
                     </div>
                 </template>
             </Card>
+            <Link href="/addEvent" 
+            class="fixed bottom-8 right-8 bg-custom-blue text-white rounded-full p-4 shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:bg-custom-blue-dark">
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+        </svg>
+      </Link>
         </div>
     </div>
 </template>
 
 <style scoped>
+.bg-custom-blue {
+    background-color: #004266;
+}
+
 .event-card {
     @apply bg-gray-100 hover:shadow-md transition-shadow duration-300;
 }
@@ -124,4 +134,3 @@ const navigateToEvent = (event) => {
     }
 }
 </style>
-  

@@ -84,6 +84,10 @@ Route::get('/eventInfo', function(){
     return Inertia::render('EventInfo');
 });
 
+Route::get('/addEvent', function(){
+    return Inertia::render('AddEvent');
+});
+
 Route::get('/sell', function(){
     return Inertia::render('Sell');
 });
@@ -92,9 +96,15 @@ Route::get('/updateProduct', function(){
     return Inertia::render('UpdateProduct');
 });
 
+Route::get('/updateEvent', function(){
+    return Inertia::render('UpdateEvent');
+});
+
 Route::post('/sell', [ProductController::class, "addProduct"])->name("sell");
 
 Route::post('/updateProduct', [ProductController::class, "updateProduct"])->name("updateProduct");
+
+Route::post('/updateEvent', [EventController::class, "updateEvent"])->name("updateEvent");
 
 Route::get('/products', [ProductController::class, "index"])->name("products");
 Route::get('/products', [ProductController::class, 'getAllProducts'])->name('Products');
