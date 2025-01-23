@@ -1,47 +1,66 @@
 <template>
-    <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
-     
-       <!-- Sección del complemento -->
-       
- 
-       <!-- Sección del mapa -->
-       <div id="map"></div>
-     
-    </component>
-   </template>
-   
-   <script setup>
-   import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-   import NavbarS from '@/Layouts/NavbarS.vue';
-import { onMounted, nextTick, ref } from 'vue';
-import axios from 'axios'; // Asegúrate de instalar axios
-import L from 'leaflet'; // Importa Leaflet
-import 'leaflet/dist/leaflet.css'; // Importa estilos de Leaflet
+  <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
+    <!-- Sección del mapa -->
+    <div id="map-container">
+      <!-- Botón accesible para enfocar el mapa -->
+      
 
-// Referencias
-const map = ref(null); // Referencia del mapa
-const products = ref([]); // Para almacenar los productos existentes
+      <!-- Mapa interactivo con atributos de accesibilidad -->
+      <div
+        id="map"
+        role="region"
+        aria-label="Mapa interactivo mostrando ubicaciones de productos"
+        tabindex="0"
+      ></div>
+    </div>
+  </component>
+</template>
+
+<script setup>
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import NavbarS from '@/Layouts/NavbarS.vue';
+import { onMounted, nextTick, ref } from 'vue';
+
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+
+const map = ref(null);
+const products = ref([]);
+const isAuthenticated = ref(false); // Define el valor inicial
+
+// Función para enfocar el mapa cuando el botón es presionado
+const focusMap = () => {
+  const mapElement = document.getElementById('map');
+  if (mapElement) {
+    mapElement.focus();
+  }
+};
 
 // Inicializa el mapa
 const initializeMap = () => {
-  map.value = L.map('map').setView([42.265507, 2.958105], 13); // Centro inicial
+  map.value = L.map('map').setView([42.265507, 2.958105], 13);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   }).addTo(map.value);
+  console.log('Mapa inicializado:', map.value);
 };
 
 // Carga productos desde el backend y agrega marcadores
 const loadProducts = async () => {
   try {
-    const response = await axios.get('/api/products'); // Asegúrate de tener este endpoint configurado
+    const response = await axios.get('/api/products');
     products.value = response.data;
+    console.log('Productos cargados:', products.value);
 
-    // Agrega un marcador por cada producto
-    products.value.forEach(products => {
-      L.marker([products.latitude, products.longitude])
+    products.value.forEach((product) => {
+      L.marker([product.latitude, product.longitude])
         .addTo(map.value)
-        .bindPopup(`<strong>${products.name}</strong><br>${products.description || ''}`)
-        .openPopup();
+        .bindPopup(`<strong>${product.name}</strong><br>${product.description || ''}`)
+        .getElement()
+        .setAttribute(
+          'aria-label',
+          `Ubicación de ${product.name}: ${product.description || 'sin descripción'}`
+        );
     });
   } catch (error) {
     console.error('Error al cargar los productos:', error);
@@ -52,18 +71,46 @@ const loadProducts = async () => {
 onMounted(async () => {
   await nextTick();
   initializeMap();
-  await loadProducts(); // Carga los productos y los muestra en el mapa
+  await loadProducts();
 });
 </script>
 
 <style>
-#map {
+#map-container {
+  position: relative;
   height: 100vh;
   width: 100vw;
   margin: 0;
 }
 
-body, html {
+/* Botón para acceder al mapa */
+#focus-map-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#focus-map-button:focus,
+#focus-map-button:hover {
+  background-color: #0056b3;
+}
+
+#map {
+  height: 100%;
+  width: 100%;
+  outline: none; /* Permite que sea navegable sin mostrar bordes innecesarios */
+}
+
+body,
+html {
   margin: 0;
   padding: 0;
   overflow: hidden;
