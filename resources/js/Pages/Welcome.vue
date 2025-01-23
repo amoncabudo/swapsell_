@@ -1,109 +1,16 @@
-<template>
-    <div class="min-h-screen bg-gray-50">
-        <!-- Hero Section with Dynamic Grid -->
-        <section class="relative min-h-screen bg-gradient-to-br from-gray-900 to-gray-700 py-20">
-            <div class="container mx-auto px-4">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                    <div class="text-white" data-aos="fade-right">
-                        <h1 class="text-6xl font-bold mb-6">Descobreix. Compra.<br>Ven.</h1>
-                        <p class="text-xl text-gray-300 mb-8">La teva plataforma de confiança per comprar i vendre productes únics de segona mà.</p>
-                        <div class="flex gap-4">
-                            <button class="border border-white text-white px-8 py-3 rounded-lg hover:bg-white hover:text-gray-900 transition-all">
-                                Començar ara
-                            </button>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4" data-aos="fade-left">
-                        <div v-for="(item, index) in featuredItems" :key="index"
-                             :data-aos="index % 2 === 0 ? 'fade-up' : 'fade-down'"
-                             :data-aos-delay="200 * (index + 1)"
-                             class="featured-item">
-                            <img :src="item.image" :alt="item.name" class="w-full h-48 object-cover">
-                            <div class="p-4 bg-white">
-                                <h2 class="text-black font-semibold">{{ item.name }}</h2>
-                                <p class="text-bold text-red-800">{{ item.price }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Stats Section -->
-        <section class="py-16 bg-white">
-            <div class="container mx-auto px-4">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                    <div v-for="stat in stats" :key="stat.title" 
-                         class="text-center" 
-                         data-aos="fade-up"
-                         :data-aos-delay="stat.delay">
-                        <div class="text-4xl font-bold text-blue-800 mb-2">{{ stat.value }}</div>
-                        <div class="text-gray-600">{{ stat.title }}</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Trending Categories -->
-        <section class="py-20 bg-gray-50">
-            <div class="container mx-auto px-4">
-                <h2 class="text-4xl font-bold text-center mb-16 text-black" data-aos="fade-down">Tendències</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div v-for="category in trendingCategories" :key="category.id"
-                         class="trending-card"
-                         data-aos="zoom-in"
-                         :data-aos-delay="category.delay">
-                        <div class="relative h-80">
-                            <img :src="category.image" :alt="category.name" class="w-full h-full object-cover rounded-xl">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent rounded-xl">
-                                <div class="absolute bottom-6 left-6 text-white">
-                                    <h3 class="text-2xl font-bold mb-2 text-white">{{ category.name }}</h3>
-                                    <p class="text-sm text-gray-300">{{ category.items }} productes</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- How It Works -->
-        <section class="py-20 bg-white">
-            <div class="container mx-auto px-4">
-                <h2 class="text-4xl font-bold text-center mb-16 text-black" data-aos="fade-down">Com funciona</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-                    <div v-for="(step, index) in steps" :key="index"
-                         class="step-card"
-                         data-aos="fade-up"
-                         :data-aos-delay="step.delay">
-                        <div class="step-number">{{ index + 1 }}</div>
-                        <h3 class="text-xl font-semibold mb-4 text-black">{{ step.title }}</h3>
-                        <p class="text-gray-600">{{ step.description }}</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Join CTA -->
-        <section class="py-20 bg-blue-800">
-            <div class="container mx-auto px-4 text-center" data-aos="fade-up">
-                <h2 class="text-4xl font-bold text-white mb-8">Uneix-te a la nostra comunitat</h2>
-                <p class="text-xl text-white mb-8 max-w-2xl mx-auto">
-                    Més de 50.000 usuaris ja confien en nosaltres per comprar i vendre els seus productes.
-                </p>
-                <button class="bg-white text-blue-800 px-8 py-3 rounded-lg hover:bg-gray-100 transition-all">
-                   <a href="/register">Crear compte gratuït</a>
-                </button>
-            </div>
-        </section>
-
-        <Footer />
-    </div>
-</template>
-
 <script setup>
 import Footer from '../Components/Footer.vue';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import NavbarS from '@/Layouts/NavbarS.vue';
 import { ref } from 'vue';
+
+defineProps({
+    isAuthenticated: Boolean,
+    featuredProducts: {
+        type: Array,
+        default: () => []
+    }
+});
 
 const featuredItems = ref([
     { name: 'iPhone 12 Pro', price: '599€', image: '' },
@@ -121,7 +28,7 @@ const stats = ref([
 
 const trendingCategories = ref([
     { id: 1, name: 'Tecnologia', items: '2,534', image: '/images/3.jpeg', delay: 200 },
-    { id: 2, name: 'Moda Sostenible', items: '1,839', image: '/images/4.jpeg', delay: 400 },
+    { id: 2, name: 'Moda', items: '1,839', image: '/images/4.jpeg', delay: 400 },
     { id: 3, name: 'Col·leccionables', items: '943', image: '/images/5.jpeg', delay: 600 }
 ]);
 
@@ -144,7 +51,106 @@ const steps = ref([
 ]);
 </script>
 
+<template>
+    <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
+
+        <div class="min-h-screen bg-gray-50">
+            <section class="relative min-h-screen py-20 sect-background">
+                <div class="container mx-auto px-4">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                        <div class="text-white" data-aos="fade-right">
+                            <h1 class="text-6xl font-bold mb-6">Descobreix. Compra.<br>Ven.</h1>
+                            <p class="text-xl text-gray-300 mb-8">La teva plataforma de confiança per comprar i vendre
+                                productes únics de segona mà.</p>
+                            <div class="flex gap-4">
+                                <button
+                                    class="border border-white text-white px-8 py-3 rounded-lg hover:bg-white hover:text-gray-900 transition-all">
+                                    <a href="/login">Començar ara</a>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4" data-aos="fade-left">
+                            <div v-for="(item, index) in featuredItems" :key="index"
+                                :data-aos="index % 2 === 0 ? 'fade-up' : 'fade-down'"
+                                :data-aos-delay="200 * (index + 1)" class="featured-item">
+                                <img :src="item.image" :alt="item.name" class="w-full h-48 object-cover">
+                                <div class="p-2 bg-white">
+                                    <h2 class="text-black font-semibold">{{ item.name }}</h2>
+                                    <p class="text-bold text-red-800">{{ item.price }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="py-16 bg-white">
+                <div class="container mx-auto px-4">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                        <div v-for="stat in stats" :key="stat.title" class="text-center" data-aos="fade-up"
+                            :data-aos-delay="stat.delay">
+                            <div class="text-4xl font-bold text-blue-800 mb-2">{{ stat.value }}</div>
+                            <div class="text-gray-600">{{ stat.title }}</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="py-20 bg-gray-50">
+                <div class="container mx-auto px-4">
+                    <h2 class="text-4xl font-bold text-center mb-16 text-black" data-aos="fade-down">Tendències</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div v-for="category in trendingCategories" :key="category.id" class="trending-card"
+                            data-aos="zoom-in" :data-aos-delay="category.delay">
+                            <div class="relative h-80">
+                                <img :src="category.image" :alt="category.name"
+                                    class="w-full h-full object-cover rounded-xl">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent rounded-xl">
+                                    <div class="absolute bottom-6 left-6 text-white">
+                                        <h3 class="text-2xl font-bold mb-2 text-white">{{ category.name }}</h3>
+                                        <p class="text-sm text-gray-300">{{ category.items }} productes</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="py-20 bg-white">
+                <div class="container mx-auto px-4">
+                    <h2 class="text-4xl font-bold text-center mb-16 text-black" data-aos="fade-down">Com funciona</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                        <div v-for="(step, index) in steps" :key="index" class="step-card" data-aos="fade-up"
+                            :data-aos-delay="step.delay">
+                            <div class="step-number">{{ index + 1 }}</div>
+                            <h3 class="text-xl font-semibold mb-4 text-black">{{ step.title }}</h3>
+                            <p class="text-gray-600">{{ step.description }}</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="py-20  sect-background">
+                <div class="container mx-auto px-4 text-center" data-aos="fade-up">
+                    <h2 class="text-4xl font-bold text-white mb-8">Uneix-te a la nostra comunitat</h2>
+                    <p class="text-xl text-white mb-8 max-w-2xl mx-auto">
+                        Més de 50.000 usuaris ja confien en nosaltres per comprar i vendre els seus productes.
+                    </p>
+                    <button class="bg-white text-blue-800 px-8 py-3 rounded-lg hover:bg-gray-100 transition-all">
+                        <a href="/register">Crear compte gratuït</a>
+                    </button>
+                </div>
+            </section>
+
+            <hr class="border-gray-200">
+
+            <Footer />
+        </div>
+    </component>
+</template>
+
 <style scoped>
+.sect-background {
+    background: linear-gradient(to right, #004266, #004266);
+
+}
 .featured-item {
     @apply bg-gray-800/50 rounded-lg overflow-hidden transition-all duration-300 hover:bg-gray-800;
 }
@@ -158,11 +164,9 @@ const steps = ref([
 }
 
 .step-number {
-    @apply w-12 h-12 bg-blue-800 text-white rounded-full flex items-center justify-center text-xl font-bold
-    absolute -top-6 left-1/2 -translate-x-1/2;
+    @apply w-12 h-12 text-white rounded-full flex items-center justify-center text-xl font-bold absolute -top-6 left-1/2 -translate-x-1/2;
+    background-color: #004266
 }
-
-/* Custom animations */
 [data-aos] {
     @apply transition-all duration-500;
 }

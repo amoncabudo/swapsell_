@@ -3,18 +3,14 @@ import { useForm } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
 
-defineProps({
-    isAuthenticated: Boolean,
-});
-
-let form = useForm({     
-    name: "",
+let form = useForm({   
+    id: "",  
+    title: "",
     description: "",
-    price: null,
+    date: null,
+    time: "active",
     longitude: null,
     latitude: null,
-    status: "active",
-    category: null,
 });
 </script>
 
@@ -25,39 +21,44 @@ let form = useForm({
         <!-- Encabezado del formulario -->
         <div class="text-center mb-8">
           <h1 class="text-3xl font-extrabold text-gray-900 mb-2">
-            Publica tu Producto
+            Edita el teu Event
           </h1>
           <p class="text-gray-600">
-            Completa los detalles de tu producto para publicarlo
+            Edita els detalls del teu event per editar-lo
           </p>
         </div>
 
-        <!-- Tarjeta del formulario -->
         <div class="bg-white rounded-2xl shadow-xl p-8">
-          <form @submit.prevent="form.post(route('sell'))" class="space-y-6">
-            <!-- Campo Nombre -->
+          <form @submit.prevent="form.post(route('updateEvent'))" class="space-y-6">
+            <div class="mb-4">
+          <label for="id" class="block text-gray-700 font-medium mb-2">Id Event:</label>
+          <input
+            type="number"
+            id="id"
+            name="id"
+            v-model="form.id"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200"
+            required
+          />
+        </div>
+
             <div class="form-group">
-              <label for="name" class="form-label">Nombre del Producto</label>
+              <label for="title" class="form-label">Nom de l'event</label>
               <div class="relative">
                 <input
                   type="text"
-                  id="name"
-                  v-model="form.name"
+                  id="title"
+                  name="title"
+                  v-model="form.title"
                   class="form-input pl-10"
                   required
                 />
-                <span class="form-icon">
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                          d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                  </svg>
-                </span>
               </div>
             </div>
 
             <!-- Campo Descripción -->
             <div class="form-group">
-              <label for="description" class="form-label">Descripción</label>
+              <label for="description" class="form-label">Descripció</label>
               <div class="relative">
                 <textarea
                   id="description"
@@ -71,24 +72,44 @@ let form = useForm({
 
             <!-- Campo Precio -->
             <div class="form-group">
-              <label for="price" class="form-label">Precio (€)</label>
+              <label for="date" class="form-label">Data</label>
               <div class="relative">
                 <input
-                  type="number"
+                  type="date"
                   id="price"
-                  v-model="form.price"
+                  v-model="form.date"
                   class="form-input pl-10"
                   required
                 />
                 <span class="form-icon">
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                          d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
+                    <svg class="w-[20px] h-[20px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Zm3-7h.01v.01H8V13Zm4 0h.01v.01H12V13Zm4 0h.01v.01H16V13Zm-8 4h.01v.01H8V17Zm4 0h.01v.01H12V17Zm4 0h.01v.01H16V17Z"/>
+</svg>
+
                 </span>
               </div>
             </div>
 
+            <!-- Campo Estado -->
+            <div class="form-group">
+              <label for="time" class="form-label">Hora</label>
+              <div class="relative">
+                <input
+                  type="time"
+                  id="time"
+                  v-model="form.time"
+                  class="form-input pl-10"
+                  required
+                />
+                <span class="form-icon">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                    </svg>
+                </span>
+              </div>
+            </div>
+            
             <!-- Campos de Ubicación -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div class="form-group">
@@ -103,9 +124,11 @@ let form = useForm({
                     required
                   />
                   <span class="form-icon">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                        d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                        d="M17.8 13.938h-.011a7 7 0 1 0-11.464.144h-.016l.14.171c.1.127.2.251.3.371L12 21l5.13-6.248c.194-.209.374-.429.54-.659l.13-.155Z"/>
                     </svg>
                   </span>
                 </div>
@@ -123,61 +146,17 @@ let form = useForm({
                     required
                   />
                   <span class="form-icon">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                        d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                        d="M17.8 13.938h-.011a7 7 0 1 0-11.464.144h-.016l.14.171c.1.127.2.251.3.371L12 21l5.13-6.248c.194-.209.374-.429.54-.659l.13-.155Z"/>
                     </svg>
                   </span>
                 </div>
               </div>
             </div>
 
-            <!-- Campo Estado -->
-            <div class="form-group">
-              <label for="status" class="form-label">Estado</label>
-              <div class="relative">
-                <select
-                  id="status"
-                  v-model="form.status"
-                  class="form-input pl-10"
-                  required
-                >
-                  <option value="active">Activo</option>
-                  <option value="inactive">Inactivo</option>
-                </select>
-                <span class="form-icon">
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </span>
-              </div>
-            </div>
-            <!--category-->
-            <div class="form-group">
-              <label for="category" class="form-label">Categoría</label>
-              <div class="relative">
-                <select
-                  id="category"
-                  v-model="form.category"
-                  class="form-input pl-10"
-                  required
-                >
-                  <option value="1">Hogar</option>
-                  <option value="2">Tecnología</option>
-                  <option value="3">Deportes</option>
-                  <option value="4">Moda</option>
-                  <option value="5">Salud y belleza</option>
-                  <option value="6">Juguetes</option>
-                </select>
-                <span class="form-icon">
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </span>
-              </div>
-            </div>
             <!-- Botón de envío -->
             <div class="mt-8">
               <button
@@ -228,7 +207,7 @@ let form = useForm({
 
 .form-icon {
   position: absolute;
-  left: 0.75rem;
+  left: 0.70rem;
   top: 50%;
   transform: translateY(-50%);
   color: rgb(156, 163, 175);
@@ -302,4 +281,3 @@ input[type="number"]::-webkit-outer-spin-button {
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
 }
 </style>
-

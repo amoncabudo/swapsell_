@@ -12,6 +12,16 @@ class SellController extends Controller
     /**
      * Muestra el formulario de venta
      */
+
+     public function index()
+     {   
+         $isAuthenticated = Auth::check();
+         return Inertia::render('Sell', [
+             'name' => Auth::user(),
+             'isAuthenticated' => $isAuthenticated
+         ]);
+     }
+     
     public function create()
     {
         return Inertia::render('sell', [

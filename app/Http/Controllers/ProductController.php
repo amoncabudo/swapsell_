@@ -11,10 +11,7 @@ use Inertia\Inertia;
 
 class ProductController extends Controller
 {
-    public function index()
-    {
-        return Inertia::render('Products');
-    }
+   
 
     public function addProduct(Request $request){
         $name = $request->get("name");
@@ -36,7 +33,6 @@ class ProductController extends Controller
         $product->image = 'default.jpg';
 
         $product->save();
-        
         return redirect()->route('Products')->with('success', 'Producte publicat correctament');
     }
 
@@ -54,6 +50,7 @@ class ProductController extends Controller
         $longitude = $request->get("longitude");
         $latitude = $request->get("latitude");
         $status = $request->get("status");
+        $category = $request->get("category");
 
         $product = Product::find($id);
         $product->name = $request->get("name", $product->name);
@@ -64,7 +61,7 @@ class ProductController extends Controller
         $product->status = $request->get("status", $product->status);
 
         $product->user_id = Auth::id();
-        $product->category_id = 1;
+        $product->category_id = $category;
         $product->image = 'default.jpg';
 
         $product->save();
@@ -74,7 +71,11 @@ class ProductController extends Controller
 
     public function getAllProducts(){
         $products = Product::all();
-        return Inertia::render("Products", ["products" => $products]);
+        $isAuthenticated = Auth::check();
+        return Inertia::render("Products", 
+        ["products" => $products,
+        "isAuthenticated" => $isAuthenticated
+    ]);
     }
 
     public function toggleFavourite(Request $request)
