@@ -1,40 +1,106 @@
 <script setup lang="ts">
-import {ref} from 'vue';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import NavbarS from '@/Layouts/NavbarS.vue';
+import { ref } from 'vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import axios from 'axios';
-const flashMessage= ref(null);
-const isModalOpen=ref(false); 
+const flashMessage = ref(null);
+const isModalEventOpen = ref(false);
+const isModalUserOpen = ref(false);
+const isModalProductOpen = ref(false);
 
-const openModal = () => {
-    isModalOpen.value = true;
+// Modal User
+
+const openModalU = () => {
+    isModalUserOpen.value = true;
 };
 const form = useForm({
     name: '',
     surname: '',
-    email:'',
-    password:'',
+    email: '',
+    password: '',
 });
-const closeModal = () => {
-    isModalOpen.value = false;
+const closeModalU = () => {
+    isModalUserOpen.value = false;
 };
 
-function addUser(){
+function addUser() {
     console.log("dkasjg");
     axios.post(route('users'), form).then(data => {
         console.log(data.data);
-        closeModal();
-        flashMessage.value='Prova';
+        closeModalU();
+        flashMessage.value = 'Prova';
         console.log("---prueba----");
-        })
-    };
+    })
+};
 
+//Modal Events
+
+const openModalE = () => {
+    isModalEventOpen.value = true;
+};
+const event = useForm({
+    title: '',
+    description: '',
+    date: '',
+    time: '',
+    longitude: '',
+    latitude: '',
+    image: ''
+
+    
+});
+const closeModalE = () => {
+    isModalEventOpen.value = false;
+};
+
+function addEvent(){
+        console.log("dkasjg");
+    axios.post(route('events'), event).then(data => {
+        console.log(data.data);
+        closeModalE();
+        flashMessage.value = 'Prova';
+        console.log("---prueba----");
+    })
+};
+
+// ModalProducts
+
+const openModalP = () => {
+    isModalProductOpen.value = true;
+};
+const product = useForm({
+    name: '',
+    description: '',
+    price: '',
+    longitude: '',
+    latitude: '',
+    image: '',
+    status: ''
+
+    
+});
+const closeModalP = () => {
+    isModalProductOpen.value = false;
+};
+
+function addProduct(){
+        console.log("dkasjg");
+    axios.post(route('products'), product).then(data => {
+        console.log(data.data);
+        closeModalP();
+        flashMessage.value = 'Prova';
+        console.log("---prueba----");
+    })
+};
 
 </script>
 
 <template>
+    <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
     <div class="min-h-screen bg-gray-100">
         <div class="container mx-auto p-6">
-            <h1 class="text-4xl font-bold text-center mb-8 text-gray-800">PANELL D'ADMINISTRADOR</h1>
+            <h1 class="text-4xl font-bold text-center mb-8 text-gray-800 mt-12">PANELL D'ADMINISTRADOR</h1>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="bg-white p-6 rounded-lg shadow-lg text-center">
                     <svg class="mx-auto mb-2 w-12 h-12 text-gray-800 dark:text-white" aria-hidden="true"
@@ -48,7 +114,8 @@ function addUser(){
                     <h2 class="text-xl font-semibold mb-2 text-gray-800">AFEGIR USUARIS</h2>
                     <p class="text-gray-800">Apartat per afegir usuaris</p>
                     <div class="mt-4">
-                        <button @click="openModal" class="bg-SubastaButton1 text-white px-4 py-2 rounded hover:bg-blue-600">
+                        <button @click="openModalU"
+                            class="bg-SubastaButton1 text-white px-4 py-2 rounded hover:bg-blue-600">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                 viewBox="0 0 24 24">
@@ -69,7 +136,8 @@ function addUser(){
                     <h2 class="text-xl font-semibold mb-2 text-gray-800">AFEGIR ESDEVENIMENTS</h2>
                     <p class="text-gray-800">Apartat per afegir esdeveniments</p>
                     <div class="mt-4">
-                        <button class="bg-SubastaButton1 text-white px-4 py-2 rounded hover:bg-blue-600">
+                        <button @click="openModalE" 
+                        class="bg-SubastaButton1 text-white px-4 py-2 rounded hover:bg-blue-600">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                 viewBox="0 0 24 24">
@@ -90,7 +158,8 @@ function addUser(){
                     <h2 class="text-xl font-semibold mb-2 text-gray-800">AFEGIR PRODUCTES</h2>
                     <p class="text-gray-800">Apartat per afegir productes</p>
                     <div class="mt-4">
-                        <button class="bg-SubastaButton1 text-white px-4 py-2 rounded hover:bg-blue-600">
+                        <button @click="openModalP" 
+                        class="bg-SubastaButton1 text-white px-4 py-2 rounded hover:bg-blue-600">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                 viewBox="0 0 24 24">
@@ -163,33 +232,137 @@ function addUser(){
             </div>
         </div>
     </div>
-    <!-- Modal -->
-    <div v-if="isModalOpen" class="fixed inset-0 flex items-center justify-center z-50">
+    <!-- Modal add user -->
+    <div v-if="isModalUserOpen" class="fixed inset-0 flex items-center justify-center z-50">
         <div class="bg-white p-8 rounded-lg shadow-lg w-1/2">
             <h2 class="text-xl font-semibold mb-2">Crear Usuario</h2>
             <form @submit.prevent="addUser">
                 <div>
                     <label for="name" class="block text-black">Nom de l'Usuari:</label>
-                    <input type="text" id="name" v-model="form.name" class="border rounded w-full p-2 text-black" required />
+                    <input type="text" id="name" v-model="form.name" class="border rounded w-full p-2 text-black"
+                        required />
                 </div>
                 <div>
                     <label for="surname" class="block text-black">Cognoms de l'Usuari:</label>
-                    <input type="text" id="surname" v-model="form.surname" class="border rounded w-full p-2 text-black" required />
+                    <input type="text" id="surname" v-model="form.surname" class="border rounded w-full p-2 text-black"
+                        required />
                 </div>
-                
+
                 <div class="mt-4">
                     <label for="email" class="block text-black">Correu Electrònic:</label>
-                    <input type="email" id="email" v-model="form.email" class="border rounded w-full p-2 text-black" required />
+                    <input type="email" id="email" v-model="form.email" class="border rounded w-full p-2 text-black"
+                        required />
                 </div>
                 <div>
                     <label for="password" class="block text-black">Contrasenya:</label>
-                    <input type="password" id="password" v-model="form.password" class="border rounded w-full p-2 text-black" required />
+                    <input type="password" id="password" v-model="form.password"
+                        class="border rounded w-full p-2 text-black" required />
                 </div>
                 <div class="mt-4">
                     <button type="submit" class="bg-SubastaButton1 text-white px-4 py-2 rounded">Crear</button>
-                    <button type="button" @click="closeModal" class="bg-red-500 text-white px-4 py-2 rounded ml-4">Cancelar</button>
+                    <button type="button" @click="closeModalU"
+                        class="bg-red-500 text-white px-4 py-2 rounded ml-4">Cancelar</button>
                 </div>
             </form>
         </div>
     </div>
+    <!-- Modal add event-->
+    <div v-if="isModalEventOpen" class="fixed inset-0 flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-1/2">
+            <h2 class="text-xl font-semibold mb-2">Crear Usuario</h2>
+            <form @submit.prevent="addEvent">
+                <div>
+                    <label for="title" class="block text-black">Titol de l'event:</label>
+                    <input type="text" id="title" v-model="event.title" class="border rounded w-full p-2 text-black"
+                        required />
+                </div>
+                <div>
+                    <label for="description" class="block text-black">Descripció:</label>
+                    <input type="text" id="description" v-model="event.description" class="border rounded w-full p-2 text-black"
+                        required />
+                </div>
+
+                <div class="mt-4">
+                    <label for="date" class="block text-black">Dia del evento:</label>
+                    <input type="date" id="date" v-model="event.date" class="border rounded w-full p-2 text-black"
+                        required />
+                </div>
+                <div class="mt-4">
+                    <label for="time" class="block text-black">Hora del evento:</label>
+                    <input type="time" id="time" v-model="event.time" class="border rounded w-full p-2 text-black"
+                        required />
+                </div>
+                <div class="mt-4">
+                    <label for="longitude" class="block text-black">Longitud:</label>
+                    <input type="text" id="longitude" v-model="event.longitude" class="border rounded w-full p-2 text-black"
+                        required />
+                </div>
+                <div class="mt-4">
+                    <label for="latitude" class="block text-black">Latitud:</label>
+                    <input type="text" id="latitude" v-model="event.latitude" class="border rounded w-full p-2 text-black"
+                        required />
+                </div>
+                <div class="mt-4">
+                    <label for="imge" class="block text-black">Imatge:</label>
+                    <input type="text" id="imge" v-model="event.image" class="border rounded w-full p-2 text-black"
+                        required />
+                </div>
+                <div class="mt-4">
+                    <button type="submit" class="bg-SubastaButton1 text-white px-4 py-2 rounded">Crear</button>
+                    <button type="button" @click="closeModalE"
+                        class="bg-red-500 text-white px-4 py-2 rounded ml-4">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div v-if="isModalProductOpen" class="fixed inset-0 flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-1/2">
+            <h2 class="text-xl font-semibold mb-2">Crear Usuario</h2>
+            <form @submit.prevent="addProduct">
+                <div>
+                    <label for="name" class="block text-black">Nom del producte:</label>
+                    <input type="text" id="name" v-model="product.name" class="border rounded w-full p-2 text-black"
+                        required />
+                </div>
+                <div>
+                    <label for="description" class="block text-black">Descripció:</label>
+                    <textarea id="description" v-model="product.description" class="border rounded w-full p-2 text-black"
+                        required>
+                    </textarea>
+                </div>
+
+                <div class="mt-4">
+                    <label for="price" class="block text-black">Preu del producte:</label>
+                    <input type="number" id="price" v-model="product.price" class="border rounded w-full p-2 text-black"
+                        required />
+                </div>
+                <div class="mt-4">
+                    <label for="longitude" class="block text-black">Longitud:</label>
+                    <input type="text" id="longitude" v-model="product.longitude" class="border rounded w-full p-2 text-black"
+                        required />
+                </div>
+                <div class="mt-4">
+                    <label for="latitude" class="block text-black">Latitud:</label>
+                    <input type="text" id="latitude" v-model="product.latitude" class="border rounded w-full p-2 text-black"
+                        required />
+                </div>
+                <div class="mt-4">
+                    <label for="image" class="block text-black">Imatges:</label>
+                    <input type="text" id="image" v-model="product.image" class="border rounded w-full p-2 text-black"
+                        required />
+                </div>
+                <div class="mt-4">
+                    <label for="status" class="block text-black">Estat del producte:</label>
+                    <input type="text" id="status" v-model="product.status" class="border rounded w-full p-2 text-black"
+                        required />
+                </div>
+                <div class="mt-4">
+                    <button type="submit" class="bg-SubastaButton1 text-white px-4 py-2 rounded">Crear</button>
+                    <button type="button" @click="closeModalP"
+                        class="bg-red-500 text-white px-4 py-2 rounded ml-4">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    </component>
 </template>

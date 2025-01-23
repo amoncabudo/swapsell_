@@ -7,9 +7,12 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ControllerProducts;
 use App\Http\Controllers\ControllerEvents;
 use App\Http\Controllers\ControllerProject;
+use App\Http\Controllers\ControllerFavorites;
 use Inertia\Inertia;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\SellController;
+
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -30,6 +33,10 @@ Route::get('/productextend', function () {
 Route::get('/adminpanel', function () {return Inertia::render('AdminPanel');})->name("adminpanel");
 
 Route::post('/users', [UserController::class, "addUser"])->name("users");
+Route::middleware(['auth'])->group(function(){
+    Route::post('/events', [EventController::class, "addEvent"])->name("events");
+    Route::post('/products', [ProductController::class, "addProduct"])->name("products");
+});
 
 Route::get('/mapa', function () {return Inertia::render('Mapa');});
 
@@ -72,7 +79,9 @@ Route::get('/legal', function(){
 Route::get('/contact', function(){
     return Inertia::render('Contact');
 });
-Route::get('/products', function () {return Inertia::render('Products');});
+Route::get('/products', function () {
+    return Inertia::render('Products');
+});
 Route::post('/products', [ProductController::class, 'store']);
 
 Route::get('/eventInfo', function(){
@@ -83,9 +92,16 @@ Route::get('/sell', function(){
     return Inertia::render('Sell');
 });
 
+Route::get('/updateProduct', function(){
+    return Inertia::render('UpdateProduct');
+});
+
 Route::post('/sell', [ProductController::class, "addProduct"])->name("sell");
 
-Route::get('/products', [ControllerProducts::class, "index"])->name("Products");
+Route::post('/updateProduct', [ProductController::class, "UpdateProduct"])->name("UpdateProduct");
+
+Route::get('/products', [ProductController::class, "index"])->name("products");
+Route::get('/products', [ProductController::class, 'getAllProducts'])->name('Products');
 
 
 Route::get('/events', [ControllerEvents::class, "index"])->name("Events");
@@ -99,5 +115,8 @@ Route::get('/project', function () {
 Route::get('/subasta', function(){
     return Inertia::render('Subasta');
 });
+
+Route::get('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->name("deleteProduct");
+Route::post('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->name("deleteProduct");
 
 require __DIR__.'/auth.php';
