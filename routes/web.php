@@ -129,7 +129,8 @@ Route::post('/updateEvent', [EventController::class, "updateEvent"])->name("upda
 Route::get('/products', [ProductController::class, "index"])->name("products");
 Route::get('/products', [ProductController::class, 'getAllProducts'])->name('Products');
 Route::post('/products', [ProductController::class, 'toggleFavourite'])->name('productFavorite');
-
+//Route to show a product by id
+Route::get('/products/{id}', [ProductController::class, "goProduct"])->name("product.show");
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
 });

@@ -9,7 +9,7 @@ class Product extends Model
 {
     protected $fillable = ['name', 'category_id']; // Asegúrate de incluir 'category_id' si lo usas en tu base de datos.
     
-    public function user(): BelongsTo
+    public function user()
     {
         return $this->belongsTo(User::class);
     }

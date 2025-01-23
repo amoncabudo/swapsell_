@@ -94,5 +94,13 @@ class ProductController extends Controller
 
         return $product;
     }
-
+    public function goProduct($id){
+        $product = Product::with('category', 'user')->find($id);
+        $isAuthenticated = Auth::check();
+        return Inertia::render("ProducteAmpliat", 
+        ["product" => $product,
+        "isAuthenticated" => $isAuthenticated,
+        "user" => $product->user
+    ]);
+    }
 }
