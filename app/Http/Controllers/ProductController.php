@@ -95,4 +95,10 @@ class ProductController extends Controller
         return $product;
     }
 
+    public function getProductsByCategoryId()
+    {
+        $products = Product::where('category_id', 7)->get();
+        return $products;
+    }
+
 }
