@@ -103,19 +103,27 @@ Route::get('/eventInfo', function(){
     ]);
 });
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/sell', [SellController::class, 'index'])->name('sell');
-}); 
+Route::get('/addEvent', function(){
+    return Inertia::render('AddEvent');
+});
+
+Route::get('/sell', function(){
+    return Inertia::render('Sell');
+});
 
 Route::get('/updateProduct', function(){
-    return Inertia::render('UpdateProduct',[
-        'isAuthenticated' => auth()->check(),
-    ]);
+    return Inertia::render('UpdateProduct');
+});
+
+Route::get('/updateEvent', function(){
+    return Inertia::render('UpdateEvent');
 });
 
 Route::post('/sell', [ProductController::class, "addProduct"])->name("sell");
 
-Route::post('/updateProduct', [ProductController::class, "updateProduct", ])->name("updateProduct");
+Route::post('/updateProduct', [ProductController::class, "updateProduct"])->name("updateProduct");
+
+Route::post('/updateEvent', [EventController::class, "updateEvent"])->name("updateEvent");
 
 Route::get('/products', [ProductController::class, "index"])->name("products");
 Route::get('/products', [ProductController::class, 'getAllProducts'])->name('Products');
