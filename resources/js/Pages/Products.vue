@@ -71,7 +71,7 @@ console.log(props.products)
                 <p class="text-gray-800 text-base mb-4 line-clamp-2">{{ product.description }}</p>
                 <div class="flex justify-between items-center mb-4">
                   <span class="text-blue-800 font-bold text-lg">{{ product.price }} €</span>
-                  <span class="text-sm text-gray-800">Electrónicos</span>
+                  <span class="text-sm text-gray-800">{{ product.category.name }}</span>
                 </div>
 
                 <div class="mt-2 flex items-center justify-between text-sm text-gray-500">
