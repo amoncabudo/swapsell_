@@ -100,5 +100,12 @@ class ProductController extends Controller
         $products = Product::where('category_id', 7)->get();
         return $products;
     }
+    public function mapa(){
+
+        $products = Product::all();
+        return Inertia::render('Mapa',[
+            'products' => $products
+        ]);
+    }
 
 }

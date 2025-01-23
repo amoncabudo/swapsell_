@@ -13,7 +13,6 @@ use Inertia\Inertia;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\SellController;
-use App\Http\Controllers\FavoriteController;
 
 
 Route::get('/', function () {
@@ -49,9 +48,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/products', [ProductController::class, "addProduct"])->name("products");
 });
 
-Route::get('/mapa', function () {return Inertia::render('Mapa');});
-
-// Route::get('/mapa',  [ProductController::class, 'getAllProducts']);
+Route::get('/mapa', [ProductController::class, "mapa"])->name("mapa");
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -104,31 +101,22 @@ Route::get('/eventInfo', function(){
     ]);
 });
 
-Route::get('/addEvent', function(){
-    return Inertia::render('AddEvent');
-});
-
-Route::get('/sell', function(){
-    return Inertia::render('Sell');
-});
+Route::middleware(['auth'])->group(function () {
+    Route::get('/sell', [SellController::class, 'index'])->name('sell');
+}); 
 
 Route::get('/updateProduct', function(){
-    return Inertia::render('UpdateProduct');
-});
-
-Route::get('/updateEvent', function(){
-    return Inertia::render('UpdateEvent');
+    return Inertia::render('UpdateProduct',[
+        'isAuthenticated' => auth()->check(),
+    ]);
 });
 
 Route::post('/sell', [ProductController::class, "addProduct"])->name("sell");
 
-Route::post('/updateProduct', [ProductController::class, "updateProduct"])->name("updateProduct");
-
-Route::post('/updateEvent', [EventController::class, "updateEvent"])->name("updateEvent");
+Route::post('/updateProduct', [ProductController::class, "updateProduct", ])->name("updateProduct");
 
 Route::get('/products', [ProductController::class, "index"])->name("products");
 Route::get('/products', [ProductController::class, 'getAllProducts'])->name('Products');
-Route::post('/products', [ProductController::class, 'toggleFavourite'])->name('productFavorite');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
@@ -152,7 +140,5 @@ Route::get('/subasta', function(){
 
 Route::get('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->name("deleteProduct");
 Route::post('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->name("deleteProduct");
-
-Route::get('/products/featured', [ProductController::class, 'getProductsByCategoryId'])->name('products.featured');
 
 require __DIR__.'/auth.php';

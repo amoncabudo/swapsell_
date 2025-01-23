@@ -33,6 +33,7 @@
         "@primevue/themes": "^4.2.5",
         "aos": "^2.3.4",
         "leaflet": "^1.9.4",
+        "leaflet.locatecontrol": "^0.83.1",
         "particles.js": "^2.0.0",
         "primeicons": "^7.0.0",
         "primevue": "^4.2.5"
