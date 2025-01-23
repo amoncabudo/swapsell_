@@ -4,7 +4,7 @@ import NavbarS from '@/Layouts/NavbarS.vue';
 
 const props = defineProps({
   user: Object,
-  isAuthenticated: Boolean // Asegúrate de definir isAuthenticated aquí
+  isAuthenticated: Boolean // Asegúrate de definir isAuthenticated aquí 
 
 })
 
