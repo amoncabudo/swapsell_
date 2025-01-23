@@ -1,4 +1,15 @@
+<script setup>
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import NavbarS from '@/Layouts/NavbarS.vue';
+
+defineProps({
+    isAuthenticated: Boolean,
+})
+
+</script>
 <template>
+      <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
+
     <div class="flex justify-center font-bold">
     <h1 class="text-5xl font-bold">Esdeveniment1</h1>
     </div>
@@ -17,4 +28,5 @@
       <p>dd/mm/yyyy - hh:mm</p>
     </div>
 </div>
+</component>
 </template>

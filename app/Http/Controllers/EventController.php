@@ -10,7 +10,15 @@ use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class EventController extends Controller
-{
+{   
+    public function index()
+    {   
+        $isAuthenticated = Auth::check();
+        return Inertia::render('Events', [
+            'isAuthenticated' => $isAuthenticated
+        ]);
+    }
+
     public function addEvent(Request $request)
     {
 

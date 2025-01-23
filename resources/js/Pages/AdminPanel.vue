@@ -9,6 +9,10 @@ const isModalEventOpen = ref(false);
 const isModalUserOpen = ref(false);
 const isModalProductOpen = ref(false);
 
+defineProps({
+    isAuthenticated: Boolean,
+});
+
 // Modal User
 
 const openModalU = () => {

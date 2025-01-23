@@ -7,6 +7,11 @@ import Button from 'primevue/button';
 import { Link } from '@inertiajs/vue3';
 import Footer from "../Components/Footer.vue";
 
+defineProps({
+    isAuthenticated: Boolean
+});
+
+
 const items = ref([
     { label: 'Inici', url: '/' },
     { label: 'Favorites' }
