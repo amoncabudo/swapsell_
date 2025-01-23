@@ -70,7 +70,7 @@ class ProductController extends Controller
     }
 
     public function getAllProducts(){
-        $products = Product::all();
+        $products = Product::with('category')->get();
         $isAuthenticated = Auth::check();
         return Inertia::render("Products", 
         ["products" => $products,
@@ -93,6 +93,12 @@ class ProductController extends Controller
         $product->save();
 
         return $product;
+    }
+
+    public function getProductsByCategoryId()
+    {
+        $products = Product::where('category_id', 7)->get();
+        return $products;
     }
 
 }
