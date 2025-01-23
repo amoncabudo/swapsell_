@@ -1,6 +1,16 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
+
+const props = defineProps({
+  user: Object,
+  isAuthenticated: Boolean // Asegúrate de definir isAuthenticated aquí
+
+})
+
+console.log(props.user)
+console.log(props.isAuthenticated)
+
 </script>
 
 <template>
@@ -24,8 +34,9 @@ import NavbarS from '@/Layouts/NavbarS.vue';
           
           <!-- Información del usuario -->
           <div class="flex-1">
-            <h1 class="text-3xl font-bold text-gray-800 mb-2">Nombre del Usuario</h1>
-            <p class="text-gray-600 mb-4">@username</p>
+            <!--Pop-->
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">{{ user.name }}</h1>
+            <p class="text-gray-600 mb-4">{{ user.surname }}</p>
             <div class="flex flex-wrap gap-4 mb-4">
               <div class="flex items-center space-x-2 text-gray-600">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
