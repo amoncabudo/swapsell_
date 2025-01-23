@@ -1,5 +1,11 @@
 <script setup>
 import { ref, computed } from 'vue';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import NavbarS from '@/Layouts/NavbarS.vue';
+
+defineProps({
+    isAuthenticated: Boolean,
+});
 
 const products = ref([]);
 const cart = ref([]);
@@ -10,6 +16,7 @@ const total = computed(() => {
 </script>
 
 <template>
+  <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
   <div class="flex flex-col lg:flex-row h-screen overflow-hidden">
     <!-- Columna izquierdax -->
      
@@ -37,6 +44,7 @@ const total = computed(() => {
       </div>
     </div>
   </div>
+</component>
 </template>
 
 <style scoped>

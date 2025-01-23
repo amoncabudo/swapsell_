@@ -21,19 +21,28 @@ Route::get('/', function () {
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
+        'isAuthenticated' => auth()->check(),
     ]);
 });
 
-Route::get('/Cart', function () {return Inertia::render('Cart');});
+Route::get('/Cart', function () {
+    $isAuthenticated = Auth::check();
+    return Inertia::render('Cart', [
+        'isAuthenticated' => $isAuthenticated
+    ]);
+});
 
 Route::get('/productextend', function () {
     return Inertia::render('ProducteAmpliat', [
         'isAuthenticated' => auth()->check(),
     ]);
 });
-Route::get('/adminpanel', function () {return Inertia::render('AdminPanel');})->name("adminpanel");
+Route::get('/adminpanel', function () {return Inertia::render('AdminPanel', [
+    'isAuthenticated' => auth()->check(),
+]);})->name("adminpanel");
 
 Route::post('/users', [UserController::class, "addUser"])->name("users");
+
 Route::middleware(['auth'])->group(function(){
     Route::post('/events', [EventController::class, "addEvent"])->name("events");
     Route::post('/products', [ProductController::class, "addProduct"])->name("products");
@@ -54,12 +63,11 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/favorites', function () {
-    return Inertia::render('Favorites');
+    return Inertia::render('Favorites',[
+        'isAuthenticated' => auth()->check(),
+    ]);
 });
 
-Route::get('/events', function () {
-    return Inertia::render('Events');
-});
 Route::get('/auctions', function () {
     return Inertia::render('Auctions');
 });
@@ -68,13 +76,17 @@ Route::get('/footer', function(){
 });
 
 Route::get('/aboutus', function(){
-    return Inertia::render('AboutUs');
+    return Inertia::render('AboutUs',[
+        'isAuthenticated' => auth()->check(),
+    ]);
 });
 
 
 
 Route::get('/legal', function(){
-    return Inertia::render('Legal');
+    return Inertia::render('Legal', [
+        'isAuthenticated' => auth()->check(),
+    ]);
 });
 
 Route::get('/contact', function(){
@@ -86,20 +98,24 @@ Route::get('/products', function () {
 Route::post('/products', [ProductController::class, 'store']);
 
 Route::get('/eventInfo', function(){
-    return Inertia::render('EventInfo');
+    return Inertia::render('EventInfo',[
+        'isAuthenticated' => auth()->check(),
+    ]);
 });
 
-Route::get('/sell', function(){
-    return Inertia::render('Sell');
-});
+Route::middleware(['auth'])->group(function () {
+    Route::get('/sell', [SellController::class, 'index'])->name('sell');
+}); 
 
 Route::get('/updateProduct', function(){
-    return Inertia::render('UpdateProduct');
+    return Inertia::render('UpdateProduct',[
+        'isAuthenticated' => auth()->check(),
+    ]);
 });
 
 Route::post('/sell', [ProductController::class, "addProduct"])->name("sell");
 
-Route::post('/updateProduct', [ProductController::class, "updateProduct"])->name("updateProduct");
+Route::post('/updateProduct', [ProductController::class, "updateProduct", ])->name("updateProduct");
 
 Route::get('/products', [ProductController::class, "index"])->name("products");
 Route::get('/products', [ProductController::class, 'getAllProducts'])->name('Products');
@@ -110,7 +126,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-Route::get('/events', [ControllerEvents::class, "index"])->name("Events");
+Route::get('/events', [EventController::class, "index"])->name("Events");
 
 Route::get('/project', function () {
     return Inertia::render('Project', [
@@ -119,7 +135,9 @@ Route::get('/project', function () {
 });
 
 Route::get('/subasta', function(){
-    return Inertia::render('Subasta');
+    return Inertia::render('Subasta', [
+        'isAuthenticated' => auth()->check(),
+    ]);
 });
 
 Route::get('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->name("deleteProduct");
