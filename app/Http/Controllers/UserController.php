@@ -27,4 +27,5 @@ class UserController extends Controller
 
         return redirect(route('adminpanel', absolute: false)); // Retorna el usuario creado
     }
+ 
 }
