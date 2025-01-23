@@ -120,4 +120,6 @@ Route::get('/subasta', function(){
 Route::get('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->name("deleteProduct");
 Route::post('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->name("deleteProduct");
 
+Route::get('/products/featured', [ProductController::class, 'getProductsByCategoryId'])->name('products.featured');
+
 require __DIR__.'/auth.php';
