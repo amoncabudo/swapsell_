@@ -52,16 +52,16 @@ const loadProducts = async () => {
     products.value = response.data;
     console.log('Productos cargados:', products.value);
 
-    // products.value.forEach((product) => {
-    //   L.marker([product.latitude, product.longitude])
-    //     .addTo(map.value)
-    //     .bindPopup(`<strong>${product.name}</strong><br>${product.description || ''}`)
-    //     .getElement()
-    //     .setAttribute(
-    //       'aria-label',
-    //       `Ubicación de ${product.name}: ${product.description || 'sin descripción'}`
-    //     );
-    // });
+    products.value.forEach((product) => {
+      L.marker([product.latitude, product.longitude])
+        .addTo(map.value)
+        .bindPopup(`<strong>${product.name}</strong><br>${product.description || ''}`)
+        .getElement()
+        .setAttribute(
+          'aria-label',
+          `Ubicación de ${product.name}: ${product.description || 'sin descripción'}`
+        );
+    });
   } catch (error) {
     console.error('Error al cargar los productos:', error);
   }
