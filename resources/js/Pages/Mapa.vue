@@ -17,62 +17,67 @@
 </template>
 
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import NavbarS from '@/Layouts/NavbarS.vue';
-import { onMounted, nextTick, ref } from 'vue';
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import NavbarS from "@/Layouts/NavbarS.vue";
+import { onMounted, ref } from "vue";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 
-import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
-
-const map = ref(null);
-const products = ref([]);
-const isAuthenticated = ref(false); // Define el valor inicial
-
-// Función para enfocar el mapa cuando el botón es presionado
-const focusMap = () => {
-  const mapElement = document.getElementById('map');
-  if (mapElement) {
-    mapElement.focus();
-  }
-};
+// Referencias y datos
+const map = ref(null); // Referencia al mapa
+const products = ref([]); // Productos cargados
+const isAuthenticated = ref(false); // Autenticación (puedes conectarlo al backend si es necesario)
 
 // Inicializa el mapa
 const initializeMap = () => {
-  map.value = L.map('map').setView([42.265507, 2.958105], 13);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  map.value = L.map("map", {
+    zoomControl: true,
+    attributionControl: true,
+  }).setView([42.265507, 2.958105], 13); // Centro inicial del mapa
+
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   }).addTo(map.value);
-  console.log('Mapa inicializado:', map.value);
 };
 
-// Carga productos desde el backend y agrega marcadores
+// Carga productos desde el backend (usando fetch)
 const loadProducts = async () => {
   try {
-    const response = await axios.get('/api/products');
-    products.value = response.data;
-    console.log('Productos cargados:', products.value);
+    // Realiza la solicitud al backend
+    const response = await fetch("/api/products"); // Cambia la URL si es necesario
 
+    if (!response.ok) {
+      throw new Error(`Error en la solicitud: ${response.status}`);
+    }
+
+    // Convierte la respuesta a JSON
+    const data = await response.json();
+
+    // Almacena los productos
+    products.value = data.products || [];
+    isAuthenticated.value = data.isAuthenticated || false;
+
+    // Crea un marcador por cada producto
     products.value.forEach((product) => {
-      L.marker([product.latitude, product.longitude])
-        .addTo(map.value)
-        .bindPopup(`<strong>${product.name}</strong><br>${product.description || ''}`)
-        .getElement()
-        .setAttribute(
-          'aria-label',
-          `Ubicación de ${product.name}: ${product.description || 'sin descripción'}`
-        );
+      if (products.latitude && products.longitude) {
+        L.marker([products.latitude, products.longitude]) // Coordenadas
+          .addTo(map.value) // Agrega el marcador al mapa
+          .bindPopup(
+            `<strong>${products.name}</strong><br>${products.description || "Sin descripción"}`
+          ); // Popup con información
+      }
     });
   } catch (error) {
-    console.error('Error al cargar los productos:', error);
+    console.error("Error al cargar los productos:", error);
   }
 };
 
-// Ejecuta la inicialización al montar el componente
-onMounted(async () => {
-  await nextTick();
-  initializeMap();
-  await loadProducts();
+// Ejecuta al montar el componente
+onMounted(() => {
+  initializeMap(); // Inicializa el mapa
+  loadProducts(); // Carga productos
 });
+console.log(products.value);
 </script>
 
 <style>
