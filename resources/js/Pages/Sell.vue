@@ -10,6 +10,7 @@ let form = useForm({
     longitude: null,
     latitude: null,
     status: "active",
+    category: null,
 });
 </script>
 
@@ -148,7 +149,31 @@ let form = useForm({
                 </span>
               </div>
             </div>
-
+            <!--category-->
+            <div class="form-group">
+              <label for="category" class="form-label">Categoría</label>
+              <div class="relative">
+                <select
+                  id="category"
+                  v-model="form.category"
+                  class="form-input pl-10"
+                  required
+                >
+                  <option value="1">Hogar</option>
+                  <option value="2">Tecnología</option>
+                  <option value="3">Deportes</option>
+                  <option value="4">Moda</option>
+                  <option value="5">Salud y belleza</option>
+                  <option value="6">Juguetes</option>
+                </select>
+                <span class="form-icon">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </span>
+              </div>
+            </div>
             <!-- Botón de envío -->
             <div class="mt-8">
               <button
