@@ -3,7 +3,9 @@ import Footer from "../Components/Footer.vue";
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
 import { ref, computed } from 'vue';
-
+defineProps({
+    isAuthenticated: Boolean
+})
 const teamMembers = ref([
     { id: 1, name: 'Arnau', surname: 'Garcia', role: 'Programador Backend', rank: '', image: '/images/logo1.png' },
     { id: 2, name: 'Marc', surname: 'Cufí', role: 'Programador Backend', rank: '', image: '/images/logo2.png' },

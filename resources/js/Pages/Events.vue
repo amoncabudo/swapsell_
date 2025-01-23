@@ -4,6 +4,12 @@ import { ref } from 'vue';
 import Card from 'primevue/card';
 import Button from 'primevue/button';
 import Paginator from 'primevue/paginator';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import NavbarS from '@/Layouts/NavbarS.vue';
+
+defineProps({
+    isAuthenticated: Boolean,
+});
 
 // Pagination state
 const first = ref(0);
@@ -42,6 +48,7 @@ const navigateToEvent = (event) => {
 };
 </script>
 <template>
+    <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
     <div class="min-h-screen bg-gray-50 p-8">
         <h1 class="text-4xl font-bold text-center mb-12 text-black">ESDEVENIMENTS</h1>
 
@@ -77,6 +84,7 @@ const navigateToEvent = (event) => {
             </Card>
         </div>
     </div>
+    </component>
 </template>
 
 <style scoped>
