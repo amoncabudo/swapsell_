@@ -25,8 +25,21 @@ const showingNavigationDropdown = ref(false);
                                 </span>
                             </Link>
                         </div>
+                        
 
-                        <!-- Links Section -->
+                        <!-- Links Section --->
+                        <Link href="/" class="text-gray-600 hover:text-blue-500 transition-colors">
+                            Inici
+                        </Link>
+                        <!-- Productes -->
+                        <Link href="/products" class="text-gray-600 hover:text-blue-500 transition-colors">
+                            Productes
+                        </Link>
+                        <!-- Events -->
+                        <Link href="/events" class="text-gray-600 hover:text-blue-500 transition-colors">
+                            Events
+                        </Link>
+
                         <div class="hidden sm:flex items-center space-x-6">
                             
                             <Link href="/favorites" class="text-gray-600 hover:text-blue-500 transition-colors">
