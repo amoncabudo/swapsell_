@@ -13,6 +13,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\SellController;
+use App\Http\Controllers\FavoriteController;
 
 
 Route::get('/', function () {
@@ -127,6 +128,7 @@ Route::post('/updateEvent', [EventController::class, "updateEvent"])->name("upda
 
 Route::get('/products', [ProductController::class, "index"])->name("products");
 Route::get('/products', [ProductController::class, 'getAllProducts'])->name('Products');
+Route::post('/products', [ProductController::class, 'toggleFavourite'])->name('productFavorite');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');

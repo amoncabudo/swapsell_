@@ -78,4 +78,21 @@ class ProductController extends Controller
     ]);
     }
 
+    public function toggleFavourite(Request $request)
+    {
+        $id=$request->id;
+        // Busca el producto por ID
+        $product = Product::find($id);
+
+        if ($product->favorites == 0){
+            $product->favorites = 1;
+        }else{
+            $product->favorites = 0;
+        }
+        
+        $product->save();
+
+        return $product;
+    }
+
 }
