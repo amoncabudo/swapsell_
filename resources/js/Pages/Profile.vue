@@ -1,15 +1,17 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
+import { Link } from '@inertiajs/vue3';
 
 const props = defineProps({
   user: Object,
-  isAuthenticated: Boolean // Asegúrate de definir isAuthenticated aquí 
+  isAuthenticated: Boolean,
+  products: Array
 
 })
 
 console.log(props.user)
-console.log(props.isAuthenticated)
+console.log(props.products)
 
 </script>
 
@@ -97,14 +99,23 @@ console.log(props.isAuthenticated)
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div v-for="i in 4" :key="i" class="group relative">
+          <div v-for="product in props.products" :key="product.id" class="group relative">
             <div class="aspect-square rounded-lg overflow-hidden bg-gray-200">
-              <img src="/images/machine.jpg" alt="Producto" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+              <img :src="product.image" alt="Producto" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
             </div>
             <div class="mt-4">
-              <h3 class="text-lg font-semibold text-gray-800">Producto {{ i }}</h3>
-              <p class="text-gray-600">150€</p>
+              <h3 class="text-lg font-semibold text-gray-800">{{ product.name }}</h3>
+              <p class="text-gray-600">{{ product.price }}€</p>
             </div>
+            <!-- <Link :href="route('product.show', product.id)" class="absolute inset-0 flex items-center justify-center bg-black/50 text-white opacity-0 group-hover:opacity-100 transition duration-300">
+              Ver Producto
+            </Link> -->
+            <Link :href="route('updateProductId', product.id)" class="absolute top-2 left-2 bg-white/80 p-2 rounded-full hover:bg-white transition">
+              <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M12 14l9-5-9-5-9 5 9 5z"/>
+                <path d="M12 14l9-5-9-5-9 5 9 5z"/>
+              </svg>
+            </Link>
             <button class="absolute top-2 right-2 bg-white/80 p-2 rounded-full hover:bg-white transition">
               <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>

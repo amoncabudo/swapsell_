@@ -13,7 +13,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\SellController;
-use App\http\Controllers\CategoryController;
+use App\Http\Controllers\CategoryController;
 
 
 Route::get('/', function () {
@@ -51,7 +51,7 @@ Route::middleware(['auth'])->group(function(){
 
 Route::get('/mapa', [ProductController::class, "mapa"])->name("mapa");
 
-Route::get('/dashboard', function () {
+Route::get('/dashboard', function () {      
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -103,11 +103,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/sell', [SellController::class, 'index'])->name('sell');
 }); 
 
-Route::get('/updateProduct', function(){
-    return Inertia::render('UpdateProduct',[
-        'isAuthenticated' => auth()->check(),
-    ]);
-});
+// Route::get('/updateProduct', function(){
+//     return Inertia::render('UpdateProduct',[
+//         'isAuthenticated' => auth()->check(),
+//     ]);
+// });
 
 Route::post('/sell', [ProductController::class, "addProduct"])->name("sell");
 
@@ -138,7 +138,7 @@ Route::get('/subasta', function(){
         'isAuthenticated' => auth()->check(),
     ]);
 });
-
+Route::get('/updateProduct/{id}', [ProductController::class, "updateProduct"])->name("updateProductId");
 Route::get('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->name("deleteProduct");
 Route::post('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->name("deleteProduct");
 Route::get('/categories/trending', [CategoryController::class, 'getTrendingCategories'])->name('categories.trending');

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\Product;
 
 class ProfileController extends Controller
 {
@@ -62,13 +63,14 @@ class ProfileController extends Controller
     }
     
     public function profile()
-    {
+    {   
         $user = Auth::user();
         $isAuthenticated = Auth::check();
-        // Aqui se le pasa los valores y el loged con isAuthenticaded
+        $products = Product::where('user_id', $user->id)->get();
         return Inertia::render("Profile", [
             "user" => $user,
             "isAuthenticated" => $isAuthenticated,
+            "products" => $products
         ]);
     }
 }

@@ -42,8 +42,13 @@ class ProductController extends Controller
         return redirect()->route('Products')->with('success', 'Producte eliminat correctament');
     }
     
-    public function updateProduct(Request $request){
-        $id = $request->get("id");
+    public function updateProduct(Request $request, $id){
+        $product = Product::find($id);
+    
+        if (!$product) {
+            return redirect()->route('Products')->with('error', 'Producte no trobat');
+        }
+    
         $name = $request->get("name");
         $description = $request->get("description");
         $price = $request->get("price");
@@ -51,22 +56,24 @@ class ProductController extends Controller
         $latitude = $request->get("latitude");
         $status = $request->get("status");
         $category = $request->get("category");
-
-        $product = Product::find($id);
+    
         $product->name = $request->get("name", $product->name);
         $product->description = $request->get("description", $product->description);
         $product->price = $request->get("price", $product->price);
         $product->longitude = $request->get("longitude", $product->longitude);
         $product->latitude = $request->get("latitude", $product->latitude);
         $product->status = $request->get("status", $product->status);
-
+    
+        if ($category !== null) {
+            $product->category_id = $category;
+        }
+    
         $product->user_id = Auth::id();
-        $product->category_id = $category;
         $product->image = 'default.jpg';
-
+    
         $product->save();
         
-        return redirect()->route('Products')->with('success', 'Producte actualitzat correctament');
+        return redirect()->route('updateProductId')->with('success', 'Producte actualitzat correctament');
     }
 
     public function getAllProducts(){
