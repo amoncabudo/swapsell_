@@ -50,6 +50,7 @@ Route::middleware(['auth'])->group(function(){
 });
 
 Route::get('/mapa', [ProductController::class, "mapa"])->name("mapa");
+Route::get('/mapae', [EventController::class, "mapae"])->name("mapae");
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
