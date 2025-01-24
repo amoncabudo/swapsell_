@@ -24,22 +24,28 @@ class DatabaseSeeder extends Seeder
 
         // Aquí tu código para crear categorías
         Category::create([
-            'name' => 'Hogar'
+            'name' => 'Hogar',
+            'image' => 'https://cdn.pixabay.com/photo/2016/11/18/17/46/architecture-1836070_960_720.jpg'
         ]);
         Category::create([
-            'name' => 'Tecnología'
+            'name' => 'Tecnología',
+            'image' => 'https://cdn.pixabay.com/photo/2016/11/29/05/45/apple-1867461_960_720.jpg'
         ]);
         Category::create([
-            'name' => 'Deportes'
+            'name' => 'Deportes',
+            'image' => 'https://cdn.pixabay.com/photo/2016/11/29/12/30/action-1866482_960_720.jpg'
         ]);
         Category::create([
-            'name' => 'Moda'
+            'name' => 'Moda',
+            'image' => 'https://cdn.pixabay.com/photo/2016/11/29/09/08/attractive-1865520_960_720.jpg'
         ]);
         Category::create([
-            'name' => 'Salud y belleza'
+            'name' => 'Salud y belleza',
+            'image' => 'https://cdn.pixabay.com/photo/2016/11/29/10/07/beautiful-1866488_960_720.jpg'
         ]);
         Category::create([
-            'name' => 'Juguetes'
+            'name' => 'Juguetes',
+            'image' => 'https://cdn.pixabay.com/photo/2016/11/29/10/07/beautiful-1866488_960_720.jpg'
         ]);
         
     }

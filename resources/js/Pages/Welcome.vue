@@ -4,6 +4,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
 import { ref, onMounted } from 'vue';
 import { usePage } from '@inertiajs/vue3';
+import axios from 'axios';
 
 defineProps({
     isAuthenticated: Boolean,
@@ -29,10 +30,22 @@ const steps = ref([
 ]);
 
 const featuredProducts = ref([]);
+const trendingCategories = ref([]);
 
 onMounted(async () => {
         const response = await axios.get(route('products.featured'));
         featuredProducts.value = response.data;
+});
+
+onMounted(async () => {
+        const response = await axios.get(route('categories.trending'));
+        trendingCategories.value = response.data.map((category, index) => ({
+            id: category.id,
+            name: category.name,
+            items: 0, // You can add a count of products per category if needed
+            image: `/images/category${category.id}.jpg`, // Make sure these images exist
+            delay: (index + 1) * 100
+        }));
 });
 </script>
 
