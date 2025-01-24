@@ -14,6 +14,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\SellController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\CategoryController;
 
 
 Route::get('/', function () {
@@ -154,5 +155,5 @@ Route::get('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->
 Route::post('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->name("deleteProduct");
 
 Route::get('/products/featured', [ProductController::class, 'getProductsByCategoryId'])->name('products.featured');
-
+Route::get('/categories/trending', [CategoryController::class, 'getTrendingCategories'])->name('categories.trending');
 require __DIR__.'/auth.php';
