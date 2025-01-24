@@ -146,5 +146,5 @@ Route::get('/subasta', function(){
 
 Route::get('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->name("deleteProduct");
 Route::post('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->name("deleteProduct");
-
+Route::get('/categories/trending', [CategoryController::class, 'getTrendingCategories'])->name('categories.trending');
 require __DIR__.'/auth.php';
