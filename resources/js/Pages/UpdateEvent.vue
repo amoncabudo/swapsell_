@@ -3,15 +3,21 @@ import { useForm } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
 
-let form = useForm({   
-    id: "",  
-    title: "",
-    description: "",
-    date: null,
-    time: "active",
-    longitude: null,
-    latitude: null,
+const props = defineProps({
+    event: Object,
+    isAuthenticated: Boolean   
 });
+
+let form = useForm({   
+    id: props.event.id,  
+    title: props.event.title,
+    description: props.event.description,
+    date: props.event.date,
+    time: props.event.time,
+    longitude: props.event.longitude,
+    latitude: props.event.latitude,
+});
+console.log(props.event);
 </script>
 
 <template>
@@ -30,8 +36,6 @@ let form = useForm({
 
         <div class="bg-white rounded-2xl shadow-xl p-8">
           <form @submit.prevent="form.post(route('updateEvent'))" class="space-y-6">
-            <div class="mb-4">
-          <label for="id" class="block text-gray-700 font-medium mb-2">Id Event:</label>
           <input
             type="number"
             id="id"
@@ -40,7 +44,6 @@ let form = useForm({
             class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200"
             required
           />
-        </div>
 
             <div class="form-group">
               <label for="title" class="form-label">Nom de l'event</label>

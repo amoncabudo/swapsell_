@@ -109,10 +109,16 @@ Route::get('/updateProduct', function(){
         'isAuthenticated' => auth()->check(),
     ]);
 });
+    return Inertia::render('UpdateProduct');
+
+Route::get('/updateEvent/{id}', [EventController::class, "goEvent"])->name("event.show");
 
 Route::post('/sell', [ProductController::class, "addProduct"])->name("sell");
 
 Route::post('/updateProduct', [ProductController::class, "updateProduct", ])->name("updateProduct");
+
+Route::get('/deleteEvent/{id}', [EventController::class, "deleteEvent"])->name("deleteEvent");
+Route::post('/deleteEvent/{id}', [EventController::class, "deleteEvent"])->name("deleteEvent");
 
 Route::get('/products', [ProductController::class, "index"])->name("products");
 Route::get('/products', [ProductController::class, 'getAllProducts'])->name('Products');
@@ -120,13 +126,13 @@ Route::post('/products', [ProductController::class, 'toggleFavourite'])->name('p
 //Route to show a product by id
 Route::get('/products/{id}', [ProductController::class, "goProduct"])->name("product.show");
 
+Route::get('/events', [EventController::class, 'getAllEvents'])->name('Events');
+
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
 });
 
-
-
-Route::get('/events', [EventController::class, "index"])->name("Events");
 
 Route::get('/project', function () {
     return Inertia::render('Project', [
