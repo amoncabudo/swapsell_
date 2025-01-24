@@ -51,8 +51,14 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
 
+<<<<<<< HEAD
     public function products()
     {
         return $this->hasMany(Product::class);
+=======
+    public function events()
+    {
+        return $this->hasMany(Event::class);
+>>>>>>> feature/EventsView
     }
 }

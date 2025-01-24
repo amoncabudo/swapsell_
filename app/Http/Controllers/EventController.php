@@ -78,6 +78,24 @@ class EventController extends Controller
         return redirect()->route('Events');
     }
 
+    public function getAllEvents(){
+        $events = Event::all();
+        $isAuthenticated = Auth::check();
+        return Inertia::render("Events", 
+        ["events" => $events,
+        "isAuthenticated" => $isAuthenticated
+    ]);
+    }
+
+    public function goEvent($id){
+        $event = Event::find($id);
+        $isAuthenticated = Auth::check();
+        return Inertia::render("UpdateEvent", 
+        ["event" => $event,
+        "isAuthenticated" => $isAuthenticated,
+    ]);
+    }
+
     public function mapae(){
 
         $events = Event::all();
