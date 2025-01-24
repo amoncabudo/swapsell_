@@ -11,6 +11,7 @@ const showingNavigationDropdown = ref(false);
 </script>
 
 <template>
+    
     <div>
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             <nav class="w-full z-50 bg-white shadow-md dark:bg-gray-800">
