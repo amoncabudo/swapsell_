@@ -61,11 +61,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile2', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/favorites', function () {
-    return Inertia::render('Favorites',[
-        'isAuthenticated' => auth()->check(),
-    ]);
-});
+Route::get('/favorites', [ControllerFavorites::class, 'index'])->name('favorites');
+
 
 Route::get('/auctions', function () {
     return Inertia::render('Auctions');
@@ -93,7 +90,7 @@ Route::get('/contact', function(){
 });
 Route::get('/products', function () {
     return Inertia::render('Products');
-});
+})->name('productsview');
 Route::post('/products', [ProductController::class, 'store']);
 
 Route::get('/eventInfo', function(){
