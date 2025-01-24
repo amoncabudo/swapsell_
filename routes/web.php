@@ -13,6 +13,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\SellController;
+use App\http\Controllers\CategoryController;
 
 
 Route::get('/', function () {
