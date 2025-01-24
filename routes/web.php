@@ -60,11 +60,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile2', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/favorites', function () {
-    return Inertia::render('Favorites',[
-        'isAuthenticated' => auth()->check(),
-    ]);
-});
+Route::get('/favorites', [ControllerFavorites::class, 'index'])->name('favorites');
+
 
 Route::get('/auctions', function () {
     return Inertia::render('Auctions');
@@ -92,7 +89,7 @@ Route::get('/contact', function(){
 });
 Route::get('/products', function () {
     return Inertia::render('Products');
-});
+})->name('productsview');
 Route::post('/products', [ProductController::class, 'store']);
 
 Route::get('/eventInfo', function(){
@@ -117,13 +114,10 @@ Route::post('/updateProduct', [ProductController::class, "updateProduct", ])->na
 
 Route::get('/products', [ProductController::class, "index"])->name("products");
 Route::get('/products', [ProductController::class, 'getAllProducts'])->name('Products');
-<<<<<<< HEAD
 Route::post('/products', [ProductController::class, 'toggleFavourite'])->name('productFavorite');
 //Route to show a product by id
 Route::get('/products/{id}', [ProductController::class, "goProduct"])->name("product.show");
-=======
 
->>>>>>> 243a01a363de6dc139a193131e9c279fc0f2d224
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
 });
