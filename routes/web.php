@@ -49,6 +49,7 @@ Route::middleware(['auth'])->group(function(){
 });
 
 Route::get('/mapa', [ProductController::class, "mapa"])->name("mapa");
+Route::get('/mapae', [EventController::class, "mapae"])->name("mapae");
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -117,13 +118,10 @@ Route::post('/updateProduct', [ProductController::class, "updateProduct", ])->na
 
 Route::get('/products', [ProductController::class, "index"])->name("products");
 Route::get('/products', [ProductController::class, 'getAllProducts'])->name('Products');
-<<<<<<< HEAD
 Route::post('/products', [ProductController::class, 'toggleFavourite'])->name('productFavorite');
 //Route to show a product by id
 Route::get('/products/{id}', [ProductController::class, "goProduct"])->name("product.show");
-=======
 
->>>>>>> 243a01a363de6dc139a193131e9c279fc0f2d224
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
 });

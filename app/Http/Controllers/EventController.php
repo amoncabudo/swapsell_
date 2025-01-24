@@ -77,4 +77,12 @@ class EventController extends Controller
         
         return redirect()->route('Events');
     }
+
+    public function mapae(){
+
+        $events = Event::all();
+        return Inertia::render('MapaE',[
+            'events' => $events
+        ]);
+    }
 }
