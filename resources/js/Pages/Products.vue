@@ -77,7 +77,7 @@ console.log(props.products)
               <img :src="`/uploads/products/${product.image}`" :alt="product.name" class="w-full h-56 object-cover">
             </div>
             <div class="p-6">
-              <Link :href="`/product/${product.id}`" class="block">
+              <Link :href="route('product.show', product.id)" class="block">
               <h2 class="text-xl font-semibold text-gray-900 mb-3">{{ product.name }}</h2>
               <p class="text-gray-800 text-base mb-4 line-clamp-2">{{ product.description }}</p>
               <div class="flex justify-between items-center mb-4">
