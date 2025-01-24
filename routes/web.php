@@ -115,9 +115,7 @@ Route::get('/updateProduct', function(){
     return Inertia::render('UpdateProduct');
 });
 
-Route::get('/updateEvent', function(){
-    return Inertia::render('UpdateEvent');
-});
+Route::get('/updateEvent/{id}', [EventController::class, "goEvent"])->name("event.show");
 
 Route::post('/sell', [ProductController::class, "addProduct"])->name("sell");
 
@@ -125,8 +123,14 @@ Route::post('/updateProduct', [ProductController::class, "updateProduct"])->name
 
 Route::post('/updateEvent', [EventController::class, "updateEvent"])->name("updateEvent");
 
+Route::get('/deleteEvent/{id}', [EventController::class, "deleteEvent"])->name("deleteEvent");
+Route::post('/deleteEvent/{id}', [EventController::class, "deleteEvent"])->name("deleteEvent");
+
 Route::get('/products', [ProductController::class, "index"])->name("products");
 Route::get('/products', [ProductController::class, 'getAllProducts'])->name('Products');
+
+Route::get('/events', [EventController::class, 'getAllEvents'])->name('Events');
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
@@ -134,7 +138,8 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-Route::get('/events', [EventController::class, "index"])->name("Events");
+// Route::get('/events', [EventController::class, "index"])->name("Events");
+
 
 Route::get('/project', function () {
     return Inertia::render('Project', [
