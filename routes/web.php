@@ -1,21 +1,21 @@
 <?php
 
-
-use App\Http\Controllers\ProfileController;
+use Inertia\Inertia;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ControllerProducts;
 use App\Http\Controllers\ControllerEvents;
 use App\Http\Controllers\ControllerProject;
 use App\Http\Controllers\ControllerFavorites;
-use Inertia\Inertia;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\SellController;
 use App\http\Controllers\CategoryController;
 
-
+// Routes welcome
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -26,6 +26,19 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/dashboard', function () {
+    return Inertia::render('Dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+//Route AdminPanel
+Route::get('/adminpanel', function () {return Inertia::render('AdminPanel', [
+    'isAuthenticated' => auth()->check(),
+]);})->name("adminpanel");
+
+//Route Events
+Route::post('/updateEvent', [EventController::class, "updateEvent"])->name("updateEvent");
+
+//Route Cart
 Route::get('/Cart', function () {
     $isAuthenticated = Auth::check();
     return Inertia::render('Cart', [
@@ -33,52 +46,82 @@ Route::get('/Cart', function () {
     ]);
 });
 
+// Route Products
 Route::get('/productextend', function () {
     return Inertia::render('ProducteAmpliat', [
         'isAuthenticated' => auth()->check(),
     ]);
 });
-Route::get('/adminpanel', function () {return Inertia::render('AdminPanel', [
-    'isAuthenticated' => auth()->check(),
-]);})->name("adminpanel");
 
-Route::post('/users', [UserController::class, "addUser"])->name("users");
+Route::get('/products', function () {
+    return Inertia::render('Products');
+})->name('productsview');
 
-Route::middleware(['auth'])->group(function(){
-    Route::post('/events', [EventController::class, "addEvent"])->name("events");
-    Route::post('/products', [ProductController::class, "addProduct"])->name("products");
+Route::post('/products', [ProductController::class, 'store']);
+
+Route::get('/updateProduct', function(){
+    return Inertia::render('UpdateProduct',[
+        'isAuthenticated' => auth()->check(),
+    ]);
 });
 
+Route::post('/products', [ProductController::class, "addProduct"])->name("products");
+
+Route::post('/updateProduct', [ProductController::class, "updateProduct", ])->name("updateProduct");
+
+Route::get('/products', [ProductController::class, "index"])->name("products");
+Route::get('/products', [ProductController::class, 'getAllProducts'])->name('Products');
+Route::post('/products', [ProductController::class, 'toggleFavourite'])->name('productFavorite');
+//Route to show a product by id
+Route::get('/products/{id}', [ProductController::class, "goProduct"])->name("product.show");
+
+//Route Users
+Route::post('/users', [UserController::class, "addUser"])->name("users");
+
+//Route Events
+Route::post('/events', [EventController::class, "addEvent"])->name("events");
+Route::get('/eventInfo', function(){
+    return Inertia::render('EventInfo',[
+        'isAuthenticated' => auth()->check(),
+    ]);
+});
+
+Route::get('/addEvent', function(){
+    return Inertia::render('AddEvent');
+});
+Route::get('/updateEvent/{id}', [EventController::class, "goEvent"])->name("event.show");
+
+Route::get('/deleteEvent/{id}', [EventController::class, "deleteEvent"])->name("deleteEvent");
+Route::post('/deleteEvent/{id}', [EventController::class, "deleteEvent"])->name("deleteEvent");
+Route::get('/events', [EventController::class, 'getAllEvents'])->name('Events');
+
+//Route Mapa
 Route::get('/mapa', [ProductController::class, "mapa"])->name("mapa");
 Route::get('/mapae', [EventController::class, "mapae"])->name("mapae");
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
+//Route Profile
 Route::middleware('auth')->group(function () {
     Route::get('/profile2', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile2', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile2', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
+});
 
+//Route Favorites
 Route::get('/favorites', [ControllerFavorites::class, 'index'])->name('favorites');
 
+//Route Sell
+Route::middleware(['auth'])->group(function () {
+    Route::get('/sell', [SellController::class, 'index'])->name('sell');
+}); 
+Route::post('/sell', [ProductController::class, "addProduct"])->name("sell");
 
-Route::get('/auctions', function () {
-    return Inertia::render('Auctions');
-});
-Route::get('/footer', function(){
-    return Inertia::render('Footer');
-});
-
-Route::get('/aboutus', function(){
-    return Inertia::render('AboutUs',[
-        'isAuthenticated' => auth()->check(),
-    ]);
-});
-
-
+//Route MOncayo
+Route::get('/auctions', function () { return Inertia::render('Auctions'); });
+Route::get('/footer', function(){ return Inertia::render('Footer'); });
+Route::get('/aboutus', function(){ return Inertia::render('AboutUs',['isAuthenticated' => auth()->check(),]);});
 
 Route::get('/legal', function(){
     return Inertia::render('Legal', [
@@ -89,49 +132,10 @@ Route::get('/legal', function(){
 Route::get('/contact', function(){
     return Inertia::render('Contact');
 });
-Route::get('/products', function () {
-    return Inertia::render('Products');
-})->name('productsview');
-Route::post('/products', [ProductController::class, 'store']);
-
-Route::get('/eventInfo', function(){
-    return Inertia::render('EventInfo',[
-        'isAuthenticated' => auth()->check(),
-    ]);
-});
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('/sell', [SellController::class, 'index'])->name('sell');
-}); 
-
-Route::get('/updateProduct', function(){
-    return Inertia::render('UpdateProduct',[
-        'isAuthenticated' => auth()->check(),
-    ]);
-});
-    return Inertia::render('UpdateProduct');
-
-Route::get('/updateEvent/{id}', [EventController::class, "goEvent"])->name("event.show");
-
-Route::post('/sell', [ProductController::class, "addProduct"])->name("sell");
-
-Route::post('/updateProduct', [ProductController::class, "updateProduct", ])->name("updateProduct");
-
-Route::get('/deleteEvent/{id}', [EventController::class, "deleteEvent"])->name("deleteEvent");
-Route::post('/deleteEvent/{id}', [EventController::class, "deleteEvent"])->name("deleteEvent");
-
-Route::get('/products', [ProductController::class, "index"])->name("products");
-Route::get('/products', [ProductController::class, 'getAllProducts'])->name('Products');
-Route::post('/products', [ProductController::class, 'toggleFavourite'])->name('productFavorite');
-//Route to show a product by id
-Route::get('/products/{id}', [ProductController::class, "goProduct"])->name("product.show");
-
-Route::get('/events', [EventController::class, 'getAllEvents'])->name('Events');
 
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
-});
+
+
 
 
 Route::get('/project', function () {
