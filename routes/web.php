@@ -109,7 +109,7 @@ Route::get('/updateProduct', function(){
         'isAuthenticated' => auth()->check(),
     ]);
 });
-    return Inertia::render('UpdateProduct');
+    
 
 Route::get('/updateEvent/{id}', [EventController::class, "goEvent"])->name("event.show");
 
