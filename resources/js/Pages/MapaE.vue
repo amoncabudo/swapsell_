@@ -145,7 +145,7 @@
         <p style="margin:0;">${element.time}</p>
       <a  style="margin:0;" href="/productextend/${element.id}">Ver producto</a>
       `;
-      L.marker([element.latitude, element.longitude])
+      L.marker([element.latitude, element.longitude], {icon: Icon})
         .bindPopup(contenido)
         .addTo(markersGroup);
     });
@@ -162,6 +162,17 @@
   onMounted(() => {
     initializeMap(); // Inicializa el mapa
   });
+
+  var Icon = L.icon({
+    iconUrl: 'images/event_marker_map.png',
+    
+
+    iconSize:     [75, 75], // size of the icon
+    
+    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+     
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
   </script>
   
   <style>
