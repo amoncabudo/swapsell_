@@ -17,7 +17,7 @@ console.log(props.products_favs);
 
 function toggleFavorite(product) {
     const isFavorite = product.favorites === 1;
-    axios.post(route('productFavorite'), { id: product.id, favorite: !isFavorite })
+    axios.post(route('productFavorite'), { id: product.id, favorite: !isFavorite }) 
         .then(response => {
             product.favorites = isFavorite ? 0 : 1;
 
