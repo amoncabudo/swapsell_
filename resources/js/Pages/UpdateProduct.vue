@@ -24,7 +24,7 @@ let form = useForm({
   <div id="app" class="p-8 bg-gray-100 min-h-screen flex items-center justify-center">
     <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
       <h1 class="text-2xl font-bold mb-6 text-center">Formulario de Registro</h1>
-      <form @submit.prevent="form.post(route('updateProduct'))">
+      <form @submit.prevent="form.post(route('updateProduct', { id: form.id }))">
         <div class="mb-4">
           <label for="id" class="block text-gray-700 font-medium mb-2">Id Producte:</label>
           <input

@@ -110,7 +110,7 @@ console.log(props.products)
             <!-- <Link :href="route('product.show', product.id)" class="absolute inset-0 flex items-center justify-center bg-black/50 text-white opacity-0 group-hover:opacity-100 transition duration-300">
               Ver Producto
             </Link> -->
-            <Link :href="route('updateProductId', product.id)" class="absolute top-2 left-2 bg-white/80 p-2 rounded-full hover:bg-white transition">
+            <Link :href="route('editProductId', product.id)" class="absolute top-2 left-2 bg-white/80 p-2 rounded-full hover:bg-white transition">
               <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path d="M12 14l9-5-9-5-9 5 9 5z"/>
                 <path d="M12 14l9-5-9-5-9 5 9 5z"/>

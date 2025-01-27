@@ -111,11 +111,11 @@ Route::middleware(['auth'])->group(function () {
 
 Route::post('/sell', [ProductController::class, "addProduct"])->name("sell");
 
-Route::post('/updateProduct', [ProductController::class, "updateProduct", ])->name("updateProduct");
-
+Route::post('/updateProduct/{id}', [ProductController::class, "updateProduct"])->name("updateProduct");
 Route::get('/products', [ProductController::class, "index"])->name("products");
 Route::get('/products', [ProductController::class, 'getAllProducts'])->name('Products');
 Route::post('/products', [ProductController::class, 'toggleFavourite'])->name('productFavorite');
+Route::get('/editProduct/{id}', [ProductController::class, "editProduct"])->name("editProductId");
 //Route to show a product by id
 Route::get('/products/{id}', [ProductController::class, "goProduct"])->name("product.show");
 
@@ -143,3 +143,5 @@ Route::get('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->
 Route::post('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->name("deleteProduct");
 Route::get('/categories/trending', [CategoryController::class, 'getTrendingCategories'])->name('categories.trending');
 require __DIR__.'/auth.php';
+
+
