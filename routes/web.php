@@ -119,7 +119,6 @@ Route::middleware(['auth'])->group(function () {
 Route::post('/sell', [ProductController::class, "addProduct"])->name("sell");
 
 //Route MOncayo
-Route::get('/auctions', function () { return Inertia::render('Auctions'); });
 Route::get('/footer', function(){ return Inertia::render('Footer'); });
 Route::get('/aboutus', function(){ return Inertia::render('AboutUs',['isAuthenticated' => auth()->check(),]);});
 
@@ -144,11 +143,7 @@ Route::get('/project', function () {
     ]);
 });
 
-Route::get('/subasta', function(){
-    return Inertia::render('Subasta', [
-        'isAuthenticated' => auth()->check(),
-    ]);
-});
+Route::get('/auction', [ProductController::class, 'auction'])->name('auction');
 
 Route::get('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->name("deleteProduct");
 Route::post('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->name("deleteProduct");

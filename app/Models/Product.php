@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $fillable = ['name', 'category_id']; // Asegúrate de incluir 'category_id' si lo usas en tu base de datos.
+    protected $fillable = ['name', 'category_id', 'bid']; // Asegúrate de incluir 'category_id' si lo usas en tu base de datos.
     
     public function user()
     {
@@ -29,4 +29,14 @@ class Product extends Model
     {
         return $this->hasMany(Comment::class);
     }
+    
+    public function showAuctions(){
+    $products = Product::where('bid', true)->get();
+    return Inertia::render('Subasta', [
+        'products' => $products,
+        'isAuthenticated' => Auth::check()
+    ]);
+}   
 }
+
+
