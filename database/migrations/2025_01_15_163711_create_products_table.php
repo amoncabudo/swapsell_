@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('latitude');
             $table->string('image');
             $table->string('status');
+            $table->boolean('bid')->default(false);
             $table->boolean('favorites')->default(false);
             $table->timestamps();
         });
