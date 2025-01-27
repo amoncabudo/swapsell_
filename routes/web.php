@@ -13,7 +13,7 @@ use App\Http\Controllers\ControllerFavorites;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\SellController;
-use App\http\Controllers\CategoryController;
+use App\Http\Controllers\CategoryController;
 
 // Routes welcome
 Route::get('/', function () {
@@ -152,6 +152,7 @@ Route::get('/subasta', function(){
 
 Route::get('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->name("deleteProduct");
 Route::post('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->name("deleteProduct");
+Route::get('/product/featured', [ProductController::class, 'getProductsByCategoryId'])->name('products.featured');
 Route::get('/categories/trending', [CategoryController::class, 'getTrendingCategories'])->name('categories.trending');
 require __DIR__.'/auth.php';
 //reset
