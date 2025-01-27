@@ -111,8 +111,8 @@ Route::middleware(['auth'])->group(function () {
 });
 
 //Route Favorites
-Route::get('/favorites', [ControllerFavorites::class, 'index'])->name('favorites');
-Route::get('/favorites/all', [FavoriteController::class, 'gatAllFavorites'])->name('products_favs');
+Route::get('/favorites/all', [ControllerFavorites::class, 'index'])->name('favorites');
+Route::get('/favorites', [FavoriteController::class, 'gatAllFavorites'])->name('products_favs');
 
 //Route Sell
 Route::middleware(['auth'])->group(function () {
@@ -121,7 +121,6 @@ Route::middleware(['auth'])->group(function () {
 Route::post('/sell', [ProductController::class, "addProduct"])->name("sell");
 
 //Route MOncayo
-Route::get('/auctions', function () { return Inertia::render('Auctions'); });
 Route::get('/footer', function(){ return Inertia::render('Footer'); });
 Route::get('/aboutus', function(){ return Inertia::render('AboutUs',['isAuthenticated' => auth()->check(),]);});
 
@@ -135,25 +134,17 @@ Route::get('/contact', function(){
     return Inertia::render('Contact');
 });
 
-
-
-
-
-
 Route::get('/project', function () {
     return Inertia::render('Project', [
         'isAuthenticated' => auth()->check(),
     ]);
 });
 
-Route::get('/subasta', function(){
-    return Inertia::render('Subasta', [
-        'isAuthenticated' => auth()->check(),
-    ]);
-});
+Route::get('/auction', [ProductController::class, 'auction'])->name('auction');
 
 Route::get('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->name("deleteProduct");
 Route::post('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->name("deleteProduct");
+Route::get('/product/featured', [ProductController::class, 'getProductsByCategoryId'])->name('products.featured');
 Route::get('/categories/trending', [CategoryController::class, 'getTrendingCategories'])->name('categories.trending');
 require __DIR__.'/auth.php';
 //reset
