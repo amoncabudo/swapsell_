@@ -14,6 +14,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\SellController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FavoriteController;
 
 // Routes welcome
 Route::get('/', function () {
@@ -110,7 +111,8 @@ Route::middleware(['auth'])->group(function () {
 });
 
 //Route Favorites
-Route::get('/favorites', [ControllerFavorites::class, 'index'])->name('favorites');
+Route::get('/favorites/all', [ControllerFavorites::class, 'index'])->name('favorites');
+Route::get('/favorites', [FavoriteController::class, 'gatAllFavorites'])->name('products_favs');
 
 //Route Sell
 Route::middleware(['auth'])->group(function () {
