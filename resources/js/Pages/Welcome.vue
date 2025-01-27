@@ -2,35 +2,14 @@
 import Footer from '../Components/Footer.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { usePage } from '@inertiajs/vue3';
+import axios from 'axios';
 
 defineProps({
     isAuthenticated: Boolean,
-    featuredProducts: {
-        type: Array,
-        default: () => []
-    }
 });
 
-const featuredItems = ref([
-    { name: 'iPhone 12 Pro', price: '599€', image: '' },
-    { name: 'MacBook Air', price: '899€', image: '' },
-    { name: 'iPad Pro', price: '699€', image: '' },
-    { name: 'AirPods Max', price: '450€', image: '' }
-]);
-
-const stats = ref([
-    { value: '50K+', title: 'Usuaris actius', delay: 200 },
-    { value: '100K+', title: 'Productes', delay: 400 },
-    { value: '95%', title: 'Satisfacció', delay: 600 },
-    { value: '24/7', title: 'Suport', delay: 800 }
-]);
-
-const trendingCategories = ref([
-    { id: 1, name: 'Tecnologia', items: '2,534', image: '/images/3.jpeg', delay: 200 },
-    { id: 2, name: 'Moda', items: '1,839', image: '/images/4.jpeg', delay: 400 },
-    { id: 3, name: 'Col·leccionables', items: '943', image: '/images/5.jpeg', delay: 600 }
-]);
 
 const steps = ref([
     {
@@ -49,6 +28,25 @@ const steps = ref([
         delay: 600
     }
 ]);
+
+const featuredProducts = ref([]);
+const trendingCategories = ref([]);
+
+onMounted(async () => {
+        const response = await axios.get(route('products.featured'));
+        featuredProducts.value = response.data;
+});
+
+onMounted(async () => {
+        const response = await axios.get(route('categories.trending'));
+        trendingCategories.value = response.data.map((category, index) => ({
+            id: category.id,
+            name: category.name,
+            items: 0, // You can add a count of products per category if needed
+            image: `/images/category${category.id}.jpg`, // Make sure these images exist
+            delay: (index + 1) * 100
+        }));
+});
 </script>
 
 <template>
@@ -70,13 +68,14 @@ const steps = ref([
                             </div>
                         </div>
                         <div class="grid grid-cols-2 gap-4" data-aos="fade-left">
-                            <div v-for="(item, index) in featuredItems" :key="index"
+                            <div v-for="(product, index) in featuredProducts" :key="product.id"
                                 :data-aos="index % 2 === 0 ? 'fade-up' : 'fade-down'"
-                                :data-aos-delay="200 * (index + 1)" class="featured-item">
-                                <img :src="item.image" :alt="item.name" class="w-full h-48 object-cover">
+                                :data-aos-delay="200 * (index + 1)" 
+                                class="featured-item">
+                                <img :src="product.image" :alt="product.name" class="w-full h-48 object-cover">
                                 <div class="p-2 bg-white">
-                                    <h2 class="text-black font-semibold">{{ item.name }}</h2>
-                                    <p class="text-bold text-red-800">{{ item.price }}</p>
+                                    <h2 class="text-black font-semibold">{{ product.name }}</h2>
+                                    <p class="text-bold text-red-800">{{ product.price }} €</p>
                                 </div>
                             </div>
                         </div>

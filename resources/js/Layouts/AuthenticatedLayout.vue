@@ -11,6 +11,7 @@ const showingNavigationDropdown = ref(false);
 </script>
 
 <template>
+    
     <div>
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             <nav class="w-full z-50 bg-white shadow-md dark:bg-gray-800">
@@ -71,8 +72,11 @@ const showingNavigationDropdown = ref(false);
                                     </template>
 
                                     <template #content>
-                                        <DropdownLink :href="route('profile.edit')">Profile</DropdownLink>
-                                        <DropdownLink :href="route('logout')" method="post" as="button">Log Out</DropdownLink>
+                                        <DropdownLink :href="route('profile')">Perfil</DropdownLink>
+                                        <DropdownLink :href="route('Events')">Events</DropdownLink>
+                                        <DropdownLink :href="route('Products')">Productes</DropdownLink>
+                                        <DropdownLink :href="route('favorites')">Favorits</DropdownLink>
+                                        <DropdownLink :href="route('logout')" method="post" as="button">Tencar sessió</DropdownLink>
                                     </template>
                                 </Dropdown>
                             </div>
@@ -104,8 +108,10 @@ const showingNavigationDropdown = ref(false);
                         </div>
 
                         <div class="mt-3 space-y-1">
-                            <ResponsiveNavLink :href="route('profile.edit')">Profile</ResponsiveNavLink>
-                            <ResponsiveNavLink :href="route('logout')" method="post" as="button">Log Out</ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('profile.edit')">Perfil</ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('Events')">Events</ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('Products')">Productes</ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('logout')" method="post" as="button">Tencar sessió</ResponsiveNavLink>
                         </div>
                     </div>
                 </div>

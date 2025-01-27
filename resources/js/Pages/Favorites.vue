@@ -72,54 +72,53 @@ const removeFromFavorites = (product) => {
                         <div v-if="loading" class="flex justify-center items-center py-12">
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            <div v-if="products_favs">
-                                <div v-for="products_favs in products_favs" :key="products_favs.id"
-                                    class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                                    <div class="relative">
-                                        <img :src="products_favs.image" :alt="products_favs.name"
-                                            class="w-full h-56 object-cover" />
+                        <!-- Removed the extra wrapping div and moved v-if to the grid container -->
+                        <div v-if="products_favs" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                            <div v-for="products_favs in products_favs" :key="products_favs.id"
+                                class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                                <div class="relative">
+                                    <img :src="products_favs.image" :alt="products_favs.name"
+                                        class="w-full h-56 object-cover" />
+                                </div>
+                                <div class="p-6">
+                                    <Link :href="`/product/${products_favs.id}`" class="block">
+                                    <h2 class="text-xl font-semibold text-gray-900 mb-3">{{ products_favs.name }}
+                                    </h2>
+                                    <p class="text-gray-800 text-base mb-4 line-clamp-2">{{
+                                        products_favs.description }}
+                                    </p>
+                                    <div class="flex justify-between items-center mb-4">
+                                        <span class="text-blue-800 font-bold text-lg">{{
+                                            formatCurrency(products_favs.price) }}</span>
+                                        <span class="text-sm text-gray-800">{{ products_favs.category }}</span>
                                     </div>
-                                    <div class="p-6">
-                                        <Link :href="`/product/${products_favs.id}`" class="block">
-                                        <h2 class="text-xl font-semibold text-gray-900 mb-3">{{ products_favs.name }}
-                                        </h2>
-                                        <p class="text-gray-800 text-base mb-4 line-clamp-2">{{
-                                            products_favs.description }}
-                                        </p>
-                                        <div class="flex justify-between items-center mb-4">
-                                            <span class="text-blue-800 font-bold text-lg">{{
-                                                formatCurrency(products_favs.price) }}</span>
-                                            <span class="text-sm text-gray-800">{{ products_favs.category }}</span>
-                                        </div>
-                                        </Link>
+                                    </Link>
 
-                                        <div class="mt-2 flex items-center justify-between text-sm text-gray-500">
-                                            <div class="flex items-center">
-                                                <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor"
-                                                    viewBox="0 0 24 24">
+                                    <div class="mt-2 flex items-center justify-between text-sm text-gray-500">
+                                        <div class="flex items-center">
+                                            <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    stroke-width="2"
+                                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                            </svg>
+                                            <span class="text-gray-800">{{ products_favs.location }}</span>
+                                            <span class="mx-2 text-gray-800">•</span>
+                                            <span class="text-gray-800">Hace {{ products_favs.timestamp }}</span>
+                                        </div>
+                                        <form @submit.prevent>
+                                            <button @click="toggleFavorite(products_favs)"
+                                                :class="{ 'text-red-500': products_favs.favorites === 1, 'text-gray-400': products_favs.favorites === 0 }"
+                                                class="transition-colors">
+                                                <svg class="h-5 w-5"
+                                                    :fill="products_favs.favorites === 1 ? 'red' : 'none'"
+                                                    stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                         stroke-width="2"
-                                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                                                 </svg>
-                                                <span class="text-gray-800">{{ products_favs.location }}</span>
-                                                <span class="mx-2 text-gray-800">•</span>
-                                                <span class="text-gray-800">Hace {{ products_favs.timestamp }}</span>
-                                            </div>
-                                            <form @submit.prevent>
-                                                <button @click="toggleFavorite(products_favs)"
-                                                    :class="{ 'text-red-500': products_favs.favorites === 1, 'text-gray-400': products_favs.favorites === 0 }"
-                                                    class="transition-colors">
-                                                    <svg class="h-5 w-5"
-                                                        :fill="products_favs.favorites === 1 ? 'red' : 'none'"
-                                                        stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="2"
-                                                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                                                    </svg>
-                                                </button>
-                                            </form>
-                                        </div>
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>

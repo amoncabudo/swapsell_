@@ -11,7 +11,9 @@ class ControllerFavorites extends Controller
      */
     public function index()
     {
-        return Inertia::render('Favorites');
+        return Inertia::render('Favorites',[
+            'isAuthenticated' => auth()->check(),
+        ]);
     }
 
     /**

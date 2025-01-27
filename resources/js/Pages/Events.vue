@@ -7,45 +7,24 @@ import Paginator from 'primevue/paginator';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
 
-defineProps({
-    isAuthenticated: Boolean,
+const props = defineProps({
+    events: Array,
+    isAuthenticated: Boolean   
 });
+console.log(props.events);
 
 // Pagination state
 const first = ref(0);
 const rows = ref(5);
 const totalRecords = ref(15);
 
-// Events data
-const events = ref([
-    {
-        id: 1,
-        title: 'TÍTOL ESDEVENIMENT',
-        location: 'Ubicació',
-        date: 'Data de l\'esdeveniment',
-        type: 'Tipus d\'esdeveniment'
-    },
-    {
-        id: 2,
-        title: 'TÍTOL ESDEVENIMENT',
-        location: 'Ubicació',
-        date: 'Data de l\'esdeveniment',
-        type: 'Tipus d\'esdeveniment'
-    },
-    {
-        id: 3,
-        title: 'TÍTOL ESDEVENIMENT',
-        location: 'Ubicació',
-        date: 'Data de l\'esdeveniment',
-        type: 'Tipus d\'esdeveniment'
-    }
-]);
-
 
 
 const navigateToEvent = (event) => {
     window.location.href = `/EventInfo/${event.id}`;
 };
+
+
 </script>
 <template>
     <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
@@ -54,34 +33,47 @@ const navigateToEvent = (event) => {
 
         <!-- Events List -->
         <div class="max-w-5xl mx-auto space-y-4">
-            <Card v-for="event in events" :key="event.id" class="event-card">
-                <template #content>
-                    <div class="p-2">
-                        <h2 class="text-xl font-bold mb-4 text-black">{{ event.title }}</h2>
-                        <div class="grid grid-cols-3 gap-8">
-                            <div class="flex items-center space-x-2">
-                                <i class="pi pi-map-marker text-blue-800"></i>
-                                <span class="text-black">{{ event.location }}</span>
-                            </div>
-                            <div class="flex items-center space-x-2">
-                                <i class="pi pi-calendar text-blue-800"></i>
-                                <span class="text-black">{{ event.date }}</span>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center space-x-2">
-                                    <i class="pi pi-tag text-blue-800"></i>
-                                    <span class="text-black">{{ event.type }}</span>
-                                </div>
-                                <Button 
-                                    label="VER MÁS" 
-                                    class="p-button-text p-button-info"
-                                    @click="navigateToEvent(event)"
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </template>
-            </Card>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div v-for="event in events" :key="event.id" 
+               class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+            <div class="relative">
+              <img :src="`/uploads/events/${event.image}`" 
+                   :alt="event.name" 
+                   class="w-full h-56 object-cover">
+            </div>
+            <div class="p-6">
+              
+                <h2 class="text-xl font-semibold text-gray-900 mb-3 font-bold">{{ event.title }}</h2>
+                <p class="text-gray-800 text-base mb-4 line-clamp-2">{{ event.description }}</p>
+                <div class="flex justify-between items-center mb-4">
+                  <span class="text-black font-bold">Data: {{ event.date }}</span>
+                  <span class="text-black font-bold">Hora: {{ event.time }}h</span>
+                </div>
+                <div class="mt-2 flex items-center justify-between text-sm text-gray-500">
+                  <div class="flex items-center">
+                    <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                    </svg>
+                    <span class="text-gray-800">{{ event.location || 'Ubicación no disponible' }}</span>
+                    <span class="mx-2 text-gray-800">•</span>
+                    <span class="text-gray-800">Hace 2h</span>
+                  </div>
+                  <button class="text-gray-400 hover:text-red-500 transition-colors">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                    </svg>
+                  </button>
+                </div>
+                
+                <div class="flex justify-between mt-5">
+                <Link :href="route('event.show', event.id)" class="block"><button class="bg-custom-blue text-white p-2 rounded">Editar</button></Link>
+                <Link :href="route('deleteEvent', event.id)" class="block"><button class="bg-red-800 text-white p-2 rounded">Eliminar</button></Link>
+                </div>
+              
+            </div>
+          </div>
+        </div>
+
             <Link href="/addEvent" 
             class="fixed bottom-8 right-8 bg-custom-blue text-white rounded-full p-4 shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:bg-custom-blue-dark">
         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -90,6 +82,7 @@ const navigateToEvent = (event) => {
       </Link>
         </div>
     </div>
+    
     </component>
 </template>
 

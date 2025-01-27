@@ -70,7 +70,7 @@ class ProductController extends Controller
     }
 
     public function getAllProducts(){
-        $products = Product::all();
+        $products = Product::with('category')->get();
         $isAuthenticated = Auth::check();
         return Inertia::render("Products", 
         ["products" => $products,
@@ -95,4 +95,26 @@ class ProductController extends Controller
         return $product;
     }
 
+    public function getProductsByCategoryId()
+    {
+        $products = Product::where('category_id', 7)->get();
+        return $products;
+    }
+    public function mapa(){
+
+        $products = Product::all();
+        return Inertia::render('Mapa',[
+            'products' => $products
+        ]);
+    }
+
+    public function goProduct($id){
+        $product = Product::with('category', 'user')->find($id);
+        $isAuthenticated = Auth::check();
+        return Inertia::render("ProducteAmpliat", 
+        ["product" => $product,
+        "isAuthenticated" => $isAuthenticated,
+        "user" => $product->user
+    ]);
+    }
 }
