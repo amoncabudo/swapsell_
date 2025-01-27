@@ -82,38 +82,10 @@ import NavbarS from '@/Layouts/NavbarS.vue';
 
 defineProps({
     isAuthenticated: Boolean,
+    products: Array // Products will be passed from the backend
 });
 
-// Estado para los montos de las pujas
 const bidAmounts = ref({});
-
-// Datos de ejemplo de productos
-const products = ref([
-  {
-    id: 1,
-    name: "iPhone 14 Pro",
-    description: "Último modelo, 256GB, Color Space Gray",
-    currentBid: 800,
-    image: "https://example.com/iphone.jpg",
-    timeLeft: "2 días"
-  },
-  {
-    id: 2,
-    name: "MacBook Pro M2",
-    description: "16 pulgadas, 512GB SSD, 16GB RAM",
-    currentBid: 1200,
-    image: "https://example.com/macbook.jpg",
-    timeLeft: "1 día"
-  },
-  {
-    id: 3,
-    name: "PlayStation 5",
-    description: "Consola PS5 Digital Edition, Nueva",
-    currentBid: 400,
-    image: "https://example.com/ps5.jpg",
-    timeLeft: "3 días"
-  }
-]);
 
 // Función para manejar las pujas
 const placeBid = (productId) => {

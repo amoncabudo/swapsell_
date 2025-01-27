@@ -32,8 +32,6 @@ const map = ref(null); // Referencia al mapa
 let products = ref(props.products); // Productos cargados
 const isAuthenticated = ref(false); // Autenticación (puedes conectarlo al backend si es necesario)
 
-// Inicializa el mapa
-// ... existing code ...
 
 // Inicializa el mapa
 const initializeMap = () => {
@@ -144,7 +142,7 @@ const initializeMapWithPosition = (lat, lng) => {
     <p style="margin:0;">  ${element.price}€ </p>
     <a  style="margin:0;" href="/productextend/${element.id}">Ver producto</a>
     `;
-    L.marker([element.latitude, element.longitude])
+    L.marker([element.latitude, element.longitude],{icon: Icon})
       .bindPopup(contenido)
       .addTo(markersGroup);
   });
@@ -152,7 +150,6 @@ const initializeMapWithPosition = (lat, lng) => {
   // Añadir el grupo al mapa
   markersGroup.addTo(map.value);
 };
-// ... existing code ...
 
 // Carga productos desde el backend (usando fetch)
 console.log(products.value);
@@ -161,6 +158,17 @@ console.log(products.value);
 // Ejecuta al montar el componente
 onMounted(() => {
   initializeMap(); // Inicializa el mapa
+});
+
+var Icon = L.icon({
+  iconUrl: 'images/product_marker_map.png',
+  
+
+  iconSize:     [85, 75], // size of the icon
+  
+  iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+   
+  popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
 });
 </script>
 
