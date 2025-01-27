@@ -73,7 +73,7 @@ class ProductController extends Controller
         
             $product->save();
             
-            return redirect()->route('updateProduct', ['id' => $id])->with('success', 'Producte actualitzat correctament');
+            return redirect()->route('profile');
 
         }
 
