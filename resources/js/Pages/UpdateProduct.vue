@@ -17,6 +17,7 @@ let form = useForm({
     longitude: props.product.longitude ?? null,
     latitude: props.product.latitude ?? null,
     status: props.product.status ?? "active",
+    category_id: props.product.category_id ?? "Hogar"
 });
 
 
@@ -111,6 +112,25 @@ let form = useForm({
           >
             <option value="active">Activo</option>
             <option value="inactive">Inactivo</option>
+          </select>
+        </div>
+
+        <div class="mb-4">
+          <label for="status" class="block text-gray-700 font-medium mb-2">Categoria</label>
+          <select
+            id="category_id"
+            name="category_id"
+            v-model="form.category_id"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200"
+            required
+          >
+            <option value="1">Hogar</option>
+            <option value="2">Tecnologia</option>
+            <option value="3">Deportes</option>
+            <option value="4">Moda</option>
+            <option value="5">Salud y belleza</option>
+            <option value="6">Juguetes</option>
+
           </select>
         </div>
 

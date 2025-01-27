@@ -63,14 +63,12 @@ class ProductController extends Controller
             $product->longitude = $request->get("longitude", $product->longitude);
             $product->latitude = $request->get("latitude", $product->latitude);
             $product->status = $request->get("status", $product->status);
-        
-            if ($category !== null) {
-                $product->category_id = $category;
-            }
+            $product->category_id = $request->get("category_id", $product->category_id);
+            
         
             $product->user_id = Auth::id();
             $product->image = 'default.jpg';
-        
+            
             $product->save();
             
             return redirect()->route('profile');
