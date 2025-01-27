@@ -15,6 +15,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\SellController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\AuctionController;
 
 // Routes welcome
 Route::get('/', function () {
@@ -146,5 +147,9 @@ Route::get('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->
 Route::post('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->name("deleteProduct");
 Route::get('/product/featured', [ProductController::class, 'getProductsByCategoryId'])->name('products.featured');
 Route::get('/categories/trending', [CategoryController::class, 'getTrendingCategories'])->name('categories.trending');
+
+//route to show auction form
+Route::get('/create-auction', [AuctionController::class, 'create'])->name('auctions.create');
+
 require __DIR__.'/auth.php';
 //reset
