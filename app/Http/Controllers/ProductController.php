@@ -117,4 +117,14 @@ class ProductController extends Controller
         "user" => $product->user
     ]);
     }
+
+    public function auction()
+    {
+        $products = Product::where('bid', true)->get();
+        
+        return Inertia::render('Subasta', [
+            'isAuthenticated' => auth()->check(),
+            'products' => $products
+        ]);
+    }
 }
