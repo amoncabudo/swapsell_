@@ -74,8 +74,8 @@ console.log(props.products)
           <div v-for="product in products" :key="product.id"
             class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
             <div class="relative">
-              <img :src="`/uploads/products/${product.image}`" :alt="product.name" class="w-full h-56 object-cover">
-            </div>
+              <img :src="`/storage/${product.image}`" :alt="product.name" class="w-full h-56 object-cover">
+            </div>  
             <div class="p-6">
               <Link :href="route('product.show', product.id)" class="block">
               <h2 class="text-xl font-semibold text-gray-900 mb-3">{{ product.name }}</h2>
