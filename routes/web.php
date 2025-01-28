@@ -192,8 +192,9 @@ Route::post('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])-
 Route::get('/product/featured', [ProductController::class, 'getProductsByCategoryId'])->name('products.featured');
 Route::get('/categories/trending', [CategoryController::class, 'getTrendingCategories'])->name('categories.trending');
 
-//route to show auction form
 Route::get('/create-auction', [AuctionController::class, 'create'])->name('auctions.create');
+Route::post('/create-auction', [AuctionController::class, 'store'])->name('auctions.store');
+
 
 require __DIR__.'/auth.php';
 

@@ -36,7 +36,11 @@ class Product extends Model
         'products' => $products,
         'isAuthenticated' => Auth::check()
     ]);
-}   
+    }   
+
+    public function auction(){
+        return $this->hasOne(Auction::class);
+    }
 }
 
 

@@ -14,10 +14,15 @@ const dateError = ref('');
 let form = useForm({     
     product_id: null,
     start_price: null,
-    current_price: null,
+    current_price: null, // This should match the start_price initially
     start_time: null,
     end_time: null,
     status: true
+});
+
+// Add a watcher to update current_price when start_price changes
+watch(() => form.start_price, (newPrice) => {
+    form.current_price = newPrice;
 });
 
 watch(() => form.end_time, (newEndTime) => {
@@ -49,7 +54,14 @@ watch(() => form.end_time, (newEndTime) => {
         </div>
 
         <div class="bg-white rounded-2xl shadow-xl p-8">
-          <form @submit.prevent="form.post(route('auctions'))" class="space-y-6">
+          <form @submit.prevent="form.post(route('auctions.store'), {
+              onSuccess: () => {
+                  // Redirect or show success message
+              },
+              onError: (errors) => {
+                  console.error(errors);
+              }
+          })" class="space-y-6">
             <!-- Selector de Producto -->
             <div class="form-group">
               <label for="product" class="form-label">Selecciona el Producto</label>
