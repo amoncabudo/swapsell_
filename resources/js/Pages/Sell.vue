@@ -14,8 +14,15 @@ let form = useForm({
     longitude: null,
     latitude: null,
     status: "active",
-    category: null,
+    category: "",
+    image: null
 });
+
+// Método para manejar la subida de archivos
+function handleFileUpload(event) {
+    form.image = event.target.files[0]; // Guardamos el archivo en la propiedad 'image'
+}
+
 </script>
 
 <template>
@@ -34,7 +41,7 @@ let form = useForm({
 
         <!-- Tarjeta del formulario -->
         <div class="bg-white rounded-2xl shadow-xl p-8">
-          <form @submit.prevent="form.post(route('sell'))" class="space-y-6">
+          <form @submit.prevent="form.post(route('sell'))" enctype="multipart/form-data" class="space-y-6">
             <!-- Campo Nombre -->
             <div class="form-group">
               <label for="name" class="form-label">Nombre del Producto</label>
@@ -66,6 +73,19 @@ let form = useForm({
                   class="form-input"
                   required
                 ></textarea>
+              </div>
+            </div>
+
+            <!-- Campo Imagen -->
+            <div class="form-group">
+            <label for="image" class="form-label">Imagen del Producto</label>
+              <div class="relative">
+                <input
+                  type="file"
+                  id="image"
+                  @change="handleFileUpload"
+                  required
+                />
               </div>
             </div>
 
@@ -158,8 +178,8 @@ let form = useForm({
               <label for="category" class="form-label">Categoría</label>
               <div class="relative">
                 <select
-                  id="category"
-                  v-model="form.category"
+                  id="category_id"
+                  v-model="form.category_id"
                   class="form-input pl-10"
                   required
                 >
