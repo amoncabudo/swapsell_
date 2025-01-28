@@ -93,7 +93,7 @@ Route::get('/eventInfo', function(){
 
 Route::get('/addEvent', function(){
     return Inertia::render('AddEvent');
-})->middleware(ManagerMiddleware::class)->name('addEvent');
+})->middleware(['auth', 'verified'])->name('addEvent');
 Route::get('/updateEvent/{id}', [EventController::class, "goEvent"])->middleware(ManagerMiddleware::class)->name("event.show");
 
 Route::get('/deleteEvent/{id}', [EventController::class, "deleteEvent"])->middleware(ManagerMiddleware::class)->name("deleteEvent");

@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'admin',
             'email' => 'admin@admin.com',
             'password' => 'admin',
+            'role' => '0',
         ]);
 
         // Aquí tu código para crear categorías
