@@ -29,9 +29,18 @@ class ProductController extends Controller
         $product->latitude = $latitude;
         $product->status = $status;
         $product->user_id = Auth::id();
-        $product->category_id = 1;
-        $product->image = 'default.jpg';
-
+        $product->category_id = $request->get('category_id') ?? 1;
+        //Image
+        
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->storeAs('public', $request->file('image')->getClientOriginalName());
+            $product->image = $request->file('image')->getClientOriginalName();
+        } else {
+            $product->image = 'default.jpg';
+        }   
+                
+        
+        
         $product->save();
         return redirect()->route('Products')->with('success', 'Producte publicat correctament');
     }
