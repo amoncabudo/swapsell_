@@ -126,7 +126,26 @@ class ProductController extends Controller
 
     public function auction()
     {
-        $products = Product::where('bid', true)->get();
+        $products = Product::with('auction')
+            ->where('bid', true)
+            ->get()
+            ->map(function($product) {
+                // Add remaining time calculation
+                if ($product->auction) {
+                    $endTime = new \DateTime($product->auction->end_time);
+                    $now = new \DateTime();
+                    $interval = $now->diff($endTime);
+                    
+                    $product->auction->remaining = [
+                        'days' => $interval->d,
+                        'hours' => $interval->h,
+                        'minutes' => $interval->i,
+                        'seconds' => $interval->s,
+                        'total_seconds' => $endTime->getTimestamp() - $now->getTimestamp()
+                    ];
+                }
+                return $product;
+            });
         
         return Inertia::render('Subasta', [
             'isAuthenticated' => auth()->check(),
@@ -141,5 +160,14 @@ class ProductController extends Controller
         }
     
         return Inertia::render('UpdateProduct', ['product' => $product]);
+    }
+
+    public function getAvailableProducts()
+    {
+        $availableProducts = Product::where('user_id', auth()->id())
+                              ->where('bid', false)
+                              ->get();
+    
+        return response()->json($availableProducts);
     }
 }
