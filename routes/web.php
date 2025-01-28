@@ -193,8 +193,8 @@ Route::get('/subasta', function(){
 Route::get('/updateProduct/{id}', [ProductController::class, "updateProduct"])->middleware(['auth', 'verified'])->name("updateProductId");
 Route::get('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->middleware(['auth', 'verified'])->name("deleteProduct");
 Route::post('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->middleware(['auth', 'verified'])->name("deleteProduct");
-Route::get('/product/featured', [ProductController::class, 'getProductsByCategoryId'])->middleware(['auth', 'verified'])->name('products.featured');
-Route::get('/categories/trending', [CategoryController::class, 'getTrendingCategories'])->middleware(['auth', 'verified'])->name('categories.trending');
+Route::get('/product/featured', [ProductController::class, 'getProductsByCategoryId'])->name('products.featured');
+Route::get('/categories/trending', [CategoryController::class, 'getTrendingCategories'])->name('categories.trending');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/create-auction', [AuctionController::class, 'create'])->name('auctions.create');
