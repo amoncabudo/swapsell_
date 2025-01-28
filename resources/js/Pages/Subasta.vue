@@ -1,137 +1,196 @@
-<template>
-<component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">    <div class="max-w-7xl mx-auto px-4 py-8">
-      <!-- Hero Section -->
-      <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg shadow-lg mb-12 p-8 text-white">
-        <h1 class="text-4xl font-bold mb-4">Subastas en Vivo</h1>
-        <p class="text-xl">Descubre productos únicos y haz tu mejor oferta</p>
-      </div>
-
-      <!-- Filtros -->
-      <div class="mb-8 flex flex-wrap gap-4">
-        <select class="border rounded-md px-4 py-2 text-gray-700 bg-white">
-          <option>Todas las categorías</option>
-          <option>Electrónicos</option>
-          <option>Hogar</option>
-          <option>Deportes</option>
-        </select>
-        <select class="border rounded-md px-4 py-2 text-gray-700 bg-white">
-          <option>Ordenar por</option>
-          <option>Precio más bajo</option>
-          <option>Precio más alto</option>
-          <option>Tiempo restante</option> 
-        </select>
-      </div>
-
-      <!-- Grid de productos -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div v-for="product in products" :key="product.id" 
-             class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-          <div class="relative">
-            <img :src="product.image" :alt="product.name" 
-                 class="w-full h-64 object-cover">
-            <div class="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full">
-              {{ product.timeLeft }}
-            </div>
-          </div>
-          
-          <div class="p-6">
-            <h2 class="text-2xl font-bold mb-2 text-gray-800">{{ product.name }}</h2>
-            <p class="text-gray-700 mb-4">{{ product.description }}</p>
-            
-            <div class="bg-gray-50 p-4 rounded-lg mb-4">
-              <div class="flex justify-between items-center mb-2">
-                <span class="text-gray-700">Puja actual:</span>
-                <span class="text-2xl font-bold text-blue-600">${{ product.currentBid }}</span>
-              </div>
-              <div class="h-2 bg-gray-200 rounded-full">
-                <div class="h-2 bg-blue-500 rounded-full" 
-                     :style="{ width: `${(product.currentBid / 2000) * 100}%` }"></div>
-              </div>
-            </div>
-
-            <form @submit.prevent="placeBid(product.id)" class="space-y-4">
-              <div class="flex gap-2">
-                <input 
-                  type="number" 
-                  v-model="bidAmounts[product.id]" 
-                  :min="product.currentBid + 1" 
-                  step="0.01"
-                  class="flex-1 border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700"
-                  :placeholder="`Mínimo $${product.currentBid + 1}`"
-                >
-                <button 
-                  type="submit"
-                  class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200"
-                >
-                  Pujar
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </component>
-</template>
-
 <script setup>
-import { ref } from 'vue';
-import { useForm } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 
-defineProps({
+const props = defineProps({
     isAuthenticated: Boolean,
-    products: Array // Products will be passed from the backend
+    products: Array
 });
 
-const bidAmounts = ref({});
+const countdowns = ref({});
 
-// Función para manejar las pujas
-const placeBid = (productId) => {
-  const product = products.value.find(p => p.id === productId);
-  const bidAmount = parseFloat(bidAmounts.value[productId]);
+const updateCountdown = (auctionId, totalSeconds) => {
+    if (totalSeconds <= 0) {
+        return '¡Subasta finalizada!';
+    }
 
-  if (!bidAmount) {
-    alert('Por favor ingresa un monto válido');
-    return;
-  }
+    const days = Math.floor(totalSeconds / (24 * 60 * 60));
+    const hours = Math.floor((totalSeconds % (24 * 60 * 60)) / (60 * 60));
+    const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
+    const seconds = Math.floor(totalSeconds % 60);
 
-  if (bidAmount <= product.currentBid) {
-    alert('La puja debe ser mayor que la puja actual');
-    return;
-  }
-
-  // Actualizar la puja actual
-  product.currentBid = bidAmount;
-  bidAmounts.value[productId] = ''; // Limpiar el input
-
-  alert(`¡Puja realizada con éxito! Nueva puja: $${bidAmount}`);
+    return `${days}d ${hours}h ${minutes}m ${seconds}s`;
 };
+
+// Start countdown timers
+onMounted(() => {
+    if (props.products) {
+        props.products.forEach(product => {
+            if (product.auction?.remaining?.total_seconds) {
+                let remainingSeconds = product.auction.remaining.total_seconds;
+                countdowns.value[product.auction.id] = remainingSeconds;
+
+                const timer = setInterval(() => {
+                    if (countdowns.value[product.auction.id] > 0) {
+                        countdowns.value[product.auction.id]--;
+                    } else {
+                        clearInterval(timer);
+                    }
+                }, 1000);
+            }
+        });
+    }
+});
+
+// Cleanup timers
+onUnmounted(() => {
+    Object.keys(countdowns.value).forEach(auctionId => {
+        clearInterval(countdowns.value[auctionId]);
+    });
+});
 </script>
 
+<template>
+    <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
+        <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Header Section with Wave Effect -->
+                <div class="text-center mb-12 relative overflow-hidden p-8 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 shadow-xl">
+                    <div class="relative z-10">
+                        <h1 class="text-4xl font-bold text-white mb-4">Subastas Activas</h1>
+                        <p class="text-lg text-white/90">Descubre productos únicos y participa en emocionantes subastas</p>
+                        <Link 
+                            v-if="isAuthenticated"
+                            :href="route('auctions.create')" 
+                            class="mt-6 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-blue-600 bg-white hover:bg-blue-50 transition-all transform hover:scale-105 shadow-md"
+                        >
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                            </svg>
+                            Crear Nueva Subasta
+                        </Link>
+                    </div>
+                    <!-- Animated Wave Background -->
+                    <div class="absolute inset-0 z-0 opacity-20">
+                        <div class="wave"></div>
+                    </div>
+                </div>
+
+                <!-- Grid de Subastas -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div v-for="product in products" :key="product.id" 
+                         class="bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl transform hover:-translate-y-2">
+                        <!-- Imagen y Badge -->
+                        <div class="relative">
+                            <img 
+                                :src="product.image || '/default-product.jpg'" 
+                                :alt="product.name"
+                                class="w-full h-64 object-cover"
+                            >
+                            <div class="absolute top-4 right-4">
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-600 text-white shadow-lg">
+                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                    </svg>
+                                    Subasta Activa
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Información de la subasta -->
+                        <div class="p-6 space-y-4">
+                            <h3 class="text-xl font-bold text-gray-900">{{ product.name }}</h3>
+                            
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="bg-blue-50 p-3 rounded-lg">
+                                    <p class="text-sm text-blue-600 font-medium">Precio actual</p>
+                                    <p class="text-lg font-bold text-blue-900">{{ product.auction?.current_price }}€</p>
+                                </div>
+                                <div class="bg-green-50 p-3 rounded-lg">
+                                    <p class="text-sm text-green-600 font-medium">Precio inicial</p>
+                                    <p class="text-lg font-bold text-green-900">{{ product.auction?.start_price }}€</p>
+                                </div>
+                            </div>
+
+                            <!-- Countdown Timer -->
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <p class="text-sm text-gray-600 font-medium flex items-center">
+                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    Tiempo restante
+                                </p>
+                                <p class="text-lg font-bold text-gray-900">
+                                    {{ product.auction?.id && countdowns[product.auction.id] !== undefined 
+                                        ? updateCountdown(product.auction.id, countdowns[product.auction.id])
+                                        : 'Calculando...' 
+                                    }}
+                                </p>
+                            </div>
+
+                            <!-- Botones de acción -->
+                            <div class="grid grid-cols-2 gap-4 pt-4">
+                                <Link 
+                                    :href="route('product.show', product.id)"
+                                    class="inline-flex justify-center items-center px-4 py-2 border border-blue-600 text-sm font-medium rounded-lg text-blue-600 bg-white hover:bg-blue-50 transition-all"
+                                >
+                                    Ver Detalles
+                                </Link>
+                                <button 
+                                    v-if="isAuthenticated"
+                                    class="inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-white bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 transition-all"
+                                >
+                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                                    </svg>
+                                    Pujar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Empty State -->
+                <div v-if="products.length === 0" class="text-center py-12 bg-white rounded-2xl shadow-lg">
+                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
+                    </svg>
+                    <h3 class="mt-2 text-sm font-medium text-gray-900">No hay subastas activas</h3>
+                    <p class="mt-1 text-sm text-gray-500">Vuelve más tarde para ver nuevas subastas</p>
+                </div>
+            </div>
+        </div>
+    </component>
+</template>
+
 <style scoped>
-.auction-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
+
+
+@keyframes wave {
+    0% { transform: translateX(-50%) rotateZ(0deg); }
+    50% { transform: translateX(-25%) rotateZ(180deg); }
+    100% { transform: translateX(-50%) rotateZ(360deg); }
 }
 
-.auction-card {
-  background-color: white;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  transition: transform 0.2s;
+/* Hover Effects */
+.transform {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
 }
 
-.auction-card:hover {
-  transform: translateY(-2px);
+.hover\:scale-105:hover {
+    transform: scale(1.05);
 }
 
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+.hover\:-translate-y-2:hover {
+    transform: translateY(-0.5rem);
+}
+
+/* Add this to your existing styles */
+.countdown-expired {
+    color: #EF4444;
 }
 </style>

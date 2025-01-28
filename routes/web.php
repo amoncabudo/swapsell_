@@ -76,6 +76,7 @@ Route::get('/products', [ProductController::class, 'getAllProducts'])->name('Pro
 Route::post('/products', [ProductController::class, 'toggleFavourite'])->name('productFavorite');
 //Route to show a product by id
 Route::get('/products/{id}', [ProductController::class, "goProduct"])->name("product.show");
+Route::get('/products/{id}', [ProductController::class, "show"])->name("products.show");
 
 //Route Users
 Route::post('/users', [UserController::class, "addUser"])->name("users");
@@ -192,8 +193,10 @@ Route::post('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])-
 Route::get('/product/featured', [ProductController::class, 'getProductsByCategoryId'])->name('products.featured');
 Route::get('/categories/trending', [CategoryController::class, 'getTrendingCategories'])->name('categories.trending');
 
-Route::get('/create-auction', [AuctionController::class, 'create'])->name('auctions.create');
-Route::post('/create-auction', [AuctionController::class, 'store'])->name('auctions.store');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/create-auction', [AuctionController::class, 'create'])->name('auctions.create');
+    Route::post('/create-auction', [AuctionController::class, 'store'])->name('auctions.store');
+});
 
 
 require __DIR__.'/auth.php';
