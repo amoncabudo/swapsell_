@@ -93,7 +93,7 @@ Route::get('/eventInfo', function(){
 
 Route::get('/addEvent', function(){
     return Inertia::render('AddEvent');
-})->middleware(['auth', 'verified', ManagerMiddleware::class])->name('addEvent');
+})->name('addEvent');
 Route::get('/updateEvent/{id}', [EventController::class, "goEvent"])->middleware(ManagerMiddleware::class)->name("event.show");
 
 Route::get('/deleteEvent/{id}', [EventController::class, "deleteEvent"])->middleware(ManagerMiddleware::class)->name("deleteEvent");
@@ -171,10 +171,6 @@ Route::get('/products/{id}', [ProductController::class, "goProduct"])->name("pro
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
 });
-
-
-
-Route::get('/events', [EventController::class, "index"])->name("Events");
 
 Route::get('/project', function () {
     return Inertia::render('Project', [
