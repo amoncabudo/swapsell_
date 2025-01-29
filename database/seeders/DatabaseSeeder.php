@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'admin',
             'email' => 'admin@admin.com',
             'password' => 'admin',
+            'role' => '0',
         ]);
 
         // Aquí tu código para crear categorías
@@ -46,6 +47,11 @@ class DatabaseSeeder extends Seeder
         Category::create([
             'name' => 'Juguetes',
             'image' => 'https://cdn.pixabay.com/photo/2016/11/29/10/07/beautiful-1866488_960_720.jpg'
+        ]);
+        Category::create([
+            'name' => 'index',
+            'image' => '',
+            'id' => 7,
         ]);
         
     }

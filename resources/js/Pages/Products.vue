@@ -1,11 +1,86 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
 import { defineProps } from 'vue';
-import { useForm } from '@inertiajs/vue3';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
+dayjs.extend(relativeTime);
+dayjs.locale('ca'); 
+import 'dayjs/locale/ca';
+
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import axios from 'axios';
+
+const timeAgo = (date) => {
+  return dayjs(date).fromNow();
+};
+onMounted(() => {
+  setInterval(() => {
+    props.products = [...props.products];
+  }, 60000);
+});
+// Añadimos un ref para las categorías
+// Definir props primero
+const props = defineProps({
+  products: Array,
+  isAuthenticated: Boolean
+});
+
+// Añadimos un ref para las categorías y ubicaciones
+const categories = ref([]);
+const locations = ref({});
+
+// Función para obtener las categorías
+const fetchCategories = async () => {
+    const response = await axios.get(route('categories.trending'));
+    categories.value = response.data.filter(category => category.id !== 7);
+};
+
+// Función para obtener el nombre de la ubicación
+const getLocationName = async (latitude, longitude) => {
+    const lat = Number(latitude).toFixed(6);
+    const lng = Number(longitude).toFixed(6);
+        const response = await axios.get(
+            `https://nominatim.openstreetmap.org/reverse`, {
+                params: {
+                    format: 'json',
+                    lat: lat,
+                    lon: lng,
+                    'accept-language': 'es',
+                    zoom: 10
+                }
+            }
+        );
+
+        if (response.data && response.data.address) {
+            const address = response.data.address;
+            return address.city || 
+                   address.town || 
+                   address.village || 
+                   address.municipality || 
+                   address.county ||
+                   'Ubicación no disponible';
+        }
+        return 'Ubicación no disponible';
+};
+
+// Función para inicializar las ubicaciones
+const initializeLocations = async () => {
+  if (props.products && props.products.length > 0) {
+    for (const product of props.products) {
+      if (product.latitude && product.longitude) {
+          locations.value[product.id] = await getLocationName(product.latitude, product.longitude);
+      }
+    }
+  }
+};
+
+onMounted(async () => {
+  await fetchCategories();
+  await initializeLocations();
+});
 
 function toggleFavorite(product) {
   const isFavorite = product.favorites === 1;
@@ -18,11 +93,18 @@ function toggleFavorite(product) {
     });
 }
 
-const props = defineProps({
-  products: Array,
-  isAuthenticated: Boolean
-})
-console.log(props.products)
+// Función auxiliar para asignar emojis según la categoría
+const getCategoryEmoji = (categoryName) => {
+  const emojiMap = {
+    'Hogar': '🏠',
+    'Tecnología': '📱',
+    'Deportes': '⚽',
+    'Moda': '👕',
+    'Salud y belleza': '💄',
+    'Juguetes': '🎮'
+  };
+  return emojiMap[categoryName] || '📦';
+};
 </script>
 <template>
   <div class="bg-gray-50 min-h-screen">
@@ -56,13 +138,15 @@ console.log(props.products)
               <span class="text-lg">⭐</span>
               <span>Todo</span>
             </button>
-            <button class="category-inactive px-4 py-2 rounded-full flex items-center space-x-2">
-              <span class="text-lg">📱</span>
-              <span>Electrónicos</span>
-            </button>
-            <button class="category-inactive px-4 py-2 rounded-full flex items-center space-x-2">
-              <span class="text-lg">🪑</span>
-              <span>Muebles</span>
+            <button 
+              v-for="category in categories" 
+              :key="category.id"
+              class="category-inactive px-4 py-2 rounded-full flex items-center space-x-2"
+            >
+              <span class="text-lg">
+                {{ getCategoryEmoji(category.name) }}
+              </span>
+              <span>{{ category.name }}</span>
             </button>
           </div>
         </div>
@@ -74,8 +158,8 @@ console.log(props.products)
           <div v-for="product in products" :key="product.id"
             class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
             <div class="relative">
-              <img :src="`/uploads/products/${product.image}`" :alt="product.name" class="w-full h-56 object-cover">
-            </div>
+              <img :src="`/storage/${product.image}`" :alt="product.name" class="w-full h-56 object-cover">
+            </div>  
             <div class="p-6">
               <Link :href="route('product.show', product.id)" class="block">
               <h2 class="text-xl font-semibold text-gray-900 mb-3">{{ product.name }}</h2>
@@ -92,9 +176,8 @@ console.log(props.products)
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   </svg>
-                  <span class="text-gray-800">{{ product.location || 'Ubicación no disponible' }}</span>
-                  <span class="mx-2 text-gray-800">•</span>
-                  <span class="text-gray-800">Hace 2h</span>
+                  <span class="text-gray-800">{{ locations[product.id] || 'Ubicación no disponible' }}</span>
+                  <span class="text-gray-800">{{ timeAgo(product.created_at) }}</span>
                 </div>
 
                 <form @submit.prevent>
