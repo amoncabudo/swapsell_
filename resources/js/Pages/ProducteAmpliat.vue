@@ -17,7 +17,7 @@ console.log(props.product);
       <!-- Primer bloque -->
       <div class="w-full lg:w-2/3 p-4 flex flex-col items-center justify-center">
         <p class="text-xl font-bold mb-4">{{ product.name }}</p>
-        <img src="/images/machine.jpg" alt="pop" class="mb-4 rounded max-w-full h-auto">
+        <img :src="`/storage/${product.image}`" :alt="product.name" class="mb-4 rounded max-w-full h-auto">
         <div class="flex space-x-4">
           <button class="bg-SubastaButton1 text-white font-bold py-2 px-4 rounded hover:bg-slate-800">
             Compra
@@ -37,7 +37,7 @@ console.log(props.product);
             <p>Preu: {{ product.price }} €</p>
             <p>Descripcio del producte: {{ product.description }}</p>
           </div>
-          <img src="/images/machine.jpg" alt="popaopaopa" class="rounded w-24 h-28">
+          <img :src="`/storage/${product.image}`" :alt="product.name" class="rounded w-24 h-28">
         </div>
   
         <!-- Segundo div -->
