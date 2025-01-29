@@ -4,8 +4,22 @@ import { defineProps } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import axios from 'axios';
+
+// Añadimos un ref para las categorías
+const categories = ref([]);
+
+// Función para obtener las categorías
+const fetchCategories = async () => {
+    const response = await axios.get(route('categories.trending'));
+    categories.value = response.data.filter(category => category.id !== 7);
+};
+
+// Llamamos a la función cuando el componente se monta
+onMounted(() => {
+  fetchCategories();
+});
 
 function toggleFavorite(product) {
   const isFavorite = product.favorites === 1;
@@ -23,6 +37,19 @@ const props = defineProps({
   isAuthenticated: Boolean
 })
 console.log(props.products)
+
+// Función auxiliar para asignar emojis según la categoría
+const getCategoryEmoji = (categoryName) => {
+  const emojiMap = {
+    'Hogar': '🏠',
+    'Tecnología': '📱',
+    'Deportes': '⚽',
+    'Moda': '👕',
+    'Salud y belleza': '💄',
+    'Juguetes': '🎮'
+  };
+  return emojiMap[categoryName] || '📦';
+};
 </script>
 <template>
   <div class="bg-gray-50 min-h-screen">
@@ -56,13 +83,15 @@ console.log(props.products)
               <span class="text-lg">⭐</span>
               <span>Todo</span>
             </button>
-            <button class="category-inactive px-4 py-2 rounded-full flex items-center space-x-2">
-              <span class="text-lg">📱</span>
-              <span>Electrónicos</span>
-            </button>
-            <button class="category-inactive px-4 py-2 rounded-full flex items-center space-x-2">
-              <span class="text-lg">🪑</span>
-              <span>Muebles</span>
+            <button 
+              v-for="category in categories" 
+              :key="category.id"
+              class="category-inactive px-4 py-2 rounded-full flex items-center space-x-2"
+            >
+              <span class="text-lg">
+                {{ getCategoryEmoji(category.name) }}
+              </span>
+              <span>{{ category.name }}</span>
             </button>
           </div>
         </div>
