@@ -7,8 +7,15 @@ import NavbarS from '@/Layouts/NavbarS.vue';
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
-// Añadimos un ref para las categorías
+// Definir props primero
+const props = defineProps({
+  products: Array,
+  isAuthenticated: Boolean
+});
+
+// Añadimos un ref para las categorías y ubicaciones
 const categories = ref([]);
+const locations = ref({});
 
 // Función para obtener las categorías
 const fetchCategories = async () => {
@@ -16,9 +23,62 @@ const fetchCategories = async () => {
     categories.value = response.data.filter(category => category.id !== 7);
 };
 
-// Llamamos a la función cuando el componente se monta
-onMounted(() => {
-  fetchCategories();
+// Función para obtener el nombre de la ubicación
+const getLocationName = async (latitude, longitude) => {
+    // Convertir las coordenadas a números y redondear a 6 decimales
+    const lat = Number(latitude).toFixed(6);
+    const lng = Number(longitude).toFixed(6);
+    
+    console.log('Coordenadas a consultar:', lat, lng);
+    
+    const response = await axios.get(
+      `https://nominatim.openstreetmap.org/reverse`, {
+        params: {
+          format: 'json',
+          lat: lat,
+          lon: lng,
+          'accept-language': 'es',
+          zoom: 10 // Nivel de zoom para obtener ciudad
+        },
+        headers: {
+          'User-Agent': 'TuAplicacion/1.0' // Requerido por Nominatim
+        }
+    });
+
+    console.log('Respuesta de Nominatim:', response.data);
+
+    if (response.data && response.data.address) {
+      const address = response.data.address;
+      // Intentar obtener la ubicación en este orden de preferencia
+      return address.city || 
+             address.town || 
+             address.village || 
+             address.municipality || 
+             address.county ||
+             'Ubicación no disponible';
+    }
+    return 'Ubicación no disponible';
+};
+
+// Función para inicializar las ubicaciones
+const initializeLocations = async () => {
+  if (props.products && props.products.length > 0) {
+    for (const product of props.products) {
+      if (product.latitude && product.longitude) {
+        try {
+          locations.value[product.id] = await getLocationName(product.latitude, product.longitude);
+        } catch (error) {
+          console.error(`Error al obtener ubicación para producto ${product.id}:`, error);
+          locations.value[product.id] = 'Ubicación no disponible';
+        }
+      }
+    }
+  }
+};
+
+onMounted(async () => {
+  await fetchCategories();
+  await initializeLocations();
 });
 
 function toggleFavorite(product) {
@@ -31,12 +91,6 @@ function toggleFavorite(product) {
       console.error("Error al actualizar el estado de favorito:", error);
     });
 }
-
-const props = defineProps({
-  products: Array,
-  isAuthenticated: Boolean
-})
-console.log(props.products)
 
 // Función auxiliar para asignar emojis según la categoría
 const getCategoryEmoji = (categoryName) => {
@@ -121,7 +175,7 @@ const getCategoryEmoji = (categoryName) => {
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   </svg>
-                  <span class="text-gray-800">{{ product.location || 'Ubicación no disponible' }}</span>
+                  <span class="text-gray-800">{{ locations[product.id] || 'Ubicación no disponible' }}</span>
                   <span class="mx-2 text-gray-800">•</span>
                   <span class="text-gray-800">Hace 2h</span>
                 </div>
