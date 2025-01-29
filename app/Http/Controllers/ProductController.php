@@ -39,8 +39,6 @@ class ProductController extends Controller
             $product->image = 'default.jpg';
         }   
                 
-        
-        
         $product->save();
         return redirect()->route('Products')->with('success', 'Producte publicat correctament');
     }
