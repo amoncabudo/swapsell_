@@ -46,7 +46,7 @@ class ProductController extends Controller
     public function deleteProduct($id){
         $product = Product::find($id);
         $product->delete();
-        return redirect()->route('Products')->with('success', 'Producte eliminat correctament');
+        return redirect()->route('profile')->with('success', 'Producte eliminat correctament');
     }
     
         public function updateProduct(Request $request, $id){
