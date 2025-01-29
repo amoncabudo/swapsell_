@@ -6,7 +6,6 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 
 dayjs.extend(relativeTime);
 dayjs.locale('ca'); 
-console.log(dayjs.locale());
 import 'dayjs/locale/ca';
 
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
@@ -41,39 +40,30 @@ const fetchCategories = async () => {
 
 // Función para obtener el nombre de la ubicación
 const getLocationName = async (latitude, longitude) => {
-    // Convertir las coordenadas a números y redondear a 6 decimales
     const lat = Number(latitude).toFixed(6);
     const lng = Number(longitude).toFixed(6);
-    
-    console.log('Coordenadas a consultar:', lat, lng);
-    
-    const response = await axios.get(
-      `https://nominatim.openstreetmap.org/reverse`, {
-        params: {
-          format: 'json',
-          lat: lat,
-          lon: lng,
-          'accept-language': 'es',
-          zoom: 10 // Nivel de zoom para obtener ciudad
-        },
-        headers: {
-          'User-Agent': 'TuAplicacion/1.0' // Requerido por Nominatim
+        const response = await axios.get(
+            `https://nominatim.openstreetmap.org/reverse`, {
+                params: {
+                    format: 'json',
+                    lat: lat,
+                    lon: lng,
+                    'accept-language': 'es',
+                    zoom: 10
+                }
+            }
+        );
+
+        if (response.data && response.data.address) {
+            const address = response.data.address;
+            return address.city || 
+                   address.town || 
+                   address.village || 
+                   address.municipality || 
+                   address.county ||
+                   'Ubicación no disponible';
         }
-    });
-
-    console.log('Respuesta de Nominatim:', response.data);
-
-    if (response.data && response.data.address) {
-      const address = response.data.address;
-      // Intentar obtener la ubicación en este orden de preferencia
-      return address.city || 
-             address.town || 
-             address.village || 
-             address.municipality || 
-             address.county ||
-             'Ubicación no disponible';
-    }
-    return 'Ubicación no disponible';
+        return 'Ubicación no disponible';
 };
 
 // Función para inicializar las ubicaciones
@@ -81,12 +71,7 @@ const initializeLocations = async () => {
   if (props.products && props.products.length > 0) {
     for (const product of props.products) {
       if (product.latitude && product.longitude) {
-        try {
           locations.value[product.id] = await getLocationName(product.latitude, product.longitude);
-        } catch (error) {
-          console.error(`Error al obtener ubicación para producto ${product.id}:`, error);
-          locations.value[product.id] = 'Ubicación no disponible';
-        }
       }
     }
   }
