@@ -140,7 +140,7 @@ const initializeMapWithPosition = (lat, lng) => {
     let contenido = `
     <p style="margin:0;font-weight:bold;">${element.name} </p> 
     <p style="margin:0;">  ${element.price}€ </p>
-    <a  style="margin:0;" href="/productextend/${element.id}">Ver producto</a>
+    <a  style="margin:0;" href="/products/${element.id}">Ver producto</a>
     `;
     L.marker([element.latitude, element.longitude],{icon: Icon})
       .bindPopup(contenido)
