@@ -1,12 +1,27 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
 import { defineProps } from 'vue';
-import { useForm } from '@inertiajs/vue3';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
+dayjs.extend(relativeTime);
+dayjs.locale('ca'); 
+console.log(dayjs.locale());
+import 'dayjs/locale/ca';
+
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
+const timeAgo = (date) => {
+  return dayjs(date).fromNow();
+};
+onMounted(() => {
+  setInterval(() => {
+    props.products = [...props.products];
+  }, 60000);
+});
 // Añadimos un ref para las categorías
 const categories = ref([]);
 
@@ -117,13 +132,8 @@ const getCategoryEmoji = (categoryName) => {
 
               <div class="mt-2 flex items-center justify-between text-sm text-gray-500">
                 <div class="flex items-center">
-                  <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  </svg>
-                  <span class="text-gray-800">{{ product.location || 'Ubicación no disponible' }}</span>
-                  <span class="mx-2 text-gray-800">•</span>
-                  <span class="text-gray-800">Hace 2h</span>
+                  
+                  <span class="text-gray-800">{{ timeAgo(product.created_at) }}</span>
                 </div>
 
                 <form @submit.prevent>
