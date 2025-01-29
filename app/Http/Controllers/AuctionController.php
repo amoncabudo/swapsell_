@@ -55,4 +55,26 @@ class AuctionController extends Controller
 
         return redirect()->route('auction');
     }
+
+    public function bid(Request $request)
+    {
+        $validated = $request->validate([
+            'auction_id' => 'required|exists:auctions,id',
+            'bid_amount' => 'required|numeric|min:0'
+        ]);
+
+        $auction = Auction::findOrFail($validated['auction_id']);
+
+        // Verificar que la puja sea mayor que el precio actual
+        if ($validated['bid_amount'] <= $auction->current_price) {
+            return back()->withErrors(['bid_amount' => 'La puja debe ser mayor al precio actual']);
+        }
+
+        // Actualizar el precio actual
+        $auction->update([
+            'current_price' => $validated['bid_amount']
+        ]);
+
+        return back()->with('success', 'Puja realizada con éxito');
+    }
 }

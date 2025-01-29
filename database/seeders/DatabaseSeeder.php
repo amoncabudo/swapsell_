@@ -48,6 +48,11 @@ class DatabaseSeeder extends Seeder
             'name' => 'Juguetes',
             'image' => 'https://cdn.pixabay.com/photo/2016/11/29/10/07/beautiful-1866488_960_720.jpg'
         ]);
+        Category::create([
+            'name' => 'index',
+            'image' => '',
+            'id' => 7,
+        ]);
         
     }
 }

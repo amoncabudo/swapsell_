@@ -3,6 +3,7 @@ import { Link } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
 import { ref, onMounted, onUnmounted } from 'vue';
+import { useForm } from '@inertiajs/vue3';
 
 const props = defineProps({
     isAuthenticated: Boolean,
@@ -50,6 +51,33 @@ onUnmounted(() => {
         clearInterval(countdowns.value[auctionId]);
     });
 });
+
+const form = useForm({
+    bid_amount: null,
+    auction_id: null
+});
+
+const placeBid = (product) => {
+    if (!product.bidPrice || product.bidPrice <= product.auction.current_price) {
+        alert('La puja debe ser mayor al precio actual');
+        return;
+    }
+
+    form.bid_amount = product.bidPrice;
+    form.auction_id = product.auction.id;
+
+    form.post(route('auctions.bid'), {
+        preserveScroll: true,
+        onSuccess: () => {
+            // Actualizar el precio actual en la interfaz
+            product.auction.current_price = product.bidPrice;
+            product.bidPrice = null; // Limpiar el campo de puja
+        },
+        onError: (errors) => {
+            alert('Error al realizar la puja: ' + Object.values(errors).join('\n'));
+        }
+    });
+};
 </script>
 
 <template>
@@ -130,6 +158,21 @@ onUnmounted(() => {
                                 </p>
                             </div>
 
+                            <!-- Campo para ingresar el precio de la puja -->
+                            <div class="mt-4">
+                                <input 
+                                    type="number" 
+                                    v-model="product.bidPrice" 
+                                    :min="product.auction?.current_price + 1"
+                                    :placeholder="`Mínimo ${(product.auction?.current_price + 1)}€`"
+                                    class="border rounded-lg p-2 w-full"
+                                    :class="{'border-red-500': product.bidPrice <= product.auction?.current_price}"
+                                />
+                                <p v-if="product.bidPrice <= product.auction?.current_price" class="text-red-500 text-sm mt-1">
+                                    La puja debe ser mayor al precio actual
+                                </p>
+                            </div>
+
                             <!-- Botones de acción -->
                             <div class="grid grid-cols-2 gap-4 pt-4">
                                 <Link 
@@ -140,7 +183,9 @@ onUnmounted(() => {
                                 </Link>
                                 <button 
                                     v-if="isAuthenticated"
-                                    class="inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-white bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 transition-all"
+                                    @click="placeBid(product)"
+                                    :disabled="!product.bidPrice || product.bidPrice <= product.auction?.current_price"
+                                    class="inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-white bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
                                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
