@@ -75,7 +75,7 @@ const showingNavigationDropdown = ref(false);
                                         <DropdownLink :href="route('profile')">Perfil</DropdownLink>
                                         <DropdownLink :href="route('Events')">Events</DropdownLink>
                                         <DropdownLink :href="route('Products')">Productes</DropdownLink>
-                                        <DropdownLink :href="route('favorites')">Favorits</DropdownLink>
+                                        <DropdownLink :href="route('products_favs')">Favorits</DropdownLink>
                                         <DropdownLink :href="route('logout')" method="post" as="button">Tencar sessió</DropdownLink>
                                     </template>
                                 </Dropdown>
