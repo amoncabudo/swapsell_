@@ -43,6 +43,7 @@ class AuctionController extends Controller
 
         $auction = Auction::create([
             'product_id' => $validated['product_id'],
+            'user_id' => Auth::id(),
             'start_price' => $validated['start_price'],
             'current_price' => $validated['current_price'],
             'start_time' => $validated['start_time'],
@@ -70,9 +71,10 @@ class AuctionController extends Controller
             return back()->withErrors(['bid_amount' => 'La puja debe ser mayor al precio actual']);
         }
 
-        // Actualizar el precio actual
+        // Actualizar el precio actual y el último pujador
         $auction->update([
-            'current_price' => $validated['bid_amount']
+            'current_price' => $validated['bid_amount'],
+            'last_bidder_id' => Auth::id() // Agregamos el ID del usuario actual como último pujador
         ]);
 
         return back()->with('success', 'Puja realizada con éxito');

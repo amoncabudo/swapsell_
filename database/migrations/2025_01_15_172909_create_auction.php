@@ -14,12 +14,16 @@ return new class extends Migration
         Schema::create('auctions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('last_bidder_id')->nullable();
             $table->decimal('start_price', total:8, places:2);
             $table->decimal('current_price', total:8, places:2);
             $table->dateTime('start_time');
             $table->dateTime('end_time');
             $table->boolean('status');
             $table->timestamps();
+
+            $table->foreign('last_bidder_id')->references('id')->on('users')->onDelete('set null');
         });
     }
 
@@ -28,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('auctions');
     }
 };
