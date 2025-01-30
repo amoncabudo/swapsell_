@@ -8,6 +8,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use app\http\Controller\FavoriteController;
 
 class ProductController extends Controller
 {
@@ -88,6 +89,10 @@ class ProductController extends Controller
             $product->favorites = 1;
         }else{
             $product->favorites = 0;
+            
+            // Llamada a la función delete del FavoriteController
+            $favoriteController = new \App\Http\Controllers\FavoriteController();
+            $favoriteController->delete($product->id); // Asegúrate de pasar el ID correcto del producto
         }
         
         $product->save();

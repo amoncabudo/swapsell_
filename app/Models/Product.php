@@ -3,6 +3,8 @@
 namespace App\Models;
 use App\Models\User;
 use App\Models\Category;
+use App\Models\Favorite;
+use App\Model\Basket;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
@@ -20,6 +22,16 @@ class Product extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function basket()
+    {
+        return $this->belongsTo(Basket::class);
+    }
+
+    public function favorite()
+    {
+        return $this->belongsTo(Favorite::class);
     }
 
     /**

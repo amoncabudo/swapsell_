@@ -112,7 +112,7 @@ Route::middleware(['auth'])->group(function () {
 
 //Route Favorites
 Route::get('/favorites/all', [ControllerFavorites::class, 'index'])->name('favorites');
-Route::get('/favorites', [FavoriteController::class, 'gatAllFavorites'])->name('products_favs');
+Route::get('/favorites', [FavoriteController::class, 'getAllFavorites'])->name('products_favs');
 
 //Route Sell
 Route::middleware(['auth'])->group(function () {

@@ -90,7 +90,7 @@ const closeModalP = () => {
 
 function addProduct(){
         console.log("dkasjg");
-    axios.post(route('products'), product).then(data => {
+    axios.post(route('sell'), product).then(data => {
         console.log(data.data);
         closeModalP();
         flashMessage.value = 'Prova';

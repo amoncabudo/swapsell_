@@ -2,6 +2,8 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
 
+
+
 const props = defineProps({
     isAuthenticated: Boolean,
     product: Object,
@@ -19,7 +21,7 @@ console.log(props.product);
         <p class="text-xl font-bold mb-4">{{ product.name }}</p>
         <img src="/images/machine.jpg" alt="pop" class="mb-4 rounded max-w-full h-auto">
         <div class="flex space-x-4">
-          <button class="bg-SubastaButton1 text-white font-bold py-2 px-4 rounded hover:bg-slate-800">
+          <button @click="addToBasket" class="bg-SubastaButton1 text-white font-bold py-2 px-4 rounded hover:bg-slate-800">
             Compra
           </button>
           <button class="bg-SubastaButton2 text-white font-bold py-2 px-4 rounded hover:bg-amber-600">
