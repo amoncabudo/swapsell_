@@ -25,7 +25,7 @@ class UserController extends Controller
             'password' => bcrypt($request->password), // Asegúrate de encriptar la contraseña
         ]);
 
-        return redirect(route('adminpanel', absolute: false)); // Retorna el usuario creado
+        return $user; // Retorna el usuario creado
     }
  
 }
