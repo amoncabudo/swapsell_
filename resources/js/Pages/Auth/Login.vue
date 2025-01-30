@@ -1,5 +1,6 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3';
 
 const form = useForm({
     email: '',
@@ -100,6 +101,11 @@ const submit = () => {
             <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-700 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
           </button>
         </form>
+        <div class="text-center">
+        <Link href="/register" class="text-gray-600 hover:text-blue-500 transition-colors">
+          <p class="text-custom-blue mt-5 text-sm/6">No tens compte? Registra't</p>
+        </Link>
+      </div>
       </div>
     </section>
   </div>

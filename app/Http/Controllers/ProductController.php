@@ -30,9 +30,16 @@ class ProductController extends Controller
         $product->latitude = $latitude;
         $product->status = $status;
         $product->user_id = Auth::id();
-        $product->category_id = 1;
-        $product->image = 'default.jpg';
-
+        $product->category_id = $request->get('category_id') ?? 1;
+        //Image
+        
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->storeAs('public', $request->file('image')->getClientOriginalName());
+            $product->image = $request->file('image')->getClientOriginalName();
+        } else {
+            $product->image = 'default.jpg';
+        }   
+                
         $product->save();
         return redirect()->route('Products')->with('success', 'Producte publicat correctament');
     }
@@ -40,38 +47,44 @@ class ProductController extends Controller
     public function deleteProduct($id){
         $product = Product::find($id);
         $product->delete();
-        return redirect()->route('Products')->with('success', 'Producte eliminat correctament');
+        return redirect()->route('profile')->with('success', 'Producte eliminat correctament');
     }
     
-    public function updateProduct(Request $request){
-        $id = $request->get("id");
-        $name = $request->get("name");
-        $description = $request->get("description");
-        $price = $request->get("price");
-        $longitude = $request->get("longitude");
-        $latitude = $request->get("latitude");
-        $status = $request->get("status");
-        $category = $request->get("category");
-
-        $product = Product::find($id);
-        $product->name = $request->get("name", $product->name);
-        $product->description = $request->get("description", $product->description);
-        $product->price = $request->get("price", $product->price);
-        $product->longitude = $request->get("longitude", $product->longitude);
-        $product->latitude = $request->get("latitude", $product->latitude);
-        $product->status = $request->get("status", $product->status);
-
-        $product->user_id = Auth::id();
-        $product->category_id = $category;
-        $product->image = 'default.jpg';
-
-        $product->save();
+        public function updateProduct(Request $request, $id){
+            $product = Product::find($id);
         
-        return redirect()->route('Products')->with('success', 'Producte actualitzat correctament');
-    }
+            if (!$product) {
+                return redirect()->route('Products')->with('error', 'Producte no trobat');
+            }
+        
+            $name = $request->get("name");
+            $description = $request->get("description");
+            $price = $request->get("price");
+            $longitude = $request->get("longitude");
+            $latitude = $request->get("latitude");
+            $status = $request->get("status");
+            $category = $request->get("category");
+        
+            $product->name = $request->get("name", $product->name);
+            $product->description = $request->get("description", $product->description);
+            $product->price = $request->get("price", $product->price);
+            $product->longitude = $request->get("longitude", $product->longitude);
+            $product->latitude = $request->get("latitude", $product->latitude);
+            $product->status = $request->get("status", $product->status);
+            $product->category_id = $request->get("category_id", $product->category_id);
+            
+        
+            $product->user_id = Auth::id();
+            $product->image = 'default.jpg';
+            
+            $product->save();
+            
+            return redirect()->route('profile');
+
+        }
 
     public function getAllProducts(){
-        $products = Product::with('category')->get();
+        $products = Product::where('bid', false)->with('category')->get();
         $isAuthenticated = Auth::check();
         return Inertia::render("Products", 
         ["products" => $products,
@@ -125,11 +138,48 @@ class ProductController extends Controller
 
     public function auction()
     {
-        $products = Product::where('bid', true)->get();
+        $products = Product::with('auction')
+            ->where('bid', true)
+            ->get()
+            ->map(function($product) {
+                // Add remaining time calculation
+                if ($product->auction) {
+                    $endTime = new \DateTime($product->auction->end_time);
+                    $now = new \DateTime();
+                    $interval = $now->diff($endTime);
+                    
+                    $product->auction->remaining = [
+                        'days' => $interval->d,
+                        'hours' => $interval->h,
+                        'minutes' => $interval->i,
+                        'seconds' => $interval->s,
+                        'total_seconds' => $endTime->getTimestamp() - $now->getTimestamp()
+                    ];
+                }
+                return $product;
+            });
         
         return Inertia::render('Subasta', [
             'isAuthenticated' => auth()->check(),
             'products' => $products
         ]);
+    }
+    public function editProduct($id) {
+        $product = Product::find($id);
+    
+        if (!$product) {
+            return redirect()->route('Products')->with('error', 'Producte no trobat');
+        }
+    
+        return Inertia::render('UpdateProduct', ['product' => $product]);
+    }
+
+    public function getAvailableProducts()
+    {
+        $availableProducts = Product::where('user_id', auth()->id())
+                              ->where('bid', false)
+                              ->get();
+    
+        return response()->json($availableProducts);
     }
 }
