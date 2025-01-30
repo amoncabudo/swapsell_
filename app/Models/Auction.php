@@ -10,11 +10,13 @@ class Auction extends Model
 {
     protected $fillable = [
         'product_id',
+        'user_id',
         'start_price',
         'current_price',
         'start_time',
         'end_time',
-        'status'
+        'status',
+        'last_bidder_id'
     ];
     
     public function products()
@@ -26,4 +28,9 @@ class Auction extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    public function lastBidder()
+{
+    return $this->belongsTo(User::class, 'last_bidder_id');
+}
 }
