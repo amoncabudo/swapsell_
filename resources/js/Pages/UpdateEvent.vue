@@ -41,6 +41,7 @@ console.log(props.event);
             id="id"
             name="id"
             v-model="form.id"
+            hidden
             class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200"
             required
           />
