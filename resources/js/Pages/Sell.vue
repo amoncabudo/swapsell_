@@ -14,7 +14,7 @@ let form = useForm({
     longitude: null,
     latitude: null,
     status: "active",
-    category: "",
+    category_id: "",
     image: null
 });
 

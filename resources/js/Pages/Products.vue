@@ -1,6 +1,6 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
-import { defineProps } from 'vue';
+import { defineProps, ref, onMounted, computed } from 'vue';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
@@ -10,7 +10,6 @@ import 'dayjs/locale/ca';
 
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
-import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
 const timeAgo = (date) => {
@@ -105,6 +104,22 @@ const getCategoryEmoji = (categoryName) => {
   };
   return emojiMap[categoryName] || '📦';
 };
+
+const selectedCategory = ref('all');
+
+// Función para filtrar productos por categoría
+const filteredProducts = computed(() => {
+  if (selectedCategory.value === 'all') {
+    return props.products;
+  }else if(selectedCategory.value.empty){
+    return 'no hi ha productos en esta categoria';
+  }else{
+    return props.products.filter(product => 
+      product.category.name === selectedCategory.value
+    );
+  }
+
+});
 </script>
 <template>
   <div class="bg-gray-50 min-h-screen">
@@ -134,14 +149,24 @@ const getCategoryEmoji = (categoryName) => {
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8">
         <div class="glass-effect rounded-xl p-4">
           <div class="flex space-x-4 overflow-x-auto py-2">
-            <button class="category-active px-4 py-2 rounded-full flex items-center space-x-2">
+            <button 
+              @click="selectedCategory = 'all'"
+              :class="[
+                'px-4 py-2 rounded-full flex items-center space-x-2',
+                selectedCategory === 'all' ? 'category-active' : 'category-inactive'
+              ]"
+            >
               <span class="text-lg">⭐</span>
               <span>Todo</span>
             </button>
             <button 
               v-for="category in categories" 
               :key="category.id"
-              class="category-inactive px-4 py-2 rounded-full flex items-center space-x-2"
+              @click="selectedCategory = category.name"
+              :class="[
+                'px-4 py-2 rounded-full flex items-center space-x-2',
+                selectedCategory === category.name ? 'category-active' : 'category-inactive'
+              ]"
             >
               <span class="text-lg">
                 {{ getCategoryEmoji(category.name) }}
@@ -155,7 +180,7 @@ const getCategoryEmoji = (categoryName) => {
       <!-- Grid de productos -->
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div v-for="product in products" :key="product.id"
+          <div v-for="product in filteredProducts" :key="product.id"
             class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
             <div class="relative">
               <img :src="`/storage/${product.image}`" :alt="product.name" class="w-full h-56 object-cover">
