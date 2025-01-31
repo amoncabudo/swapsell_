@@ -6,8 +6,10 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
+import { usePage } from '@inertiajs/vue3';
 
 const showingNavigationDropdown = ref(false);
+
 </script>
 
 <template>
@@ -70,14 +72,17 @@ const showingNavigationDropdown = ref(false);
                                             </button>
                                         </span>
                                     </template>
-
-                                    <template #content>
-                                        <DropdownLink :href="route('profile')">Perfil</DropdownLink>
-                                        <DropdownLink :href="route('Events')">Events</DropdownLink>
-                                        <DropdownLink :href="route('Products')">Productes</DropdownLink>
-                                        <DropdownLink :href="route('products_favs')">Favorits</DropdownLink>
-                                        <DropdownLink :href="route('logout')" method="post" as="button">Tencar sessió</DropdownLink>
-                                    </template>
+                            <template #content>  
+                                <DropdownLink :href="route('profile')">Perfil</DropdownLink>
+                                <DropdownLink :href="route('Events')">Events</DropdownLink>
+                                <DropdownLink :href="route('Products')">Productes</DropdownLink>
+                                <DropdownLink :href="route('products_favs')">Favorits</DropdownLink>
+                                <DropdownLink :href="route('cart')">Carrito</DropdownLink>
+                                <template v-if="$page.props.auth.user.role === 0">
+                                    <DropdownLink :href="route('AdminPanel')">Admin Panel</DropdownLink>
+                                </template>
+                                <DropdownLink :href="route('logout')" method="post" as="button">Tencar sessió</DropdownLink>
+                            </template>
                                 </Dropdown>
                             </div>
                         </div>
@@ -111,6 +116,11 @@ const showingNavigationDropdown = ref(false);
                             <ResponsiveNavLink :href="route('profile.edit')">Perfil</ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('Events')">Events</ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('Products')">Productes</ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('products_favs')">Favorits</ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('cart')">Carrito</ResponsiveNavLink>
+                            <template v-if="$page.props.auth.user.role === 0">
+                                <ResponsiveNavLink :href="route('AdminPanel')">Admin Panel</ResponsiveNavLink>
+                            </template>
                             <ResponsiveNavLink :href="route('logout')" method="post" as="button">Tencar sessió</ResponsiveNavLink>
                         </div>
                     </div>
