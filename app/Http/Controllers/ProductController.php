@@ -21,7 +21,7 @@ class ProductController extends Controller
         $longitude = $request->get("longitude");
         $latitude = $request->get("latitude");
         $status = $request->get("status");
-
+        $category_id = $request->get("category_id");
         $product = new Product();
         $product->name = $name;
         $product->description = $description;
@@ -30,7 +30,7 @@ class ProductController extends Controller
         $product->latitude = $latitude;
         $product->status = $status;
         $product->user_id = Auth::id();
-        $product->category_id = $request->get('category_id') ?? 1;
+        $product->category_id = $request->category_id;
         //Image
         
         if ($request->hasFile('image')) {
