@@ -37,7 +37,7 @@ Route::get('/dashboard', function () {
 //Route AdminPanel
 Route::get('/adminpanel', function () {return Inertia::render('AdminPanel', [
     'isAuthenticated' => auth()->check(),
-]);})->middleware(AdminMiddleware::class);
+]);})->middleware(AdminMiddleware::class)->name("AdminPanel");
 
 //Route Events
 Route::post('/events', [EventController::class, "addEvent"])->name("events");
