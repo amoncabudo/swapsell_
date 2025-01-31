@@ -43,7 +43,7 @@ onMounted(async () => {
             id: category.id,
             name: category.name,
             items: 0, // You can add a count of products per category if needed
-            image: `/images/category${category.id}.jpg`, // Make sure these images exist
+            image: `/storage/${category.image}`, // Make sure these images exist
             delay: (index + 1) * 100
         }));
 });
@@ -100,7 +100,7 @@ onMounted(async () => {
                         <div v-for="category in trendingCategories" :key="category.id" class="trending-card"
                             data-aos="zoom-in" :data-aos-delay="category.delay">
                             <div class="relative h-80">
-                                <img :src="category.image" :alt="category.name"
+                                <img :src="`${category.image}`" :alt="category.name"
                                     class="w-full h-full object-cover rounded-xl">
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent rounded-xl">
                                     <div class="absolute bottom-6 left-6 text-white">
