@@ -124,10 +124,12 @@ class ProductController extends Controller
     public function goProduct($id){
         $product = Product::with('category', 'user')->find($id);
         $isAuthenticated = Auth::check();
+        $comments = $product->comments()->with('user')->orderBy('created_at', 'desc')->get();
         return Inertia::render("ProducteAmpliat", 
         ["product" => $product,
         "isAuthenticated" => $isAuthenticated,
-        "user" => $product->user
+        "user" => $product->user,
+        "comments" => $comments
     ]);
     }
 
@@ -176,5 +178,18 @@ class ProductController extends Controller
                               ->get();
     
         return response()->json($availableProducts);
+    }
+
+    
+
+    public function showcomment(Request $request)
+    {
+        $product = Product::find($request->product_id);
+        $product->comments()->create([
+            'user_id' => auth()->id(),
+            'content' => $request->content
+        ]);
+    
+        return response()->json($product->comments()->with('user')->get());
     }
 }

@@ -15,6 +15,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\SellController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\AuctionController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\ManagerMiddleware;
@@ -78,7 +79,14 @@ Route::get('/products', [ProductController::class, 'getAllProducts'])->name('Pro
 Route::post('/products', [ProductController::class, 'toggleFavourite'])->name('productFavorite');
 //Route to show a product by id
 Route::get('/products/{id}', [ProductController::class, "goProduct"])->name("product.show");
-Route::get('/products/{id}', [ProductController::class, "show"])->name("products.show");
+
+//route to show all comments
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('/comentarios', [CommentController::class, 'addcomment'])->name('comments.addcoment');
+
+});
+
 
 //Route Users
 Route::post('/users', [UserController::class, "addUser"])->name("users");
