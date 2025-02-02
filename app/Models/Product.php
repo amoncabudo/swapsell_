@@ -5,6 +5,7 @@ use App\Models\User;
 use App\Models\Category;
 use App\Models\Favorite;
 use App\Model\Basket;
+use App\Models\Comment;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
