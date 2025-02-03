@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\Product;
+use App\Models\Auction;
 
 class ProfileController extends Controller
 {
@@ -67,10 +68,12 @@ class ProfileController extends Controller
         $user = Auth::user();
         $isAuthenticated = Auth::check();
         $products = Product::where('user_id', $user->id)->get();
+        $auction = Auction::where('user_id', $user->id)->with('product')->get();
         return Inertia::render("Profile", [
             "user" => $user,
             "isAuthenticated" => $isAuthenticated,
-            "products" => $products
+            "products" => $products,
+            "auction" => $auction
         ]);
     }
 }
