@@ -236,10 +236,14 @@ const filteredProducts = computed(() => {
       <div class="fixed bottom-8 right-8 flex space-x-4">
         <!-- Botón de venta -->
 <<<<<<< HEAD
+<<<<<<< HEAD
         <Link aria-label="addProduct" href="/sell"
 =======
         <Link href="/sell"
 >>>>>>> 601851fb7a5589b99602d27e674946056385d7e4
+=======
+        <Link href="/sell"
+>>>>>>> 0afaeefc056477d61a7e49b8d7abd8763f463c9c
           class="bg-custom-blue text-white rounded-full p-4 shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:bg-custom-blue-dark flex items-center">
           <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -249,10 +253,14 @@ const filteredProducts = computed(() => {
 
         <!-- Botón de subastas -->
 <<<<<<< HEAD
+<<<<<<< HEAD
         <Link aria-label="Create Auction" href="/create-auction"
 =======
         <Link href="/create-auction"
 >>>>>>> 601851fb7a5589b99602d27e674946056385d7e4
+=======
+        <Link href="/create-auction"
+>>>>>>> 0afaeefc056477d61a7e49b8d7abd8763f463c9c
           class="bg-custom-blue text-white rounded-full p-4 shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:bg-custom-blue-dark flex items-center">
           <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -262,10 +270,14 @@ const filteredProducts = computed(() => {
 
         <!-- Botón de chat -->
 <<<<<<< HEAD
+<<<<<<< HEAD
         <Link aria-label="Products Map" href="/mapa"
 =======
         <Link href="/mapa"
 >>>>>>> 601851fb7a5589b99602d27e674946056385d7e4
+=======
+        <Link href="/mapa"
+>>>>>>> 0afaeefc056477d61a7e49b8d7abd8763f463c9c
           class="bg-custom-blue text-white rounded-full p-4 shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:bg-custom-blue-dark flex items-center">
           <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
