@@ -182,4 +182,12 @@ class ProductController extends Controller
     
         return response()->json($availableProducts);
     }
+
+    public function showAuctions(){
+        $products = Product::where('bid', true)->get();
+        return Inertia::render('Subasta', [
+            'products' => $products,
+            'isAuthenticated' => Auth::check()
+        ]);
+        } 
 }
