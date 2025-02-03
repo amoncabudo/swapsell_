@@ -5,6 +5,7 @@ use App\Models\User;
 use App\Models\Category;
 use App\Models\Favorite;
 use App\Model\Basket;
+use App\Models\Comment;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
@@ -40,15 +41,7 @@ class Product extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class);
-    }
-    
-    public function showAuctions(){
-    $products = Product::where('bid', true)->get();
-    return Inertia::render('Subasta', [
-        'products' => $products,
-        'isAuthenticated' => Auth::check()
-    ]);
-    }   
+    }  
 
     public function auction(){
         return $this->hasOne(Auction::class);
