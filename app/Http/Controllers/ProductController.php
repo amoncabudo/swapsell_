@@ -35,7 +35,7 @@ class ProductController extends Controller
         //Image
         
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->storeAs('public', $request->file('image')->getClientOriginalName());
+            $imagePath = $request->file('image')->storeAs('public/products', $request->file('image')->getClientOriginalName());
             $product->image = $request->file('image')->getClientOriginalName();
         } else {
             $product->image = 'default.jpg';
