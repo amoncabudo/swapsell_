@@ -27,7 +27,13 @@ return [
     | Supported drivers: "local", "ftp", "sftp", "s3"
     |
     */
-
+    'local' => [
+        'driver' => 'local',
+        'root' => storage_path('app'),
+        'serve' => true,
+        'throw' => false,
+    ],
+    
     'disks' => [
 
         'local' => [
