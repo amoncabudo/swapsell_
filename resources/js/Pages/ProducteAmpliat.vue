@@ -180,7 +180,7 @@ console.log(props.user.created_at);
                     <span>Comprar ara</span>
                   </button>
                   <button
-                    class="flex items-center space-x-2 bg-SubastaButton2 text-white px-6 py-3 rounded-lg hover:bg-amber-600 transition-all duration-300 transform hover:-translate-y-1">
+                    class="flex items-center space-x-2 bg-amber-700 text-white px-6 py-3 rounded-lg hover:bg-amber-500 transition-all duration-300 transform hover:-translate-y-1">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -241,7 +241,7 @@ console.log(props.user.created_at);
             <div class="flex items-start space-x-4">
               <img :src="'/images/User.png'" alt="User Avatar" class="w-10 h-10 rounded-full">
               <div class="flex-1">
-                <textarea 
+                <textarea aria-label="Comments TextArea"
                   class="w-full p-4 border rounded-lg focus:ring-2 focus:ring-blue-500 text-black focus:border-blue-500"
                   placeholder="Escriu el teu comentari..."
                   rows="3" id="description" name="description" required v-model="form.message"

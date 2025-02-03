@@ -85,7 +85,7 @@ const initializeMapWithPosition = (lat, lng) => {
   locationButton.onAdd = function(map) {
     const div = L.DomUtil.create('div', 'leaflet-bar mainbutton ');
     div.innerHTML = `
-      <a href="#" title="Mostrar mi ubicación" role="button" aria-label="Mostrar mi ubicación" 
+      <a aria-label="Product Page" href="#" title="Mostrar mi ubicación" role="button" 
          style="width: 30px; height: 30px; line-height: 30px; text-align: center; display: block; 
                 background: white; border-radius: 4px;">
         <svg viewBox="0 0 24 24" style="width: 18px; height: 18px; margin: 6px;">
