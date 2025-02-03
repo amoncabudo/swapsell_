@@ -99,12 +99,12 @@ const isFavorite = (product) => {
 // Función auxiliar para asignar emojis según la categoría
 const getCategoryEmoji = (categoryName) => {
   const emojiMap = {
-    'Hogar': '🏠',
-    'Tecnología': '📱',
-    'Deportes': '⚽',
+    'Llar': '🏠',
+    'Tecnologia': '📱',
+    'Esports': '⚽',
     'Moda': '👕',
-    'Salud y belleza': '💄',
-    'Juguetes': '🎮'
+    'Salut i Bellesa': '💄',
+    'Joguines': '🎮'
   };
   return emojiMap[categoryName] || '📦';
 };
