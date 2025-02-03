@@ -32,7 +32,7 @@ const navigateToEvent = (event) => {
         <h1 class="text-4xl font-bold text-center mb-12 text-black">ESDEVENIMENTS</h1>
 
         <!-- Events List -->
-        <div class="max-w-5xl mx-auto space-y-4">
+        <div v-if="events.length" class="max-w-5xl mx-auto space-y-4">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div v-for="event in events" :key="event.id" 
                class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
@@ -73,7 +73,10 @@ const navigateToEvent = (event) => {
             </div>
           </div>
         </div>
-
+        </div>
+        <div v-else class="text-center text-gray-600 text-xl font-semibold mt-20">
+                No hay eventos disponibles
+            </div>
             <Link href="/addEvent" 
             class="fixed bottom-8 right-8 bg-custom-blue text-white rounded-full p-4 shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:bg-custom-blue-dark">
         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -81,7 +84,7 @@ const navigateToEvent = (event) => {
         </svg>
       </Link>
         </div>
-    </div>
+   
     
     </component>
 </template>
