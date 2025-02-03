@@ -6,12 +6,14 @@ import { Link } from '@inertiajs/vue3';
 const props = defineProps({
   user: Object,
   isAuthenticated: Boolean,
-  products: Array
+  products: Array,
+  auction: Array
 
 })
 
-console.log(props.user)
-console.log(props.products)
+// console.log(props.user)
+// console.log(props.products)
+console.log(props.auction)
 
 </script>
 
@@ -129,6 +131,31 @@ console.log(props.products)
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
               </svg>
               </Link>
+            </div>
+          </div>
+        </div>
+
+        <!-- Subastas -->
+        <div class="bg-white rounded-xl shadow-lg p-8 mt-8">
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold text-gray-800">Mis subastas</h2>
+            <button class="text-blue-500 hover:text-blue-600 transition">
+              Ver todos
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div v-for="auction in props.auction" :key="auction.id" class="group relative">
+              <Link :href="route('auction')">
+              <div class="aspect-square rounded-lg overflow-hidden bg-gray-200">
+                <img :src="`/storage/${auction.product.image}`" alt="Producto"
+                  class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+              </div>
+              <div class="mt-4">
+                <h3 class="text-lg font-bold text-gray-800">{{ auction.product.name }}</h3>
+                <p class="text-gray-600">Preu actual: {{ auction.product.price }}€</p>
+              </div>
+               </Link>
             </div>
           </div>
         </div>
