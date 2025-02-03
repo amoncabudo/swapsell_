@@ -19,12 +19,9 @@ class Auction extends Model
         'last_bidder_id'
     ];
     
-    public function products()
-    {
-        return $this->hasMany(Product::class);
-    }
+    
 
-    public function product(): BelongsTo
+    public function product()
     {
         return $this->belongsTo(Product::class);
     }

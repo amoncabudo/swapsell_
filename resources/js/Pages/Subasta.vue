@@ -113,7 +113,7 @@ const placeBid = (product) => {
                         <!-- Imagen y Badge -->
                         <div class="relative">
                             <img 
-                                :src="product.image || '/default-product.jpg'" 
+                                :src="`/storage/${product.image}`" 
                                 :alt="product.name"
                                 class="w-full h-64 object-cover"
                             >
@@ -160,7 +160,8 @@ const placeBid = (product) => {
 
                             <!-- Campo para ingresar el precio de la puja -->
                             <div class="mt-4">
-                                <input 
+                                <input
+                                    aria-label="Product Price" 
                                     type="number" 
                                     v-model="product.bidPrice" 
                                     :min="product.auction?.current_price + 1"
