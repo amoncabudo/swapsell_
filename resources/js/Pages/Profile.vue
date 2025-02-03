@@ -30,7 +30,7 @@ console.log(props.auction)
                 <img src="/images/User.png" alt="Foto de perfil" class="w-full h-full object-cover">
               </div>
               <button
-                class="absolute bottom-0 right-0 bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600 transition">
+                aria-label="Add Profile Image"  class="absolute bottom-0 right-0 bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600 transition">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path d="M12 4v16m8-8H4" />
                 </svg>
@@ -61,7 +61,7 @@ console.log(props.auction)
                 Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
               </p>
               <div class="flex space-x-4">
-                <button class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition">
+                <button class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition">
                   Editar Perfil
                 </button>
                 <button class="border border-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-50 transition">
@@ -96,7 +96,7 @@ console.log(props.auction)
         <div class="bg-white rounded-xl shadow-lg p-8">
           <div class="flex justify-between items-center mb-6">
             <h2 class="text-2xl font-bold text-gray-800">Mis Productos</h2>
-            <button class="text-blue-500 hover:text-blue-600 transition">
+            <button class="text-blue-600 hover:text-blue-600 transition">
               Ver todos
             </button>
           </div>
@@ -115,7 +115,7 @@ console.log(props.auction)
 
               </div>
               </Link>
-              <Link :href="route('editProductId', product.id)"
+              <Link aria-label="Edit Product"  :href="route('editProductId', product.id)"
                 class="absolute top-2 left-2 bg-white/80 p-2 rounded-full hover:bg-white transition">
               <svg class="w-5 h-5 text-blue-500 hover:text-blue-700 transition-colors" fill="none" stroke="currentColor"
                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-label="Editar producto">
@@ -124,7 +124,7 @@ console.log(props.auction)
               </svg>
               </Link>
 
-              <Link :href="route('deleteProduct', product.id)"
+              <Link aria-label="Delete Product" :href="route('deleteProduct', product.id)"
                 class="absolute top-2 right-2 bg-white/80 p-2 rounded-full hover:bg-white transition">
               <svg class="w-5 h-5 text-red-500 hover:text-red-700 transition-colors" fill="none" stroke="currentColor"
                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-label="Eliminar producto">
