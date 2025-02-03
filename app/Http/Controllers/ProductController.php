@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use app\http\Controller\FavoriteController;
+use Carbon\Carbon;
 
 class ProductController extends Controller
 {
@@ -126,13 +127,47 @@ class ProductController extends Controller
         ]);
     }
 
+    private function calcularTiempoTranscurrido($fecha)
+    {
+        $fecha = Carbon::parse($fecha);
+        $ahora = Carbon::now();
+        
+        $diferencia = (int)$fecha->diffInSeconds($ahora);
+        
+        if ($diferencia < 60) {
+            return "Hace " . $diferencia . " segundo" . ($diferencia == 1 ? '' : 's');
+        }
+        
+        $diferencia = (int)$fecha->diffInMinutes($ahora);
+        if ($diferencia < 60) {
+            return "Hace " . $diferencia . " minuto" . ($diferencia == 1 ? '' : 's');
+        }
+        
+        $diferencia = (int)$fecha->diffInHours($ahora);
+        if ($diferencia < 24) {
+            return "Hace " . $diferencia . " hora" . ($diferencia == 1 ? '' : 's');
+        }
+        
+        $diferencia = (int)$fecha->diffInDays($ahora);
+        return "Hace " . $diferencia . " día" . ($diferencia == 1 ? '' : 's');
+    }
+
+    
     public function goProduct($id){
         $product = Product::with('category', 'user')->find($id);
         $isAuthenticated = Auth::check();
-        return Inertia::render("ProducteAmpliat", 
+        $comments = $product->comments()
+        ->with('user')
+        ->orderBy('created_at', 'desc')
+        ->get()
+        ->map(function ($comment) {
+            $comment->tiempo_transcurrido = $this->calcularTiempoTranscurrido($comment->created_at);
+            return $comment;
+        });        return Inertia::render("ProducteAmpliat", 
         ["product" => $product,
         "isAuthenticated" => $isAuthenticated,
-        "user" => $product->user
+        "user" => $product->user,
+        "commentarios" => $comments
     ]);
     }
 
@@ -181,5 +216,18 @@ class ProductController extends Controller
                               ->get();
     
         return response()->json($availableProducts);
+    }
+
+    
+
+    public function showcomment(Request $request)
+    {
+        $product = Product::find($request->product_id);
+        $product->comments()->create([
+            'user_id' => auth()->id(),
+            'content' => $request->content
+        ]);
+    
+        return response()->json($product->comments()->with('user')->get());
     }
 }

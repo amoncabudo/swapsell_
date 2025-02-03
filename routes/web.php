@@ -15,6 +15,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\SellController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\AuctionController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\ManagerMiddleware;
@@ -89,13 +90,21 @@ Route::get('/products', [ProductController::class, "index"])->name("products");
 Route::get('/products', [ProductController::class, 'getAllProducts'])->name('Products');
 Route::post('/products', [ProductController::class, 'toggleFavourite'])->name('productFavorite');
 // Route to show a product by id
-Route::get('/products/{id}', [ProductController::class, "show"])->name("products.show");
 Route::get('/editProduct/{id}', [ProductController::class, "editProduct"])->name("editProductId");
 Route::get('/updateProduct/{id}', [ProductController::class, "updateProduct"])->middleware(['auth', 'verified'])->name("updateProductId");
 Route::post('/updateProduct/{id}', [ProductController::class, "updateProduct"])->name("updateProduct");
 Route::get('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->middleware(['auth', 'verified'])->name("deleteProduct");
 Route::post('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->middleware(['auth', 'verified'])->name("deleteProduct");
 Route::get('/products/{id}', [ProductController::class, "goProduct"])->name("product.show");
+//Route to show a product by id
+
+//route to show all comments
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('/comentarios', [CommentController::class, 'addcomment'])->name('comments.addcoment');
+
+});
+
 
 //Route Users
 Route::post('/users', [UserController::class, "addUser"])->name("users");
