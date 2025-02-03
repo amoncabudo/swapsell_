@@ -126,7 +126,7 @@ const calcularTiempo = (fecha) => {
               <div class="bg-white rounded-xl shadow-lg p-4">
                 <h1 class="text-2xl font-bold text-gray-800 mb-4 text-center">{{ product.name }}</h1>
                 <div class="relative group">
-                  <img :src="`/storage/${product.image}`" :alt="product.name"
+                  <img :src="`/storage/products/${product.image}`" :alt="product.name"
                     class="w-full h-[286px] object-cover rounded-lg transition-transform duration-300 group-hover:scale-105">
                   <div
                     class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg">
