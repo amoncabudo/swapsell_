@@ -23,8 +23,6 @@ return new class extends Migration
             $table->string('image');
             $table->string('status');
             $table->boolean('bid')->default(false);
-            $table->boolean('favorites')->default(false);
-            $table->boolean('cart')->default(false);
             $table->timestamps();
         });
     }
