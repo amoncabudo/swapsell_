@@ -85,7 +85,8 @@ class ProductController extends Controller
         }
 
     public function getAllProducts(){
-        $products = Product::where('bid', false)->with('category')->get();
+        $id = Auth::id();
+        $products = Product::where('bid', false)->where('user_id', '!=', $id)->with('category')->get();
         $isAuthenticated = Auth::check();
         return Inertia::render("Products", 
         ["products" => $products,
