@@ -82,15 +82,19 @@ onMounted(async () => {
 });
 
 function toggleFavorite(product) {
-  const isFavorite = product.favorites === 1;
-  axios.post(route('productFavorite'), { id: product.id, favorite: !isFavorite })
-    .then(response => {
-      product.favorites = isFavorite ? 0 : 1;
-    })
-    .catch(error => {
-      console.error("Error al actualizar el estado de favorito:", error);
-    });
+    axios.post(route('productFavorite'), { id: product.id }) 
+        .then(response => {
+            // Actualizar el estado del favorito basado en la respuesta del servidor
+            product.is_favorite = response.data.is_favorite;
+        })
+        .catch(error => {
+            console.error("Error al actualizar el estado de favorito:", error);
+        });
 }
+
+const isFavorite = (product) => {
+    return product.is_favorite;
+};
 
 // Función auxiliar para asignar emojis según la categoría
 const getCategoryEmoji = (categoryName) => {
@@ -207,11 +211,13 @@ const filteredProducts = computed(() => {
 
                 <form @submit.prevent>
                   <button @click="toggleFavorite(product)"
-                    :class="{ 'text-red-500': product.favorites === 1, 'text-gray-400': product.favorites === 0 }"
+                    :class="{ 'text-red-500': product.is_favorite, 'text-gray-400': !product.is_favorite }"
                     class="transition-colors">
-                    <svg class="h-5 w-5" :fill="product.favorites === 1 ? 'red' : 'none'" stroke="currentColor"
-                      viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    <svg class="h-5 w-5"
+                      :fill="product.is_favorite ? 'red' : 'none'"
+                      stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2"
                         d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                     </svg>
                   </button>
