@@ -4,8 +4,9 @@ import NavbarS from '@/Layouts/NavbarS.vue';
 import { onMounted } from 'vue';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import { defineProps, ref } from 'vue';
+import { defineProps, ref , computed} from 'vue';
 import { useForm } from '@inertiajs/vue3';
+
 
 import axios from 'axios';
 let comments = ref([]);
@@ -68,7 +69,7 @@ onMounted(() => {
 
   // Crear icono personalizado
   const customIcon = L.icon({
-    iconUrl: '/images/marker.png',
+    iconUrl: 'storage/app/public/product_marker_map.png',
     iconSize: [40, 40],
     iconAnchor: [20, 40],
     popupAnchor: [0, -40]
@@ -111,6 +112,41 @@ const calcularTiempo = (fecha) => {
 
 
 
+
+const calcularAntiguedad = (fecha) => {
+  if (!fecha) return "Fecha no disponible";
+
+  try {
+    const fechaCreacion = new Date(fecha);
+    if (isNaN(fechaCreacion)) throw new Error("Fecha inválida");
+
+    const ahora = new Date();
+    const diferencia = ahora - fechaCreacion;
+
+    const años = Math.floor(diferencia / (1000 * 60 * 60 * 24 * 365));
+    const meses = Math.floor(diferencia / (1000 * 60 * 60 * 24 * 30)) % 12;
+    const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24)) % 30;
+    const horas = Math.floor(diferencia / (1000 * 60 * 60)) % 24;
+    const minutos = Math.floor(diferencia / (1000 * 60)) % 60;
+
+    if (años > 0) return `fa ${años} anys${años > 1 ? "s" : ""}`;
+    if (meses > 0) return `fa ${meses} mesos${meses > 1 ? "es" : ""}`;
+    if (dias > 0) return `fa ${dias} dies${dias > 1 ? "s" : ""}`;
+    if (horas > 0) return `fa ${horas} hores${horas > 1 ? "s" : ""}`;
+    return `fa ${minutos} minuts${minutos > 1 ? "s" : ""}`;
+  } catch (error) {
+    console.error("Error al calcular antigüedad:", error);
+    return "Fecha no válida";
+  }
+};
+
+// Computed para actualizar automáticamente si cambia el `user.created_at`
+const miembroDesde = computed(() => props.user?.created_at ? calcularAntiguedad(props.user.created_at) : "Cargando...");
+
+console.log(miembroDesde);
+
+console.log(props.user.created_at);
+
 </script>
 
 <template>
@@ -141,7 +177,7 @@ const calcularTiempo = (fecha) => {
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
-                    <span>Comprar ahora</span>
+                    <span>Comprar ara</span>
                   </button>
                   <button
                     class="flex items-center space-x-2 bg-SubastaButton2 text-white px-6 py-3 rounded-lg hover:bg-amber-600 transition-all duration-300 transform hover:-translate-y-1">
@@ -159,7 +195,7 @@ const calcularTiempo = (fecha) => {
             <div class="w-full lg:w-1/2 space-y-6">
               <!-- Información del vendedor -->
               <div class="bg-white rounded-xl shadow-lg p-6">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">Información del vendedor</h2>
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Informació del venedor</h2>
                 <div class="flex items-center space-x-4">
                   <img src="/images/User.png" alt="User" class="w-16 h-16 rounded-full border-2 border-gray-200">
                   <div>
@@ -167,7 +203,8 @@ const calcularTiempo = (fecha) => {
                     <div class="flex items-center space-x-2 text-sm text-gray-500">
                       <span>⭐ 4.8</span>
                       <span>•</span>
-                      <span>Miembro desde 2024</span>
+                      <span>Membre desde</span><span>{{ miembroDesde }}</span>
+
                     </div>
                   </div>
                 </div>
@@ -175,18 +212,18 @@ const calcularTiempo = (fecha) => {
 
               <!-- Detalles del producto -->
               <div class="bg-white rounded-xl shadow-lg p-6">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">Detalles del producto</h2>
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Detalls del producte</h2>
                 <div class="space-y-4">
                   <div class="flex justify-between items-center py-2 border-b">
-                    <span class="text-black">Nombre:</span>
+                    <span class="text-black">Nom:</span>
                     <span class="font-semibold text-black">{{ product.name }}</span>
                   </div>
                   <div class="flex justify-between items-center py-2 border-b">
-                    <span class="text-black">Precio:</span>
+                    <span class="text-black">Preu:</span>
                     <span class="font-semibold text-xl text-green-600">{{ product.price }}€</span>
                   </div>
                   <div class="flex justify-between items-center py-2">
-                    <span class="text-black">Descripción:</span>
+                    <span class="text-black">Descripció:</span>
                     <span class="text-black">{{ product.description }}</span>
                   </div>
                 </div>
@@ -197,7 +234,7 @@ const calcularTiempo = (fecha) => {
 
         <!-- Nueva sección de comentarios -->
         <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 mt-8">
-          <h2 class="text-2xl font-bold text-gray-800 mb-6">Comentarios</h2>
+          <h2 class="text-2xl font-bold text-gray-800 mb-6">Comentaris</h2>
 
           <!-- Formulario para nuevo comentario -->
           <div class="mb-8">
@@ -206,11 +243,11 @@ const calcularTiempo = (fecha) => {
               <div class="flex-1">
                 <textarea 
                   class="w-full p-4 border rounded-lg focus:ring-2 focus:ring-blue-500 text-black focus:border-blue-500"
-                  placeholder="Escribe tu comentario..."
+                  placeholder="Escriu el teu comentari..."
                   rows="3" id="description" name="description" required v-model="form.message"
                 ></textarea>
                 <button type="submit" @click="submitData" class="mt-2 bg-SubastaButton1 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-all duration-300">
-                  Publicar comentario
+                  Publicar comentari
                 </button>
                 
               </div>
@@ -239,7 +276,7 @@ const calcularTiempo = (fecha) => {
     </div>
   </div>
       <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 mt-8">
-        <h2 class="text-2xl font-bold text-gray-800 mb-6">Ubicación del producto</h2>
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">Ubicació del producte</h2>
         <div id="map" class="h-[400px] w-full rounded-lg"></div>
       </div>
     </div>
