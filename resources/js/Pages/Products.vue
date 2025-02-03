@@ -132,7 +132,7 @@ const filteredProducts = computed(() => {
           </h1>
           <div class="max-w-3xl mx-auto">
             <div class="relative">
-              <input type="text" placeholder="¿Qué estás buscando?"
+              <input aria-label="search bar" type="text" placeholder="¿Qué estás buscando?"
                 class="w-full pl-12 pr-4 py-4 rounded-xl shadow-lg focus:outline-none focus:ring-2 focus:ring-white/50">
               <div class="absolute left-4 top-4">
                 <svg class="h-6 w-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -206,7 +206,7 @@ const filteredProducts = computed(() => {
                 </div>
 
                 <form @submit.prevent>
-                  <button @click="toggleFavorite(product)"
+                  <button aria-label="favorites Button" @click="toggleFavorite(product)"
                     :class="{ 'text-red-500': product.favorites === 1, 'text-gray-400': product.favorites === 0 }"
                     class="transition-colors">
                     <svg class="h-5 w-5" :fill="product.favorites === 1 ? 'red' : 'none'" stroke="currentColor"
@@ -224,7 +224,7 @@ const filteredProducts = computed(() => {
       </div>
 
       <!-- Botón flotante de venta -->
-      <Link href="/sell"
+      <Link aria-label="addProduct Page" href="/sell"
         class="fixed bottom-8 right-8 bg-custom-blue text-white rounded-full p-4 shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:bg-custom-blue-dark">
       <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
