@@ -22,6 +22,18 @@ class DatabaseSeeder extends Seeder
             'password' => 'admin',
             'role' => '0',
         ]);
+        User::factory()->create([
+            'name' => 'manager',
+            'email' => 'manager@manager.com',
+            'password' => 'manager',
+            'role' => '1',
+        ]);
+        User::factory()->create([
+            'name' => 'user',
+            'email' => 'user@user.com',
+            'password' => 'user',
+            'role' => '2',
+        ]);
 
         // Aquí tu código para crear categorías
         Category::create([
