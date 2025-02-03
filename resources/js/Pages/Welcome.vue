@@ -42,8 +42,8 @@ onMounted(async () => {
         trendingCategories.value = response.data.map((category, index) => ({
             id: category.id,
             name: category.name,
-            items: 0, // You can add a count of products per category if needed
-            image: `/storage/${category.image}`, // Make sure these images exist
+            items: category.items,
+            image: `/storage/${category.image}`,
             delay: (index + 1) * 100
         }));
 });
