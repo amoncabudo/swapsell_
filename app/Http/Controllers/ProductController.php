@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Product;
+use App\Models\Category;
+use App\Models\Favorite;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
-use app\http\Controller\FavoriteController;
+use App\Http\Controllers\FavoriteController;
 use Carbon\Carbon;
 
 class ProductController extends Controller
@@ -85,34 +87,54 @@ class ProductController extends Controller
         }
 
     public function getAllProducts(){
-        $id = Auth::id();
-        $products = Product::where('bid', false)->where('user_id', '!=', $id)->with('category')->get();
+        $userId = Auth::id();
         $isAuthenticated = Auth::check();
-        return Inertia::render("Products", 
-        ["products" => $products,
-        "isAuthenticated" => $isAuthenticated
-    ]);
+
+        // Obtener los productos
+        $products = Product::where('bid', false)
+            ->where('user_id', '!=', $userId)
+            ->with('category')
+            ->get();
+
+        // Si el usuario está autenticado, verificar cuáles son favoritos
+        if ($isAuthenticated) {
+            $favorites = Favorite::where('user_id', $userId)->pluck('product_id')->toArray();
+            
+            foreach ($products as $product) {
+                $product->is_favorite = in_array($product->id, $favorites);
+            }
+        }
+
+        return Inertia::render("Products", [
+            "products" => $products,
+            "isAuthenticated" => $isAuthenticated
+        ]);
     }
 
     public function toggleFavourite(Request $request)
     {
-        $id=$request->id;
-        // Busca el producto por ID
-        $product = Product::find($id);
+        $productId = $request->id;
+        $userId = Auth::id();
 
-        if ($product->favorites == 0){
-            $product->favorites = 1;
-        }else{
-            $product->favorites = 0;
-            
-            // Llamada a la función delete del FavoriteController
-            $favoriteController = new \App\Http\Controllers\FavoriteController();
-            $favoriteController->delete($product->id); // Asegúrate de pasar el ID correcto del producto
+        // Verificar si ya existe en favoritos
+        $exists = Favorite::where('user_id', $userId)
+                         ->where('product_id', $productId)
+                         ->exists();
+
+        if (!$exists) {
+            // Añadir a favoritos
+            Favorite::create([
+                'user_id' => $userId,
+                'product_id' => $productId
+            ]);
+            return response()->json(['is_favorite' => true]);
+        } else {
+            // Eliminar de favoritos
+            Favorite::where('user_id', $userId)
+                   ->where('product_id', $productId)
+                   ->delete();
+            return response()->json(['is_favorite' => false]);
         }
-        
-        $product->save();
-
-        return $product;
     }
 
     public function getProductsByCategoryId()
