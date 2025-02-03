@@ -159,7 +159,7 @@ const filteredProducts = computed(() => {
               ]"
             >
               <span class="text-lg">⭐</span>
-              <span>Todo</span>
+              <span>Tot</span>
             </button>
             <button 
               v-for="category in categories" 
