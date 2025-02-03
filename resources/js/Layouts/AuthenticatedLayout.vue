@@ -42,6 +42,9 @@ const showingNavigationDropdown = ref(false);
                         <Link href="/events" class="text-gray-600 hover:text-blue-500 transition-colors">
                             Events
                         </Link>
+                        <Link href="/auction" class="text-gray-600 hover:text-blue-500 transition-colors">
+                            Subhastes
+                        </Link>
 
                         <div class="hidden sm:flex items-center space-x-6">
                             
@@ -78,6 +81,7 @@ const showingNavigationDropdown = ref(false);
                                 <DropdownLink :href="route('Products')">Productes</DropdownLink>
                                 <DropdownLink :href="route('products_favs')">Favorits</DropdownLink>
                                 <DropdownLink :href="route('cart')">Carrito</DropdownLink>
+                                <DropdownLink :href="route('auction')">Subhastes</DropdownLink>
                                 <template v-if="$page.props.auth.user.role === 0">
                                     <DropdownLink :href="route('AdminPanel')">Admin Panel</DropdownLink>
                                 </template>
@@ -118,6 +122,7 @@ const showingNavigationDropdown = ref(false);
                             <ResponsiveNavLink :href="route('Products')">Productes</ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('products_favs')">Favorits</ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('cart')">Carrito</ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('auction')">Subhastes</ResponsiveNavLink>
                             <template v-if="$page.props.auth.user.role === 0">
                                 <ResponsiveNavLink :href="route('AdminPanel')">Admin Panel</ResponsiveNavLink>
                             </template>
