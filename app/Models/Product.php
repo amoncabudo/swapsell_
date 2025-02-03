@@ -27,12 +27,12 @@ class Product extends Model
 
     public function basket()
     {
-        return $this->belongsTo(Basket::class);
+        return $this->hasMany(Basket::class);
     }
 
     public function favorite()
     {
-        return $this->belongsTo(Favorite::class);
+        return $this->hasMany(Favorite::class);
     }
 
     /**

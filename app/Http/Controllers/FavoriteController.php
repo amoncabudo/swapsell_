@@ -12,25 +12,28 @@ class FavoriteController extends Controller
 {
     public function getAllFavorites()
     {
-        $products_favs = Product::where('favorites',1)->get();
-        $isAuthenticated = Auth::check();
         $userId = Auth::id();
-        //dd($products_favs->toArray());
+        $isAuthenticated = Auth::check();
 
-        foreach ($products_favs as $product) {
-            $exists = Favorite::where('user_id', $userId)
-            ->where('product_id', $product->id)
-            ->exists();
-
-            if (!$exists)
-            {
-            Favorite::addFavorite($product->id, $userId);
+        // Obtener los IDs de los productos favoritos del usuario
+        $favorites = Favorite::where('user_id', $userId)->get();
+        
+        // Obtener los productos completos
+        $products_favs = [];
+        foreach ($favorites as $favorite) {
+            $product = Product::with('category')
+                ->where('id', $favorite->product_id)
+                ->first();
+            
+            if ($product) {
+                $products_favs[] = $product;
             }
         }
-        return Inertia::render("Favorites",
-        ["products_favs" => $products_favs,
-        "isAuthenticated" => $isAuthenticated
-    ]);
+
+        return Inertia::render("Favorites", [
+            "products_favs" => $products_favs,
+            "isAuthenticated" => $isAuthenticated
+        ]);
     }
 
 
