@@ -15,9 +15,10 @@ class AuctionController extends Controller
     public function index()
     {
         $auctions = Auction::active()->get();
-
+        $products = Product::all();
         return Inertia::render('Auctions', [
             'auctions' => $auctions,
+            'products' => $products,
             'isAuthenticated' => Auth::check()
         ]);
     }

@@ -113,7 +113,7 @@ const placeBid = (product) => {
                         <!-- Imagen y Badge -->
                         <div class="relative">
                             <img 
-                                :src="product.image || '/default-product.jpg'" 
+                                :src="`/storage/${product.image}`" 
                                 :alt="product.name"
                                 class="w-full h-64 object-cover"
                             >
