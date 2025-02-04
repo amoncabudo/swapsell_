@@ -4,6 +4,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useForm } from '@inertiajs/vue3';
+import axios from 'axios';
 
 const props = defineProps({
     isAuthenticated: Boolean,
@@ -48,6 +49,16 @@ onMounted(() => {
                         const time = formatTime(countdowns.value[product.auction.id]);
                     } else {
                         clearInterval(intervals.value[product.auction.id]);
+                        // Actualizar el estado de la subasta si es necesario
+                        if (product.auction.status) {
+                            axios.post(route('auctions.finish', product.auction.id))
+                                .then(response => {
+                                    // Actualizar la información del ganador si es necesario
+                                    if (response.data.winner) {
+                                        product.auction.last_bidder = response.data.winner;
+                                    }
+                                });
+                        }
                     }
                 }, 1000);
             }
@@ -169,7 +180,15 @@ const placeBid = (product) => {
                                             {{ formatTime(countdowns[product.auction.id]).seconds }}s
                                         </template>
                                         <template v-else>
-                                            Subasta finalizada
+                                            <div class="text-center">
+                                                <p class="text-red-500 font-bold mb-2">Subasta finalizada</p>
+                                                <p v-if="product.auction.last_bidder" class="text-green-600">
+                                                    Ganador: {{ product.auction.last_bidder.name }}
+                                                </p>
+                                                <p v-else class="text-gray-500">
+                                                    No hubo pujas en esta subasta
+                                                </p>
+                                            </div>
                                         </template>
                                     </template>
                                     <template v-else>
@@ -179,40 +198,42 @@ const placeBid = (product) => {
                             </div>
 
                             <!-- Campo para ingresar el precio de la puja -->
-                            <div class="mt-4">
-                                <input
-                                    aria-label="Product Price" 
-                                    type="number" 
-                                    v-model="product.bidPrice" 
-                                    :min="product.auction?.current_price + 1"
-                                    :placeholder="`Mínimo ${(product.auction?.current_price + 1)}€`"
-                                    class="border rounded-lg p-2 w-full"
-                                    :class="{'border-red-500': product.bidPrice <= product.auction?.current_price}"
-                                />
-                                <p v-if="product.bidPrice <= product.auction?.current_price" class="text-red-500 text-sm mt-1">
-                                    La puja debe ser mayor al precio actual
-                                </p>
-                            </div>
+                            <div v-if="countdowns[product.auction.id] > 0">
+                                <div class="mt-4">
+                                    <input
+                                        aria-label="Product Price" 
+                                        type="number" 
+                                        v-model="product.bidPrice" 
+                                        :min="product.auction?.current_price + 1"
+                                        :placeholder="`Mínimo ${(product.auction?.current_price + 1)}€`"
+                                        class="border rounded-lg p-2 w-full"
+                                        :class="{'border-red-500': product.bidPrice <= product.auction?.current_price}"
+                                    />
+                                    <p v-if="product.bidPrice <= product.auction?.current_price" class="text-red-500 text-sm mt-1">
+                                        La puja debe ser mayor al precio actual
+                                    </p>
+                                </div>
 
-                            <!-- Botones de acción -->
-                            <div class="grid grid-cols-2 gap-4 pt-4">
-                                <Link 
-                                    :href="route('product.show', product.id)"
-                                    class="inline-flex justify-center items-center px-4 py-2 border border-blue-600 text-sm font-medium rounded-lg text-blue-600 bg-white hover:bg-blue-50 transition-all"
-                                >
-                                    Ver Detalles
-                                </Link>
-                                <button 
-                                    v-if="isAuthenticated"
-                                    @click="placeBid(product)"
-                                    :disabled="!product.bidPrice || product.bidPrice <= product.auction?.current_price"
-                                    class="inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-white bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                                >
-                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
-                                    </svg>
-                                    Pujar
-                                </button>
+                                <!-- Botones de acción -->
+                                <div class="grid grid-cols-2 gap-4 pt-4">
+                                    <Link 
+                                        :href="route('product.show', product.id)"
+                                        class="inline-flex justify-center items-center px-4 py-2 border border-blue-600 text-sm font-medium rounded-lg text-blue-600 bg-white hover:bg-blue-50 transition-all"
+                                    >
+                                        Ver Detalles
+                                    </Link>
+                                    <button 
+                                        v-if="isAuthenticated"
+                                        @click="placeBid(product)"
+                                        :disabled="!product.bidPrice || product.bidPrice <= product.auction?.current_price"
+                                        class="inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-white bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                    >
+                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                                        </svg>
+                                        Pujar
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>

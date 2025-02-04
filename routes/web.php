@@ -166,6 +166,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/create-auction', [AuctionController::class, 'create'])->name('auctions.create');
     Route::post('/create-auction', [AuctionController::class, 'store'])->name('auctions.store');
     Route::post('/auctions/bid', [AuctionController::class, 'bid'])->name('auctions.bid');
+    Route::post('/auctions/{id}/finish', [AuctionController::class, 'finish'])->name('auctions.finish');
 });
 require __DIR__.'/auth.php';
 

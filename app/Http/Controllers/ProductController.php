@@ -196,11 +196,10 @@ class ProductController extends Controller
 
     public function auction()
     {
-        $products = Product::with('auction')
+        $products = Product::with(['auction.lastBidder'])
             ->where('bid', true)
             ->get()
             ->map(function($product) {
-                // Add remaining time calculation
                 if ($product->auction) {
                     $endTime = new \DateTime($product->auction->end_time);
                     $now = new \DateTime();
