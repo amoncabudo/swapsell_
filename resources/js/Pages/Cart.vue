@@ -2,58 +2,108 @@
 import { ref, computed } from 'vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
+import { Link } from '@inertiajs/vue3';
+import axios from 'axios';
 
-defineProps({
-    isAuthenticated: Boolean,
+const props = defineProps({
+    products_baskets: Array,
+    isAuthenticated: Boolean
 });
 
-const products = ref([]);
-const cart = ref([]);
+console.log('Products in basket:', props.products_baskets);
 
 const total = computed(() => {
-  return cart.value.reduce((sum, item) => sum + item.quantity * item.price, 0);
+    if (!props.products_baskets) return 0;
+    return props.products_baskets.reduce((sum, product) => {
+        const price = parseFloat(product?.price) || 0;
+        return sum + price;
+    }, 0);
 });
+
+function formatPrice(price) {
+    return new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(price);
+}
+
+function removeFromBasket(product) {
+    axios.post(route('baskets_products'), { id: product.id })
+        .then(response => {
+            // Eliminar el producto de la lista si estamos en la página del carrito
+            const index = props.products_baskets.findIndex(p => p.id === product.id);
+            if (index !== -1) {
+                props.products_baskets.splice(index, 1);
+            }
+        })
+        .catch(error => {
+            console.error("Error al actualizar el carrito:", error);
+        });
+}
 </script>
 
 <template>
-  <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
-  <div class="flex flex-col lg:flex-row h-screen overflow-hidden">
-    <!-- Columna izquierdax -->
-     
-    <div class="w-full lg:w-1/2 p-4">
-      <h2 class="text-xl flex justify-center font-extrabold mb-4 text-center">Lista de Productos</h2>
-      <div class="bg-gray-300 p-4 min-h-[200px] overflow-y-auto rounded">
-        <ul class="flex flex-col space-y-4">
-          <li v-for="n in 12" :key="n" class="font-bold border-b-2 border-dotted border-gray-400 pb-2 rounded">
-            Foto --- Producto {{ n }}
-          </li>
-        </ul>
-      </div>
-    </div>
-    <!-- Columna derecha -->
-    <div class="w-full lg:w-1/2 p-4 flex flex-col justify-between">
-      <div>
-        <h2 class="text-xl font-bold mb-4 text-center">Resumen</h2>
-        <div class="bg-gray-300 min-h-[80px] flex justify-start items-center rounded shadow-lg">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-10 h-10 ml-5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-          </svg>
-          <p class="ml-2 text-xl">Resum de la compra</p>
+    <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
+        <div class="flex flex-col lg:flex-row min-h-screen bg-gray-100 p-4">
+            <!-- Lista de productos -->
+            <div class="w-full lg:w-2/3 pr-4">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h2 class="text-2xl font-bold mb-6 text-gray-800">El meu carret</h2>
+                    <div v-if="!products_baskets || products_baskets.length === 0" class="text-center py-8">
+                        <p class="text-gray-500">No hi ha productes al carret</p>
+                    </div>
+                    <div v-else class="space-y-6">
+                        <div v-for="product in products_baskets" :key="product.id" 
+                            class="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                            <img :src="`/storage/${product.image}`" :alt="product.name"
+                                class="w-24 h-24 object-cover rounded-lg">
+                            <div class="ml-6 flex-grow">
+                                <Link :href="route('product.show', product.id)" class="text-lg font-semibold text-gray-800 hover:text-blue-600">
+                                    {{ product.name }}
+                                </Link>
+                                <p class="text-gray-600 mt-1">{{ product.description }}</p>
+                                <p class="text-blue-600 font-bold mt-2">{{ formatPrice(product.price) }}</p>
+                            </div>
+                            <button @click="removeFromBasket(product)" class="ml-4 text-red-500 hover:text-red-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resumen de la compra -->
+            <div class="w-full lg:w-1/3 mt-6 lg:mt-0">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h2 class="text-xl font-bold mb-4 text-gray-800">Resum de la compra</h2>
+                    <div class="border-t border-gray-200 pt-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-600">Subtotal</span>
+                            <span class="font-semibold">{{ formatPrice(total) }}</span>
+                        </div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-600">IVA (21%)</span>
+                            <span class="font-semibold">{{ formatPrice(total * 0.21) }}</span>
+                        </div>
+                        <div class="border-t border-gray-200 pt-4 mt-2">
+                            <div class="flex justify-between items-center">
+                                <span class="text-lg font-bold">Total</span>
+                                <span class="text-lg font-bold text-blue-600">{{ formatPrice(total * 1.21) }}</span>
+                            </div>
+                        </div>
+                        <button class="w-full mt-6 bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors">
+                            Procedir al pagament
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <p class="mt-4 text-lg">Preu estimat:</p>
-      </div>
-    </div>
-  </div>
-</component>
+    </component>
 </template>
 
 <style scoped>
 .bg-gray-100 {
-  overflow-y: auto;
-  scrollbar-width: none;
-}
-
-.bg-gray-100::-webkit-scrollbar {
-  display: none;
+    min-height: calc(100vh - 4rem);
 }
 </style>
