@@ -1,8 +1,9 @@
 <?php
-
+use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
@@ -182,3 +183,26 @@ require __DIR__.'/auth.php';
 // Route::post('/products', [ProductController::class, 'toggleFavourite'])->name('productFavorite');
 //Route to show a product by id
 // Route::get('/products/{id}', [ProductController::class, "goProduct"])->name("product.show");
+
+//Routes to login with google
+Route::get('login-google', function () {
+    return Socialite::driver('google')->redirect();
+});
+ 
+Route::get('google-callback', function () {
+    $user = Socialite::driver('google')->user();
+
+    $userExists = User::where('email', $user->email)->first();
+    if ($userExists) {
+        Auth::login($userExists);
+        return redirect('/');
+    }else {
+        $newUser = User::create([
+            'name' => $user->name,
+            'email' => $user->email,
+            'password' => Hash::make('password'),
+        ]);
+        Auth::login($newUser);
+        return redirect('/');
+    }
+});
