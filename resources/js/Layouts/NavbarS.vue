@@ -14,7 +14,7 @@ const showingNavigationDropdown = ref(false);
                     <!-- Logo Section -->
                     <div class="flex items-center">
                         <Link href="/" class="flex items-center space-x-2">
-                            <img src="/images/logo.png" alt="SwapSell Logo" class="h-8 w-8 rounded-full">
+                            <img src="/images/logo.png" alt="SwapSell Logo" class="h-8 w-10 rounded-full">
                             <span class="text-2xl font-extrabold bg-gradient-to-r from-blue-500 to-indigo-400 bg-clip-text text-transparent">
                                 <span class="text-blue-700">SwapSell</span>
                             </span>
