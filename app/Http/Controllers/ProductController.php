@@ -37,7 +37,7 @@ class ProductController extends Controller
         //Image
         
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->storeAs('public/products', $request->file('image')->getClientOriginalName());
+            $imagePath = $request->file('image')->storeAs('public', $request->file('image')->getClientOriginalName());
             $product->image = $request->file('image')->getClientOriginalName();
         } else {
             $product->image = 'default.jpg';
@@ -196,11 +196,10 @@ class ProductController extends Controller
 
     public function auction()
     {
-        $products = Product::with('auction')
+        $products = Product::with(['auction.lastBidder'])
             ->where('bid', true)
             ->get()
             ->map(function($product) {
-                // Add remaining time calculation
                 if ($product->auction) {
                     $endTime = new \DateTime($product->auction->end_time);
                     $now = new \DateTime();

@@ -96,7 +96,7 @@ console.log(props.auction)
         <div class="bg-white rounded-xl shadow-lg p-8">
           <div class="flex justify-between items-center mb-6">
             <h2 class="text-2xl font-bold text-gray-800">Mis Productos</h2>
-            <button class="text-blue-600 hover:text-blue-600 transition">
+            <button class="text-blue-600 hover:text-blue-700 transition">
               Ver todos
             </button>
           </div>
@@ -139,7 +139,7 @@ console.log(props.auction)
         <div class="bg-white rounded-xl shadow-lg p-8 mt-8">
           <div class="flex justify-between items-center mb-6">
             <h2 class="text-2xl font-bold text-gray-800">Mis subastas</h2>
-            <button class="text-blue-500 hover:text-blue-600 transition">
+            <button class="text-blue-600 hover:text-blue-700 transition">
               Ver todos
             </button>
           </div>
