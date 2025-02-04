@@ -105,7 +105,7 @@ console.log(props.auction)
             <div v-for="product in props.products" :key="product.id" class="group relative">
               <Link :href="route('product.show', product.id)">
               <div class="aspect-square rounded-lg overflow-hidden bg-gray-200">
-                <img :src="`/storage/products/${product.image}`" alt="Producto"
+                <img :src="`/storage/${product.image}`" alt="Producto"
                   class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
               </div>
               <div class="mt-4">
