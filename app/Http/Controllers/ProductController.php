@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Favorite;
+use App\Models\Basket;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -179,19 +180,30 @@ class ProductController extends Controller
     public function goProduct($id){
         $product = Product::with('category', 'user')->find($id);
         $isAuthenticated = Auth::check();
+        $userId = Auth::id();
+
+        // Verificar si el producto está en el carrito del usuario
+        if ($isAuthenticated) {
+            $product->is_basket = \App\Models\Basket::where('user_id', $userId)
+                ->where('product_id', $id)
+                ->exists();
+        }
+
         $comments = $product->comments()
-        ->with('user')
-        ->orderBy('created_at', 'desc')
-        ->get()
-        ->map(function ($comment) {
-            $comment->tiempo_transcurrido = $this->calcularTiempoTranscurrido($comment->created_at);
-            return $comment;
-        });        return Inertia::render("ProducteAmpliat", 
-        ["product" => $product,
-        "isAuthenticated" => $isAuthenticated,
-        "user" => $product->user,
-        "commentarios" => $comments
-    ]);
+            ->with('user')
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->map(function ($comment) {
+                $comment->tiempo_transcurrido = $this->calcularTiempoTranscurrido($comment->created_at);
+                return $comment;
+            });
+        
+        return Inertia::render("ProducteAmpliat", [
+            "product" => $product,
+            "isAuthenticated" => $isAuthenticated,
+            "user" => $product->user,
+            "commentarios" => $comments
+        ]);
     }
 
     public function auction()
@@ -251,5 +263,30 @@ class ProductController extends Controller
         ]);
     
         return response()->json($product->comments()->with('user')->get());
+    }
+
+    public function toggleBasket(Request $request)
+    {
+        $productId = $request->id;
+        $userId = Auth::id();
+
+        $exists = \App\Models\Basket::where('user_id', $userId)
+                         ->where('product_id', $productId)
+                         ->exists();
+
+        if (!$exists) {
+            // Añadir al carrito
+            \App\Models\Basket::create([
+                'user_id' => $userId,
+                'product_id' => $productId
+            ]);
+            return response()->json(['is_basket' => true]);
+        } else {
+            // Eliminar del carrito
+            \App\Models\Basket::where('user_id', $userId)
+                   ->where('product_id', $productId)
+                   ->delete();
+            return response()->json(['is_basket' => false]);
+        }
     }
 }

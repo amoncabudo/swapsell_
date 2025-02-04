@@ -18,6 +18,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\AuctionController;
+use App\Http\Controllers\BasketController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\ManagerMiddleware;
 
@@ -58,13 +59,6 @@ Route::get('/eventInfo', function(){
         'isAuthenticated' => auth()->check(),
     ]);
 });
-//Route Cart
-Route::get('/Cart', function () {
-    $isAuthenticated = Auth::check();
-    return Inertia::render('Cart', [
-        'isAuthenticated' => $isAuthenticated
-    ]);
-})->middleware(['auth', 'verified'])->name('cart');
 
 // Route Products
 Route::get('/productextend', function () {
@@ -128,6 +122,11 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/favorites', [FavoriteController::class, 'getAllFavorites'])->name('products_favs');
 Route::get('/favorites/all', [ControllerFavorites::class, 'index'])->middleware(['auth', 'verified'])->name('favorites');
 Route::post('/products', [ProductController::class, 'toggleFavourite'])->name('productFavorite');
+
+// Route Basket
+Route::get('/Cart', [BasketController::class, 'getAllBaskets'])->name('cart');
+Route::post('/products/baskets', [ProductController::class, 'toggleBasket'])->middleware(['auth', 'verified'])->name('baskets_products');
+Route::get('/baskets', [BasketController::class, 'getAllBaskets'])->name('products_baskets');
 
 
 //Route Sell
