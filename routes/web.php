@@ -126,6 +126,8 @@ Route::middleware(['auth'])->group(function () {
 // //Route Favorites
 Route::get('/favorites', [FavoriteController::class, 'getAllFavorites'])->name('products_favs');
 Route::get('/favorites/all', [ControllerFavorites::class, 'index'])->middleware(['auth', 'verified'])->name('favorites');
+Route::post('/products', [ProductController::class, 'toggleFavourite'])->name('productFavorite');
+
 
 //Route Sell
 Route::get('/sell', [SellController::class, 'index'])->middleware(['auth', 'verified'])->name('sell');

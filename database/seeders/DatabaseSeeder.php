@@ -37,15 +37,15 @@ class DatabaseSeeder extends Seeder
 
         // Aquí tu código para crear categorías
         Category::create([
-            'name' => 'Hogar',
+            'name' => 'Llar',
             'image' => 'HomeCategory.jpg'
         ]);
         Category::create([
-            'name' => 'Tecnología',
+            'name' => 'Tecnologia',
             'image' => 'TecnologyCategory.jpg'
         ]);
         Category::create([
-            'name' => 'Deportes',
+            'name' => 'Esports',
             'image' => 'SportsCategory.jpg'
         ]);
         Category::create([
@@ -53,11 +53,11 @@ class DatabaseSeeder extends Seeder
             'image' => 'ModaCategory.jpg'
         ]);
         Category::create([
-            'name' => 'Salud y belleza',
+            'name' => 'Salut i Bellesa',
             'image' => 'HealthCategory.jpg'
         ]);
         Category::create([
-            'name' => 'Juguetes',
+            'name' => 'Joguines',
             'image' => 'ToysCategory.jpg'
         ]);
         Category::create([

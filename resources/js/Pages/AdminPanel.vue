@@ -118,7 +118,7 @@ function addProduct(){
                     <h2 class="text-xl font-semibold mb-2 text-gray-800">AFEGIR USUARIS</h2>
                     <p class="text-gray-800">Apartat per afegir usuaris</p>
                     <div class="mt-4">
-                        <button @click="openModalU"
+                        <button aria-label="Create User" @click="openModalU"
                             class="bg-SubastaButton1 text-white px-4 py-2 rounded hover:bg-blue-600">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
@@ -140,7 +140,7 @@ function addProduct(){
                     <h2 class="text-xl font-semibold mb-2 text-gray-800">AFEGIR ESDEVENIMENTS</h2>
                     <p class="text-gray-800">Apartat per afegir esdeveniments</p>
                     <div class="mt-4">
-                        <button @click="openModalE" 
+                        <button aria-label="Create Event" @click="openModalE" 
                         class="bg-SubastaButton1 text-white px-4 py-2 rounded hover:bg-blue-600">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
@@ -162,7 +162,7 @@ function addProduct(){
                     <h2 class="text-xl font-semibold mb-2 text-gray-800">AFEGIR PRODUCTES</h2>
                     <p class="text-gray-800">Apartat per afegir productes</p>
                     <div class="mt-4">
-                        <button @click="openModalP" 
+                        <button aria-label="Create Product" @click="openModalP" 
                         class="bg-SubastaButton1 text-white px-4 py-2 rounded hover:bg-blue-600">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
@@ -183,7 +183,7 @@ function addProduct(){
                     <h2 class="text-xl font-semibold mb-2 text-gray-800">LLISTA D'USUARIS</h2>
                     <p class="text-gray-800">Apartat per visualitzar i gestionar els usuaris</p>
                     <div class="mt-4">
-                        <button class="bg-SubastaButton1 text-white px-4 py-2 rounded hover:bg-blue-600">
+                        <button aria-label="User List" class="bg-SubastaButton1 text-white px-4 py-2 rounded hover:bg-blue-600">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                 viewBox="0 0 24 24">
@@ -203,7 +203,7 @@ function addProduct(){
                     <h2 class="text-xl font-semibold mb-2 text-gray-800">LLISTA D'ESDEVENIMENTS</h2>
                     <p class="text-gray-800">Apartat per visualitzar i gestionar els esdeveniments</p>
                     <div class="mt-4">
-                        <button class="bg-SubastaButton1 text-white px-4 py-2 rounded hover:bg-blue-600">
+                        <button aria-label="Events List" class="bg-SubastaButton1 text-white px-4 py-2 rounded hover:bg-blue-600">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                 viewBox="0 0 24 24">
@@ -223,7 +223,7 @@ function addProduct(){
                     <h2 class="text-xl font-semibold mb-2 text-gray-800">LLISTA DE PRODUCTES</h2>
                     <p class="text-gray-800">Apartat per visualitzar i gestionar els productes</p>
                     <div class="mt-4">
-                        <button class="bg-SubastaButton1 text-white px-4 py-2 rounded hover:bg-blue-600">
+                        <button aria-label="Products List" class="bg-SubastaButton1 text-white px-4 py-2 rounded hover:bg-blue-600">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                 viewBox="0 0 24 24">
