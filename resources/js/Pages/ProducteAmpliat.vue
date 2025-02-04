@@ -6,6 +6,7 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { defineProps, ref , computed} from 'vue';
 import { useForm } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3';
 
 
 import axios from 'axios';
@@ -185,13 +186,15 @@ console.log(props.user.created_at);
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <span>Subastar</span>
+                    <Link :href="route('auction')" class="text-white">
+                            <span>Subastar</span>
+                    </Link>
                   </button>
                 </div>
               </div>
             </div>
 
-            <!-- Sección de información -->
+            <!-- Sección de información --->
             <div class="w-full lg:w-1/2 space-y-6">
               <!-- Información del vendedor -->
               <div class="bg-white rounded-xl shadow-lg p-6">
