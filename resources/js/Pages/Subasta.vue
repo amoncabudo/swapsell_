@@ -10,34 +10,44 @@ const props = defineProps({
     products: Array
 });
 
-const countdowns = ref({});
-
-const updateCountdown = (auctionId, totalSeconds) => {
-    if (totalSeconds <= 0) {
-        return '¡Subasta finalizada!';
-    }
-
+const formatTime = (totalSeconds) => {
+    if (totalSeconds <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+    
     const days = Math.floor(totalSeconds / (24 * 60 * 60));
     const hours = Math.floor((totalSeconds % (24 * 60 * 60)) / (60 * 60));
     const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
     const seconds = Math.floor(totalSeconds % 60);
-
-    return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    
+    return { days, hours, minutes, seconds };
 };
 
-// Start countdown timers
+const countdowns = ref({});
+const intervals = ref({}); // Para almacenar las referencias a los intervalos
+
+const calculateRemainingTime = (endTime) => {
+    const now = new Date();
+    const end = new Date(endTime);
+    const difference = Math.floor((end - now) / 1000); // Diferencia en segundos
+    return difference > 0 ? difference : 0;
+};
+
+// Iniciar los contadores
 onMounted(() => {
     if (props.products) {
         props.products.forEach(product => {
-            if (product.auction?.remaining?.total_seconds) {
-                let remainingSeconds = product.auction.remaining.total_seconds;
-                countdowns.value[product.auction.id] = remainingSeconds;
+            if (product.auction) {
+                // Calcular tiempo restante inicial
+                countdowns.value[product.auction.id] = calculateRemainingTime(
+                    product.auction.end_time
+                );
 
-                const timer = setInterval(() => {
+                // Crear un intervalo para cada subasta
+                intervals.value[product.auction.id] = setInterval(() => {
                     if (countdowns.value[product.auction.id] > 0) {
                         countdowns.value[product.auction.id]--;
+                        const time = formatTime(countdowns.value[product.auction.id]);
                     } else {
-                        clearInterval(timer);
+                        clearInterval(intervals.value[product.auction.id]);
                     }
                 }, 1000);
             }
@@ -45,10 +55,10 @@ onMounted(() => {
     }
 });
 
-// Cleanup timers
+// Limpiar los intervalos cuando el componente se desmonte
 onUnmounted(() => {
-    Object.keys(countdowns.value).forEach(auctionId => {
-        clearInterval(countdowns.value[auctionId]);
+    Object.values(intervals.value).forEach(interval => {
+        clearInterval(interval);
     });
 });
 
@@ -151,10 +161,20 @@ const placeBid = (product) => {
                                     Tiempo restante
                                 </p>
                                 <p class="text-lg font-bold text-gray-900">
-                                    {{ product.auction?.id && countdowns[product.auction.id] !== undefined 
-                                        ? updateCountdown(product.auction.id, countdowns[product.auction.id])
-                                        : 'Calculando...' 
-                                    }}
+                                    <template v-if="product.auction?.id && countdowns[product.auction.id] !== undefined">
+                                        <template v-if="countdowns[product.auction.id] > 0">
+                                            {{ formatTime(countdowns[product.auction.id]).days }}d
+                                            {{ formatTime(countdowns[product.auction.id]).hours }}h
+                                            {{ formatTime(countdowns[product.auction.id]).minutes }}m
+                                            {{ formatTime(countdowns[product.auction.id]).seconds }}s
+                                        </template>
+                                        <template v-else>
+                                            Subasta finalizada
+                                        </template>
+                                    </template>
+                                    <template v-else>
+                                        Calculando...
+                                    </template>
                                 </p>
                             </div>
 
