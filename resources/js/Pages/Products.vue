@@ -181,7 +181,7 @@ const filteredProducts = computed(() => {
           <div v-for="product in filteredProducts" :key="product.id"
             class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
             <div class="relative">
-              <img :src="`/storage/products/${product.image}`" :alt="product.name" class="w-full h-56 object-cover">
+              <img :src="`/storage/${product.image}`" :alt="product.name" class="w-full h-56 object-cover">
             </div>  
             <div class="p-6">
               <Link :href="route('product.show', product.id)" class="block">

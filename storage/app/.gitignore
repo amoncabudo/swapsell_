@@ -1,2 +1,2 @@
-/storage/*
-!/storage/app/public/
+/storage/public/*
+!/storage/public/products/*
