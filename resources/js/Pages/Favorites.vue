@@ -81,7 +81,7 @@ const isFavorite = (product) => {
                             <div v-for="products_favs in products_favs" :key="products_favs.id"
                                 class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
                                 <div class="relative">
-                                    <img :src="`/storage/products/${products_favs.image}`" :alt="products_favs.name" class="w-full h-56 object-cover">
+                                    <img :src="`/storage/${products_favs.image}`" :alt="products_favs.name" class="w-full h-56 object-cover">
                                 </div>
                                 <div class="p-6">
                                     <Link :href="`/product/${products_favs.id}`" class="block">

@@ -43,7 +43,7 @@ onMounted(async () => {
             id: category.id,
             name: category.name,
             items: category.items,
-            image: `/storage/${category.image}`,
+            image: `/storage/products/${category.image}`,
             delay: (index + 1) * 100
         }));
 });
