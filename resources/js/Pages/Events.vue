@@ -75,7 +75,7 @@ const navigateToEvent = (event) => {
         </div>
         </div>
         <div v-else class="text-center text-gray-600 text-xl font-semibold mt-20">
-                No hay eventos disponibles
+                No hi ha esdeveniments disponibles
             </div>
            
             <Link aria-label="addEvent Page" href="/addEvent" 

@@ -32,10 +32,10 @@ function handleFileUpload(event) {
         <!-- Encabezado del formulario -->
         <div class="text-center mb-8">
           <h1 class="text-3xl font-extrabold text-gray-900 mb-2">
-            Publica tu Producto
+            Publica el teu Producte
           </h1>
           <p class="text-gray-600">
-            Completa los detalles de tu producto para publicarlo
+            Completa els detalls del teu producte:
           </p>
         </div>
 
@@ -44,7 +44,7 @@ function handleFileUpload(event) {
           <form @submit.prevent="form.post(route('sell'))" enctype="multipart/form-data" class="space-y-6">
             <!-- Campo Nombre -->
             <div class="form-group">
-              <label for="name" class="form-label">Nombre del Producto</label>
+              <label for="name" class="form-label">Nom del Producte</label>
               <div class="relative">
                 <input
                   type="text"
@@ -64,7 +64,7 @@ function handleFileUpload(event) {
 
             <!-- Campo Descripción -->
             <div class="form-group">
-              <label for="description" class="form-label">Descripción</label>
+              <label for="description" class="form-label">Descripció</label>
               <div class="relative">
                 <textarea
                   id="description"
@@ -78,7 +78,7 @@ function handleFileUpload(event) {
 
             <!-- Campo Imagen -->
             <div class="form-group">
-            <label for="image" class="form-label">Imagen del Producto</label>
+            <label for="image" class="form-label">Imatge del Producte</label>
               <div class="relative">
                 <input
                   type="file"
@@ -91,7 +91,7 @@ function handleFileUpload(event) {
 
             <!-- Campo Precio -->
             <div class="form-group">
-              <label for="price" class="form-label">Precio (€)</label>
+              <label for="price" class="form-label">Preu (€)</label>
               <div class="relative">
                 <input
                   type="number"
@@ -154,7 +154,7 @@ function handleFileUpload(event) {
 
             <!-- Campo Estado -->
             <div class="form-group">
-              <label for="status" class="form-label">Estado</label>
+              <label for="status" class="form-label">Estat</label>
               <div class="relative">
                 <select
                   id="status"
@@ -175,7 +175,7 @@ function handleFileUpload(event) {
             </div>
             <!--category-->
             <div class="form-group">
-              <label for="category" class="form-label">Categoría</label>
+              <label for="category" class="form-label">Categoria</label>
               <div class="relative">
                 <select
                   id="category_id"
@@ -183,12 +183,12 @@ function handleFileUpload(event) {
                   class="form-input pl-10"
                   required
                 >
-                  <option value="1">Hogar</option>
-                  <option value="2">Tecnología</option>
-                  <option value="3">Deportes</option>
+                  <option value="1">Llar</option>
+                  <option value="2">Tecnologia</option>
+                  <option value="3">Esports</option>
                   <option value="4">Moda</option>
-                  <option value="5">Salud y belleza</option>
-                  <option value="6">Juguetes</option>
+                  <option value="5">Salut i Bellesa</option>
+                  <option value="6">Joguines</option>
                 </select>
                 <span class="form-icon">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -206,7 +206,7 @@ function handleFileUpload(event) {
                        hover:from-blue-600 hover:to-indigo-700 transform hover:-translate-y-0.5 transition-all duration-150
                        focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               >
-                Publicar Producto
+                Publicar Producte
               </button>
             </div>
           </form>

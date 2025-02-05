@@ -20,17 +20,17 @@ let form = useForm({
         <!-- Encabezado del formulario -->
         <div class="text-center mb-8">
           <h1 class="text-3xl font-extrabold text-gray-900 mb-2">
-            Crea un Event
+            Crea un Esdeveniment
           </h1>
           <p class="text-gray-600">
-            Completa els detalls del teu event per crear-lo
+            Completa els detalls del teu esdeveniment:
           </p>
         </div>
 
         <div class="bg-white rounded-2xl shadow-xl p-8">
           <form @submit.prevent="form.post(route('events'))" class="space-y-6">
             <div class="form-group">
-              <label for="title" class="form-label">Nom de l'event</label>
+              <label for="title" class="form-label">Nom de l'esdeveniment</label>
               <div class="relative">
                 <input
                   type="text"
@@ -151,7 +151,7 @@ let form = useForm({
                        hover:from-blue-600 hover:to-indigo-700 transform hover:-translate-y-0.5 transition-all duration-150
                        focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               >
-                Publicar Producto
+                Publicar Producte
               </button>
             </div>
           </form>

@@ -156,8 +156,8 @@ const downloadAuctionCertificate = (product) => {
                 <!-- Header Section with Wave Effect -->
                 <div class="text-center mb-12 relative overflow-hidden p-8 rounded-xl bg-SubastaButton1 shadow-xl">
                     <div class="relative z-10">
-                        <h1 class="text-4xl font-bold text-white mb-4">Subastas Activas</h1>
-                        <p class="text-lg text-white/90">Descubre productos únicos y participa en emocionantes subastas</p>
+                        <h1 class="text-4xl font-bold text-white mb-4">Subhastes Actives</h1>
+                        <p class="text-lg text-white/90">Descobreix productes únics i participa a emocionants subhastes</p>
                         <Link 
                             v-if="isAuthenticated"
                             :href="route('auctions.create')" 
@@ -166,7 +166,7 @@ const downloadAuctionCertificate = (product) => {
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                             </svg>
-                            Crear Nueva Subasta
+                            Crear Nova Subhasta
                         </Link>
                     </div>
                     <!-- Animated Wave Background -->
@@ -191,7 +191,7 @@ const downloadAuctionCertificate = (product) => {
                                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                                     </svg>
-                                    Subasta Activa
+                                    Subhasta Activa
                                 </span>
                             </div>
                         </div>
@@ -229,7 +229,7 @@ const downloadAuctionCertificate = (product) => {
                                         </template>
                                         <template v-else>
                                             <div class="text-center">
-                                                <p class="text-red-500 font-bold mb-2">Subasta finalizada</p>
+                                                <p class="text-red-500 font-bold mb-2">Subhasta finalitzada</p>
                                                 <p v-if="product.auction.last_bidder" class="text-green-600">
                                                     Ganador: {{ product.auction.last_bidder.name }}
                                                     <button 
@@ -244,13 +244,13 @@ const downloadAuctionCertificate = (product) => {
                                                     </button>
                                                 </p>
                                                 <p v-else class="text-gray-500">
-                                                    No hubo pujas en esta subasta
+                                                    No ha hagut licitacions en aquesta subhasta
                                                 </p>
                                             </div>
                                         </template>
                                     </template>
                                     <template v-else>
-                                        Calculando...
+                                        Calculant...
                                     </template>
                                 </p>
                             </div>
@@ -268,7 +268,7 @@ const downloadAuctionCertificate = (product) => {
                                         :class="{'border-red-500': product.bidPrice <= product.auction?.current_price}"
                                     />
                                     <p v-if="product.bidPrice <= product.auction?.current_price" class="text-red-500 text-sm mt-1">
-                                        La puja debe ser mayor al precio actual
+                                        La licitació ha de ser major al preu actual
                                     </p>
                                 </div>
 
@@ -302,8 +302,8 @@ const downloadAuctionCertificate = (product) => {
                     <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
                     </svg>
-                    <h3 class="mt-2 text-sm font-medium text-gray-900">No hay subastas activas</h3>
-                    <p class="mt-1 text-sm text-gray-500">Vuelve más tarde para ver nuevas subastas</p>
+                    <h3 class="mt-2 text-sm font-medium text-gray-900">No hi ha subhastes actives</h3>
+                    <p class="mt-1 text-sm text-gray-500">Torna més tard per veure noves subhastes</p>
                 </div>
             </div>
         </div>

@@ -130,11 +130,11 @@ const filteredProducts = computed(() => {
       <div class="wave-bg pt-24 pb-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 class="text-4xl font-bold text-white text-center mb-8">
-            Encuentra lo que buscas
+            Troba el que busques
           </h1>
           <div class="max-w-3xl mx-auto">
             <div class="relative">
-              <input aria-label="search bar" type="text" placeholder="¿Qué estás buscando?"
+              <input aria-label="search bar" type="text" placeholder="¿Què estàs buscant?"
                 class="w-full pl-12 pr-4 py-4 rounded-xl shadow-lg focus:outline-none focus:ring-2 focus:ring-white/50">
               <div class="absolute left-4 top-4">
                 <svg class="h-6 w-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -233,8 +233,8 @@ const filteredProducts = computed(() => {
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                 d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
             </svg>
-            <h3 class="mt-4 text-lg font-medium text-gray-900">No hay productos en esta categoría</h3>
-            <p class="mt-2 text-sm text-gray-500">Intenta buscar en otra categoría o vuelve más tarde.</p>
+            <h3 class="mt-4 text-lg font-medium text-gray-900">No hi ha productes amb aquesta categoría</h3>
+            <p class="mt-2 text-sm text-gray-500">Intenta buscar amb una altre categoria o torna més tard.</p>
           </div>
         </div>
       </div>
@@ -246,7 +246,7 @@ const filteredProducts = computed(() => {
           <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
           </svg>
-          <span class="ml-2">Vender</span>
+          <span class="ml-2">Vendre</span>
         </Link>
 
         <!-- Botón de subastas -->
@@ -255,7 +255,7 @@ const filteredProducts = computed(() => {
           <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
           </svg>
-          <span class="ml-2">Subastas</span>
+          <span class="ml-2">Subhastes</span>
         </Link>
 
         <!-- Botón de chat -->
