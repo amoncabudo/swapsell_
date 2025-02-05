@@ -32,7 +32,7 @@ const showingNavigationDropdown = ref(false);
                         </Link>
                         <!-- Events -->
                         <Link href="/events" class="text-gray-600 hover:text-blue-500 transition-colors">
-                            Events
+                            Esdeveniments
                         </Link>
 
                     <div class="hidden sm:flex items-center space-x-6">
@@ -59,8 +59,8 @@ const showingNavigationDropdown = ref(false);
             <!-- Responsive Navigation Menu -->
             <div :class="{ block: showingNavigationDropdown, hidden: !showingNavigationDropdown }" class="sm:hidden">
                 <div class="space-y-1 pb-3 pt-2">
-                    <Link href="/login" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700">Login</Link>
-                    <Link href="/register" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700">Register</Link>
+                    <Link href="/login" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700">Inicia Sessió</Link>
+                    <Link href="/register" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700">Registrar-se</Link>
                 </div>
             </div>
         </nav>

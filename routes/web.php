@@ -18,8 +18,10 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\AuctionController;
+use App\Http\Controllers\BasketController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\ManagerMiddleware;
+use App\Http\Controllers\PayPalController;
 
 // Routes welcome
 Route::get('/', function () {
@@ -58,13 +60,6 @@ Route::get('/eventInfo', function(){
         'isAuthenticated' => auth()->check(),
     ]);
 });
-//Route Cart
-Route::get('/Cart', function () {
-    $isAuthenticated = Auth::check();
-    return Inertia::render('Cart', [
-        'isAuthenticated' => $isAuthenticated
-    ]);
-})->middleware(['auth', 'verified'])->name('cart');
 
 // Route Products
 Route::get('/productextend', function () {
@@ -129,6 +124,11 @@ Route::get('/favorites', [FavoriteController::class, 'getAllFavorites'])->name('
 Route::get('/favorites/all', [ControllerFavorites::class, 'index'])->middleware(['auth', 'verified'])->name('favorites');
 Route::post('/products', [ProductController::class, 'toggleFavourite'])->name('productFavorite');
 
+// Route Basket
+Route::get('/Cart', [BasketController::class, 'getAllBaskets'])->name('cart');
+Route::post('/products/baskets', [ProductController::class, 'toggleBasket'])->middleware(['auth', 'verified'])->name('baskets_products');
+Route::get('/baskets', [BasketController::class, 'getAllBaskets'])->name('products_baskets');
+
 
 //Route Sell
 Route::get('/sell', [SellController::class, 'index'])->middleware(['auth', 'verified'])->name('sell');
@@ -169,8 +169,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/auctions/bid', [AuctionController::class, 'bid'])->name('auctions.bid');
     Route::post('/auctions/{id}/finish', [AuctionController::class, 'finish'])->name('auctions.finish');
 });
-require __DIR__.'/auth.php';
 
+Route::post('/paypal/create-order', [PayPalController::class, 'createOrder']);
+Route::post('/paypal/capture-order/{orderId}', [PayPalController::class, 'captureOrder']);
+Route::post('clear-cart', [PayPalController::class, 'clear'])->name('clear-cart');
+
+require __DIR__.'/auth.php';
 
 
 // Route::get('/products', function () {
@@ -187,7 +191,7 @@ require __DIR__.'/auth.php';
 //Routes to login with google
 Route::get('login-google', function () {
     return Socialite::driver('google')->redirect();
-});
+})->name('login-google');
  
 Route::get('google-callback', function () {
     $user = Socialite::driver('google')->user();

@@ -40,7 +40,7 @@ const showingNavigationDropdown = ref(false);
                         </Link>
                         <!-- Events -->
                         <Link href="/events" class="text-gray-600 hover:text-blue-500 transition-colors">
-                            Events
+                            Esdeveniments
                         </Link>
                         <Link href="/auction" class="text-gray-600 hover:text-blue-500 transition-colors">
                             Subhastes
@@ -77,15 +77,15 @@ const showingNavigationDropdown = ref(false);
                                     </template>
                             <template #content>  
                                 <DropdownLink :href="route('profile')">Perfil</DropdownLink>
-                                <DropdownLink :href="route('Events')">Events</DropdownLink>
+                                <DropdownLink :href="route('Events')">Esdeveniments</DropdownLink>
                                 <DropdownLink :href="route('Products')">Productes</DropdownLink>
                                 <DropdownLink :href="route('products_favs')">Favorits</DropdownLink>
                                 <DropdownLink :href="route('cart')">Carrito</DropdownLink>
                                 <DropdownLink :href="route('auction')">Subhastes</DropdownLink>
                                 <template v-if="$page.props.auth.user.role === 0">
-                                    <DropdownLink :href="route('AdminPanel')">Admin Panel</DropdownLink>
+                                    <DropdownLink :href="route('AdminPanel')">Panell d'Administració</DropdownLink>
                                 </template>
-                                <DropdownLink :href="route('logout')" method="post" as="button">Tencar sessió</DropdownLink>
+                                <DropdownLink :href="route('logout')" method="post" as="button">Tancar Sessió</DropdownLink>
                             </template>
                                 </Dropdown>
                             </div>
