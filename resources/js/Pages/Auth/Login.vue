@@ -51,7 +51,7 @@ const submit = () => {
               {{ form.errors.email }}
             </div>
           </div>
-
+          
           <!-- Input Contrasenya -->
           <div class="form-group relative">
             <input type="password"
@@ -86,7 +86,7 @@ const submit = () => {
               Has oblidat la contrasenya?
             </Link>
           </div>
-
+          
           <!-- Botó d'inici de sessió -->
           <button type="submit" 
                   :disabled="form.processing"
@@ -101,6 +101,20 @@ const submit = () => {
             <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-700 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
           </button>
         </form>
+        <div class="inline-flex items-center justify-center w-full">
+    <hr class="w-64 h-px bg-gray-700 border-0 dark:bg-gray-700">
+    <span class="absolute px-3 font-medium text-gray-900 -translate-x-1/2 bg-white left-1/2 dark:text-white dark:bg-gray-900">O també</span>
+</div>
+        <div class="flex items-center justify-center">
+        <a
+    :href="route('login-google')"
+    class="flex items-center justify-center gap-2 w-full max-w-xs px-4 py-2 text-white bg-red-600 hover:bg-red-700 
+           rounded-lg shadow-md transition duration-300 font-medium"
+  >
+    <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google Logo" class="w-5 h-5" />
+    Iniciar sessio amb Google
+  </a>
+</div>
         <div class="text-center">
         <Link href="/register" class="text-gray-600 hover:text-blue-500 transition-colors">
           <p class="text-custom-blue mt-5 text-sm/6">No tens compte? Registra't</p>
@@ -109,6 +123,8 @@ const submit = () => {
       </div>
     </section>
   </div>
+
+  
 </template>
 
 <style scoped>
