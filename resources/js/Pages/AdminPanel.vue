@@ -180,7 +180,7 @@ function addProduct(){
                             d="M9 8h10M9 12h10M9 16h10M4.99 8H5m-.02 4h.01m0 4H5" />
                     </svg>
                     <!-- <img src="" alt="ListUsers" class="mx-auto mb-2 w-12 h-12" /> -->
-                    <h2 class="text-xl font-semibold mb-2 text-gray-800">LLISTA D'USUARIS</h2>
+                    <h2 class="text-xl font-semibold mb-2 text-gray-800">LLISTAT D'USUARIS</h2>
                     <p class="text-gray-800">Apartat per visualitzar i gestionar els usuaris</p>
                     <div class="mt-4">
                         <button aria-label="User List" class="bg-SubastaButton1 text-white px-4 py-2 rounded hover:bg-blue-600">
@@ -200,7 +200,7 @@ function addProduct(){
                             d="M9 8h10M9 12h10M9 16h10M4.99 8H5m-.02 4h.01m0 4H5" />
                     </svg>
                     <!-- <img src="" alt="ListEvents" class="mx-auto mb-2 w-12 h-12" /> -->
-                    <h2 class="text-xl font-semibold mb-2 text-gray-800">LLISTA D'ESDEVENIMENTS</h2>
+                    <h2 class="text-xl font-semibold mb-2 text-gray-800">LLISTAT D'ESDEVENIMENTS</h2>
                     <p class="text-gray-800">Apartat per visualitzar i gestionar els esdeveniments</p>
                     <div class="mt-4">
                         <button aria-label="Events List" class="bg-SubastaButton1 text-white px-4 py-2 rounded hover:bg-blue-600">
@@ -220,7 +220,7 @@ function addProduct(){
                             d="M9 8h10M9 12h10M9 16h10M4.99 8H5m-.02 4h.01m0 4H5" />
                     </svg>
                     <!-- <img src="" alt="ListProducts" class="mx-auto mb-2 w-12 h-12" /> -->
-                    <h2 class="text-xl font-semibold mb-2 text-gray-800">LLISTA DE PRODUCTES</h2>
+                    <h2 class="text-xl font-semibold mb-2 text-gray-800">LLISTAT DE PRODUCTES</h2>
                     <p class="text-gray-800">Apartat per visualitzar i gestionar els productes</p>
                     <div class="mt-4">
                         <button aria-label="Products List" class="bg-SubastaButton1 text-white px-4 py-2 rounded hover:bg-blue-600">

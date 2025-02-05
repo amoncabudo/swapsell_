@@ -21,6 +21,7 @@ use App\Http\Controllers\AuctionController;
 use App\Http\Controllers\BasketController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\ManagerMiddleware;
+use App\Http\Controllers\PayPalController;
 
 // Routes welcome
 Route::get('/', function () {
@@ -168,8 +169,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/auctions/bid', [AuctionController::class, 'bid'])->name('auctions.bid');
     Route::post('/auctions/{id}/finish', [AuctionController::class, 'finish'])->name('auctions.finish');
 });
-require __DIR__.'/auth.php';
 
+Route::post('/paypal/create-order', [PayPalController::class, 'createOrder']);
+Route::post('/paypal/capture-order/{orderId}', [PayPalController::class, 'captureOrder']);
+Route::post('clear-cart', [PayPalController::class, 'clear'])->name('clear-cart');
+
+require __DIR__.'/auth.php';
 
 
 // Route::get('/products', function () {
@@ -186,7 +191,7 @@ require __DIR__.'/auth.php';
 //Routes to login with google
 Route::get('login-google', function () {
     return Socialite::driver('google')->redirect();
-});
+})->name('login-google');
  
 Route::get('google-callback', function () {
     $user = Socialite::driver('google')->user();

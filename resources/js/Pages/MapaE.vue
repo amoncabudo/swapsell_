@@ -9,7 +9,7 @@
       <div
         id="map"
         role="region"
-        aria-label="Mapa interactivo mostrando ubicaciones de productos"
+        aria-label="Mapa interactiu mostrant ubicacions de esdeveniments"
         tabindex="0"
       ></div>
     </div>
@@ -47,7 +47,7 @@ const initializeMap = () => {
       },
       // Error o rechazo de permisos
       (error) => {
-        console.log("Error de geolocalización:", error);
+        console.log("Error de geolocalització:", error);
         // Usar posición por defecto
         initializeMapWithPosition(42.265507, 2.958105);
       },
@@ -60,7 +60,7 @@ const initializeMap = () => {
     );
   } else {
     // Navegador no soporta geolocalización
-    console.log("Geolocalización no disponible");
+    console.log("Geolocalització no disponible");
     initializeMapWithPosition(42.265507, 2.958105);
   }
 };
@@ -89,7 +89,7 @@ const initializeMapWithPosition = (lat, lng) => {
   locationButton.onAdd = function(map) {
     const div = L.DomUtil.create('div', 'leaflet-bar mainbutton ');
     div.innerHTML = `
-      <a href="#" title="Mostrar mi ubicación" role="button" aria-label="Mostrar mi ubicación" 
+      <a href="#" title="Mostrar mi ubicación" role="button" aria-label="La meva ubicació" 
          style="width: 30px; height: 30px; line-height: 30px; text-align: center; display: block; 
                 background: white; border-radius: 4px;">
         <svg viewBox="0 0 24 24" style="width: 18px; height: 18px; margin: 6px;">
@@ -108,7 +108,7 @@ const initializeMapWithPosition = (lat, lng) => {
           },
           (error) => {
             console.error("Error getting location:", error);
-            alert("No se pudo obtener tu ubicación");
+            alert("No s'ha pogut obtenir la vostre ubicació");
           }
         );
       }
@@ -133,7 +133,7 @@ const initializeMapWithPosition = (lat, lng) => {
         html: '<div style="background-color: #4285f4; width: 12px; height: 12px; border-radius: 50%; border: 2px solid white;"></div>',
       })
     })
-    .bindPopup('Tu ubicación actual')
+    .bindPopup('Ubicació actual')
     .addTo(map.value);
   }
 
@@ -143,7 +143,7 @@ const initializeMapWithPosition = (lat, lng) => {
     <p style="margin:0;font-weight:bold;">${element.title} </p> 
       <p style="margin:0;">${element.date}</p>
       <p style="margin:0;">${element.time}</p>
-    <a  style="margin:0;" href="/productextend/${element.id}">Ver producto</a>
+    <a  style="margin:0;" href="/productextend/${element.id}">Veure esdeveniment</a>
     `;
     L.marker([element.latitude, element.longitude], {icon: Icon})
       .bindPopup(contenido)

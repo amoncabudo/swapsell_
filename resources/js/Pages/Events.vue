@@ -75,14 +75,16 @@ const navigateToEvent = (event) => {
         </div>
         </div>
         <div v-else class="text-center text-gray-600 text-xl font-semibold mt-20">
-                No hay eventos disponibles
+                No hi ha esdeveniments disponibles
             </div>
+           
             <Link aria-label="addEvent Page" href="/addEvent" 
             class="fixed bottom-8 right-8 bg-custom-blue text-white rounded-full p-4 shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:bg-custom-blue-dark">
         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
         </svg>
       </Link>
+      
         </div>
    
     
