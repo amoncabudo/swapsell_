@@ -26,9 +26,9 @@ const submit = () => {
         <Head title="Forgot Password" />
 
         <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-            Forgot your password? No problem. Just let us know your email
-            address and we will email you a password reset link that will allow
-            you to choose a new one.
+            Heu oblidat la contrasenya? No hi ha problema. Només has de fer-nos saber el teu correu
+adreça i t'enviarem un correu electrònic amb un enllaç de restabliment de contrasenya que et permetrà
+tu per triar-ne un de nou.
         </div>
 
         <div
@@ -60,7 +60,7 @@ const submit = () => {
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
-                    Email Password Reset Link
+                Enllaç de restabliment de contrasenya per correu
                 </PrimaryButton>
             </div>
         </form>
