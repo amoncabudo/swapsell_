@@ -16,6 +16,9 @@
         @vite(['resources/css/app.css','resources/js/app.js'])
 
         @inertiaHead
+        <script>
+            window.__WS_TOKEN__ = '{{ csrf_token() }}';
+        </script>
     </head>
     <body class="font-sans antialiased">
         @inertia
