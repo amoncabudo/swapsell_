@@ -7,6 +7,10 @@ use PayPalCheckoutSdk\Orders\OrdersCreateRequest;
 use PayPalCheckoutSdk\Orders\OrdersCaptureRequest;
 use PayPalCheckoutSdk\Core\PayPalHttpClient;
 use PayPalCheckoutSdk\Core\SandboxEnvironment;
+use App\Models\Basket;
+use App\Models\Product;
+use App\Models\Transaction;
+use Illuminate\Support\Facades\Auth;
 
 class PayPalController extends Controller
 {
@@ -45,6 +49,32 @@ class PayPalController extends Controller
         $request = new OrdersCaptureRequest($orderId);
         try {
             $response = $this->client->execute($request);
+            
+            // Si el pago es exitoso, crear la transacción
+            if ($response->result->status === 'COMPLETED') {
+                // Obtener el producto del carrito
+                $basket = Basket::where('user_id', Auth::id())->first();
+                $product = Product::find($basket->product_id);
+                
+                // Crear la transacción
+                Transaction::create([
+                    'user_id' => $product->user_id, // Vendedor
+                    'buyer_id' => Auth::id(), // Comprador
+                    'category_id' => $product->category_id,
+                    'name' => $product->name,
+                    'description' => $product->description,
+                    'price' => $product->price,
+                    'longitude' => $product->longitude,
+                    'latitude' => $product->latitude,
+                    'image' => $product->image,
+                    'status' => 'completed',
+                    'bid' => false
+                ]);
+                
+                // Limpiar el carrito
+                $this->clear();
+            }
+            
             return response()->json($response->result);
         } catch (\Exception $ex) {
             return response()->json(['error' => $ex->getMessage()], 500);

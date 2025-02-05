@@ -69,30 +69,47 @@ onMounted(() => {
       },
       onApprove: (data, actions) => {
         return actions.order.capture().then((details) => {
-            // Mostrar alerta de éxito
-            Swal.fire({
-                title: '¡Éxito!',
-                text: '¡Pago procesado correctamente! Gracias por tu compra.',
-                icon: 'success',
-                confirmButtonText: 'Aceptar'
-            }).then(() => {
-                // Limpiar el carrito y recargar la página
-                axios.post(route('clear-cart'))
-                    .then(() => {
+            // Procesamos cada producto en el carrito
+            const processTransactions = props.products_baskets.map(product => {
+                return axios.post(route('transactions.store'), {
+                    product_id: product.id,
+                    category_id: product.category_id,
+                    name: product.name,
+                    description: product.description,
+                    price: product.price,
+                    longitude: product.longitude || '0',
+                    latitude: product.latitude || '0',
+                    image: product.image,
+                    status: 'completed'
+                });
+            });
+
+            // Esperamos a que todas las transacciones se completen
+            Promise.all(processTransactions)
+                .then(() => {
+                    // Limpiamos el carrito
+                    return axios.post(route('clear-cart'));
+                })
+                .then(() => {
+                    // Mostramos mensaje de éxito
+                    Swal.fire({
+                        title: '¡Èxit!',
+                        text: 'Pagament processat correctament!',
+                        icon: 'success',
+                        confirmButtonText: 'Acceptar'
+                    }).then(() => {
                         window.location.href = route('products');
-                    })
-                    .catch((error) => {
-                        console.error('Error al limpiar el carrito:', error);
                     });
-            });
-        }).catch((error) => {
-            // Mostrar alerta de error
-            Swal.fire({
-                title: 'Error',
-                text: 'Hubo un problema al procesar el pago. Por favor, inténtalo de nuevo.',
-                icon: 'error',
-                confirmButtonText: 'Aceptar'
-            });
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Hi ha hagut un problema en processar el pagament. Si us plau, contacta amb suport.',
+                        icon: 'error',
+                        confirmButtonText: 'Acceptar'
+                    });
+                });
         });
       }
     }).render('#paypal-button-container');
