@@ -7,10 +7,22 @@ use App\Models\Favorite;
 use App\Model\Basket;
 use App\Models\Comment;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Product;
 
 class Product extends Model
 {
-    protected $fillable = ['name', 'category_id', 'bid']; // Asegúrate de incluir 'category_id' si lo usas en tu base de datos.
+    protected $fillable = [
+        'name',
+        'category_id',
+        'bid',
+        'user_id',
+        'description',
+        'price',
+        'longitude',
+        'latitude',
+        'image',
+        'status'
+    ];
     
     public function user()
     {

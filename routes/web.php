@@ -22,6 +22,7 @@ use App\Http\Controllers\BasketController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\ManagerMiddleware;
 use App\Http\Controllers\PayPalController;
+use App\Http\Controllers\TransactionController;
 
 // Routes welcome
 Route::get('/', function () {
@@ -173,6 +174,7 @@ Route::middleware(['auth'])->group(function () {
 Route::post('/paypal/create-order', [PayPalController::class, 'createOrder']);
 Route::post('/paypal/capture-order/{orderId}', [PayPalController::class, 'captureOrder']);
 Route::post('clear-cart', [PayPalController::class, 'clear'])->name('clear-cart');
+Route::post('/transactions', [TransactionController::class, 'store'])->name('transactions.store');
 
 require __DIR__.'/auth.php';
 
