@@ -61,7 +61,7 @@ function removeFromBasket(product) {
                                 <p class="text-gray-600 mt-1">{{ product.description }}</p>
                                 <p class="text-blue-600 font-bold mt-2">{{ formatPrice(product.price) }}</p>
                             </div>
-                            <button @click="removeFromBasket(product)" class="ml-4 text-red-500 hover:text-red-700">
+                            <button @click="removeFromBasket(product)" class="ml-4 text-red-500 hover:text-red-700" aria-label="Delete product from basket">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
