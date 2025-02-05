@@ -186,7 +186,7 @@ require __DIR__.'/auth.php';
 //Routes to login with google
 Route::get('login-google', function () {
     return Socialite::driver('google')->redirect();
-});
+})->name('login-google');
  
 Route::get('google-callback', function () {
     $user = Socialite::driver('google')->user();
