@@ -26,8 +26,7 @@ class Auction extends Model
         return $this->belongsTo(Product::class);
     }
 
-    public function lastBidder()
-{
-    return $this->belongsTo(User::class, 'last_bidder_id');
-}
+    public function lastBidder(){
+        return $this->belongsTo(User::class, 'last_bidder_id');
+    }
 }
