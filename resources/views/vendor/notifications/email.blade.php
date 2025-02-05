@@ -1,22 +1,25 @@
 <x-mail::message>
-{{-- Greeting --}}
+{{-- Logo --}}
+
+
+{{-- Salutació --}}
 @if (! empty($greeting))
 # {{ $greeting }}
 @else
 @if ($level === 'error')
-# @lang('Whoops!')
+# @lang('Ups!')
 @else
-# @lang('Hello!')
+# @lang('Hola!')
 @endif
 @endif
 
-{{-- Intro Lines --}}
+{{-- Línies d'introducció --}}
 @foreach ($introLines as $line)
 {{ $line }}
 
 @endforeach
 
-{{-- Action Button --}}
+{{-- Botó d'acció --}}
 @isset($actionText)
 <?php
     $color = match ($level) {
@@ -25,34 +28,33 @@
     };
 ?>
 <x-mail::button :url="$actionUrl" :color="$color">
-{{ $actionText }}
+    {{ $actionText }}
 </x-mail::button>
 @endisset
 
-{{-- Outro Lines --}}
+{{-- Línies de tancament --}}
 @foreach ($outroLines as $line)
 {{ $line }}
 
 @endforeach
 
-{{-- Salutation --}}
+{{-- Comiat --}}
 @if (! empty($salutation))
 {{ $salutation }}
 @else
-@lang('Regards,')<br>
+@lang('Salutacions,')<br>
 {{ config('app.name') }}
 @endif
 
-{{-- Subcopy --}}
+{{-- Subcòpia --}}
 @isset($actionText)
 <x-slot:subcopy>
-@lang(
-    "If you're having trouble clicking the \":actionText\" button, copy and paste the URL below\n".
-    'into your web browser:',
-    [
-        'actionText' => $actionText,
-    ]
-) <span class="break-all">[{{ $displayableActionUrl }}]({{ $actionUrl }})</span>
+    @lang(
+        "Si tens problemes per fer clic al botó \":actionText\", copia i enganxa l'URL següent\n".
+        'al teu navegador web:',
+        ['actionText' => $actionText]
+    ) 
+    <span class="break-all">[{{ $displayableActionUrl }}]({{ $actionUrl }})</span>
 </x-slot:subcopy>
 @endisset
 </x-mail::message>
