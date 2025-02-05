@@ -103,7 +103,7 @@ const submit = () => {
         </form>
         <div class="inline-flex items-center justify-center w-full">
     <hr class="w-64 h-px bg-gray-700 border-0 dark:bg-gray-700">
-    <span class="absolute px-3 font-medium text-gray-900 -translate-x-1/2 bg-white left-1/2 dark:text-white dark:bg-gray-900">or</span>
+    <span class="absolute px-3 font-medium text-gray-900 -translate-x-1/2 bg-white left-1/2 dark:text-white dark:bg-gray-900">O també</span>
 </div>
         <div class="flex items-center justify-center">
         <a
@@ -112,7 +112,7 @@ const submit = () => {
            rounded-lg shadow-md transition duration-300 font-medium"
   >
     <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google Logo" class="w-5 h-5" />
-    Iniciar sessio amb  Google
+    Iniciar sessio amb Google
   </a>
 </div>
         <div class="text-center">
