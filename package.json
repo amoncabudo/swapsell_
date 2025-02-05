@@ -42,6 +42,7 @@
         "leaflet.locatecontrol": "^0.83.1",
         "particles.js": "^2.0.0",
         "primeicons": "^7.0.0",
-        "primevue": "^4.2.5"
+        "primevue": "^4.2.5",
+        "sweetalert2": "^11.15.10"
     }
 }

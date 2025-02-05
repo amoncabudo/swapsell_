@@ -1,9 +1,10 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
 import { Link } from '@inertiajs/vue3';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const props = defineProps({
     products_baskets: Array,
@@ -37,6 +38,68 @@ function removeFromBasket(product) {
             console.error("Error al actualizar el carrito:", error);
         });
 }
+
+const paypalLoaded = ref(false);
+const paypalClientId = import.meta.env.VITE_PAYPAL_CLIENT_ID;
+
+onMounted(() => {
+  const script = document.createElement('script');
+  script.src = `https://www.paypal.com/sdk/js?client-id=${paypalClientId}&currency=EUR`;
+  script.async = true;
+  
+  script.onload = () => {
+    paypalLoaded.value = true;
+    window.paypal.Buttons({
+      fundingSource: paypal.FUNDING.PAYPAL,
+      style: {
+        color: 'blue',
+        shape: 'rect',
+        layout: 'vertical',
+        label: 'paypal'
+      },
+      createOrder: (data, actions) => {
+        return actions.order.create({
+          purchase_units: [{
+            amount: {
+              currency_code: 'EUR',
+              value: (total.value * 1.21).toFixed(2) // Total con IVA
+            }
+          }]
+        });
+      },
+      onApprove: (data, actions) => {
+        return actions.order.capture().then((details) => {
+            // Mostrar alerta de éxito
+            Swal.fire({
+                title: '¡Éxito!',
+                text: '¡Pago procesado correctamente! Gracias por tu compra.',
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+            }).then(() => {
+                // Limpiar el carrito y recargar la página
+                axios.post(route('clear-cart'))
+                    .then(() => {
+                        window.location.href = route('products');
+                    })
+                    .catch((error) => {
+                        console.error('Error al limpiar el carrito:', error);
+                    });
+            });
+        }).catch((error) => {
+            // Mostrar alerta de error
+            Swal.fire({
+                title: 'Error',
+                text: 'Hubo un problema al procesar el pago. Por favor, inténtalo de nuevo.',
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+            });
+        });
+      }
+    }).render('#paypal-button-container');
+  };
+
+  document.body.appendChild(script);
+});
 </script>
 
 <template>
@@ -80,11 +143,11 @@ function removeFromBasket(product) {
                     <div class="border-t border-gray-200 pt-4">
                         <div class="flex justify-between items-center mb-2">
                             <span class="text-gray-600">Subtotal</span>
-                            <span class="font-semibold">{{ formatPrice(total) }}</span>
+                            <span class="text-black font-semibold">{{ formatPrice(total) }}</span>
                         </div>
                         <div class="flex justify-between items-center mb-2">
                             <span class="text-gray-600">IVA (21%)</span>
-                            <span class="font-semibold">{{ formatPrice(total * 0.21) }}</span>
+                            <span class="text-black font-semibold">{{ formatPrice(total * 0.21) }}</span>
                         </div>
                         <div class="border-t border-gray-200 pt-4 mt-2">
                             <div class="flex justify-between items-center">
@@ -92,18 +155,33 @@ function removeFromBasket(product) {
                                 <span class="text-lg font-bold text-blue-600">{{ formatPrice(total * 1.21) }}</span>
                             </div>
                         </div>
-                        <button class="w-full mt-6 bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors">
-                            Procedir al pagament
-                        </button>
+                        <div class="w-full mt-6">
+                            <div id="paypal-button-container" class="w-full"></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </component>
+
+
 </template>
 
 <style scoped>
 .bg-gray-100 {
     min-height: calc(100vh - 4rem);
+}
+
+#paypal-button-container {
+  min-height: 45px;
+  width: 100%;
+}
+
+.paypal-buttons {
+    display: block !important;
+}
+
+.paypal-button-number-2 {
+    display: none !important;
 }
 </style>
