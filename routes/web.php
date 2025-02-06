@@ -34,24 +34,19 @@ Route::get('/', function () {
         'isAuthenticated' => auth()->check(),
     ]);
 })->name("Welcome");
-
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-
 //Route AdminPanel
 Route::get('/adminpanel', function () {return Inertia::render('AdminPanel', [
     'isAuthenticated' => auth()->check(),
 ]);})->middleware(AdminMiddleware::class)->name("AdminPanel");
-
 //Route Events
 Route::post('/events', [EventController::class, "addEvent"])->name("events");
-
 Route::get('/addEvent', function(){
     return Inertia::render('AddEvent');
 })->middleware('auth', 'verified' , ManagerMiddleware::class)->name('addEvent');
 Route::get('/updateEvent/{id}', [EventController::class, "goEvent"])->middleware(ManagerMiddleware::class)->name("event.show");
-
 Route::get('/deleteEvent/{id}', [EventController::class, "deleteEvent"])->middleware(ManagerMiddleware::class)->name("deleteEvent");
 Route::post('/deleteEvent/{id}', [EventController::class, "deleteEvent"])->middleware(ManagerMiddleware::class)->name("deleteEvent");
 Route::get('/events', [EventController::class, 'getAllEvents'])->name('Events');
@@ -61,54 +56,42 @@ Route::get('/eventInfo', function(){
         'isAuthenticated' => auth()->check(),
     ]);
 });
-
 // Route Products
 Route::get('/productextend', function () {
     return Inertia::render('ProducteAmpliat', [
         'isAuthenticated' => auth()->check(),
     ]);
 });
-
 Route::get('/products', function () {
     return Inertia::render('Products');
 })->name('productsview');
-
 Route::post('/products', [ProductController::class, 'store']);
-
 Route::get('/updateProduct', function(){
     return Inertia::render('UpdateProduct',[
         'isAuthenticated' => auth()->check(),
     ]);
 })->middleware(['auth', 'verified'])->name('updateProduct');;
-
 Route::post('/products', [ProductController::class, "addProduct"])->name("products");
-
 Route::get('/products', [ProductController::class, "index"])->name("products");
 Route::get('/products', [ProductController::class, 'getAllProducts'])->name('Products');
-Route::post('/products', [ProductController::class, 'toggleFavourite'])->name('productFavorite');
+Route::post('/products/favorite', [ProductController::class, 'toggleFavourite'])->name('productFavorite');
 // Route to show a product by id
 Route::get('/editProduct/{id}', [ProductController::class, "editProduct"])->name("editProductId");
 Route::get('/updateProduct/{id}', [ProductController::class, "updateProduct"])->middleware(['auth', 'verified'])->name("updateProductId");
 Route::get('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->middleware(['auth', 'verified'])->name("deleteProduct");
 Route::get('/products/{id}', [ProductController::class, "goProduct"])->name("product.show");
 //Route to show a product by id
-
 //route to show all comments
-
 Route::middleware(['auth'])->group(function () {
     Route::post('/comentarios', [CommentController::class, 'addcomment'])->name('comments.addcoment');
 
 });
-
-
 //Route Users
 Route::post('/users', [UserController::class, "addUser"])->name("users");
 Route::get('/users', [UserController::class, "index"])->name("users");
-
 //Route Mapa
 Route::get('/mapa', [ProductController::class, "mapa"])->name("mapa");
 Route::get('/mapae', [EventController::class, "mapae"])->name("mapae");
-
 //Route Profile
 Route::middleware('auth')->group(function () {
     Route::get('/profile2', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -118,32 +101,24 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
 });
-
 // //Route Favorites
 Route::get('/favorites', [FavoriteController::class, 'getAllFavorites'])->name('products_favs');
 Route::get('/favorites/all', [ControllerFavorites::class, 'index'])->middleware(['auth', 'verified'])->name('favorites');
-Route::post('/products', [ProductController::class, 'toggleFavourite'])->name('productFavorite');
-
 // Route Basket
 Route::get('/Cart', [BasketController::class, 'getAllBaskets'])->name('cart');
 Route::post('/products/baskets', [ProductController::class, 'toggleBasket'])->middleware(['auth', 'verified'])->name('baskets_products');
 Route::get('/baskets', [BasketController::class, 'getAllBaskets'])->name('products_baskets');
-
-
 //Route Sell
 Route::get('/sell', [SellController::class, 'index'])->middleware(['auth', 'verified'])->name('sell');
 Route::post('/sell', [ProductController::class, "addProduct"])->middleware(['auth', 'verified'])->name("sell");
-
 //Route MOncayo
 Route::get('/footer', function(){ return Inertia::render('Footer'); });
 Route::get('/aboutus', function(){ return Inertia::render('AboutUs',['isAuthenticated' => auth()->check(),]);});
-
 Route::get('/legal', function(){
     return Inertia::render('Legal', [
         'isAuthenticated' => auth()->check(),
     ]);
 });
-
 Route::get('/contact', function(){
     return Inertia::render('Contact');
 });
@@ -169,38 +144,21 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/auctions/bid', [AuctionController::class, 'bid'])->name('auctions.bid');
     Route::post('/auctions/{id}/finish', [AuctionController::class, 'finish'])->name('auctions.finish');
 });
-
-Route::get('/users/list', [UserController::class, 'getAllUsers'])->name('users.list');
-Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
-Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
-Route::post('/products', [ProductController::class, 'addProduct'])->name('products.addProduct');
-Route::post('/events', [EventController::class, 'addEvent'])->name('event.addEvent');
+Route::get('adminpanel/users/list', [UserController::class, 'getAllUsers'])->name('users.list');
+Route::delete('adminpanel/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+Route::put('adminpanel/users/{id}', [UserController::class, 'update'])->name('users.update');
+Route::post('adminpanel/products', [ProductController::class, 'addProduct'])->name('products.addProduct');
+Route::post('events', [EventController::class, 'addEvent'])->name('event.addEvent');
 require __DIR__.'/auth.php';
-
-
-
 Route::post('/paypal/create-order', [PayPalController::class, 'createOrder']);
 Route::post('/paypal/capture-order/{orderId}', [PayPalController::class, 'captureOrder']);
 Route::post('/transactions', [TransactionController::class, 'store'])->name('transactions.store');
 Route::post('/paypal/delete-product/{productId}', [PayPalController::class, 'deleteProduct']);
 require __DIR__.'/auth.php';
-
-// Route::get('/products', function () {
-//     return Inertia::render('Products');
-// })->name('productsview');
-// Route::post('/products', [ProductController::class, 'store']);
-// Route::post('/updateProduct', [ProductController::class, "updateProduct", ])->name("updateProduct");
-// Route::get('/products', [ProductController::class, "index"])->name("products");
-// Route::get('/products', [ProductController::class, 'getAllProducts'])->name('Products');
-// Route::post('/products', [ProductController::class, 'toggleFavourite'])->name('productFavorite');
-//Route to show a product by id
-// Route::get('/products/{id}', [ProductController::class, "goProduct"])->name("product.show");
-
 //Routes to login with google
 Route::get('login-google', function () {
     return Socialite::driver('google')->redirect();
 })->name('login-google');
- 
 Route::get('google-callback', function () {
     $user = Socialite::driver('google')->user();
 
