@@ -89,9 +89,7 @@ Route::post('/products', [ProductController::class, 'toggleFavourite'])->name('p
 // Route to show a product by id
 Route::get('/editProduct/{id}', [ProductController::class, "editProduct"])->name("editProductId");
 Route::get('/updateProduct/{id}', [ProductController::class, "updateProduct"])->middleware(['auth', 'verified'])->name("updateProductId");
-Route::post('/updateProduct/{id}', [ProductController::class, "updateProduct"])->name("updateProduct");
 Route::get('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->middleware(['auth', 'verified'])->name("deleteProduct");
-Route::post('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->middleware(['auth', 'verified'])->name("deleteProduct");
 Route::get('/products/{id}', [ProductController::class, "goProduct"])->name("product.show");
 //Route to show a product by id
 
@@ -170,6 +168,15 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/auctions/bid', [AuctionController::class, 'bid'])->name('auctions.bid');
     Route::post('/auctions/{id}/finish', [AuctionController::class, 'finish'])->name('auctions.finish');
 });
+
+Route::get('/users/list', [UserController::class, 'getAllUsers'])->name('users.list');
+Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
+Route::post('/products', [ProductController::class, 'addProduct'])->name('products.addProduct');
+Route::post('/events', [EventController::class, 'addEvent'])->name('event.addEvent');
+require __DIR__.'/auth.php';
+
+
 
 Route::post('/paypal/create-order', [PayPalController::class, 'createOrder']);
 Route::post('/paypal/capture-order/{orderId}', [PayPalController::class, 'captureOrder']);

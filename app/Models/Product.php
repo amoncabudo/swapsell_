@@ -53,7 +53,13 @@ class Product extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class);
+<<<<<<< HEAD
+    }
+    
+
+=======
     }  
+>>>>>>> develop
 
     public function auction(){
         return $this->hasOne(Auction::class);
