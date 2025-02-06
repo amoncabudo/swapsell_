@@ -22,17 +22,6 @@ const users = ref([]);
 const editingUser = ref(null);
 const events = ref([]);
 
-const categoryData = ref({
-    labels: [],
-    datasets: [
-        {
-            label: 'Productos por Categoría',
-            backgroundColor: '#42A5F5',
-            data: []
-        }
-    ]
-});
-
 const editUserForm = useForm({
     id: '',
     name: '',
@@ -99,9 +88,7 @@ function addUser() {
             }, 3000);
         });
 }
-
 //Modal Events
-
 const openModalE = () => {
     isModalEventOpen.value = true;
 };
@@ -412,7 +399,6 @@ function addProduct() {
                                         <th
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">
                                             Accions</th>
-
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
@@ -441,7 +427,7 @@ function addProduct() {
                                             <button @click="openEditUserModal(user)"
                                                 class="text-indigo-800 hover:text-indigo-900 mr-3">Editar</button>
                                             <button @click="deleteUser(user.id)"
-                                                class="text-red-800 hover:text-red-900 ">Eliminar</button>
+                                                class="text-red-800 hover:text-red-900 ">Esborrar</button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -494,7 +480,7 @@ function addProduct() {
                                 <button type="submit"
                                     class="bg-SubastaButton1 text-white px-4 py-2 rounded">Crear</button>
                                 <button type="button" @click="closeModalU"
-                                    class="bg-red-500 text-white px-4 py-2 rounded ml-4">Cancelar</button>
+                                    class="bg-red-500 text-white px-4 py-2 rounded ml-4">Cancel·lar</button>
                             </div>
                         </form>
                     </div>
@@ -547,7 +533,7 @@ function addProduct() {
                                 <button type="submit"
                                     class="bg-SubastaButton1 text-white px-4 py-2 rounded">Crear</button>
                                 <button type="button" @click="closeModalE"
-                                    class="bg-red-500 text-white px-4 py-2 rounded ml-4">Cancelar</button>
+                                    class="bg-red-500 text-white px-4 py-2 rounded ml-4">Cancel·lar</button>
                             </div>
                         </form>
                     </div>
@@ -623,7 +609,7 @@ function addProduct() {
                                 <button type="submit"
                                     class="bg-SubastaButton1 text-white px-4 py-2 rounded">Crear</button>
                                 <button type="button" @click="closeModalP"
-                                    class="bg-red-500 text-white px-4 py-2 rounded ml-4">Cancelar</button>
+                                    class="bg-red-500 text-white px-4 py-2 rounded ml-4">Cancel·lar</button>
                             </div>
                         </form>
                     </div>
@@ -669,14 +655,13 @@ function addProduct() {
                                 </button>
                                 <button type="button" @click="closeEditUserModal"
                                     class="bg-red-500 text-white px-4 py-2 rounded ml-4">
-                                    Cancelar
+                                    Cancel·lar
                                 </button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-
             <!-- Toast Message -->
             <div v-if="showToast" class="fixed top-4 right-4 px-4 py-2 rounded-lg shadow-lg transition-all duration-500"
                 :class="toastType === 'success' ? 'bg-green-500' : 'bg-red-500'">
