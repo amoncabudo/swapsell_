@@ -47,7 +47,11 @@ const showingNavigationDropdown = ref(false);
                         </Link>
 
                         <div class="hidden sm:flex items-center space-x-6">
-                            
+                            <Link aria-label="Carret Page"  href="/Cart" class="text-gray-600 hover:text-blue-500 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                                    <path d="M3 3h2l3 10h10l3-6H6M7 16a2 2 0 100 4 2 2 0 000-4zm10 0a2 2 0 100 4 2 2 0 000-4z"/>
+                                </svg>
+                            </Link>
                             <Link aria-label="Favorites Page"  href="/favorites" class="text-gray-600 hover:text-blue-500 transition-colors">
                                 <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -80,7 +84,7 @@ const showingNavigationDropdown = ref(false);
                                 <DropdownLink :href="route('Events')">Esdeveniments</DropdownLink>
                                 <DropdownLink :href="route('Products')">Productes</DropdownLink>
                                 <DropdownLink :href="route('products_favs')">Favorits</DropdownLink>
-                                <DropdownLink :href="route('cart')">Carrito</DropdownLink>
+                                <DropdownLink :href="route('cart')">Carret</DropdownLink>
                                 <DropdownLink :href="route('auction')">Subhastes</DropdownLink>
                                 <template v-if="$page.props.auth.user.role === 0">
                                     <DropdownLink :href="route('AdminPanel')">Panell d'Administració</DropdownLink>
@@ -121,7 +125,7 @@ const showingNavigationDropdown = ref(false);
                             <ResponsiveNavLink :href="route('Events')">Events</ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('Products')">Productes</ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('products_favs')">Favorits</ResponsiveNavLink>
-                            <ResponsiveNavLink :href="route('cart')">Carrito</ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('cart')">Carret</ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('auction')">Subhastes</ResponsiveNavLink>
                             <template v-if="$page.props.auth.user.role === 0">
                                 <ResponsiveNavLink :href="route('AdminPanel')">Admin Panel</ResponsiveNavLink>
