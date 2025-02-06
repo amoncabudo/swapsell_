@@ -37,12 +37,11 @@ const navigateToEvent = (event) => {
           <div v-for="event in events" :key="event.id" 
                class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
             <div class="relative">
-              <img :src="`/uploads/events/${event.image}`" 
+              <img :src="`/storage/${event.image}`" 
                    :alt="event.name" 
                    class="w-full h-56 object-cover">
             </div>
             <div class="p-6">
-              
                 <h2 class="text-xl font-semibold text-gray-900 mb-3 font-bold">{{ event.title }}</h2>
                 <p class="text-gray-800 text-base mb-4 line-clamp-2">{{ event.description }}</p>
                 <div class="flex justify-between items-center mb-4">

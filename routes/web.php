@@ -92,11 +92,8 @@ Route::post('/products', [ProductController::class, 'toggleFavourite'])->name('p
 Route::get('/products/{id}', [ProductController::class, "show"])->name("products.show");
 Route::get('/editProduct/{id}', [ProductController::class, "editProduct"])->name("editProductId");
 Route::get('/updateProduct/{id}', [ProductController::class, "updateProduct"])->middleware(['auth', 'verified'])->name("updateProductId");
-Route::post('/updateProduct/{id}', [ProductController::class, "updateProduct"])->name("updateProduct");
 Route::get('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->middleware(['auth', 'verified'])->name("deleteProduct");
-Route::post('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->middleware(['auth', 'verified'])->name("deleteProduct");
 Route::get('/products/{id}', [ProductController::class, "goProduct"])->name("product.show");
-
 //Route Users
 Route::post('/users', [UserController::class, "addUser"])->name("users");
 
@@ -156,8 +153,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/create-auction', [AuctionController::class, 'store'])->name('auctions.store');
     Route::post('/auctions/bid', [AuctionController::class, 'bid'])->name('auctions.bid');
 });
-require __DIR__.'/auth.php';
 
+Route::get('/users/list', [UserController::class, 'getAllUsers'])->name('users.list');
+Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
+Route::post('/products', [ProductController::class, 'addProduct'])->name('products.addProduct');
+Route::post('/events', [EventController::class, 'addEvent'])->name('event.addEvent');
+require __DIR__.'/auth.php';
 
 
 // Route::get('/products', function () {

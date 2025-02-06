@@ -28,7 +28,6 @@ class EventController extends Controller
         $time = $request->get("time");
         $latitude = $request->get("latitude");
         $longitude = $request->get("longitude");
-        // $image = $request->get("image");
 
         $userId = auth()->id();
 
@@ -39,9 +38,13 @@ class EventController extends Controller
         $event->time = $time;
         $event->longitude = $longitude;
         $event->latitude = $latitude;
-        $event->image = 'imatge.jpg';
         $event->user_id = $userId;
 
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('public');
+            $event->image = basename($imagePath);
+        }
+        
         $event->save();
 
 
@@ -71,7 +74,6 @@ class EventController extends Controller
         $event->longitude = $request->get("longitude", $event->longitude);
         $event->latitude = $request->get("latitude", $event->latitude);
         $event->user_id = Auth::id();
-        $event->image = 'image.jpg';
 
         $event->save();
         
