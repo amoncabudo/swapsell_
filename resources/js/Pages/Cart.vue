@@ -52,7 +52,7 @@ onMounted(() => {
     window.paypal.Buttons({
       fundingSource: paypal.FUNDING.PAYPAL,
       style: {
-        color: 'blue',
+        color: 'black',
         shape: 'rect',
         layout: 'vertical',
         label: 'paypal'
@@ -87,8 +87,10 @@ onMounted(() => {
             // Esperamos a que todas las transacciones se completen
             Promise.all(processTransactions)
                 .then(() => {
-                    // Limpiamos el carrito
-                    return axios.post(route('clear-cart'));
+                    // Eliminamos los productos del carrito
+                    props.products_baskets.forEach(product => {
+                        removeFromBasket(product);
+                    });
                 })
                 .then(() => {
                     // Mostramos mensaje de éxito
