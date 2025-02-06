@@ -13,7 +13,6 @@ let form = useForm({
     price: null,
     longitude: null,
     latitude: null,
-    status: "active",
     category_id: "",
     image: null
 });
@@ -152,27 +151,6 @@ function handleFileUpload(event) {
               </div>
             </div>
 
-            <!-- Campo Estado -->
-            <div class="form-group">
-              <label for="status" class="form-label">Estat</label>
-              <div class="relative">
-                <select
-                  id="status"
-                  v-model="form.status"
-                  class="form-input pl-10"
-                  required
-                >
-                  <option value="active">Activo</option>
-                  <option value="inactive">Inactivo</option>
-                </select>
-                <span class="form-icon">
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </span>
-              </div>
-            </div>
             <!--category-->
             <div class="form-group">
               <label for="category" class="form-label">Categoria</label>

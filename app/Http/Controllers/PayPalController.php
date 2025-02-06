@@ -73,7 +73,8 @@ class PayPalController extends Controller
                     ]);
 
                     // Eliminar el producto
-                    $product->delete();
+                    $product->status = false;
+                    $product->save();
                     
                     // Eliminar el registro del carrito
                     $basket->delete();

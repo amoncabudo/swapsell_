@@ -41,7 +41,8 @@ class TransactionController extends Controller
         ]);
 
         // Eliminar el producto después de crear la transacción
-        $product->delete();
+        $product->status = false;
+        $product->save();
 
         return response()->json([
             'success' => true,
