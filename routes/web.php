@@ -103,6 +103,7 @@ Route::middleware(['auth'])->group(function () {
 
 //Route Users
 Route::post('/users', [UserController::class, "addUser"])->name("users");
+Route::get('/users', [UserController::class, "index"])->name("users");
 
 //Route Mapa
 Route::get('/mapa', [ProductController::class, "mapa"])->name("mapa");
