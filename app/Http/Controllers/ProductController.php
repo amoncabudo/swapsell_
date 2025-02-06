@@ -24,15 +24,15 @@ class ProductController extends Controller
         $price = $request->get("price");
         $longitude = $request->get("longitude");
         $latitude = $request->get("latitude");
-        $status = $request->get("status");
         $category_id = $request->get("category_id");
+        
+
         $product = new Product();
         $product->name = $name;
         $product->description = $description;
         $product->price = $price;
         $product->longitude = $longitude;
         $product->latitude = $latitude;
-        $product->status = $status;
         $product->user_id = Auth::id();
         $product->category_id = $request->category_id;
         //Image
@@ -66,7 +66,6 @@ class ProductController extends Controller
             $price = $request->get("price");
             $longitude = $request->get("longitude");
             $latitude = $request->get("latitude");
-            $status = $request->get("status");
             $category = $request->get("category");
         
             $product->name = $request->get("name", $product->name);
@@ -74,7 +73,6 @@ class ProductController extends Controller
             $product->price = $request->get("price", $product->price);
             $product->longitude = $request->get("longitude", $product->longitude);
             $product->latitude = $request->get("latitude", $product->latitude);
-            $product->status = $request->get("status", $product->status);
             $product->category_id = $request->get("category_id", $product->category_id);
             
         
@@ -94,6 +92,7 @@ class ProductController extends Controller
         // Obtener los productos
         $products = Product::where('bid', false)
             ->where('user_id', '!=', $userId)
+            ->where('status', true)
             ->with('category')
             ->get();
 
@@ -251,6 +250,66 @@ class ProductController extends Controller
     
         return response()->json($availableProducts);
     }
+
+    public function showAuctions(){
+        $products = Product::where('bid', true)->get();
+        return Inertia::render('Subasta', [
+            'products' => $products,
+            'isAuthenticated' => Auth::check()
+        ]);
+        }
+        public function getProductsList()
+        {
+            $products = Product::all();
+            return response()->json($products);
+        }
+        public function store(Request $request)
+{
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'description' => 'required|string',
+        'price' => 'required|numeric|min:0',
+        'status' => 'required|string',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+    ]);
+
+    $product = new Product();
+    $product->name = $validated['name'];
+    $product->description = $validated['description'];
+    $product->price = $validated['price'];
+    $product->status = $validated['status'];
+    $product->longitude = $request->longitude;
+    $product->latitude = $request->latitude;
+    $product->user_id = Auth::id();
+
+    if ($request->hasFile('image')) {
+        $imagePath = $request->file('image')->store('public');
+        $product->image = basename($imagePath);
+    }
+
+    $product->save();
+
+    return response()->json(['success' => true, 'message' => 'Producto creado exitosamente']);
+}
+
+public function list()
+{
+    try {
+        // Verificar si el usuario está autenticado
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json(['error' => 'Usuario no autenticado'], 401);
+        }
+
+        // Obtener productos asociados al usuario
+        $products = Product::where('user_id', $user->id)->get();
+        return response()->json($products);
+    } catch (\Exception $e) {
+        // Manejo de errores
+        return response()->json(['error' => 'Error al cargar los productos: ' . $e->getMessage()], 500);
+    }
+}
+
 
     
 

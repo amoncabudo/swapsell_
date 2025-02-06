@@ -32,7 +32,11 @@ import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';   // optional
 import Row from 'primevue/row';                   // optional
 
+//Impport for Charts
+import Chart from 'primevue/chart';
 
+//Impport for FileUpload
+import FileUpload from 'primevue/fileupload';
 
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
@@ -65,6 +69,7 @@ createInertiaApp({
         app.component('Tab', Tab);
         app.component('TabPanels', TabPanels);
         app.component('TabPanel', TabPanel);
+        app.component('Chart', Chart);
         
         return app.mount(el);
     },

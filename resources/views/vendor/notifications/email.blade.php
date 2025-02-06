@@ -1,60 +1,32 @@
 <x-mail::message>
-{{-- Logo --}}
 
+<x-mail::panel>
+# Hola,
 
-{{-- Salutació --}}
-@if (! empty($greeting))
-# {{ $greeting }}
-@else
-@if ($level === 'error')
-# @lang('Ups!')
-@else
-# @lang('Hola!')
-@endif
-@endif
-
-{{-- Línies d'introducció --}}
-@foreach ($introLines as $line)
-{{ $line }}
-
-@endforeach
+Has rebut aquest correu electrònic perquè hem rebut una sol·licitud per restablir la contrasenya del teu compte.
 
 {{-- Botó d'acció --}}
 @isset($actionText)
-<?php
-    $color = match ($level) {
-        'success', 'error' => $level,
-        default => 'primary',
-    };
-?>
-<x-mail::button :url="$actionUrl" :color="$color">
-    {{ $actionText }}
-</x-mail::button>
+<x-mail::panel>
+    <x-mail::button :url="$actionUrl" color="primary">
+        {{ $actionText }}
+    </x-mail::button>
+</x-mail::panel>
 @endisset
 
-{{-- Línies de tancament --}}
-@foreach ($outroLines as $line)
-{{ $line }}
 
-@endforeach
 
-{{-- Comiat --}}
-@if (! empty($salutation))
-{{ $salutation }}
-@else
-@lang('Salutacions,')<br>
-{{ config('app.name') }}
-@endif
+Aquest enllaç de restabliment de contrasenya caducarà en **60 minuts**.
+Si no has sol·licitat aquest restabliment, pots ignorar aquest missatge.
 
-{{-- Subcòpia --}}
-@isset($actionText)
-<x-slot:subcopy>
-    @lang(
-        "Si tens problemes per fer clic al botó \":actionText\", copia i enganxa l'URL següent\n".
-        'al teu navegador web:',
-        ['actionText' => $actionText]
-    ) 
-    <span class="break-all">[{{ $displayableActionUrl }}]({{ $actionUrl }})</span>
-</x-slot:subcopy>
-@endisset
+Gràcies per confiar en **SwapSell**! 
+
+Salutacions,
+**L’equip de SwapSell**
+</x-mail::panel>
+Aquest enllaç de restabliment de contrasenya caducarà en 60 minuts.
+
+Si no has sol·licitat el restabliment de la contrasenya, no es necessita cap acció addicional.
+
 </x-mail::message>
+

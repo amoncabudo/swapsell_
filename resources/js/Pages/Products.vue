@@ -208,7 +208,7 @@ const filteredProducts = computed(() => {
                 </div>
 
                 <form @submit.prevent>
-                  <button @click="toggleFavorite(product)"
+                  <button aria-label="Favorite Product" @click="toggleFavorite(product)"
                     :class="{ 'text-red-500': product.is_favorite, 'text-gray-400': !product.is_favorite }"
                     class="transition-colors">
                     <svg class="h-5 w-5"
