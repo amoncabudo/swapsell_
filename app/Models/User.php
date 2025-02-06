@@ -6,7 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
+Use App\Models\Review;
 
 
 class User extends Authenticatable
@@ -66,4 +66,7 @@ class User extends Authenticatable
         return $this->belongsTo(Basket::class);
     }
 
+    public function review(){
+        return $this->belongsTo(Review::class);
+    }
 }

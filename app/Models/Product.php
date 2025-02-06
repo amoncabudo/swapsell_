@@ -8,6 +8,7 @@ use App\Model\Basket;
 use App\Models\Comment;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Product;
+use App\Models\Review;
 
 class Product extends Model
 {
@@ -57,6 +58,11 @@ class Product extends Model
 
     public function auction(){
         return $this->hasOne(Auction::class);
+    }
+    
+    public function review()
+    {
+        return $this->hasOne(Review::class);
     }
 }
 

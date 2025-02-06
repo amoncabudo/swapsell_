@@ -86,10 +86,10 @@ onMounted(() => {
 
             // Esperamos a que todas las transacciones se completen
             Promise.all(processTransactions)
-                .then(() => {
-                    // Limpiamos el carrito
-                    return axios.post(route('clear-cart'));
-                })
+                // .then(() => {
+                //     // Limpiamos el carrito
+                //     return axios.post(route('clear-cart'));
+                // })
                 .then(() => {
                     // Mostramos mensaje de éxito
                     Swal.fire({
@@ -98,7 +98,7 @@ onMounted(() => {
                         icon: 'success',
                         confirmButtonText: 'Acceptar'
                     }).then(() => {
-                        window.location.href = route('products');
+                        window.location.href = route('products_favs');
                     });
                 })
                 .catch((error) => {

@@ -70,9 +70,10 @@ class PayPalController extends Controller
                     'status' => 'completed',
                     'bid' => false
                 ]);
-                
+                // return redirect()->route('products_favs');
+
                 // Limpiar el carrito
-                $this->clear();
+                // $this->clear();
             }
             
             return response()->json($response->result);
@@ -81,9 +82,9 @@ class PayPalController extends Controller
         }
     }
 
-    public function clear()
-    {
-        Auth::user()->basket()->delete();
-        return response()->json(['message' => 'Carrito limpiado con éxito']);
-    }
+    // public function clear()
+    // {
+    //     Auth::user()->basket()->delete();
+    //     return response()->json(['message' => 'Carrito limpiado con éxito']);
+    // }
 }
