@@ -4,40 +4,62 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useForm } from '@inertiajs/vue3';
+import axios from 'axios';
+import jsPDF from 'jspdf';
 
 const props = defineProps({
     isAuthenticated: Boolean,
     products: Array
 });
 
-const countdowns = ref({});
-
-const updateCountdown = (auctionId, totalSeconds) => {
-    if (totalSeconds <= 0) {
-        return '¡Subasta finalizada!';
-    }
-
+const formatTime = (totalSeconds) => {
+    if (totalSeconds <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+    
     const days = Math.floor(totalSeconds / (24 * 60 * 60));
     const hours = Math.floor((totalSeconds % (24 * 60 * 60)) / (60 * 60));
     const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
     const seconds = Math.floor(totalSeconds % 60);
-
-    return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    
+    return { days, hours, minutes, seconds };
 };
 
-// Start countdown timers
+const countdowns = ref({});
+const intervals = ref({}); // Para almacenar las referencias a los intervalos
+
+const calculateRemainingTime = (endTime) => {
+    const now = new Date();
+    const end = new Date(endTime);
+    const difference = Math.floor((end - now) / 1000); // Diferencia en segundos
+    return difference > 0 ? difference : 0;
+};
+
+// Iniciar los contadores
 onMounted(() => {
     if (props.products) {
         props.products.forEach(product => {
-            if (product.auction?.remaining?.total_seconds) {
-                let remainingSeconds = product.auction.remaining.total_seconds;
-                countdowns.value[product.auction.id] = remainingSeconds;
+            if (product.auction) {
+                // Calcular tiempo restante inicial
+                countdowns.value[product.auction.id] = calculateRemainingTime(
+                    product.auction.end_time
+                );
 
-                const timer = setInterval(() => {
+                // Crear un intervalo para cada subasta
+                intervals.value[product.auction.id] = setInterval(() => {
                     if (countdowns.value[product.auction.id] > 0) {
                         countdowns.value[product.auction.id]--;
+                        const time = formatTime(countdowns.value[product.auction.id]);
                     } else {
-                        clearInterval(timer);
+                        clearInterval(intervals.value[product.auction.id]);
+                        // Actualizar el estado de la subasta si es necesario
+                        if (product.auction.status) {
+                            axios.post(route('auctions.finish', product.auction.id))
+                                .then(response => {
+                                    // Actualizar la información del ganador si es necesario
+                                    if (response.data.winner) {
+                                        product.auction.last_bidder = response.data.winner;
+                                    }
+                                });
+                        }
                     }
                 }, 1000);
             }
@@ -45,10 +67,10 @@ onMounted(() => {
     }
 });
 
-// Cleanup timers
+// Limpiar los intervalos cuando el componente se desmonte
 onUnmounted(() => {
-    Object.keys(countdowns.value).forEach(auctionId => {
-        clearInterval(countdowns.value[auctionId]);
+    Object.values(intervals.value).forEach(interval => {
+        clearInterval(interval);
     });
 });
 
@@ -78,6 +100,53 @@ const placeBid = (product) => {
         }
     });
 };
+
+const downloadAuctionCertificate = (product) => {
+    // Crear nuevo documento PDF
+    const doc = new jsPDF();
+    
+    // Configurar estilo del documento
+    doc.setFont("helvetica");
+    
+    // Título
+    doc.setFontSize(22);
+    doc.setTextColor(44, 62, 80);
+    doc.text("Certificado de Subasta", 105, 30, { align: "center" });
+    
+    // Línea decorativa
+    doc.setDrawColor(52, 152, 219);
+    doc.setLineWidth(0.5);
+    doc.line(20, 40, 190, 40);
+    
+    // Información del producto
+    doc.setFontSize(14);
+    doc.setTextColor(44, 62, 80);
+    doc.text("Detalles de la Subasta", 20, 60);
+    
+    doc.setFontSize(12);
+    doc.setTextColor(52, 73, 94);
+    doc.text(`Producto: ${product.name}`, 20, 75);
+    doc.text(`Precio Final: ${product.auction.current_price}€`, 20, 85);
+    doc.text(`Fecha de Finalización: ${new Date(product.auction.end_time).toLocaleDateString()}`, 20, 95);
+    
+    // Información del ganador
+    doc.setFontSize(14);
+    doc.setTextColor(44, 62, 80);
+    doc.text("Información del Ganador", 20, 115);
+    
+    doc.setFontSize(12);
+    doc.setTextColor(52, 73, 94);
+    doc.text(`Nombre: ${product.auction.last_bidder.name}`, 20, 130);
+    
+    // Pie de página
+    doc.setFontSize(10);
+    doc.setTextColor(127, 140, 141);
+    doc.text("Este documento certifica que has ganado la subasta del producto mencionado.", 20, 170);
+    doc.text(`Fecha de emisión: ${new Date().toLocaleDateString()}`, 20, 180);
+    
+    // Guardar el PDF
+    doc.save(`subasta-${product.name}-certificado.pdf`);
+};
 </script>
 
 <template>
@@ -85,19 +154,19 @@ const placeBid = (product) => {
         <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 py-12">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <!-- Header Section with Wave Effect -->
-                <div class="text-center mb-12 relative overflow-hidden p-8 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 shadow-xl">
+                <div class="text-center mb-12 relative overflow-hidden p-8 rounded-xl bg-SubastaButton1 shadow-xl">
                     <div class="relative z-10">
-                        <h1 class="text-4xl font-bold text-white mb-4">Subastas Activas</h1>
-                        <p class="text-lg text-white/90">Descubre productos únicos y participa en emocionantes subastas</p>
+                        <h1 class="text-4xl font-bold text-white mb-4">Subhastes Actives</h1>
+                        <p class="text-lg text-white/90">Descobreix productes únics i participa a emocionants subhastes</p>
                         <Link 
                             v-if="isAuthenticated"
                             :href="route('auctions.create')" 
-                            class="mt-6 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-blue-600 bg-white hover:bg-blue-50 transition-all transform hover:scale-105 shadow-md"
+                            class="mt-6 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-white bg-SubastaButton1 hover:bg-opacity-90 transition-all transform hover:scale-105 shadow-md"
                         >
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                             </svg>
-                            Crear Nueva Subasta
+                            Crear Nova Subhasta
                         </Link>
                     </div>
                     <!-- Animated Wave Background -->
@@ -113,16 +182,16 @@ const placeBid = (product) => {
                         <!-- Imagen y Badge -->
                         <div class="relative">
                             <img 
-                                :src="product.image || '/default-product.jpg'" 
+                                :src="`/storage/${product.image}`" 
                                 :alt="product.name"
                                 class="w-full h-64 object-cover"
                             >
                             <div class="absolute top-4 right-4">
-                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-600 text-white shadow-lg">
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-SubastaButton1 text-white shadow-lg">
                                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                                     </svg>
-                                    Subasta Activa
+                                    Subhasta Activa
                                 </span>
                             </div>
                         </div>
@@ -151,47 +220,78 @@ const placeBid = (product) => {
                                     Tiempo restante
                                 </p>
                                 <p class="text-lg font-bold text-gray-900">
-                                    {{ product.auction?.id && countdowns[product.auction.id] !== undefined 
-                                        ? updateCountdown(product.auction.id, countdowns[product.auction.id])
-                                        : 'Calculando...' 
-                                    }}
+                                    <template v-if="product.auction?.id && countdowns[product.auction.id] !== undefined">
+                                        <template v-if="countdowns[product.auction.id] > 0">
+                                            {{ formatTime(countdowns[product.auction.id]).days }}d
+                                            {{ formatTime(countdowns[product.auction.id]).hours }}h
+                                            {{ formatTime(countdowns[product.auction.id]).minutes }}m
+                                            {{ formatTime(countdowns[product.auction.id]).seconds }}s
+                                        </template>
+                                        <template v-else>
+                                            <div class="text-center">
+                                                <p class="text-red-500 font-bold mb-2">Subhasta finalitzada</p>
+                                                <p v-if="product.auction.last_bidder" class="text-green-600">
+                                                    Ganador: {{ product.auction.last_bidder.name }}
+                                                    <button 
+                                                        v-if="product.auction.last_bidder.id === $page.props.auth.user?.id"
+                                                        @click="downloadAuctionCertificate(product)"
+                                                        class="mt-2 inline-flex items-center px-4 py-2 bg-SubastaButton1 text-white rounded-lg hover:bg-opacity-90 transition-colors"
+                                                    >
+                                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                                                        </svg>
+                                                        Descargar Certificado
+                                                    </button>
+                                                </p>
+                                                <p v-else class="text-gray-500">
+                                                    No ha hagut licitacions en aquesta subhasta
+                                                </p>
+                                            </div>
+                                        </template>
+                                    </template>
+                                    <template v-else>
+                                        Calculant...
+                                    </template>
                                 </p>
                             </div>
 
                             <!-- Campo para ingresar el precio de la puja -->
-                            <div class="mt-4">
-                                <input 
-                                    type="number" 
-                                    v-model="product.bidPrice" 
-                                    :min="product.auction?.current_price + 1"
-                                    :placeholder="`Mínimo ${(product.auction?.current_price + 1)}€`"
-                                    class="border rounded-lg p-2 w-full"
-                                    :class="{'border-red-500': product.bidPrice <= product.auction?.current_price}"
-                                />
-                                <p v-if="product.bidPrice <= product.auction?.current_price" class="text-red-500 text-sm mt-1">
-                                    La puja debe ser mayor al precio actual
-                                </p>
-                            </div>
+                            <div v-if="countdowns[product.auction.id] > 0">
+                                <div class="mt-4">
+                                    <input
+                                        aria-label="Product Price" 
+                                        type="number" 
+                                        v-model="product.bidPrice" 
+                                        :min="product.auction?.current_price + 1"
+                                        :placeholder="`Mínimo ${(product.auction?.current_price + 1)}€`"
+                                        class="border rounded-lg p-2 w-full"
+                                        :class="{'border-red-500': product.bidPrice <= product.auction?.current_price}"
+                                    />
+                                    <p v-if="product.bidPrice <= product.auction?.current_price" class="text-red-500 text-sm mt-1">
+                                        La licitació ha de ser major al preu actual
+                                    </p>
+                                </div>
 
-                            <!-- Botones de acción -->
-                            <div class="grid grid-cols-2 gap-4 pt-4">
-                                <Link 
-                                    :href="route('product.show', product.id)"
-                                    class="inline-flex justify-center items-center px-4 py-2 border border-blue-600 text-sm font-medium rounded-lg text-blue-600 bg-white hover:bg-blue-50 transition-all"
-                                >
-                                    Ver Detalles
-                                </Link>
-                                <button 
-                                    v-if="isAuthenticated"
-                                    @click="placeBid(product)"
-                                    :disabled="!product.bidPrice || product.bidPrice <= product.auction?.current_price"
-                                    class="inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-white bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                                >
-                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
-                                    </svg>
-                                    Pujar
-                                </button>
+                                <!-- Botones de acción -->
+                                <div class="grid grid-cols-2 gap-4 pt-4">
+                                    <Link 
+                                        :href="route('product.show', product.id)"
+                                        class="inline-flex justify-center items-center px-4 py-2 border border-SubastaButton1 text-sm font-medium rounded-lg text-SubastaButton1 bg-white hover:bg-gray-50 transition-all"
+                                    >
+                                        Ver Detalles
+                                    </Link>
+                                    <button 
+                                        v-if="isAuthenticated"
+                                        @click="placeBid(product)"
+                                        :disabled="!product.bidPrice || product.bidPrice <= product.auction?.current_price"
+                                        class="inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-white bg-green-500 hover:bg-green-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                    >
+                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                                        </svg>
+                                        Pujar
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -202,8 +302,8 @@ const placeBid = (product) => {
                     <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
                     </svg>
-                    <h3 class="mt-2 text-sm font-medium text-gray-900">No hay subastas activas</h3>
-                    <p class="mt-1 text-sm text-gray-500">Vuelve más tarde para ver nuevas subastas</p>
+                    <h3 class="mt-2 text-sm font-medium text-gray-900">No hi ha subhastes actives</h3>
+                    <p class="mt-1 text-sm text-gray-500">Torna més tard per veure noves subhastes</p>
                 </div>
             </div>
         </div>
@@ -211,8 +311,24 @@ const placeBid = (product) => {
 </template>
 
 <style scoped>
+/* Colores personalizados */
+.bg-custom-blue {
+    background-color: #004266;
+}
 
+.bg-custom-blue-dark {
+    background-color: #003252;
+}
 
+.bg-custom-blue-light {
+    background-color: #006699;
+}
+
+.text-custom-blue {
+    color: #004266;
+}
+
+/* Efectos existentes */
 @keyframes wave {
     0% { transform: translateX(-50%) rotateZ(0deg); }
     50% { transform: translateX(-25%) rotateZ(180deg); }
@@ -234,8 +350,13 @@ const placeBid = (product) => {
     transform: translateY(-0.5rem);
 }
 
-/* Add this to your existing styles */
 .countdown-expired {
     color: #EF4444;
 }
+
+/* Fondos y animaciones */
+.wave-bg {
+    background-color: #004266;
+}
+
 </style>

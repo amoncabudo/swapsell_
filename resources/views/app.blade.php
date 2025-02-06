@@ -9,13 +9,16 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
+        <link rel="icon" href="images/logo.svg" type="image/svg+xml" class="h-8 w-10 rounded-full">
         <!-- Scripts -->
         @routes
         @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
         @vite(['resources/css/app.css','resources/js/app.js'])
 
         @inertiaHead
+        <script>
+            window.__WS_TOKEN__ = '{{ csrf_token() }}';
+        </script>
     </head>
     <body class="font-sans antialiased">
         @inertia

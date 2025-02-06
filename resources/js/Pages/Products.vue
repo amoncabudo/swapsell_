@@ -82,25 +82,29 @@ onMounted(async () => {
 });
 
 function toggleFavorite(product) {
-  const isFavorite = product.favorites === 1;
-  axios.post(route('productFavorite'), { id: product.id, favorite: !isFavorite })
-    .then(response => {
-      product.favorites = isFavorite ? 0 : 1;
-    })
-    .catch(error => {
-      console.error("Error al actualizar el estado de favorito:", error);
-    });
+    axios.post(route('productFavorite'), { id: product.id }) 
+        .then(response => {
+            // Actualizar el estado del favorito basado en la respuesta del servidor
+            product.is_favorite = response.data.is_favorite;
+        })
+        .catch(error => {
+            console.error("Error al actualizar el estado de favorito:", error);
+        });
 }
+
+const isFavorite = (product) => {
+    return product.is_favorite;
+};
 
 // Función auxiliar para asignar emojis según la categoría
 const getCategoryEmoji = (categoryName) => {
   const emojiMap = {
-    'Hogar': '🏠',
-    'Tecnología': '📱',
-    'Deportes': '⚽',
+    'Llar': '🏠',
+    'Tecnologia': '📱',
+    'Esports': '⚽',
     'Moda': '👕',
-    'Salud y belleza': '💄',
-    'Juguetes': '🎮'
+    'Salut i Bellesa': '💄',
+    'Joguines': '🎮'
   };
   return emojiMap[categoryName] || '📦';
 };
@@ -111,14 +115,12 @@ const selectedCategory = ref('all');
 const filteredProducts = computed(() => {
   if (selectedCategory.value === 'all') {
     return props.products;
-  }else if(selectedCategory.value.empty){
-    return 'no hi ha productos en esta categoria';
-  }else{
-    return props.products.filter(product => 
+  } else {
+    const filtered = props.products.filter(product => 
       product.category.name === selectedCategory.value
     );
+    return filtered.length > 0 ? filtered : null;
   }
-
 });
 </script>
 <template>
@@ -128,11 +130,11 @@ const filteredProducts = computed(() => {
       <div class="wave-bg pt-24 pb-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 class="text-4xl font-bold text-white text-center mb-8">
-            Encuentra lo que buscas
+            Troba el que busques
           </h1>
           <div class="max-w-3xl mx-auto">
             <div class="relative">
-              <input type="text" placeholder="¿Qué estás buscando?"
+              <input aria-label="search bar" type="text" placeholder="¿Què estàs buscant?"
                 class="w-full pl-12 pr-4 py-4 rounded-xl shadow-lg focus:outline-none focus:ring-2 focus:ring-white/50">
               <div class="absolute left-4 top-4">
                 <svg class="h-6 w-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -157,7 +159,7 @@ const filteredProducts = computed(() => {
               ]"
             >
               <span class="text-lg">⭐</span>
-              <span>Todo</span>
+              <span>Tot</span>
             </button>
             <button 
               v-for="category in categories" 
@@ -179,7 +181,7 @@ const filteredProducts = computed(() => {
 
       <!-- Grid de productos -->
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div v-if="filteredProducts" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div v-for="product in filteredProducts" :key="product.id"
             class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
             <div class="relative">
@@ -206,12 +208,14 @@ const filteredProducts = computed(() => {
                 </div>
 
                 <form @submit.prevent>
-                  <button @click="toggleFavorite(product)"
-                    :class="{ 'text-red-500': product.favorites === 1, 'text-gray-400': product.favorites === 0 }"
+                  <button aria-label="Favorite Product" @click="toggleFavorite(product)"
+                    :class="{ 'text-red-500': product.is_favorite, 'text-gray-400': !product.is_favorite }"
                     class="transition-colors">
-                    <svg class="h-5 w-5" :fill="product.favorites === 1 ? 'red' : 'none'" stroke="currentColor"
-                      viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    <svg class="h-5 w-5"
+                      :fill="product.is_favorite ? 'red' : 'none'"
+                      stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2"
                         d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                     </svg>
                   </button>
@@ -221,15 +225,48 @@ const filteredProducts = computed(() => {
             </div>
           </div>
         </div>
+        
+        <!-- Mensaje cuando no hay productos -->
+        <div v-else class="text-center py-12">
+          <div class="bg-white rounded-lg shadow-md p-8">
+            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+            </svg>
+            <h3 class="mt-4 text-lg font-medium text-gray-900">No hi ha productes amb aquesta categoría</h3>
+            <p class="mt-2 text-sm text-gray-500">Intenta buscar amb una altre categoria o torna més tard.</p>
+          </div>
+        </div>
       </div>
+      <!-- Botones flotantes -->
+      <div class="fixed bottom-8 right-8 flex space-x-4">
+        <!-- Botón de venta -->
+        <Link aria-label="addProduct" href="/sell"
+          class="bg-custom-blue text-white rounded-full p-4 shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:bg-custom-blue-dark flex items-center">
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+          </svg>
+          <span class="ml-2">Vendre</span>
+        </Link>
 
-      <!-- Botón flotante de venta -->
-      <Link href="/sell"
-        class="fixed bottom-8 right-8 bg-custom-blue text-white rounded-full p-4 shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:bg-custom-blue-dark">
-      <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-      </svg>
-      </Link>
+        <!-- Botón de subastas -->
+        <Link aria-label="Create Auction" href="/create-auction"
+          class="bg-custom-blue text-white rounded-full p-4 shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:bg-custom-blue-dark flex items-center">
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+          </svg>
+          <span class="ml-2">Subhastes</span>
+        </Link>
+
+        <!-- Botón de chat -->
+        <Link aria-label="Products Map" href="/mapa"
+          class="bg-custom-blue text-white rounded-full p-4 shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:bg-custom-blue-dark flex items-center">
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span class="ml-2">Mapa</span>
+        </Link>
+      </div>
     </component>
   </div>
 </template>

@@ -5,11 +5,24 @@ use App\Models\User;
 use App\Models\Category;
 use App\Models\Favorite;
 use App\Model\Basket;
+use App\Models\Comment;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Product;
 
 class Product extends Model
 {
-    protected $fillable = ['name', 'category_id', 'bid']; // Asegúrate de incluir 'category_id' si lo usas en tu base de datos.
+    protected $fillable = [
+        'name',
+        'category_id',
+        'bid',
+        'user_id',
+        'description',
+        'price',
+        'longitude',
+        'latitude',
+        'image',
+        'status'
+    ];
     
     public function user()
     {
@@ -26,12 +39,12 @@ class Product extends Model
 
     public function basket()
     {
-        return $this->belongsTo(Basket::class);
+        return $this->hasMany(Basket::class);
     }
 
     public function favorite()
     {
-        return $this->belongsTo(Favorite::class);
+        return $this->hasMany(Favorite::class);
     }
 
     /**
@@ -40,9 +53,13 @@ class Product extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class);
+<<<<<<< HEAD
     }
     
 
+=======
+    }  
+>>>>>>> develop
 
     public function auction(){
         return $this->hasOne(Auction::class);

@@ -42,8 +42,8 @@ onMounted(async () => {
         trendingCategories.value = response.data.map((category, index) => ({
             id: category.id,
             name: category.name,
-            items: 0, // You can add a count of products per category if needed
-            image: `/storage/${category.image}`, // Make sure these images exist
+            items: category.items,
+            image: `/storage/products/${category.image}`,
             delay: (index + 1) * 100
         }));
 });
@@ -63,7 +63,7 @@ onMounted(async () => {
                             <div class="flex gap-4">
                                 <button
                                     class="border border-white text-white px-8 py-3 rounded-lg hover:bg-white hover:text-gray-900 transition-all">
-                                    <a href="/login">Començar ara</a>
+                                    <a href="/profile">Començar ara</a>
                                 </button>
                             </div>
                         </div>

@@ -7,6 +7,7 @@ use App\Models\Product; // Add this import
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Winner;
 
 class AuctionController extends Controller
 {
@@ -15,9 +16,10 @@ class AuctionController extends Controller
     public function index()
     {
         $auctions = Auction::active()->get();
-
+        $products = Product::all();
         return Inertia::render('Auctions', [
             'auctions' => $auctions,
+            'products' => $products,
             'isAuthenticated' => Auth::check()
         ]);
     }
@@ -78,5 +80,34 @@ class AuctionController extends Controller
         ]);
 
         return back()->with('success', 'Puja realizada con éxito');
+    }
+
+    public function finish($id)
+    {
+        $auction = Auction::with('lastBidder')->findOrFail($id);
+        
+        if ($auction->status) {
+            // Actualizar el estado de la subasta a finalizada
+            $auction->update(['status' => false]);
+            
+            // Si hay un ganador, crear el registro en la tabla winner
+            if ($auction->last_bidder_id) {
+                Winner::create([
+                    'product_id' => $auction->product_id,
+                    'user_id' => $auction->last_bidder_id,
+                    'amount' => $auction->current_price,
+                    'winner_date' => now()
+                ]);
+            }
+            
+            return response()->json([
+                'winner' => $auction->lastBidder,
+                'message' => 'Subasta finalizada exitosamente'
+            ]);
+        }
+        
+        return response()->json([
+            'message' => 'La subasta ya estaba finalizada'
+        ]);
     }
 }

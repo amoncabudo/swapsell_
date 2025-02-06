@@ -1,8 +1,9 @@
 <?php
-
+use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
@@ -15,9 +16,13 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\SellController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\AuctionController;
+use App\Http\Controllers\BasketController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\ManagerMiddleware;
+use App\Http\Controllers\PayPalController;
+use App\Http\Controllers\TransactionController;
 
 // Routes welcome
 Route::get('/', function () {
@@ -56,13 +61,6 @@ Route::get('/eventInfo', function(){
         'isAuthenticated' => auth()->check(),
     ]);
 });
-//Route Cart
-Route::get('/Cart', function () {
-    $isAuthenticated = Auth::check();
-    return Inertia::render('Cart', [
-        'isAuthenticated' => $isAuthenticated
-    ]);
-})->middleware(['auth', 'verified'])->name('cart');
 
 // Route Products
 Route::get('/productextend', function () {
@@ -89,11 +87,20 @@ Route::get('/products', [ProductController::class, "index"])->name("products");
 Route::get('/products', [ProductController::class, 'getAllProducts'])->name('Products');
 Route::post('/products', [ProductController::class, 'toggleFavourite'])->name('productFavorite');
 // Route to show a product by id
-Route::get('/products/{id}', [ProductController::class, "show"])->name("products.show");
 Route::get('/editProduct/{id}', [ProductController::class, "editProduct"])->name("editProductId");
 Route::get('/updateProduct/{id}', [ProductController::class, "updateProduct"])->middleware(['auth', 'verified'])->name("updateProductId");
 Route::get('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->middleware(['auth', 'verified'])->name("deleteProduct");
 Route::get('/products/{id}', [ProductController::class, "goProduct"])->name("product.show");
+//Route to show a product by id
+
+//route to show all comments
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('/comentarios', [CommentController::class, 'addcomment'])->name('comments.addcoment');
+
+});
+
+
 //Route Users
 Route::post('/users', [UserController::class, "addUser"])->name("users");
 
@@ -114,6 +121,13 @@ Route::middleware(['auth'])->group(function () {
 // //Route Favorites
 Route::get('/favorites', [FavoriteController::class, 'getAllFavorites'])->name('products_favs');
 Route::get('/favorites/all', [ControllerFavorites::class, 'index'])->middleware(['auth', 'verified'])->name('favorites');
+Route::post('/products', [ProductController::class, 'toggleFavourite'])->name('productFavorite');
+
+// Route Basket
+Route::get('/Cart', [BasketController::class, 'getAllBaskets'])->name('cart');
+Route::post('/products/baskets', [ProductController::class, 'toggleBasket'])->middleware(['auth', 'verified'])->name('baskets_products');
+Route::get('/baskets', [BasketController::class, 'getAllBaskets'])->name('products_baskets');
+
 
 //Route Sell
 Route::get('/sell', [SellController::class, 'index'])->middleware(['auth', 'verified'])->name('sell');
@@ -152,6 +166,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/create-auction', [AuctionController::class, 'create'])->name('auctions.create');
     Route::post('/create-auction', [AuctionController::class, 'store'])->name('auctions.store');
     Route::post('/auctions/bid', [AuctionController::class, 'bid'])->name('auctions.bid');
+    Route::post('/auctions/{id}/finish', [AuctionController::class, 'finish'])->name('auctions.finish');
 });
 
 Route::get('/users/list', [UserController::class, 'getAllUsers'])->name('users.list');
@@ -161,6 +176,13 @@ Route::post('/products', [ProductController::class, 'addProduct'])->name('produc
 Route::post('/events', [EventController::class, 'addEvent'])->name('event.addEvent');
 require __DIR__.'/auth.php';
 
+
+
+Route::post('/paypal/create-order', [PayPalController::class, 'createOrder']);
+Route::post('/paypal/capture-order/{orderId}', [PayPalController::class, 'captureOrder']);
+Route::post('/transactions', [TransactionController::class, 'store'])->name('transactions.store');
+Route::post('/paypal/delete-product/{productId}', [PayPalController::class, 'deleteProduct']);
+require __DIR__.'/auth.php';
 
 // Route::get('/products', function () {
 //     return Inertia::render('Products');
@@ -172,3 +194,26 @@ require __DIR__.'/auth.php';
 // Route::post('/products', [ProductController::class, 'toggleFavourite'])->name('productFavorite');
 //Route to show a product by id
 // Route::get('/products/{id}', [ProductController::class, "goProduct"])->name("product.show");
+
+//Routes to login with google
+Route::get('login-google', function () {
+    return Socialite::driver('google')->redirect();
+})->name('login-google');
+ 
+Route::get('google-callback', function () {
+    $user = Socialite::driver('google')->user();
+
+    $userExists = User::where('email', $user->email)->first();
+    if ($userExists) {
+        Auth::login($userExists);
+        return redirect('/');
+    }else {
+        $newUser = User::create([
+            'name' => $user->name,
+            'email' => $user->email,
+            'password' => Hash::make('password'),
+        ]);
+        Auth::login($newUser);
+        return redirect('/');
+    }
+});

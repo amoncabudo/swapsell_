@@ -6,12 +6,14 @@ import { Link } from '@inertiajs/vue3';
 const props = defineProps({
   user: Object,
   isAuthenticated: Boolean,
-  products: Array
+  products: Array,
+  auction: Array
 
 })
 
-console.log(props.user)
-console.log(props.products)
+// console.log(props.user)
+// console.log(props.products)
+console.log(props.auction)
 
 </script>
 
@@ -28,7 +30,7 @@ console.log(props.products)
                 <img src="/images/User.png" alt="Foto de perfil" class="w-full h-full object-cover">
               </div>
               <button
-                class="absolute bottom-0 right-0 bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600 transition">
+                aria-label="Add Profile Image"  class="absolute bottom-0 right-0 bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600 transition">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path d="M12 4v16m8-8H4" />
                 </svg>
@@ -45,25 +47,25 @@ console.log(props.products)
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   </svg>
-                  <span>Barcelona, España</span>
+                  <span>Barcelona, Espanya</span>
                 </div>
                 <div class="flex items-center space-x-2 text-gray-600">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <span>Miembro desde 2024</span>
+                  <span>Membre desde 2024</span>
                 </div>
               </div>
               <p class="text-gray-700 mb-4">
-                Descripción del usuario. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Descripció de l'usuari. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
               </p>
               <div class="flex space-x-4">
-                <button class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition">
+                <button class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition">
                   Editar Perfil
                 </button>
                 <button class="border border-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-50 transition">
-                  Configuración
+                  Configuració
                 </button>
               </div>
             </div>
@@ -74,28 +76,28 @@ console.log(props.products)
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <div class="bg-white p-6 rounded-xl shadow-lg text-center">
             <div class="text-3xl font-bold text-blue-500 mb-2">28</div>
-            <div class="text-gray-600">Productos</div>
+            <div class="text-gray-600">Productes</div>
           </div>
           <div class="bg-white p-6 rounded-xl shadow-lg text-center">
             <div class="text-3xl font-bold text-green-500 mb-2">156</div>
-            <div class="text-gray-600">Ventas</div>
+            <div class="text-gray-600">Ventes</div>
           </div>
           <div class="bg-white p-6 rounded-xl shadow-lg text-center">
             <div class="text-3xl font-bold text-yellow-500 mb-2">4.8</div>
-            <div class="text-gray-600">Valoración</div>
+            <div class="text-gray-600">Valoració</div>
           </div>
           <div class="bg-white p-6 rounded-xl shadow-lg text-center">
             <div class="text-3xl font-bold text-purple-500 mb-2">42</div>
-            <div class="text-gray-600">Seguidores</div>
+            <div class="text-gray-600">Seguidors</div>
           </div>
         </div>
 
         <!-- Productos -->
         <div class="bg-white rounded-xl shadow-lg p-8">
           <div class="flex justify-between items-center mb-6">
-            <h2 class="text-2xl font-bold text-gray-800">Mis Productos</h2>
-            <button class="text-blue-500 hover:text-blue-600 transition">
-              Ver todos
+            <h2 class="text-2xl font-bold text-gray-800">Els meus Productes</h2>
+            <button class="text-blue-600 hover:text-blue-700 transition">
+              Veure tots
             </button>
           </div>
 
@@ -113,7 +115,7 @@ console.log(props.products)
 
               </div>
               </Link>
-              <Link :href="route('editProductId', product.id)"
+              <Link aria-label="Edit Product"  :href="route('editProductId', product.id)"
                 class="absolute top-2 left-2 bg-white/80 p-2 rounded-full hover:bg-white transition">
               <svg class="w-5 h-5 text-blue-500 hover:text-blue-700 transition-colors" fill="none" stroke="currentColor"
                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-label="Editar producto">
@@ -122,13 +124,38 @@ console.log(props.products)
               </svg>
               </Link>
 
-              <Link :href="route('deleteProduct', product.id)"
+              <Link aria-label="Delete Product" :href="route('deleteProduct', product.id)"
                 class="absolute top-2 right-2 bg-white/80 p-2 rounded-full hover:bg-white transition">
               <svg class="w-5 h-5 text-red-500 hover:text-red-700 transition-colors" fill="none" stroke="currentColor"
                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-label="Eliminar producto">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
               </svg>
               </Link>
+            </div>
+          </div>
+        </div>
+
+        <!-- Subastas -->
+        <div class="bg-white rounded-xl shadow-lg p-8 mt-8">
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold text-gray-800">Les meves Subhastas</h2>
+            <button class="text-blue-600 hover:text-blue-700 transition">
+              Veure tots
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div v-for="auction in props.auction" :key="auction.id" class="group relative">
+              <Link :href="route('auction')">
+              <div class="aspect-square rounded-lg overflow-hidden bg-gray-200">
+                <img :src="`/storage/${auction.product.image}`" alt="Producto"
+                  class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+              </div>
+              <div class="mt-4">
+                <h3 class="text-lg font-bold text-gray-800">{{ auction.product.name }}</h3>
+                <p class="text-gray-600">Preu actual: {{ auction.product.price }}€</p>
+              </div>
+               </Link>
             </div>
           </div>
         </div>

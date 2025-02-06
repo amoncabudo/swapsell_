@@ -22,18 +22,30 @@ class DatabaseSeeder extends Seeder
             'password' => 'admin',
             'role' => '0',
         ]);
+        User::factory()->create([
+            'name' => 'manager',
+            'email' => 'manager@manager.com',
+            'password' => 'manager',
+            'role' => '1',
+        ]);
+        User::factory()->create([
+            'name' => 'user',
+            'email' => 'user@user.com',
+            'password' => 'user',
+            'role' => '2',
+        ]);
 
         // Aquí tu código para crear categorías
         Category::create([
-            'name' => 'Hogar',
+            'name' => 'Llar',
             'image' => 'HomeCategory.jpg'
         ]);
         Category::create([
-            'name' => 'Tecnología',
+            'name' => 'Tecnologia',
             'image' => 'TecnologyCategory.jpg'
         ]);
         Category::create([
-            'name' => 'Deportes',
+            'name' => 'Esports',
             'image' => 'SportsCategory.jpg'
         ]);
         Category::create([
@@ -41,11 +53,11 @@ class DatabaseSeeder extends Seeder
             'image' => 'ModaCategory.jpg'
         ]);
         Category::create([
-            'name' => 'Salud y belleza',
+            'name' => 'Salut i Bellesa',
             'image' => 'HealthCategory.jpg'
         ]);
         Category::create([
-            'name' => 'Juguetes',
+            'name' => 'Joguines',
             'image' => 'ToysCategory.jpg'
         ]);
         Category::create([

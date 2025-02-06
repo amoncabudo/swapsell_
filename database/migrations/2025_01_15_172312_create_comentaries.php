@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('product_id');
             $table->foreignId('user_id');
-            $table->string('image');
             $table->text('description');
+            $table->string('image')->nullable()->change();
             $table->timestamps();
         });
     }

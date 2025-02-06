@@ -16,13 +16,12 @@ console.log(props.products_favs);
 
 
 function toggleFavorite(product) {
-    const isFavorite = product.favorites === 1;
-    axios.post(route('productFavorite'), { id: product.id, favorite: !isFavorite }) 
+    axios.post(route('productFavorite'), { id: product.id }) 
         .then(response => {
-            product.favorites = isFavorite ? 0 : 1;
-
-            if (product.favorites === 0){
-                props.products_favs.splice(props.products_favs.findIndex(p => p.id === product.id),1);
+            // Eliminar el producto de la lista si estamos en la página de favoritos
+            const index = props.products_favs.findIndex(p => p.id === product.id);
+            if (index !== -1) {
+                props.products_favs.splice(index, 1);
             }
         })
         .catch(error => {
@@ -57,6 +56,11 @@ const removeFromFavorites = (product) => {
     // Implement remove from favorites logic
     console.log('Removing product:', product.id);
 };
+
+const isFavorite = (product) => {
+    // Si el producto está en la lista de favoritos, significa que es un favorito
+    return props.products_favs.some(p => p.id === product.id);
+};
 </script>
 
 
@@ -77,8 +81,7 @@ const removeFromFavorites = (product) => {
                             <div v-for="products_favs in products_favs" :key="products_favs.id"
                                 class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
                                 <div class="relative">
-                                    <img :src="products_favs.image" :alt="products_favs.name"
-                                        class="w-full h-56 object-cover" />
+                                    <img :src="`/storage/${products_favs.image}`" :alt="products_favs.name" class="w-full h-56 object-cover">
                                 </div>
                                 <div class="p-6">
                                     <Link :href="`/product/${products_favs.id}`" class="block">
@@ -90,7 +93,7 @@ const removeFromFavorites = (product) => {
                                     <div class="flex justify-between items-center mb-4">
                                         <span class="text-blue-800 font-bold text-lg">{{
                                             formatCurrency(products_favs.price) }}</span>
-                                        <span class="text-sm text-gray-800">{{ products_favs.category }}</span>
+                                        <span class="text-sm text-gray-800">{{ products_favs.category.name }}</span>
                                     </div>
                                     </Link>
 
@@ -108,10 +111,10 @@ const removeFromFavorites = (product) => {
                                         </div>
                                         <form @submit.prevent>
                                             <button @click="toggleFavorite(products_favs)"
-                                                :class="{ 'text-red-500': products_favs.favorites === 1, 'text-gray-400': products_favs.favorites === 0 }"
+                                                :class="{ 'text-red-500': isFavorite(products_favs), 'text-gray-400': !isFavorite(products_favs) }"
                                                 class="transition-colors">
                                                 <svg class="h-5 w-5"
-                                                    :fill="products_favs.favorites === 1 ? 'red' : 'none'"
+                                                    :fill="isFavorite(products_favs) ? 'red' : 'none'"
                                                     stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                         stroke-width="2"
@@ -127,7 +130,7 @@ const removeFromFavorites = (product) => {
                 </div>
             </main>
         </component>
-        <Footer />
+        <Footer/>
     </div>
 </template>
 <style scoped>
