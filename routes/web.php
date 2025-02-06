@@ -173,11 +173,9 @@ Route::middleware(['auth'])->group(function () {
 
 Route::post('/paypal/create-order', [PayPalController::class, 'createOrder']);
 Route::post('/paypal/capture-order/{orderId}', [PayPalController::class, 'captureOrder']);
-Route::post('clear-cart', [PayPalController::class, 'clear'])->name('clear-cart');
 Route::post('/transactions', [TransactionController::class, 'store'])->name('transactions.store');
-
+Route::post('/paypal/delete-product/{productId}', [PayPalController::class, 'deleteProduct']);
 require __DIR__.'/auth.php';
-
 
 // Route::get('/products', function () {
 //     return Inertia::render('Products');

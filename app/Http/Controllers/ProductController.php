@@ -24,15 +24,14 @@ class ProductController extends Controller
         $price = $request->get("price");
         $longitude = $request->get("longitude");
         $latitude = $request->get("latitude");
-        $status = $request->get("status");
         $category_id = $request->get("category_id");
+
         $product = new Product();
         $product->name = $name;
         $product->description = $description;
         $product->price = $price;
         $product->longitude = $longitude;
         $product->latitude = $latitude;
-        $product->status = $status;
         $product->user_id = Auth::id();
         $product->category_id = $request->category_id;
         //Image
@@ -66,7 +65,6 @@ class ProductController extends Controller
             $price = $request->get("price");
             $longitude = $request->get("longitude");
             $latitude = $request->get("latitude");
-            $status = $request->get("status");
             $category = $request->get("category");
         
             $product->name = $request->get("name", $product->name);
@@ -74,7 +72,6 @@ class ProductController extends Controller
             $product->price = $request->get("price", $product->price);
             $product->longitude = $request->get("longitude", $product->longitude);
             $product->latitude = $request->get("latitude", $product->latitude);
-            $product->status = $request->get("status", $product->status);
             $product->category_id = $request->get("category_id", $product->category_id);
             
         
@@ -94,6 +91,7 @@ class ProductController extends Controller
         // Obtener los productos
         $products = Product::where('bid', false)
             ->where('user_id', '!=', $userId)
+            ->where('status', true)
             ->with('category')
             ->get();
 
