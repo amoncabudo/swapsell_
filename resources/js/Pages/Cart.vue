@@ -170,7 +170,7 @@ onMounted(() => {
                         </div>
                         <div class="border-t border-gray-200 pt-4 mt-2">
                             <div class="flex justify-between items-center">
-                                <span class="text-lg font-bold">Total</span>
+                                <span class="text-lg font-bold text-gray-800">Total</span>
                                 <span class="text-lg font-bold text-blue-600">{{ formatPrice(total * 1.21) }}</span>
                             </div>
                         </div>
