@@ -47,15 +47,16 @@ class PayPalController extends Controller
     public function captureOrder($orderId)
     {
         $request = new OrdersCaptureRequest($orderId);
-        try {
-            $response = $this->client->execute($request);
+        $response = $this->client->execute($request);
+        
+        if ($response->result->status === 'COMPLETED') {
+            // Obtener todos los productos del carrito del usuario
+            $baskets = Basket::where('user_id', Auth::id())->get();
             
-            // Si el pago es exitoso, crear la transacción
-            if ($response->result->status === 'COMPLETED') {
-                // Obtener el producto del carrito
-                $basket = Basket::where('user_id', Auth::id())->first();
+            foreach ($baskets as $basket) {
                 $product = Product::find($basket->product_id);
                 
+<<<<<<< HEAD
                 // Crear la transacción
                 Transaction::create([
                     'user_id' => $product->user_id, // Vendedor
@@ -87,4 +88,34 @@ class PayPalController extends Controller
     //     Auth::user()->basket()->delete();
     //     return response()->json(['message' => 'Carrito limpiado con éxito']);
     // }
+=======
+                if ($product) {
+                    // Crear la transacción
+                    Transaction::create([
+                        'user_id' => $product->user_id,
+                        'buyer_id' => Auth::id(),
+                        'category_id' => $product->category_id,
+                        'name' => $product->name,
+                        'description' => $product->description,
+                        'price' => $product->price,
+                        'longitude' => $product->longitude,
+                        'latitude' => $product->latitude,
+                        'image' => $product->image,
+                        'status' => 'completed',
+                        'bid' => false
+                    ]);
+
+                    // Eliminar el producto
+                    $product->status = false;
+                    $product->save();
+                    
+                    // Eliminar el registro del carrito
+                    $basket->delete();
+                }
+            }
+        }
+        
+        return response()->json($response->result);
+    }
+>>>>>>> 84f2146f2503beaa2f89a8f7853082a0bedd665a
 }

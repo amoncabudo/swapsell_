@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('longitude');
             $table->string('latitude');
             $table->string('image');
-            $table->string('status');
+            $table->boolean('status')->default(true);
             $table->boolean('bid')->default(false);
             $table->timestamps();
         });

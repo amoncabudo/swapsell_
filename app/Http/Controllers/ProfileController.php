@@ -68,12 +68,16 @@ class ProfileController extends Controller
         $user = Auth::user();
         $isAuthenticated = Auth::check();
         $products = Product::where('user_id', $user->id)->get();
+        $soldProducts = Product::where('user_id', $user->id)
+            ->where('status', 0)
+            ->count();
         $auction = Auction::where('user_id', $user->id)->with('product')->get();
         return Inertia::render("Profile", [
             "user" => $user,
             "isAuthenticated" => $isAuthenticated,
             "products" => $products,
-            "auction" => $auction
+            "auction" => $auction,
+            "soldProducts" => $soldProducts
         ]);
     }
 }

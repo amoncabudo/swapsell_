@@ -27,3 +27,6 @@ yarn-error.log
 boostrap/app.php
 /public/adminer.php
 package-lock.json
+/storage/app/public/*
+!/storage/app/public/products/
+!/storage/app/public/products/*

@@ -52,7 +52,7 @@ onMounted(() => {
     window.paypal.Buttons({
       fundingSource: paypal.FUNDING.PAYPAL,
       style: {
-        color: 'blue',
+        color: 'black',
         shape: 'rect',
         layout: 'vertical',
         label: 'paypal'
@@ -86,10 +86,19 @@ onMounted(() => {
 
             // Esperamos a que todas las transacciones se completen
             Promise.all(processTransactions)
+<<<<<<< HEAD
                 // .then(() => {
                 //     // Limpiamos el carrito
                 //     return axios.post(route('clear-cart'));
                 // })
+=======
+                .then(() => {
+                    // Eliminamos los productos del carrito
+                    props.products_baskets.forEach(product => {
+                        removeFromBasket(product);
+                    });
+                })
+>>>>>>> 84f2146f2503beaa2f89a8f7853082a0bedd665a
                 .then(() => {
                     // Mostramos mensaje de éxito
                     Swal.fire({
@@ -168,7 +177,7 @@ onMounted(() => {
                         </div>
                         <div class="border-t border-gray-200 pt-4 mt-2">
                             <div class="flex justify-between items-center">
-                                <span class="text-lg font-bold">Total</span>
+                                <span class="text-lg font-bold text-gray-800">Total</span>
                                 <span class="text-lg font-bold text-blue-600">{{ formatPrice(total * 1.21) }}</span>
                             </div>
                         </div>
