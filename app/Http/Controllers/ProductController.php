@@ -348,4 +348,5 @@ public function list()
             return response()->json(['is_basket' => false]);
         }
     }
+    
 }

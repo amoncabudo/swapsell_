@@ -7,7 +7,8 @@ const props = defineProps({
   user: Object,
   isAuthenticated: Boolean,
   products: Array,
-  auction: Array
+  auction: Array,
+  soldProducts: Number
 
 })
 
@@ -56,10 +57,6 @@ console.log(props.auction)
                   <span>Membre desde 2024</span>
                 </div>
               </div>
-              <p class="text-gray-700 mb-4">
-                Descripció de l'usuari. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </p>
               <div class="flex space-x-4">
                 <Link :href="route('profile.edit')" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition">
                   Editar Perfil
@@ -72,20 +69,16 @@ console.log(props.auction)
         <!-- Estadísticas -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <div class="bg-white p-6 rounded-xl shadow-lg text-center">
-            <div class="text-3xl font-bold text-blue-500 mb-2">28</div>
+            <div class="text-3xl font-bold text-blue-500 mb-2">{{ props.products.length }}</div>
             <div class="text-gray-600">Productes</div>
           </div>
           <div class="bg-white p-6 rounded-xl shadow-lg text-center">
-            <div class="text-3xl font-bold text-green-500 mb-2">156</div>
+            <div class="text-3xl font-bold text-green-500 mb-2">{{ props.soldProducts }}</div>
             <div class="text-gray-600">Ventes</div>
           </div>
           <div class="bg-white p-6 rounded-xl shadow-lg text-center">
             <div class="text-3xl font-bold text-yellow-500 mb-2">4.8</div>
             <div class="text-gray-600">Valoració</div>
-          </div>
-          <div class="bg-white p-6 rounded-xl shadow-lg text-center">
-            <div class="text-3xl font-bold text-purple-500 mb-2">42</div>
-            <div class="text-gray-600">Seguidors</div>
           </div>
         </div>
 
