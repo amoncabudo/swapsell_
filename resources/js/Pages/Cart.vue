@@ -93,7 +93,7 @@ onMounted(() => {
                     });
                 })
                 .then(() => {
-                    // Mostramos mensaje de éxito
+                    // Mostramos mensaje de éxitoop
                     Swal.fire({
                         title: '¡Èxit!',
                         text: 'Pagament processat correctament!',
