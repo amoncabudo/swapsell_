@@ -30,6 +30,7 @@ class TransactionController extends Controller
                 'user_id' => $product->user_id, // ID del vendedor
                 'buyer_id' => Auth::id(), // ID del comprador
                 'category_id' => $validated['category_id'],
+                'product_id' => $validated['product_id'],
                 'name' => $validated['name'],
                 'description' => $validated['description'],
                 'price' => $validated['price'],

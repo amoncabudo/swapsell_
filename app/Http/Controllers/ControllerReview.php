@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\Review;
+use App\Models\Transaction;
 
 class ControllerReview extends Controller
 {
@@ -16,15 +17,12 @@ class ControllerReview extends Controller
      */
     public function index()
     {
-        $review = Review::all();
-        $user = User::all();
-        $products = Product::all();
+        
+        $transaction = Transaction::with(['product', 'user', 'buyer'])->get();
+
         return Inertia::render('Review', [
             'isAuthenticated' => Auth::check(),
-            'user' => $user,
-            'products' => $products,
-            'review' => $review
-
+            'transaction' => $transaction
         ]);
     }
 
@@ -47,7 +45,7 @@ class ControllerReview extends Controller
         $review = new Review();
         $review->rating = $rating;
         $review->comment = $comment;
-        $review->user_id = 1;
+        $review->user_id = $request->user_id;
         $review->product_id = 1;
         // dd($review);
         $review->save();

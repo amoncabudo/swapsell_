@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->foreignId('category_id');
+            $table->foreignId('product_id');
             $table->string('name');
             $table->text('description');
             $table->decimal('price', total:8, places:2);
@@ -22,7 +23,7 @@ return new class extends Migration
             $table->string('latitude');
             $table->string('image');
             $table->string('status');
-            $table->string('buyer_id');
+            $table->foreignId('buyer_id');
             $table->boolean('bid')->default(false);
             $table->timestamps();
         });

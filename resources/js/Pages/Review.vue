@@ -6,34 +6,48 @@ import Review from '@/Components/Review.vue';
 import { Link } from '@inertiajs/vue3';
 
 const props = defineProps({
-  user: Object,
-  isAuthenticated: Boolean
+  isAuthenticated: Boolean,
+  transaction: Array,
 });
+console.log(props.transaction);
 </script>
 
 <template>
-    <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
-      <div class="max-w-5xl mx-auto py-10 sm:px-6 lg:px-8 mt-3">
-        <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-          <h2 class="flex justify-center items-center text-2xl font-bold mb-4">Historial de Compras</h2>
-          
-          <div class="space-y-4">
-            <div class="p-4 border rounded-lg shadow-sm bg-gray-50">
-              <div class="flex justify-between items-center">
-                <h3 class="text-lg font-semibold">Laptop Dell XPS 13</h3>
-                <p class="text-gray-600">Vendedor: Tienda Tecno</p>
-              </div>
+  <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
+    <div class="max-w-5xl mx-auto py-10 sm:px-6 lg:px-8 mt-3">
+      <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
+        <h2 class="flex justify-center items-center text-2xl font-bold mb-4">Historial de Compras</h2>
+        
+        <div class="space-y-4">
+          <div 
+            v-for="transaction in transaction" 
+            :key="transaction.id" 
+            class="p-4 border rounded-lg shadow-sm bg-gray-50 flex items-center"
+          >
+            <!-- Sección izquierda: Imagen y nombre del producto -->
+            <div class="w-1/3 flex items-center space-x-4">
+              <img :src="`/storage/${transaction.product.image}`" :alt="transaction.product.name" class="w-24 h-24 object-cover rounded">
+              <h3 class="text-lg font-semibold">{{ transaction.name }}</h3>
+            </div>
 
-              <div class="mt-2">
-                <Review></Review>
-              </div>
+            <!-- Sección central: Comprador -->
+            <div class="w-1/3 text-center">
+              <p class="text-gray-600 font-semibold">Comprado por:</p>
+              <p class="text-gray-800 font-bold">{{ transaction.buyer.name }}</p>
+            </div>
 
-              <div class="mt-2">
-                <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Ver Detalles</button>
-              </div>
+            <!-- Sección derecha: Vendedor -->
+            <div class="w-1/3 text-right">
+              <p class="text-gray-600 font-semibold">Vendido por:</p>
+              <p class="text-gray-800 font-bold">{{ transaction.user?.name }}</p>
+              <Review :userId="transaction.user?.id" />
             </div>
           </div>
         </div>
       </div>
-    </component>
+    </div>
+  </component>
 </template>
+
+
+

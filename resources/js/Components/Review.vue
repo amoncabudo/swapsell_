@@ -2,10 +2,16 @@
 import { ref } from 'vue';
 import axios from 'axios';
 
+// Definir las props
+const props = defineProps({
+  userId: Number
+});
+
 // Definir los datos del formulario
 const formData = ref({
   rating: 0,
   comment: '',
+  user_id: props.userId
 });
 
 // Definir la visibilidad del modal

@@ -64,6 +64,11 @@ class Product extends Model
     {
         return $this->hasOne(Review::class);
     }
+
+    public function transactions()
+    {
+        return $this->hasOne(Transaction::class);
+    }
 }
 
 
