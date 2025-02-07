@@ -42,9 +42,8 @@
         "leaflet": "^1.9.4",
         "leaflet.locatecontrol": "^0.83.1",
         "particles.js": "^2.0.0",
-        "primeicons": "^7.0.0",
         "primevue": "^4.2.5",
-        "vue-data-tables": "^3.4.5",
-        "sweetalert2": "^11.15.10"
+        "sweetalert2": "^11.15.10",
+        "vue-data-tables": "^3.4.5"
     }
 }

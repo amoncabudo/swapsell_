@@ -3,6 +3,7 @@ import { useForm } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
 import { ref } from 'vue';
+import ProgressSpinner from 'primevue/progressspinner';
 
 defineProps({
   isAuthenticated: Boolean,
@@ -19,13 +20,14 @@ let form = useForm({
 });
 
 const generatedDescription = ref('');
-
+const loading = ref(false);
 
 function handleFileUpload(event) {
   form.image = event.target.files[0];
 }
 
 const generateDescription = async () => {
+  loading.value = true;
   try {
     const prompt = "Genera una descripción para un producto con el siguiente nombre: " + form.name;
     const response = await axios.post('http://localhost:11434/api/generate', {
@@ -45,6 +47,8 @@ const generateDescription = async () => {
   } catch (error) {
     console.error("Error al generar la descripción:", error);
     alert("Hubo un error al generar la descripción. Por favor, inténtalo de nuevo.");
+  } finally {
+    loading.value = false;
   }
 };
 
@@ -86,12 +90,12 @@ const generateDescription = async () => {
               <label for="description" class="form-label">Descripció</label>
               <div class="relative">
                 <textarea id="description" v-model="form.description" rows="4" class="form-input" required></textarea>
+                <ProgressSpinner v-if="loading" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px;" />
               </div>
               <button type="button" @click="generateDescription"
                 class="mt-2 w-full bg-blue-500 text-white font-bold py-2 rounded">
-                Generar Descripción
+                Generar Descripció
               </button>
-
             </div>
 
             <!-- Campo Imagen -->
@@ -294,5 +298,9 @@ input[type="number"]::-webkit-outer-spin-button {
 .submit-button:focus {
   outline: none;
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+.relative {
+  position: relative; /* Asegúrate de que el contenedor sea relativo */
 }
 </style>
