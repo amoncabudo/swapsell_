@@ -61,12 +61,9 @@ console.log(props.auction)
                 Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
               </p>
               <div class="flex space-x-4">
-                <button class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition">
+                <Link :href="route('profile.edit')" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition">
                   Editar Perfil
-                </button>
-                <button class="border border-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-50 transition">
-                  Configuració
-                </button>
+                </Link>
               </div>
             </div>
           </div>

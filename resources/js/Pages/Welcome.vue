@@ -63,7 +63,7 @@ onMounted(async () => {
                             <div class="flex gap-4">
                                 <button
                                     class="border border-white text-white px-8 py-3 rounded-lg hover:bg-white hover:text-gray-900 transition-all">
-                                    <a href="/profile">Començar ara</a>
+                                    <a href="/products">Començar ara</a>
                                 </button>
                             </div>
                         </div>
