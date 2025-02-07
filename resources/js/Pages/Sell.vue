@@ -2,25 +2,55 @@
 import { useForm } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
+import { ref } from 'vue';
+import ProgressSpinner from 'primevue/progressspinner';
 
 defineProps({
-    isAuthenticated: Boolean,
+  isAuthenticated: Boolean,
 });
 
-let form = useForm({     
-    name: "",
-    description: "",
-    price: null,
-    longitude: null,
-    latitude: null,
-    category_id: "",
-    image: null
+let form = useForm({
+  name: "",
+  description: "",
+  price: null,
+  longitude: null,
+  latitude: null,
+  category_id: "",
+  image: null
 });
 
-// Método para manejar la subida de archivos
+const generatedDescription = ref('');
+const loading = ref(false);
+
 function handleFileUpload(event) {
-    form.image = event.target.files[0]; // Guardamos el archivo en la propiedad 'image'
+  form.image = event.target.files[0];
 }
+
+const generateDescription = async () => {
+  loading.value = true;
+  try {
+    const prompt = "Genera una descripción para un producto con el siguiente nombre: " + form.name;
+    const response = await axios.post('http://localhost:11434/api/generate', {
+      model: 'deepseek-r1',
+      prompt: prompt,
+      stream: false,
+    });
+
+    let text = response.data.response;
+    text = text.replace(/<think>[\s\S]*?<\/think>/g, '');
+    text = text.replace(/\*/g, '');
+    generatedDescription.value = text;
+    form.description = text;
+
+    console.log(generatedDescription.value);
+
+  } catch (error) {
+    console.error("Error al generar la descripción:", error);
+    alert("Hubo un error al generar la descripción. Por favor, inténtalo de nuevo.");
+  } finally {
+    loading.value = false;
+  }
+};
 
 </script>
 
@@ -45,17 +75,11 @@ function handleFileUpload(event) {
             <div class="form-group">
               <label for="name" class="form-label">Nom del Producte</label>
               <div class="relative">
-                <input
-                  type="text"
-                  id="name"
-                  v-model="form.name"
-                  class="form-input pl-10"
-                  required
-                />
+                <input type="text" id="name" v-model="form.name" class="form-input pl-10" required />
                 <span class="form-icon">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                          d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                   </svg>
                 </span>
               </div>
@@ -65,26 +89,20 @@ function handleFileUpload(event) {
             <div class="form-group">
               <label for="description" class="form-label">Descripció</label>
               <div class="relative">
-                <textarea
-                  id="description"
-                  v-model="form.description"
-                  rows="4"
-                  class="form-input"
-                  required
-                ></textarea>
+                <textarea id="description" v-model="form.description" rows="4" class="form-input" required></textarea>
+                <ProgressSpinner v-if="loading" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px;" />
               </div>
+              <button type="button" @click="generateDescription"
+                class="mt-2 w-full bg-blue-500 text-white font-bold py-2 rounded">
+                Generar Descripció
+              </button>
             </div>
 
             <!-- Campo Imagen -->
             <div class="form-group">
-            <label for="image" class="form-label">Imatge del Producte</label>
+              <label for="image" class="form-label">Imatge del Producte</label>
               <div class="relative">
-                <input
-                  type="file"
-                  id="image"
-                  @change="handleFileUpload"
-                  required
-                />
+                <input type="file" id="image" @change="handleFileUpload" required />
               </div>
             </div>
 
@@ -92,17 +110,11 @@ function handleFileUpload(event) {
             <div class="form-group">
               <label for="price" class="form-label">Preu (€)</label>
               <div class="relative">
-                <input
-                  type="number"
-                  id="price"
-                  v-model="form.price"
-                  class="form-input pl-10"
-                  required
-                />
+                <input type="number" id="price" v-model="form.price" class="form-input pl-10" required />
                 <span class="form-icon">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                          d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </span>
               </div>
@@ -113,18 +125,12 @@ function handleFileUpload(event) {
               <div class="form-group">
                 <label for="longitude" class="form-label">Longitud</label>
                 <div class="relative">
-                  <input
-                    type="number"
-                    step="any"
-                    id="longitude"
-                    v-model="form.longitude"
-                    class="form-input pl-10"
-                    required
-                  />
+                  <input type="number" step="any" id="longitude" v-model="form.longitude" class="form-input pl-10"
+                    required />
                   <span class="form-icon">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     </svg>
                   </span>
                 </div>
@@ -133,18 +139,12 @@ function handleFileUpload(event) {
               <div class="form-group">
                 <label for="latitude" class="form-label">Latitud</label>
                 <div class="relative">
-                  <input
-                    type="number"
-                    step="any"
-                    id="latitude"
-                    v-model="form.latitude"
-                    class="form-input pl-10"
-                    required
-                  />
+                  <input type="number" step="any" id="latitude" v-model="form.latitude" class="form-input pl-10"
+                    required />
                   <span class="form-icon">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     </svg>
                   </span>
                 </div>
@@ -155,12 +155,7 @@ function handleFileUpload(event) {
             <div class="form-group">
               <label for="category" class="form-label">Categoria</label>
               <div class="relative">
-                <select
-                  id="category_id"
-                  v-model="form.category_id"
-                  class="form-input pl-10"
-                  required
-                >
+                <select id="category_id" v-model="form.category_id" class="form-input pl-10" required>
                   <option value="1">Llar</option>
                   <option value="2">Tecnologia</option>
                   <option value="3">Esports</option>
@@ -170,20 +165,17 @@ function handleFileUpload(event) {
                 </select>
                 <span class="form-icon">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </span>
               </div>
             </div>
             <!-- Botón de envío -->
             <div class="mt-8">
-              <button
-                type="submit"
-                class="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold py-3 px-4 rounded-xl
+              <button type="submit" class="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold py-3 px-4 rounded-xl
                        hover:from-blue-600 hover:to-indigo-700 transform hover:-translate-y-0.5 transition-all duration-150
-                       focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              >
+                       focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                 Publicar Producte
               </button>
             </div>
@@ -257,9 +249,17 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 @keyframes gradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 /* Efecto glass */
@@ -299,5 +299,8 @@ input[type="number"]::-webkit-outer-spin-button {
   outline: none;
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
 }
-</style>
 
+.relative {
+  position: relative; /* Asegúrate de que el contenedor sea relativo */
+}
+</style>
