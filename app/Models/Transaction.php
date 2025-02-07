@@ -14,6 +14,7 @@ class Transaction extends Model
         'user_id',
         'buyer_id',
         'category_id',
+        'product_id',
         'name',
         'description',
         'price',
@@ -37,5 +38,15 @@ class Transaction extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

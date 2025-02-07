@@ -56,6 +56,39 @@ class PayPalController extends Controller
             foreach ($baskets as $basket) {
                 $product = Product::find($basket->product_id);
                 
+<<<<<<< HEAD
+                // Crear la transacción
+                Transaction::create([
+                    'user_id' => $product->user_id, // Vendedor
+                    'buyer_id' => Auth::id(), // Comprador
+                    'category_id' => $product->category_id,
+                    'name' => $product->name,
+                    'description' => $product->description,
+                    'price' => $product->price,
+                    'longitude' => $product->longitude,
+                    'latitude' => $product->latitude,
+                    'image' => $product->image,
+                    'status' => 'completed',
+                    'bid' => false
+                ]);
+                // return redirect()->route('products_favs');
+
+                // Limpiar el carrito
+                // $this->clear();
+            }
+            
+            return response()->json($response->result);
+        } catch (\Exception $ex) {
+            return response()->json(['error' => $ex->getMessage()], 500);
+        }
+    }
+
+    // public function clear()
+    // {
+    //     Auth::user()->basket()->delete();
+    //     return response()->json(['message' => 'Carrito limpiado con éxito']);
+    // }
+=======
                 if ($product) {
                     // Crear la transacción
                     Transaction::create([
@@ -84,4 +117,5 @@ class PayPalController extends Controller
         
         return response()->json($response->result);
     }
+>>>>>>> 84f2146f2503beaa2f89a8f7853082a0bedd665a
 }

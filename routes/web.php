@@ -22,6 +22,7 @@ use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\ManagerMiddleware;
 use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\ControllerReview;
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
 //Routes Welcome
@@ -320,3 +321,8 @@ Route::get('google-callback', function () {
     }
 });
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+//Route reviews
+Route::get('/reviews', [ControllerReview::class, 'index'])->name('reviews.index');
+Route::post('/reviewAdd', [ControllerReview::class, 'store'])->name('reviews.store');

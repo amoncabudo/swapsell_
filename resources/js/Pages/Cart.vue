@@ -86,12 +86,19 @@ onMounted(() => {
 
             // Esperamos a que todas las transacciones se completen
             Promise.all(processTransactions)
+<<<<<<< HEAD
+                // .then(() => {
+                //     // Limpiamos el carrito
+                //     return axios.post(route('clear-cart'));
+                // })
+=======
                 .then(() => {
                     // Eliminamos los productos del carrito
                     props.products_baskets.forEach(product => {
                         removeFromBasket(product);
                     });
                 })
+>>>>>>> 84f2146f2503beaa2f89a8f7853082a0bedd665a
                 .then(() => {
                     // Mostramos mensaje de éxito
                     Swal.fire({
@@ -100,7 +107,7 @@ onMounted(() => {
                         icon: 'success',
                         confirmButtonText: 'Acceptar'
                     }).then(() => {
-                        window.location.href = route('products');
+                        window.location.href = route('products_favs');
                     });
                 })
                 .catch((error) => {
