@@ -38,7 +38,7 @@ const navigateToEvent = (event) => {
                class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
             <div class="relative">
               <img :src="`/storage/${event.image}`" 
-                   :alt="event.name" 
+                   :alt="event.title" 
                    class="w-full h-56 object-cover">
             </div>
             <div class="p-6">

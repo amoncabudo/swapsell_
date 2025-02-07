@@ -58,7 +58,7 @@ console.log(props.auction)
                 </div>
               </div>
               <div class="flex space-x-4">
-                <Link :href="route('profile.edit')" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition">
+                <Link :href="route('profile.edit')" class="bg-blue-800 text-white px-6 py-2 rounded-lg hover:bg-blue-900 transition">
                   Editar Perfil
                 </Link>
               </div>
@@ -69,15 +69,15 @@ console.log(props.auction)
         <!-- Estadísticas -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <div class="bg-white p-6 rounded-xl shadow-lg text-center">
-            <div class="text-3xl font-bold text-blue-500 mb-2">{{ props.products.length }}</div>
+            <div class="text-3xl font-bold text-blue-800 mb-2">{{ props.products.length }}</div>
             <div class="text-gray-600">Productes</div>
           </div>
           <div class="bg-white p-6 rounded-xl shadow-lg text-center">
-            <div class="text-3xl font-bold text-green-500 mb-2">{{ props.soldProducts }}</div>
+            <div class="text-3xl font-bold text-green-800 mb-2">{{ props.soldProducts }}</div>
             <div class="text-gray-600">Ventes</div>
           </div>
           <div class="bg-white p-6 rounded-xl shadow-lg text-center">
-            <div class="text-3xl font-bold text-yellow-500 mb-2">4.8</div>
+            <div class="text-3xl font-bold text-yellow-800 mb-2">4.8</div>
             <div class="text-gray-600">Valoració</div>
           </div>
         </div>
@@ -86,7 +86,7 @@ console.log(props.auction)
         <div class="bg-white rounded-xl shadow-lg p-8">
           <div class="flex justify-between items-center mb-6">
             <h2 class="text-2xl font-bold text-gray-800">Els meus Productes</h2>
-            <button class="text-blue-600 hover:text-blue-700 transition">
+            <button class="text-blue-800 hover:text-blue-900 transition">
               Veure tots
             </button>
           </div>
@@ -129,7 +129,7 @@ console.log(props.auction)
         <div class="bg-white rounded-xl shadow-lg p-8 mt-8">
           <div class="flex justify-between items-center mb-6">
             <h2 class="text-2xl font-bold text-gray-800">Les meves Subhastas</h2>
-            <button class="text-blue-600 hover:text-blue-700 transition">
+            <button class="text-blue-800 hover:text-blue-900 transition">
               Veure tots
             </button>
           </div>
