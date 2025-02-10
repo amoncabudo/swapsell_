@@ -1,7 +1,5 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import NavbarS from '@/Layouts/NavbarS.vue';
 import Breadcrumb from 'primevue/breadcrumb';
 import Button from 'primevue/button';
 import { Link } from '@inertiajs/vue3';
@@ -12,13 +10,21 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(relativeTime);
 dayjs.locale('ca'); 
 import 'dayjs/locale/ca';
+
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import axios from 'axios';
+import NavbarS from '@/Layouts/NavbarS.vue';
 
 const locations = ref({});
 onMounted(() => {
   setInterval(() => {
-    props.products = [...props.products];
+    props.products_favs = [...props.products_favs];
   }, 60000);
+});
+
+const props = defineProps({
+    products_favs: Array,
+    isAuthenticated: Boolean
 });
 
 // Función para obtener el nombre de la ubicación
@@ -51,8 +57,8 @@ const getLocationName = async (latitude, longitude) => {
 
 // Función para inicializar las ubicaciones
 const initializeLocations = async () => {
-  if (props.products && props.products.length > 0) {
-    for (const product of props.products) {
+  if (props.products_favs && props.products_favs.length > 0) {
+    for (const product of props.products_favs) {
       if (product.latitude && product.longitude) {
           locations.value[product.id] = await getLocationName(product.latitude, product.longitude);
       }
@@ -61,7 +67,6 @@ const initializeLocations = async () => {
 };
 
 onMounted(async () => {
-  await fetchCategories();
   await initializeLocations();
 });
 
@@ -69,11 +74,6 @@ onMounted(async () => {
 const timeAgo = (date) => {
   return dayjs(date).fromNow();
 };
-const props = defineProps({
-    products_favs: Array,
-    isAuthenticated: Boolean
-});
-console.log(props.products_favs);
 
 
 function toggleFavorite(product) {
