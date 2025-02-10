@@ -8,7 +8,8 @@ const props = defineProps({
   isAuthenticated: Boolean,
   products: Array,
   auction: Array,
-  soldProducts: Number
+  soldProducts: Number,
+  mediaReview: Number
 
 })
 
@@ -77,7 +78,7 @@ console.log(props.auction)
             <div class="text-gray-600">Ventes</div>
           </div>
           <div class="bg-white p-6 rounded-xl shadow-lg text-center">
-            <div class="text-3xl font-bold text-yellow-800 mb-2">4.8</div>
+            <div class="text-3xl font-bold text-yellow-800 mb-2">{{ props.mediaReview }}</div>
             <div class="text-gray-600">Valoració</div>
           </div>
         </div>

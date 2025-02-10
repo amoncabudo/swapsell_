@@ -47,9 +47,11 @@ const showingNavigationDropdown = ref(false);
                         </Link>
 
                         <div class="hidden sm:flex items-center space-x-6">
-                            <Link aria-label="Carret Page"  href="/Cart" class="text-gray-600 hover:text-blue-500 transition-colors">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                                    <path d="M3 3h2l3 10h10l3-6H6M7 16a2 2 0 100 4 2 2 0 000-4zm10 0a2 2 0 100 4 2 2 0 000-4z"/>
+                            <Link aria-label="Cart Page" href="/Cart" class="text-gray-600 hover:text-blue-500 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
+                                    <circle cx="9" cy="21" r="1"></circle>
+                                    <circle cx="20" cy="21" r="1"></circle>
+                                    <path d="M1 1h4l2.4 12.8a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 1.9-1.4L23 6H6"></path>
                                 </svg>
                             </Link>
                             <Link aria-label="Favorites Page"  href="/favorites" class="text-gray-600 hover:text-blue-500 transition-colors">
@@ -86,6 +88,7 @@ const showingNavigationDropdown = ref(false);
                                 <DropdownLink :href="route('products_favs')">Favorits</DropdownLink>
                                 <DropdownLink :href="route('cart')">Carret</DropdownLink>
                                 <DropdownLink :href="route('auction')">Subhastes</DropdownLink>
+                                <DropdownLink :href="route('reviews.index')">Valoracions</DropdownLink>
                                 <template v-if="$page.props.auth.user.role === 0">
                                     <DropdownLink :href="route('AdminPanel')">Panell d'Administració</DropdownLink>
                                 </template>
@@ -127,6 +130,7 @@ const showingNavigationDropdown = ref(false);
                             <ResponsiveNavLink :href="route('products_favs')">Favorits</ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('cart')">Carret</ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('auction')">Subhastes</ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('reviews.index')">Valoracions</ResponsiveNavLink>
                             <template v-if="$page.props.auth.user.role === 0">
                                 <ResponsiveNavLink :href="route('AdminPanel')">Admin Panel</ResponsiveNavLink>
                             </template>

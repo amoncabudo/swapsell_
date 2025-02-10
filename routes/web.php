@@ -78,7 +78,7 @@ Route::post('/events', [EventController::class, "addEvent"])->name("events");
 Route::get('/events', [EventController::class, 'getAllEvents'])->name('Events');
 
 //Route AddEvent
-Route::get('/addEvent', function(){return Inertia::render('AddEvent');})->middleware('auth', 'verified' , ManagerMiddleware::class)->name('addEvent');
+Route::get('/addEvent', function(){return Inertia::render('AddEvent', ['isAuthenticated' => auth() -> check()]);})->middleware('auth', 'verified' , ManagerMiddleware::class)->name('addEvent');
 
 //Route UpdateEvent
 Route::get('/updateEvent/{id}', [EventController::class, "goEvent"])->middleware(ManagerMiddleware::class)->name("event.show");
