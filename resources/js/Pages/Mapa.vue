@@ -22,15 +22,16 @@ import NavbarS from "@/Layouts/NavbarS.vue";
 import { onMounted, ref } from "vue";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+
 let props = defineProps({
   products: Array,
+  isAuthenticated: Boolean,
 });
 
 
 // Referencias y datos
 const map = ref(null); // Referencia al mapa
 let products = ref(props.products); // Productos cargados
-const isAuthenticated = ref(false); // Autenticación (puedes conectarlo al backend si es necesario)
 
 
 // Inicializa el mapa

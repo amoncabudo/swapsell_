@@ -100,9 +100,11 @@ class EventController extends Controller
 
     public function mapae(){
 
+        $isAuthenticated = Auth::check();
         $events = Event::all();
         return Inertia::render('MapaE',[
-            'events' => $events
+            'events' => $events,
+            'isAuthenticated' => $isAuthenticated
         ]);
     }
 }
