@@ -24,13 +24,13 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 let props = defineProps({
   events: Array,
+  isAuthenticated: Boolean,
 });
 
 
 // Referencias y datos
 const map = ref(null); // Referencia al mapa
 let events = ref(props.events); // Productos cargados
-const isAuthenticated = ref(false); // Autenticación (puedes conectarlo al backend si es necesario)
 
 
 
