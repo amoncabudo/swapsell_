@@ -27,15 +27,9 @@ console.log(props.auction)
           <div class="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-8">
             <!-- Imagen de perfil con borde y sombra -->
             <div class="relative">
-              <div class="w-32 h-32 rounded-full overflow-hidden ring-4 ring-blue-500 ring-offset-4">
+              <div class="w-32 h-32 rounded-full overflow-hidden">
                 <img src="/images/User.png" alt="Foto de perfil" class="w-full h-full object-cover">
               </div>
-              <button
-                aria-label="Add Profile Image"  class="absolute bottom-0 right-0 bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600 transition">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 4v16m8-8H4" />
-                </svg>
-              </button>
             </div>
 
             <!-- Información del usuario -->
