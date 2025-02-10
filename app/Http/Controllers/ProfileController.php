@@ -12,6 +12,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\Product;
 use App\Models\Auction;
+use App\Models\Review;
 
 class ProfileController extends Controller
 {
@@ -71,13 +72,15 @@ class ProfileController extends Controller
         $soldProducts = Product::where('user_id', $user->id)
             ->where('status', 0)
             ->count();
+        $mediaReview = round(Review::avg('rating'), 2);
         $auction = Auction::where('user_id', $user->id)->with('product')->get();
         return Inertia::render("Profile", [
             "user" => $user,
             "isAuthenticated" => $isAuthenticated,
             "products" => $products,
             "auction" => $auction,
-            "soldProducts" => $soldProducts
+            "soldProducts" => $soldProducts,
+            "mediaReview" => $mediaReview
         ]);
     }
 }
