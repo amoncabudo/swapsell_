@@ -121,7 +121,7 @@ const navigateToEvent = (event) => {
                   </div>
                 </div>
                 
-                <template v-if="$page.props.auth.user.role === 0">
+                <template v-if="$page.props.auth.user && $page.props.auth.user.role === 0">
                 <div class="flex justify-between mt-5">
                 <Link :href="route('event.show', event.id)" class="block"><button class="bg-custom-blue text-white p-2 rounded">Editar</button></Link>
                 <Link :href="route('deleteEvent', event.id)" class="block"><button class="bg-red-800 text-white p-2 rounded">Eliminar</button></Link>
@@ -137,7 +137,7 @@ const navigateToEvent = (event) => {
             </div>
            
             <div class="fixed bottom-8 right-8 flex space-x-4">
-              <template v-if="$page.props.auth.user.role <= 1">
+              <template v-if="$page.props.auth.user && $page.props.auth.user.role <= 1">
                 <Link aria-label="addEvent Page" href="/addEvent" 
                       class="bg-custom-blue text-white rounded-full p-4 shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:bg-custom-blue-dark">
                     <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
