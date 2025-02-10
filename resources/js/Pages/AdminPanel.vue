@@ -8,7 +8,7 @@ import { Events } from 'leaflet';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-
+//Define variables
 const flashMessage = ref(null);
 const isModalEventOpen = ref(false);
 const isModalUserOpen = ref(false);
@@ -21,7 +21,7 @@ const products = ref([]);
 const users = ref([]);
 const editingUser = ref(null);
 const events = ref([]);
-
+//Edit User Form Variables
 const editUserForm = useForm({
     id: '',
     name: '',
@@ -31,13 +31,13 @@ const editUserForm = useForm({
     role: '',
     image: null
 });
-
+//Define variables for roles
 const roles = [
     { id: 0, name: 'Administrador' },
     { id: 1, name: 'Scrum Manager' },
-    { id: 2, name: 'Usuario' }
+    { id: 2, name: 'Usuari' }
 ];
-
+//Define variables for products
 const product = ref({
     name: '',
     description: '',
@@ -48,39 +48,39 @@ const product = ref({
     category_id: '1',
     image: null
 });
-
+//Define variables for authentication
 defineProps({
     isAuthenticated: Boolean,
 });
 
 // Modal User
-
-const openModalU = () => {
+const openModalU = () => { //Open modal for add user
     isModalUserOpen.value = true;
 };
-const form = useForm({
+const form = useForm({ //Form for add user
     name: '',
     surname: '',
     email: '',
     password: '',
 });
-const closeModalU = () => {
+const closeModalU = () => { //Close modal for add user
     isModalUserOpen.value = false;
 };
 
-function addUser() {
-    axios.post(route('users'), form)
+//Function for add user
+function addUser() { //Add user
+    axios.post(route('users'), form) //Post request for add user
         .then(response => {
-            closeModalU();
-            toastMessage.value = 'Usuari creat correctament!';
-            toastType.value = 'success';
-            showToast.value = true;
+            closeModalU(); //Close modal for add user
+            toastMessage.value = 'Usuari creat correctament!'; //Toast message for add user
+            toastType.value = 'success'; //Toast type for add user
+            showToast.value = true; //Show toast for add user
             setTimeout(() => {
-                showToast.value = false;
-            }, 3000);
+                showToast.value = false; //Hide toast for add user
+            }, 3000); //Hide toast for add user
         })
         .catch(error => {
-            toastMessage.value = 'Error al crear usuari';
+            toastMessage.value = 'Error al crear usuari'; //Toast message for add user
             toastType.value = 'error';
             showToast.value = true;
             setTimeout(() => {
@@ -89,10 +89,10 @@ function addUser() {
         });
 }
 //Modal Events
-const openModalE = () => {
+const openModalE = () => { //Open modal for add event
     isModalEventOpen.value = true;
 };
-const event = useForm({
+const event = useForm({ //Form for add event
     title: '',
     description: '',
     date: '',
@@ -101,161 +101,161 @@ const event = useForm({
     latitude: '',
     image: null
 });
-const closeModalE = () => {
+const closeModalE = () => { //Close modal for add event
     isModalEventOpen.value = false;
 };
-
-function addEvent() {
+//Function for add event
+function addEvent() { //Add event
     event.post(route('event.addEvent'), {
         onSuccess: () => {
-            closeModalE();
-            // Actualizar la lista de eventos después de crear uno nuevo
+            closeModalE(); //Close modal for add event  
+            // Update the events list after creating a new one
             axios.get(route('event.addEvent')).then(response => {
                 events.value = response.data;
             });
-            toastMessage.value = 'Event creat correctament!';
-            showToast.value = true;
+            toastMessage.value = 'Esdeveniment creat correctament!'; //Toast message for add event
+            showToast.value = true; //Show toast for add event
             setTimeout(() => {
-                showToast.value = false;
-            }, 3000);
+                showToast.value = false; //Hide toast for add event
+            }, 3000); //Hide toast for add event
         },
         onError: () => {
-            toastMessage.value = 'Error al crear event';
-            toastType.value = 'error';
-            showToast.value = true;
+            toastMessage.value = 'Error al crear esdeveniment'; //Toast message for add event
+            toastType.value = 'error'; //Toast type for add event
+            showToast.value = true; //Show toast for add event
             setTimeout(() => {
-                showToast.value = false;
-            }, 3000);
+                showToast.value = false; //Hide toast for add event
+            }, 3000); //Hide toast for add event
         }
     });
 }
 // Modal User Edit
-const openEditUserModal = (user) => {
-    editUserForm.id = user.id;
-    editUserForm.name = user.name;
-    editUserForm.surname = user.surname;
-    editUserForm.email = user.email;
-    editUserForm.role = user.role || 'user';
-    editUserForm.password = '';
+const openEditUserModal = (user) => { //Open modal for edit user
+    editUserForm.id = user.id; //Set id for edit user
+    editUserForm.name = user.name; //Set name for edit user
+    editUserForm.surname = user.surname; //Set surname for edit user
+    editUserForm.email = user.email; //Set email for edit user
+    editUserForm.role = user.role || '0'; //Set role for edit user
+    editUserForm.password = ''; //Set password for edit user
     editUserForm.image = null;
     isEditUserModalOpen.value = true;
 };
 
-const closeEditUserModal = () => {
-    isEditUserModalOpen.value = false;
-    editUserForm.reset();
+const closeEditUserModal = () => { //Close modal for edit user
+    isEditUserModalOpen.value = false; //Set isEditUserModalOpen to false
+    editUserForm.reset(); //Reset editUserForm
 };
 
-function updateUser() {
-    const userData = {
-        name: editUserForm.name,
-        surname: editUserForm.surname,
-        email: editUserForm.email,
-        role: editUserForm.role
+function updateUser() { //Update user
+    const userData = { //Set userData
+        name: editUserForm.name, //Set name for userData
+        surname: editUserForm.surname, //Set surname for userData
+        email: editUserForm.email, //Set email for userData
+        role: editUserForm.role //Set role for userData
     };
-    // Solo incluir la contraseña si se ha ingresado
+    // Only include the password if it has been entered
     if (editUserForm.password) {
         userData.password = editUserForm.password;
     }
 
-    axios.put(route('users.update', editUserForm.id), userData)
+    axios.put(route('users.update', editUserForm.id), userData) //Put request for update user
         .then(response => {
-            closeEditUserModal();
-            // Actualizar la lista de usuarios
+            closeEditUserModal(); //Close modal for edit user
+            // Update the users list after updating one
             const index = users.value.findIndex(u => u.id === editUserForm.id);
             if (index !== -1) {
                 users.value[index] = response.data;
             }
-            toastMessage.value = 'Usuari actualitzat correctament!';
-            toastType.value = 'success';
-            showToast.value = true;
+            toastMessage.value = 'Usuari actualitzat correctament!'; //Toast message for update user
+            toastType.value = 'success'; //Toast type for update user
+            showToast.value = true; //Show toast for update user
             setTimeout(() => {
-                showToast.value = false;
-            }, 3000);
+                showToast.value = false; //Hide toast for update user
+            }, 3000); //Hide toast for update user
         })
         .catch(error => {
             console.error('Error:', error);
-            toastMessage.value = 'Error al actualitzar usuari';
-            toastType.value = 'error';
-            showToast.value = true;
+            toastMessage.value = 'Error al actualitzar l\'usuari'; //Toast message for update user
+            toastType.value = 'error'; //Toast type for update user
+            showToast.value = true; //Show toast for update user
             setTimeout(() => {
-                showToast.value = false;
-            }, 3000);
+                showToast.value = false; //Hide toast for update user
+            }, 3000); //Hide toast for update user
         });
 }
 
-// Actualiza la función deleteUser para que funcione correctamente
-const deleteUser = async (userId) => {
-    if (confirm('¿Estás seguro de que quieres eliminar este usuario?')) {
+//Function for delete user
+const deleteUser = async (userId) => { //Delete user
+    if (confirm('¿Estás segur de que vols esborrar aquest usuari?')) { //Confirmation for delete user
         try {
-            await axios.delete(route('users.destroy', userId));
-            // Actualiza la lista de usuarios eliminando el usuario borrado
+            await axios.delete(route('users.destroy', userId)); //Delete request for delete user
+            // Update the users list after deleting one
             users.value = users.value.filter(user => user.id !== userId);
-            toastMessage.value = 'Usuari eliminat correctament';
-            toastType.value = 'success';
-            showToast.value = true;
+            toastMessage.value = 'Usuari eliminat correctament'; //Toast message for delete user
+            toastType.value = 'success'; //Toast type for delete user
+            showToast.value = true; //Show toast for delete user
             setTimeout(() => {
-                showToast.value = false;
-            }, 3000);
+                showToast.value = false; //Hide toast for delete user
+            }, 3000); //Hide toast for delete user
         } catch (error) {
-            console.error('Error al eliminar el usuari:', error);
-            toastMessage.value = 'Error al eliminar el usuari';
-            toastType.value = 'error';
-            showToast.value = true;
+            console.error('Error al eliminar el usuari:', error); //Error for delete user
+            toastMessage.value = 'Error al eliminar l\'usuari'; //Toast message for delete user
+            toastType.value = 'error'; //Toast type for delete user
+            showToast.value = true; //Show toast for delete user
             setTimeout(() => {
-                showToast.value = false;
-            }, 3000);
+                showToast.value = false; //Hide toast for delete user
+            }, 3000); //Hide toast for delete user
         }
     }
 };
-
+//Mounted
 onMounted(async () => {
     try {
-        // Cargar usuarios
-        const responseUsers = await axios.get(route('users.list'));
-        users.value = responseUsers.data;
+        const responseUsers = await axios.get(route('users.list')); //Get request for list users
+        users.value = responseUsers.data; //Set users
 
     } catch (error) {
-        console.error('Error al cargar los datos:', error.response ? error.response.data : error);
-        toastMessage.value = 'Error al cargar los datos';
-        toastType.value = 'error';
-        showToast.value = true;
+        console.error('Error al cargar les dades:', error.response ? error.response.data : error); //Error for list users
+        toastMessage.value = 'Error al cargar les dades'; //Toast message for list users
+        toastType.value = 'error'; //Toast type for list users
+        showToast.value = true; //Show toast for list users
         setTimeout(() => {
-            showToast.value = false;
-        }, 3000);
+            showToast.value = false; //Hide toast for list users
+        }, 3000); //Hide toast for list users
     }
 });
 
-const formatCurrency = (value) => {
+//Function for format currency
+const formatCurrency = (value) => { //Format currency
     return new Intl.NumberFormat('es-ES', {
         style: 'currency',
         currency: 'EUR'
     }).format(value);
 };
 
-
-function handleFileUpload(e) {
-    const file = e.target.files[0];
-    if (file) {
-        event.image = file; // Guardamos el archivo correctamente en el formulario
+//Function for handle file upload
+function handleFileUpload(e) { //Handle file upload
+    const file = e.target.files[0]; //Get file
+    if (file) { //If file exists
+        event.image = file; //Set file
     }
 }
 
-function handleProductImageUpload(event) {
-    const file = event.target.files[0];
-    if (file) {
-        product.value.image = file;
+function handleProductImageUpload(event) { //Handle product image upload
+    const file = event.target.files[0]; //Get file
+    if (file) { //If file exists
+        product.value.image = file; //Set file
     }
 }
 
 // Modal add product
-const openModalP = () => {
-    isModalProductOpen.value = true;
+const openModalP = () => { //Open modal for add product
+    isModalProductOpen.value = true; //Set isModalProductOpen to true
 };
 
-const closeModalP = () => {
-    isModalProductOpen.value = false;
-    // Limpiar el formulario
+const closeModalP = () => { //Close modal for add product
+    isModalProductOpen.value = false; //Set isModalProductOpen to false
+    // Clean the form
     product.value = {
         name: '',
         description: '',
@@ -268,35 +268,35 @@ const closeModalP = () => {
     };
 };
 
-function addProduct() {
-    const formData = new FormData();
+function addProduct() { //Add product
+    const formData = new FormData(); //Create form data
     for (const key in product.value) {
         formData.append(key, product.value[key]);
     }
-    console.log(formData);
+    console.log(formData); //Log form data
     axios.post(route('products.addProduct'), formData, {
         headers: {
             'Content-Type': 'multipart/form-data'
         }
     })
         .then(response => {
-            closeModalP(); // Cierra el modal
-            product.value.push(response.data); // Agrega el nuevo producto a la lista
-            toastMessage.value = 'Producte creat correctament!';
-            toastType.value = 'success';
-            showToast.value = true;
+            closeModalP(); //Close modal for add product
+            product.value.push(response.data); //Add product to the list
+            toastMessage.value = 'Producte creat correctament!'; //Toast message for add product
+            toastType.value = 'success'; //Toast type for add product
+            showToast.value = true; //Show toast for add product
             setTimeout(() => {
-                showToast.value = false;
-            }, 3000);
+                showToast.value = false; //Hide toast for add product
+            }, 3000); //Hide toast for add product
         })
         .catch(error => {
-            console.error('Error al crear el producte:', error.response.data);
-            toastMessage.value = 'Error al crear el producte';
-            toastType.value = 'error';
-            showToast.value = true;
+            console.error('Error al crear el producte:', error.response.data); //Error for add product
+            toastMessage.value = 'Error al crear el producte'; //Toast message for add product
+            toastType.value = 'error'; //Toast type for add product
+            showToast.value = true; //Show toast for add product
             setTimeout(() => {
-                showToast.value = false;
-            }, 3000);
+                showToast.value = false; //Hide toast for add product
+            }, 3000); //Hide toast for add product
         });
 }
 </script>
@@ -467,7 +467,7 @@ function addProduct() {
                                 <select id="role" v-model="editUserForm.role"
                                     class="border rounded w-full p-2 text-black" required>
                                     <option v-for="role in roles" :key="role.id" :value="role.id">
-                                        {{ roles.name }}
+                                        {{ role.name }}
                                     </option>
                                 </select>
                             </div>
