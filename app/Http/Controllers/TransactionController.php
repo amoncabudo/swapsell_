@@ -28,6 +28,7 @@ class TransactionController extends Controller
 
         $transaction = Transaction::create([
             'user_id' => $product->user_id,
+            'product_id' => $product->id,
             'buyer_id' => Auth::id(),
             'category_id' => $validated['category_id'],
             'name' => $validated['name'],
