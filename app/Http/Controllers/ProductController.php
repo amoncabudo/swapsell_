@@ -143,10 +143,11 @@ class ProductController extends Controller
         return $products;
     }
     public function mapa(){
-
+        $isAuthenticated = Auth::check();
         $products = Product::all();
         return Inertia::render('Mapa',[
-            'products' => $products
+            'products' => $products,
+            'isAuthenticated' => $isAuthenticated
         ]);
     }
 

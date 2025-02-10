@@ -3,6 +3,10 @@ import { useForm } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
 
+const props = defineProps({
+    isAuthenticated: Boolean
+});
+
 let form = useForm({
   title: "",
   description: "",
