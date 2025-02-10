@@ -16,16 +16,17 @@ class ControllerReview extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        
-        $transaction = Transaction::with(['product', 'user', 'buyer'])->get();
-        
+{
+    $userId = Auth::id();
+    $transaction = Transaction::with(['product', 'user', 'buyer'])
+        ->where('buyer_id', $userId)
+        ->get();
 
-        return Inertia::render('Review', [
-            'isAuthenticated' => Auth::check(),
-            'transaction' => $transaction,
-        ]);
-    }
+    return Inertia::render('Review', [
+        'isAuthenticated' => Auth::check(),
+        'transaction' => $transaction,
+    ]);
+}
 
     /**
      * Show the form for creating a new resource.
