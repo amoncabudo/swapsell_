@@ -88,6 +88,7 @@ const showingNavigationDropdown = ref(false);
                                 <DropdownLink :href="route('products_favs')">Favorits</DropdownLink>
                                 <DropdownLink :href="route('cart')">Carret</DropdownLink>
                                 <DropdownLink :href="route('auction')">Subhastes</DropdownLink>
+                                <DropdownLink :href="route('reviews.index')">Valoracions</DropdownLink>
                                 <template v-if="$page.props.auth.user.role === 0">
                                     <DropdownLink :href="route('AdminPanel')">Panell d'Administració</DropdownLink>
                                 </template>
@@ -129,6 +130,7 @@ const showingNavigationDropdown = ref(false);
                             <ResponsiveNavLink :href="route('products_favs')">Favorits</ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('cart')">Carret</ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('auction')">Subhastes</ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('reviews.index')">Valoracions</ResponsiveNavLink>
                             <template v-if="$page.props.auth.user.role === 0">
                                 <ResponsiveNavLink :href="route('AdminPanel')">Admin Panel</ResponsiveNavLink>
                             </template>

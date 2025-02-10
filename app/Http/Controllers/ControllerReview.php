@@ -19,10 +19,11 @@ class ControllerReview extends Controller
     {
         
         $transaction = Transaction::with(['product', 'user', 'buyer'])->get();
+        
 
         return Inertia::render('Review', [
             'isAuthenticated' => Auth::check(),
-            'transaction' => $transaction
+            'transaction' => $transaction,
         ]);
     }
 
