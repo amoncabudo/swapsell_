@@ -6,8 +6,69 @@ import Breadcrumb from 'primevue/breadcrumb';
 import Button from 'primevue/button';
 import { Link } from '@inertiajs/vue3';
 import Footer from "../Components/Footer.vue";
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
+dayjs.extend(relativeTime);
+dayjs.locale('ca'); 
+import 'dayjs/locale/ca';
 import axios from 'axios';
 
+const locations = ref({});
+onMounted(() => {
+  setInterval(() => {
+    props.products = [...props.products];
+  }, 60000);
+});
+
+// Función para obtener el nombre de la ubicación
+const getLocationName = async (latitude, longitude) => {
+    const lat = Number(latitude).toFixed(6);
+    const lng = Number(longitude).toFixed(6);
+        const response = await axios.get(
+            `https://nominatim.openstreetmap.org/reverse`, {
+                params: {
+                    format: 'json',
+                    lat: lat,
+                    lon: lng,
+                    'accept-language': 'es',
+                    zoom: 10
+                }
+            }
+        );
+
+        if (response.data && response.data.address) {
+            const address = response.data.address;
+            return address.city || 
+                   address.town || 
+                   address.village || 
+                   address.municipality || 
+                   address.county ||
+                   'Ubicación no disponible';
+        }
+        return 'Ubicación no disponible';
+};
+
+// Función para inicializar las ubicaciones
+const initializeLocations = async () => {
+  if (props.products && props.products.length > 0) {
+    for (const product of props.products) {
+      if (product.latitude && product.longitude) {
+          locations.value[product.id] = await getLocationName(product.latitude, product.longitude);
+      }
+    }
+  }
+};
+
+onMounted(async () => {
+  await fetchCategories();
+  await initializeLocations();
+});
+
+
+const timeAgo = (date) => {
+  return dayjs(date).fromNow();
+};
 const props = defineProps({
     products_favs: Array,
     isAuthenticated: Boolean
@@ -105,9 +166,9 @@ const isFavorite = (product) => {
                                                     stroke-width="2"
                                                     d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                             </svg>
-                                            <span class="text-gray-800">{{ products_favs.location }}</span>
+                                            <span class="text-gray-800">{{ locations[products_favs.id] || 'Ubicación no disponible' }}</span>
                                             <span class="mx-2 text-gray-800">•</span>
-                                            <span class="text-gray-800">Hace {{ products_favs.timestamp }}</span>
+                                            <span class="text-gray-800">{{ timeAgo(products_favs.created_at) }}</span>
                                         </div>
                                         <form @submit.prevent>
                                             <button @click="toggleFavorite(products_favs)"
