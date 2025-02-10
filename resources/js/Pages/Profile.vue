@@ -85,7 +85,7 @@ console.log(props.auction)
               Veure tots
             </button>
           </div>
-
+ 
           <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div v-for="product in props.products" :key="product.id" class="group relative">
               <Link :href="route('product.show', product.id)">
