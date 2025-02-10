@@ -111,7 +111,7 @@ const downloadAuctionCertificate = (product) => {
     // Título
     doc.setFontSize(22);
     doc.setTextColor(44, 62, 80);
-    doc.text("Certificado de Subasta", 105, 30, { align: "center" });
+    doc.text("Certificat de subhasta", 105, 30, { align: "center" });
     
     // Línea decorativa
     doc.setDrawColor(52, 152, 219);
@@ -121,18 +121,18 @@ const downloadAuctionCertificate = (product) => {
     // Información del producto
     doc.setFontSize(14);
     doc.setTextColor(44, 62, 80);
-    doc.text("Detalles de la Subasta", 20, 60);
+    doc.text("Detalls de la subhasta", 20, 60);
     
     doc.setFontSize(12);
     doc.setTextColor(52, 73, 94);
-    doc.text(`Producto: ${product.name}`, 20, 75);
-    doc.text(`Precio Final: ${product.auction.current_price}€`, 20, 85);
-    doc.text(`Fecha de Finalización: ${new Date(product.auction.end_time).toLocaleDateString()}`, 20, 95);
+    doc.text(`Producte: ${product.name}`, 20, 75);
+    doc.text(`Preu final: ${product.auction.current_price}€`, 20, 85);
+    doc.text(`Data de finalització: ${new Date(product.auction.end_time).toLocaleDateString()}`, 20, 95);
     
     // Información del ganador
     doc.setFontSize(14);
     doc.setTextColor(44, 62, 80);
-    doc.text("Información del Ganador", 20, 115);
+    doc.text("Informació del Guanyador", 20, 115);
     
     doc.setFontSize(12);
     doc.setTextColor(52, 73, 94);
@@ -141,11 +141,11 @@ const downloadAuctionCertificate = (product) => {
     // Pie de página
     doc.setFontSize(10);
     doc.setTextColor(127, 140, 141);
-    doc.text("Este documento certifica que has ganado la subasta del producto mencionado.", 20, 170);
-    doc.text(`Fecha de emisión: ${new Date().toLocaleDateString()}`, 20, 180);
+    doc.text("Aquest document certifica que has guanyat la subhasta del producte mencionat.", 20, 170);
+    doc.text(`Data d'emissió: ${new Date().toLocaleDateString()}`, 20, 180);
     
     // Guardar el PDF
-    doc.save(`subasta-${product.name}-certificado.pdf`);
+    doc.save(`subhasta-${product.name}-certificat.pdf`);
 };
 </script>
 
@@ -202,11 +202,11 @@ const downloadAuctionCertificate = (product) => {
                             
                             <div class="grid grid-cols-2 gap-4">
                                 <div class="bg-blue-50 p-3 rounded-lg">
-                                    <p class="text-sm text-blue-600 font-medium">Precio actual</p>
+                                    <p class="text-sm text-blue-600 font-medium">Preu actual</p>
                                     <p class="text-lg font-bold text-blue-900">{{ product.auction?.current_price }}€</p>
                                 </div>
                                 <div class="bg-green-50 p-3 rounded-lg">
-                                    <p class="text-sm text-green-600 font-medium">Precio inicial</p>
+                                    <p class="text-sm text-green-600 font-medium">Preu inicial</p>
                                     <p class="text-lg font-bold text-green-900">{{ product.auction?.start_price }}€</p>
                                 </div>
                             </div>
@@ -217,7 +217,7 @@ const downloadAuctionCertificate = (product) => {
                                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                     </svg>
-                                    Tiempo restante
+                                    Temps restant
                                 </p>
                                 <p class="text-lg font-bold text-gray-900">
                                     <template v-if="product.auction?.id && countdowns[product.auction.id] !== undefined">
@@ -231,7 +231,7 @@ const downloadAuctionCertificate = (product) => {
                                             <div class="text-center">
                                                 <p class="text-red-500 font-bold mb-2">Subhasta finalitzada</p>
                                                 <p v-if="product.auction.last_bidder" class="text-green-600">
-                                                    Ganador: {{ product.auction.last_bidder.name }}
+                                                    Guanyador: {{ product.auction.last_bidder.name }}
                                                     <button 
                                                         v-if="product.auction.last_bidder.id === $page.props.auth.user?.id"
                                                         @click="downloadAuctionCertificate(product)"
@@ -240,11 +240,11 @@ const downloadAuctionCertificate = (product) => {
                                                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
                                                         </svg>
-                                                        Descargar Certificado
+                                                        Descarregar certificat
                                                     </button>
                                                 </p>
                                                 <p v-else class="text-gray-500">
-                                                    No ha hagut licitacions en aquesta subhasta
+                                                    No hi ha hagut licitacions en aquesta subhasta
                                                 </p>
                                             </div>
                                         </template>
@@ -263,7 +263,7 @@ const downloadAuctionCertificate = (product) => {
                                         type="number" 
                                         v-model="product.bidPrice" 
                                         :min="product.auction?.current_price + 1"
-                                        :placeholder="`Mínimo ${(product.auction?.current_price + 1)}€`"
+                                        :placeholder="`Mínim ${(product.auction?.current_price + 1)}€`"
                                         class="border rounded-lg p-2 w-full"
                                         :class="{'border-red-500': product.bidPrice <= product.auction?.current_price}"
                                     />
@@ -278,7 +278,7 @@ const downloadAuctionCertificate = (product) => {
                                         :href="route('product.show', product.id)"
                                         class="inline-flex justify-center items-center px-4 py-2 border border-SubastaButton1 text-sm font-medium rounded-lg text-SubastaButton1 bg-white hover:bg-gray-50 transition-all"
                                     >
-                                        Ver Detalles
+                                        Veure Detalls
                                     </Link>
                                     <button 
                                         v-if="isAuthenticated"
@@ -289,7 +289,7 @@ const downloadAuctionCertificate = (product) => {
                                         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
                                         </svg>
-                                        Pujar
+                                        Licitar
                                     </button>
                                 </div>
                             </div>
