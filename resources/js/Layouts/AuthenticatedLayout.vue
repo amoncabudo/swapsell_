@@ -9,6 +9,7 @@ import { Link } from '@inertiajs/vue3';
 import { usePage } from '@inertiajs/vue3';
 
 const showingNavigationDropdown = ref(false);
+console.log(showingNavigationDropdown.value);
 
 </script>
 
@@ -31,6 +32,7 @@ const showingNavigationDropdown = ref(false);
                         
 
                         <!-- Links Section --->
+                        <div class="hidden sm:flex space-x-6">
                         <Link href="/" class="text-gray-600 hover:text-blue-500 transition-colors">
                             Inici
                         </Link>
@@ -45,7 +47,7 @@ const showingNavigationDropdown = ref(false);
                         <Link href="/auction" class="text-gray-600 hover:text-blue-500 transition-colors">
                             Subhastes
                         </Link>
-
+                    </div>
                         <div class="hidden sm:flex items-center space-x-6">
                             <Link aria-label="Cart Page" href="/Cart" class="text-gray-600 hover:text-blue-500 transition-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
@@ -88,7 +90,7 @@ const showingNavigationDropdown = ref(false);
                                 <DropdownLink :href="route('products_favs')">Favorits</DropdownLink>
                                 <DropdownLink :href="route('cart')">Carret</DropdownLink>
                                 <DropdownLink :href="route('auction')">Subhastes</DropdownLink>
-                                <DropdownLink :href="route('reviews.index')">Valoracions</DropdownLink>
+                                <DropdownLink :href="route('reviews.index')">Historial</DropdownLink>
                                 <template v-if="$page.props.auth.user.role === 0">
                                     <DropdownLink :href="route('AdminPanel')">Panell d'Administració</DropdownLink>
                                 </template>
@@ -130,7 +132,7 @@ const showingNavigationDropdown = ref(false);
                             <ResponsiveNavLink :href="route('products_favs')">Favorits</ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('cart')">Carret</ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('auction')">Subhastes</ResponsiveNavLink>
-                            <ResponsiveNavLink :href="route('reviews.index')">Valoracions</ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('reviews.index')">Historial</ResponsiveNavLink>
                             <template v-if="$page.props.auth.user.role === 0">
                                 <ResponsiveNavLink :href="route('AdminPanel')">Admin Panel</ResponsiveNavLink>
                             </template>
