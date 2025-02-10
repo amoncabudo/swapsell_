@@ -1,17 +1,79 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import { defineProps, onMounted, computed } from 'vue';
 import Card from 'primevue/card';
 import Button from 'primevue/button';
 import Paginator from 'primevue/paginator';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
+dayjs.extend(relativeTime);
+dayjs.locale('ca'); 
+import 'dayjs/locale/ca';
+
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
+import axios from 'axios'
+
+onMounted(() => {
+  setInterval(() => {
+    props.events = [...props.events];
+  }, 60000);
+});
 
 const props = defineProps({
     events: Array,
     isAuthenticated: Boolean   
 });
-console.log(props.events);
+
+const timeAgo = (date) => {
+  return dayjs(date).fromNow();
+};
+
+const locations = ref({});
+
+const getLocationName = async (latitude, longitude) => {
+    const lat = Number(latitude).toFixed(6);
+    const lng = Number(longitude).toFixed(6);
+        const response = await axios.get(
+            `https://nominatim.openstreetmap.org/reverse`, {
+                params: {
+                    format: 'json',
+                    lat: lat,
+                    lon: lng,
+                    'accept-language': 'es',
+                    zoom: 10
+                }
+            }
+        );
+
+        if (response.data && response.data.address) {
+            const address = response.data.address;
+            return address.city || 
+                   address.town || 
+                   address.village || 
+                   address.municipality || 
+                   address.county ||
+                   'Ubicación no disponible';
+        }
+        return 'Ubicación no disponible';
+};
+
+// Función para inicializar las ubicaciones
+const initializeLocations = async () => {
+  if (props.events && props.events.length > 0) {
+    for (const evento of props.events) {
+      if (evento.latitude && evento.longitude) {
+          locations.value[evento.id] = await getLocationName(evento.latitude, evento.longitude);
+      }
+    }
+  }
+};
+
+onMounted(async () => {
+  await initializeLocations();
+});
 
 // Pagination state
 const first = ref(0);
@@ -53,9 +115,9 @@ const navigateToEvent = (event) => {
                     <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                     </svg>
-                    <span class="text-gray-800">{{ event.location || 'Ubicación no disponible' }}</span>
+                    <span class="text-gray-800">{{ locations[event.id] || 'Ubicación no disponible' }}</span>
                     <span class="mx-2 text-gray-800">•</span>
-                    <span class="text-gray-800">Hace 2h</span>
+                    <span class="text-gray-800">{{ timeAgo(event.created_at) }}</span>
                   </div>
                 </div>
                 
