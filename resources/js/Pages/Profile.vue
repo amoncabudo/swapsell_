@@ -93,7 +93,7 @@ console.log(props.auction)
                 <img :src="`/storage/${product.image}`" alt="Producto"
                   class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
               </div>
-              <div class="mt-4">
+              <div class="mt-4"> 
 
                 <h3 class="text-lg font-semibold text-gray-800">{{ product.name }}</h3>
                 <p class="text-gray-600">{{ product.price }}€</p>
