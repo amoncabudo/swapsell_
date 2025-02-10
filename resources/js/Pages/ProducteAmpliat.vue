@@ -167,7 +167,7 @@ const isBasket = (product) => {
 
 <template>
   <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
-    <div class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 py-12">
+    <div class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 py-12 text-black">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Contenedor principal con efecto glass -->
         <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 mb-8">
@@ -176,7 +176,7 @@ const isBasket = (product) => {
             <!-- Sección de imagen y botones -->
             <div class="w-full lg:w-1/2">
               <div class="bg-white rounded-xl shadow-lg p-4">
-                <h1 class="text-2xl font-bold text-gray-800 mb-4 text-center">{{ product.name }}</h1>
+                <h1 class="text-2xl font-bold text-black mb-4 text-center">{{ product.name }}</h1>
                 <div class="relative group">
                   <img :src="`/storage/${product.image}`" :alt="product.name"
                     class="w-full h-[286px] object-cover rounded-lg transition-transform duration-300 group-hover:scale-105">
@@ -187,7 +187,7 @@ const isBasket = (product) => {
 
                 <!-- Botones de acción -->
                 <div class="flex justify-center space-x-4 mt-6">
-                  <button @click="toggleBasket(product)"
+                  <button v-if="!product.bid" @click="toggleBasket(product)"
                     class="flex items-center space-x-2 bg-SubastaButton1 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-all duration-300 transform hover:-translate-y-1">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
