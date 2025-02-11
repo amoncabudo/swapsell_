@@ -33,7 +33,7 @@ const featuredProducts = ref([]);
 const trendingCategories = ref([]);
 
 onMounted(async () => {
-        const response = await axios.get(route('products.featured'));
+        const response = await axios.get(route('products.featured')); 
         featuredProducts.value = response.data;
 });
 
