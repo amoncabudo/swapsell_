@@ -1,6 +1,7 @@
 <script setup>
 import Footer from '../Components/Footer.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import Cookies from "@/Components/Cookies.vue";
 import NavbarS from '@/Layouts/NavbarS.vue';
 import { ref, onMounted } from 'vue';
 import { usePage, Head } from '@inertiajs/vue3';
@@ -140,6 +141,8 @@ onMounted(async () => {
             </section>
 
             <hr class="border-gray-200">
+
+            <Cookies />
 
             <Footer />
         </div>
