@@ -3,6 +3,7 @@ import { useForm } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
 import { watch, ref } from 'vue';
+import { Head } from '@inertiajs/vue3';
 
 defineProps({
     isAuthenticated: Boolean,
@@ -31,7 +32,7 @@ watch(() => form.end_time, (newEndTime) => {
         const endDate = new Date(newEndTime);
         
         if (endDate <= startDate) {
-            dateError.value = 'La fecha de fin debe ser posterior a la fecha de inicio';
+            dateError.value = 'La data de fi ha de ser posterior a la data de inici';
             form.end_time = null;
         } else {
             dateError.value = '';
@@ -41,15 +42,16 @@ watch(() => form.end_time, (newEndTime) => {
 </script>
 
 <template>
+  <Head title = "Formulari subhaste"></Head>
   <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
     <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 py-12 px-4 sm:px-6 lg:px-8">
       <div class="max-w-2xl mx-auto">
         <div class="text-center mb-8">
           <h1 class="text-3xl font-extrabold text-gray-900 mb-2">
-            Crear Nueva Subasta
+            Crear nova subhasta
           </h1>
           <p class="text-gray-600">
-            Selecciona un producto y configura los detalles de la subasta
+            Selecciona un producte, estableix el preu inicial i les dates de la subhasta.
           </p>
         </div>
 
@@ -64,7 +66,7 @@ watch(() => form.end_time, (newEndTime) => {
           })" class="space-y-6">
             <!-- Selector de Producto -->
             <div class="form-group">
-              <label for="product" class="form-label">Selecciona el Producto</label>
+              <label for="product" class="form-label">Selecciona el Producte</label>
               <div class="relative">
                 <select
                   id="product"
@@ -72,7 +74,7 @@ watch(() => form.end_time, (newEndTime) => {
                   class="form-input pl-10"
                   required
                 >
-                  <option value="">Selecciona un producto</option>
+                  <option value="">Selecciona un producte</option>
                   <option v-for="product in userProducts" 
                           :key="product.id" 
                           :value="product.id">
@@ -90,7 +92,7 @@ watch(() => form.end_time, (newEndTime) => {
 
             <!-- Precio Inicial -->
             <div class="form-group">
-              <label for="start_price" class="form-label">Precio Inicial (€)</label>
+              <label for="start_price" class="form-label">Preu Inicial (€)</label>
               <div class="relative">
                 <input
                   type="number"
@@ -112,7 +114,7 @@ watch(() => form.end_time, (newEndTime) => {
 
             <!-- Fecha y Hora de Inicio -->
             <div class="form-group">
-              <label for="start_time" class="form-label">Inicio de la Subasta</label>
+              <label for="start_time" class="form-label">Inici de la Subhasta</label>
               <div class="relative">
                 <input
                   type="datetime-local"
@@ -132,7 +134,7 @@ watch(() => form.end_time, (newEndTime) => {
 
             <!-- Fecha y Hora de Fin -->
             <div class="form-group">
-              <label for="end_time" class="form-label">Fin de la Subasta</label>
+              <label for="end_time" class="form-label">Fi de la Subhasta</label>
               <div class="relative">
                 <input
                   type="datetime-local"
@@ -158,7 +160,7 @@ watch(() => form.end_time, (newEndTime) => {
                 type="submit"
                 class="submit-button"
               >
-                Crear Subasta
+                Crear Subhasta
               </button>
             </div>
           </form>

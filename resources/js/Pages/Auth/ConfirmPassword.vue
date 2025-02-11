@@ -18,6 +18,7 @@ const submit = () => {
 </script>
 
 <template>
+    <Head title = "Confirmar"></Head>
     <GuestLayout>
         <Head title="Confirm Password" />
 

@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Favorite;
 use App\Models\Basket;
+use App\Models\Review;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -92,6 +93,7 @@ class ProductController extends Controller
         // Obtener los productos
         $products = Product::where('bid', false)
             ->where('user_id', '!=', $userId)
+            ->where('category_id', '!=', 7)
             ->where('status', true)
             ->with('category')
             ->get();
@@ -181,7 +183,7 @@ class ProductController extends Controller
         $product = Product::with('category', 'user')->find($id);
         $isAuthenticated = Auth::check();
         $userId = Auth::id();
-
+        $mediaReview = round(Review::avg('rating'), 2);
         // Verificar si el producto está en el carrito del usuario
         if ($isAuthenticated) {
             $product->is_basket = \App\Models\Basket::where('user_id', $userId)
@@ -202,7 +204,8 @@ class ProductController extends Controller
             "product" => $product,
             "isAuthenticated" => $isAuthenticated,
             "user" => $product->user,
-            "commentarios" => $comments
+            "commentarios" => $comments,
+            "mediaReview" => $mediaReview
         ]);
     }
 

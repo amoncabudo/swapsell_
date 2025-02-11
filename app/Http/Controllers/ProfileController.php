@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Carbon\Carbon;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -86,6 +87,7 @@ class ProfileController extends Controller
         return Inertia::render("Profile", [
             "user" => $user,
             "image" => $image,
+            "formattedDate" => Carbon::parse($user->created_at)->isoFormat('D [de] MMM [de] YYYY'),
             "isAuthenticated" => $isAuthenticated,
             "products" => $products,
             "auction" => $auction,

@@ -1,9 +1,11 @@
 <script setup>
 import Footer from '../Components/Footer.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import Cookies from "@/Components/Cookies.vue";
 import NavbarS from '@/Layouts/NavbarS.vue';
 import { ref, onMounted } from 'vue';
-import { usePage } from '@inertiajs/vue3';
+import { usePage, Head } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3';
 import axios from 'axios';
 
 defineProps({
@@ -33,7 +35,7 @@ const featuredProducts = ref([]);
 const trendingCategories = ref([]);
 
 onMounted(async () => {
-        const response = await axios.get(route('products.featured'));
+        const response = await axios.get(route('products.featured')); 
         featuredProducts.value = response.data;
 });
 
@@ -50,6 +52,7 @@ onMounted(async () => {
 </script>
 
 <template>
+    <Head title="Inici"></Head>
     <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
 
         <div class="min-h-screen bg-gray-50">
@@ -59,7 +62,7 @@ onMounted(async () => {
                         <div class="text-white" data-aos="fade-right">
                             <h1 class="text-6xl font-bold mb-6">Descobreix. Compra.<br>Ven.</h1>
                             <p class="text-xl text-gray-300 mb-8">La teva plataforma de confiança per comprar i vendre
-                                productes únics de segona mà.</p>
+                                productes únics de segona mà.</p> 
                             <div class="flex gap-4">
                                 <button
                                     class="border border-white text-white px-8 py-3 rounded-lg hover:bg-white hover:text-gray-900 transition-all">
@@ -70,9 +73,9 @@ onMounted(async () => {
                         <div class="grid grid-cols-2 gap-4" data-aos="fade-left">
                             <div v-for="(product, index) in featuredProducts" :key="product.id"
                                 :data-aos="index % 2 === 0 ? 'fade-up' : 'fade-down'"
-                                :data-aos-delay="200 * (index + 1)" 
+                                :data-aos-delay="100 * (index + 1)" 
                                 class="featured-item">
-                                <img :src="`/uploads/products/${product.image}`" :alt="product.name" class="w-full h-48 object-cover">
+                                <img :src="`/storage/products/${product.image}`" :alt="product.name" class="w-full h-48 object-cover">
                                 <div class="p-2 bg-white">
                                     <h2 class="text-black font-semibold">{{ product.name }}</h2>
                                     <p class="text-bold text-red-800">{{ product.price }} €</p>
@@ -132,13 +135,17 @@ onMounted(async () => {
                     <p class="text-xl text-white mb-8 max-w-2xl mx-auto">
                         Més de 50.000 usuaris ja confien en nosaltres per comprar i vendre els seus productes.
                     </p>
+                    <Link :href="route('register')">    
                     <button class="bg-white text-blue-800 px-8 py-3 rounded-lg hover:bg-gray-100 transition-all">
-                        <a href="/register">Crear compte gratuït</a>
+                        <p href="/register" class="text-black">Crear compte gratuït</p>
                     </button>
+                    </Link>
                 </div>
             </section>
 
             <hr class="border-gray-200">
+
+            <Cookies />
 
             <Footer />
         </div>

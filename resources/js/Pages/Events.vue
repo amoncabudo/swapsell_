@@ -1,5 +1,5 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { Link, Head } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import { defineProps, onMounted, computed } from 'vue';
 import Card from 'primevue/card';
@@ -89,9 +89,10 @@ const navigateToEvent = (event) => {
 
 </script>
 <template>
+  <Head title = "Events"></Head>
     <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
     <div class="min-h-screen bg-gray-50 p-8">
-        <h1 class="text-4xl font-bold text-center mb-12 text-black">ESDEVENIMENTS</h1>
+        <h1 class="text-4xl font-bold text-center mb-12 text-black">Esdeveniments</h1>
 
         <!-- Events List -->
         <div v-if="events.length" class="max-w-5xl mx-auto space-y-4">
@@ -121,7 +122,7 @@ const navigateToEvent = (event) => {
                   </div>
                 </div>
                 
-                <template v-if="$page.props.auth.user.role === 0">
+                <template v-if="$page.props.auth.user && $page.props.auth.user.role === 0">
                 <div class="flex justify-between mt-5">
                 <Link :href="route('event.show', event.id)" class="block"><button class="bg-custom-blue text-white p-2 rounded">Editar</button></Link>
                 <Link :href="route('deleteEvent', event.id)" class="block"><button class="bg-red-800 text-white p-2 rounded">Eliminar</button></Link>
@@ -137,7 +138,7 @@ const navigateToEvent = (event) => {
             </div>
            
             <div class="fixed bottom-8 right-8 flex space-x-4">
-              <template v-if="$page.props.auth.user.role <= 1">
+              <template v-if="$page.props.auth.user && $page.props.auth.user.role <= 1">
                 <Link aria-label="addEvent Page" href="/addEvent" 
                       class="bg-custom-blue text-white rounded-full p-4 shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:bg-custom-blue-dark">
                     <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
