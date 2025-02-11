@@ -1,5 +1,5 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { Link, Head } from '@inertiajs/vue3';
 import { defineProps, ref, onMounted, computed } from 'vue';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -124,6 +124,7 @@ const filteredProducts = computed(() => {
 });
 </script>
 <template>
+  <Head title="Productes"></Head>
   <div class="bg-gray-50 min-h-screen">
     <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
       <!-- Hero Section con wave background -->
