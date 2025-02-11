@@ -137,7 +137,7 @@ onMounted(async () => {
                     </p>
                     <Link :href="route('register')">    
                     <button class="bg-white text-blue-800 px-8 py-3 rounded-lg hover:bg-gray-100 transition-all">
-                        <p>Crear compte gratuït</p>
+                        <p href="/register" class="text-black">Crear compte gratuït</p>
                     </button>
                     </Link>
                 </div>
