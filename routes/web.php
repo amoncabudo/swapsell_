@@ -68,7 +68,7 @@ Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update
 Route::post('adminpanel/products', [ProductController::class, 'addProduct'])->name('products.addProduct');
 
 //Route CreateEvent
-Route::post('/events', [EventController::class, 'addEvent'])->name('event.addEvent');
+Route::post('/adminpanel/events', [EventController::class, 'addEvent'])->name('event.addEvent');
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
 //Routes Events

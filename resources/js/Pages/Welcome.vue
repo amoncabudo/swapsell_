@@ -33,7 +33,7 @@ const featuredProducts = ref([]);
 const trendingCategories = ref([]);
 
 onMounted(async () => {
-        const response = await axios.get(route('products.featured'));
+        const response = await axios.get(route('products.featured')); 
         featuredProducts.value = response.data;
 });
 
@@ -60,7 +60,7 @@ onMounted(async () => {
                         <div class="text-white" data-aos="fade-right">
                             <h1 class="text-6xl font-bold mb-6">Descobreix. Compra.<br>Ven.</h1>
                             <p class="text-xl text-gray-300 mb-8">La teva plataforma de confiança per comprar i vendre
-                                productes únics de segona mà.</p>
+                                productes únics de segona mà.</p> 
                             <div class="flex gap-4">
                                 <button
                                     class="border border-white text-white px-8 py-3 rounded-lg hover:bg-white hover:text-gray-900 transition-all">
