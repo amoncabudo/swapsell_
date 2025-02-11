@@ -16,6 +16,7 @@ let props = defineProps({
   product: Object,
   user: Object,
   commentarios: Array, // Asegúrate de que estás pasando "comments"
+  mediaReview: Number
 });
 
 onMounted(() => {
@@ -196,16 +197,18 @@ const isBasket = (product) => {
                     </svg>
                     <span>{{ isBasket(product) ? 'Eliminar del carret' : 'Comprar ara' }}</span>
                   </button>
+                  <Link :href="route('auction')" class="text-white">
                   <button
                     class="flex items-center space-x-2 bg-amber-700 text-white px-6 py-3 rounded-lg hover:bg-amber-500 transition-all duration-300 transform hover:-translate-y-1">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <Link :href="route('auction')" class="text-white">
+                    
                             <span>Subastar</span>
-                    </Link>
+                   
                   </button>
+                </Link>
                 </div>
               </div>
             </div>
@@ -220,7 +223,7 @@ const isBasket = (product) => {
                   <div>
                     <p class="font-semibold text-lg">{{ props.user.name }} {{ props.user.surname }}</p>
                     <div class="flex items-center space-x-2 text-sm text-gray-500">
-                      <span>⭐ 4.8</span>
+                      <span>⭐ {{ props.mediaReview }}</span>
                       <span>•</span>
                       <span>Membre desde</span><span>{{ miembroDesde }}</span>
 
