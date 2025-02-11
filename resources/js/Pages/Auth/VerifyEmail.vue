@@ -22,6 +22,7 @@ const verificationLinkSent = computed(
 </script>
 
 <template>
+    <Head title = "Verificar correu"></Head>
     <GuestLayout>
         <Head title="Email Verification" />
 

@@ -4,6 +4,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
 import Review from '@/Components/Review.vue';
 import { Link } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 
 const props = defineProps({
   isAuthenticated: Boolean,
@@ -13,6 +14,7 @@ console.log(props.transaction);
 </script>
 
 <template>
+  <Head title = "Historial"></Head>
   <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
     <div class="max-w-5xl mx-auto py-10 sm:px-6 lg:px-8 mt-3">
       <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
