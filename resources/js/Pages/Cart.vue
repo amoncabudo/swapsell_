@@ -100,7 +100,7 @@ onMounted(() => {
                         icon: 'success',
                         confirmButtonText: 'Acceptar'
                     }).then(() => {
-                        window.location.href = route('products_favs');
+                        window.location.href = route('reviews.index');
                     });
                 })
                 .catch((error) => {
