@@ -3,7 +3,7 @@ import Footer from '../Components/Footer.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
 import { ref, onMounted } from 'vue';
-import { usePage } from '@inertiajs/vue3';
+import { usePage, Head } from '@inertiajs/vue3';
 import axios from 'axios';
 
 defineProps({
@@ -50,7 +50,8 @@ onMounted(async () => {
 </script>
 
 <template>
-    <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS"> 
+    <Head title="Inici"></Head>
+    <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
 
         <div class="min-h-screen bg-gray-50">
             <section class="relative min-h-screen py-20 sect-background">
@@ -70,7 +71,7 @@ onMounted(async () => {
                         <div class="grid grid-cols-2 gap-4" data-aos="fade-left">
                             <div v-for="(product, index) in featuredProducts" :key="product.id"
                                 :data-aos="index % 2 === 0 ? 'fade-up' : 'fade-down'"
-                                :data-aos-delay="200 * (index + 1)" 
+                                :data-aos-delay="100 * (index + 1)" 
                                 class="featured-item">
                                 <img :src="`/storage/products/${product.image}`" :alt="product.name" class="w-full h-48 object-cover">
                                 <div class="p-2 bg-white">

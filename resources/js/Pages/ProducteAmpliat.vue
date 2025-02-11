@@ -6,7 +6,7 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { defineProps, ref , computed} from 'vue';
 import { useForm } from '@inertiajs/vue3';
-import { Link } from '@inertiajs/vue3';
+import { Link, Head } from '@inertiajs/vue3';
 
 
 import axios from 'axios';
@@ -166,6 +166,7 @@ const isBasket = (product) => {
 </script>
 
 <template>
+  <Head title = "Producte Ampliat"></Head>
   <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
     <div class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 py-12 text-black">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -1,5 +1,5 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { Link, Head } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import { defineProps, onMounted, computed } from 'vue';
 import Card from 'primevue/card';
@@ -89,6 +89,7 @@ const navigateToEvent = (event) => {
 
 </script>
 <template>
+  <Head title = "Events"></Head>
     <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
     <div class="min-h-screen bg-gray-50 p-8">
         <h1 class="text-4xl font-bold text-center mb-12 text-black">ESDEVENIMENTS</h1>

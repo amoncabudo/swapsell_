@@ -2,11 +2,12 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
 import { ref, onMounted } from 'vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Link, useForm } from '@inertiajs/vue3';
 import axios from 'axios';
 import { Events } from 'leaflet';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { Head } from '@inertiajs/vue3';
 
 //Define variables
 const flashMessage = ref(null);
@@ -302,6 +303,7 @@ function addProduct() { //Add product
 </script>
 
 <template>
+    <Head title = "Adminpanel"></Head>
     <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
         <div class="min-h-screen bg-white">
             <div class="container mx-auto p-4 md:p-8">
