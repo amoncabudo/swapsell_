@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Carbon\Carbon;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -76,6 +77,7 @@ class ProfileController extends Controller
         $auction = Auction::where('user_id', $user->id)->with('product')->get();
         return Inertia::render("Profile", [
             "user" => $user,
+            "formattedDate" => Carbon::parse($user->created_at)->isoFormat('D [de] MMM [de] YYYY'),
             "isAuthenticated" => $isAuthenticated,
             "products" => $products,
             "auction" => $auction,
