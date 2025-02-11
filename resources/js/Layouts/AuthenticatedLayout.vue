@@ -32,7 +32,7 @@ console.log(showingNavigationDropdown.value);
                         
 
                         <!-- Links Section --->
-                        <div class="hidden sm:flex space-x-6">
+                        <div class="hidden sm:flex space-x-20">
                         <Link href="/" class="text-gray-600 hover:text-blue-500 transition-colors">
                             Inici
                         </Link>
