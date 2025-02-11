@@ -5,6 +5,7 @@ import { Link } from '@inertiajs/vue3';
 
 const props = defineProps({
   user: Object,
+  formattedDate: String,
   isAuthenticated: Boolean,
   products: Array,
   auction: Array,
@@ -41,15 +42,9 @@ console.log(props.auction)
               <div class="flex flex-wrap gap-4 mb-4">
                 <div class="flex items-center space-x-2 text-gray-600">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  </svg>
-                  <span>Barcelona, Espanya</span>
-                </div>
-                <div class="flex items-center space-x-2 text-gray-600">
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <span>Membre desde 2024</span>
+                  <span>Membre desde {{ props.formattedDate }}</span>
                 </div>
               </div>
               <div class="flex space-x-4">
