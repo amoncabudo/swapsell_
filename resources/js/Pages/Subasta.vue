@@ -1,5 +1,5 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { Link, Head } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
 import { ref, onMounted, onUnmounted } from 'vue';
@@ -150,6 +150,7 @@ const downloadAuctionCertificate = (product) => {
 </script>
 
 <template>
+    <Head title = "Subhastes"></Head>
     <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
         <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 py-12">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

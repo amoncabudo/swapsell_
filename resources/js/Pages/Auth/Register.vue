@@ -1,6 +1,7 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
 import { Link } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 
 const form = useForm({
     name: '',
@@ -18,6 +19,7 @@ const submit = () => {
 </script>
 
 <template>
+ <Head title="Registra't"></Head>
     <div class="wave-bg min-h-screen">
         <section class="min-h-screen flex items-center justify-center p-4 relative">
             <div class="glass-effect rounded-3xl w-full max-w-md p-8 space-y-8">

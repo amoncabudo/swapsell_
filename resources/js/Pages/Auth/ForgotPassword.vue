@@ -22,6 +22,7 @@ const submit = () => {
 </script>
 
 <template>
+    <Head title = "Recuperar contraseña"></Head>
     <GuestLayout>
         <Head title="Forgot Password" />
 

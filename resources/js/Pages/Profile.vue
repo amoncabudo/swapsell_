@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
-import { Link } from '@inertiajs/vue3';
+import { Link, Head } from '@inertiajs/vue3';
 
 const props = defineProps({
   user: Object,
@@ -20,6 +20,7 @@ console.log(props.auction)
 </script>
 
 <template>
+  <Head title = "Perfil"></Head>
   <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
     <div class="bg-gray-50 min-h-screen">
       <div class="container mx-auto p-6">
