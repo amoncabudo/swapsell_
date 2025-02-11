@@ -70,7 +70,7 @@ onMounted(async () => {
                         <div class="grid grid-cols-2 gap-4" data-aos="fade-left">
                             <div v-for="(product, index) in featuredProducts" :key="product.id"
                                 :data-aos="index % 2 === 0 ? 'fade-up' : 'fade-down'"
-                                :data-aos-delay="200 * (index + 1)" 
+                                :data-aos-delay="100 * (index + 1)" 
                                 class="featured-item">
                                 <img :src="`/storage/products/${product.image}`" :alt="product.name" class="w-full h-48 object-cover">
                                 <div class="p-2 bg-white">
