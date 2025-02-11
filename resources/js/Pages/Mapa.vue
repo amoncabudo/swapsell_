@@ -1,4 +1,5 @@
 <template>
+  <Head title="Mapa"></Head>
   <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
     <!-- Sección del mapa -->
     <div id="map-container">
@@ -20,6 +21,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import NavbarS from "@/Layouts/NavbarS.vue";
 import { onMounted, ref } from "vue";
+import { Head } from '@inertiajs/vue3';
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 

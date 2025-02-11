@@ -2,6 +2,7 @@
 import { useForm } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
+import { Head } from '@inertiajs/vue3';
 
 const props = defineProps({
     isAuthenticated: Boolean
@@ -24,6 +25,7 @@ function handleFileUpload(event) {
 </script>
 
 <template>
+  <Head title="Crea un Esdeveniment"></Head>
   <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
     <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 py-12 px-4 sm:px-6 lg:px-8">
       <div class="max-w-2xl mx-auto">
