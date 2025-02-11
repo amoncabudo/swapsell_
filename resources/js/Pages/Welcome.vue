@@ -3,7 +3,7 @@ import Footer from '../Components/Footer.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
 import { ref, onMounted } from 'vue';
-import { usePage } from '@inertiajs/vue3';
+import { usePage, Head } from '@inertiajs/vue3';
 import axios from 'axios';
 
 defineProps({
@@ -50,6 +50,7 @@ onMounted(async () => {
 </script>
 
 <template>
+    <Head title="Inici"></Head>
     <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
 
         <div class="min-h-screen bg-gray-50">

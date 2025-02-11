@@ -1,12 +1,13 @@
 <script setup>
 import NavbarS from '@/Layouts/NavbarS.vue';
-
+import { Head } from '@inertiajs/vue3';
 defineProps({
     isAuthenticated: Boolean,
 })
 
 </script>
 <template>
+  <Head title = "Event ampliat"></Head>
       <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
 
     <div class="flex justify-center font-bold">
