@@ -130,7 +130,7 @@ function addEvent() { //Add event
     });
 }
 // Modal User Edit
-const openEditUserModal = (user) => { //Open modal for edit user
+const openEditUserModal = (user) => { //Open modal for edit user 
     editUserForm.id = user.id; //Set id for edit user
     editUserForm.name = user.name; //Set name for edit user
     editUserForm.surname = user.surname; //Set surname for edit user
