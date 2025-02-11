@@ -92,6 +92,7 @@ class ProductController extends Controller
         // Obtener los productos
         $products = Product::where('bid', false)
             ->where('user_id', '!=', $userId)
+            ->where('category_id', '!=', 7)
             ->where('status', true)
             ->with('category')
             ->get();
