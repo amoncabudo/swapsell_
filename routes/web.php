@@ -165,7 +165,7 @@ Route::get('/mapae', [EventController::class, "mapae"])->name("mapae");
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile2', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile2', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile2', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile2', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 Route::middleware(['auth'])->group(function () {

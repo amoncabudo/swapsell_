@@ -4,6 +4,8 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Link, useForm, usePage } from '@inertiajs/vue3';
+import { defineProps } from 'vue';
+import { ref } from 'vue';
 
 defineProps({
     mustVerifyEmail: {
@@ -19,7 +21,29 @@ const user = usePage().props.auth.user;
 const form = useForm({
     name: user.name,
     email: user.email,
+    image: user.image,
 });
+
+const imagePreview = ref(user.image);
+const handleSubmit = () => {
+    form.post(route('profile.update'), {
+        forceFormData: true, // Necesario para enviar archivos
+    });
+};
+
+const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+        form.image = file;
+
+        // Crear una vista previa de la imagen seleccionada
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            imagePreview.value = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+};
 </script>
 
 <template>
@@ -35,7 +59,7 @@ const form = useForm({
         </header>
 
         <form
-            @submit.prevent="form.patch(route('profile.update'))"
+           @submit.prevent="handleSubmit"
             class="mt-6 space-y-6"
         >
             <div>
@@ -46,8 +70,7 @@ const form = useForm({
                     type="text"
                     class="mt-1 block w-full text-black"
                     v-model="form.name"
-                    required
-                    autofocus
+                  
                     autocomplete="name"
                 />
 
@@ -62,7 +85,7 @@ const form = useForm({
                     type="email"
                     class="mt-1 block w-full text-black"
                     v-model="form.email"
-                    required
+                   
                     autocomplete="username"
                 />
 
@@ -88,6 +111,26 @@ const form = useForm({
                 >
                     Un nou enllaç de verificació ha estat enviat al teu correu electrònic.
                 </div>
+            </div>
+
+            <div>
+                <InputLabel for="image" value="Imatge de Perfil" />
+
+                <!-- Usar un elemento input nativo para manejar la carga del archivo -->
+                <input
+                    id="image"
+                    type="file"
+                    @change="handleImageChange"
+                    accept="image/*"
+                    class="mt-1 block w-full text-black"
+                />
+
+                <InputError class="mt-2" :message="form.errors.image" />
+            </div>
+
+            <!-- Vista previa de la imagen -->
+            <div v-if="imagePreview" class="mt-4">
+                <img :src="imagePreview" alt="Vista previa de la imagen" class="w-32 h-32 rounded-full object-cover">
             </div>
 
             <div class="flex items-center gap-4">
