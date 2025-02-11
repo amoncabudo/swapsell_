@@ -16,6 +16,7 @@ let props = defineProps({
   product: Object,
   user: Object,
   commentarios: Array, // Asegúrate de que estás pasando "comments"
+  mediaReview: Number
 });
 
 onMounted(() => {
@@ -220,7 +221,7 @@ const isBasket = (product) => {
                   <div>
                     <p class="font-semibold text-lg">{{ props.user.name }} {{ props.user.surname }}</p>
                     <div class="flex items-center space-x-2 text-sm text-gray-500">
-                      <span>⭐ 4.8</span>
+                      <span>⭐ {{ props.mediaReview }}</span>
                       <span>•</span>
                       <span>Membre desde</span><span>{{ miembroDesde }}</span>
 
