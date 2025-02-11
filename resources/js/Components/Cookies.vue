@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import Cookies from 'js-cookie';
 
 // Estats de consentiment de cookies
@@ -53,6 +53,11 @@ const guardarPreferencies = () => {
     Cookies.remove('marketing_cookie');
   }
 
+  // Emetre un event personalitzat per notificar altres components
+  window.dispatchEvent(new CustomEvent('cookie-preferences-updated', {
+    detail: consentStatus.value
+  }));
+
   // Amagar banner
   mostrarBanner.value = false;
   mostrarConfiguracio.value = false;
@@ -78,14 +83,28 @@ const rebutjarTotes = () => {
   guardarPreferencies();
 };
 
-// Inicialitzar estat de consentiment en muntar
+// Inicialitzar estat de consentiment al muntar
 onMounted(() => {
   const guardat = localStorage.getItem('cookieConsent');
   if (guardat) {
     consentStatus.value = JSON.parse(guardat);
     mostrarBanner.value = false;
   }
+
+  // Escoltar canvis de cookies des d'altres finestres/pestanyes
+  window.addEventListener('storage', (event) => {
+    if (event.key === 'cookieConsent') {
+      const nouConsent = JSON.parse(event.newValue);
+      consentStatus.value = nouConsent;
+      mostrarBanner.value = false;
+    }
+  });
 });
+
+// Sincronitzar amb altres pestanyes quan canvien les preferències
+watch(consentStatus, (nouValor) => {
+  localStorage.setItem('cookieConsent', JSON.stringify(nouValor));
+}, { deep: true });
 </script>
 
 <template>
