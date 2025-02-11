@@ -4,6 +4,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
 import { ref, onMounted } from 'vue';
 import { usePage, Head } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3';
 import axios from 'axios';
 
 defineProps({
@@ -133,9 +134,11 @@ onMounted(async () => {
                     <p class="text-xl text-white mb-8 max-w-2xl mx-auto">
                         Més de 50.000 usuaris ja confien en nosaltres per comprar i vendre els seus productes.
                     </p>
+                    <Link :href="route('register')">    
                     <button class="bg-white text-blue-800 px-8 py-3 rounded-lg hover:bg-gray-100 transition-all">
-                        <a href="/register">Crear compte gratuït</a>
+                        <p>Crear compte gratuït</p>
                     </button>
+                    </Link>
                 </div>
             </section>
 
