@@ -50,7 +50,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
+    <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS"> 
 
         <div class="min-h-screen bg-gray-50">
             <section class="relative min-h-screen py-20 sect-background">
