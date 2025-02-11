@@ -72,7 +72,7 @@ onMounted(async () => {
                                 :data-aos="index % 2 === 0 ? 'fade-up' : 'fade-down'"
                                 :data-aos-delay="200 * (index + 1)" 
                                 class="featured-item">
-                                <img :src="`/storage/${product.image}`" :alt="product.name" class="w-full h-48 object-cover">
+                                <img :src="`/storage/products/${product.image}`" :alt="product.name" class="w-full h-48 object-cover">
                                 <div class="p-2 bg-white">
                                     <h2 class="text-black font-semibold">{{ product.name }}</h2>
                                     <p class="text-bold text-red-800">{{ product.price }} €</p>
