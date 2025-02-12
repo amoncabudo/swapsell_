@@ -9,7 +9,7 @@ class ControllerLegal extends Controller
 {
     public function index()
     {
-        return Inertia::render('Legal');
+        return Inertia::render('Legal'); //Return the legal view
     }
 }
 

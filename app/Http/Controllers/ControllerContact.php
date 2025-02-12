@@ -9,7 +9,7 @@ class ControllerContact extends Controller
 {
     public function contact()
     {
-        return Inertia::render('Contact');
+        return Inertia::render('Contact'); //Return the contact view
     }
 }
 

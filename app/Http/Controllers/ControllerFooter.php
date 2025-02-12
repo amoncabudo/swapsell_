@@ -9,7 +9,7 @@ class ControllerFooter extends Controller
 {
     public function footer()
     {
-        return Inertia::render('Footer');
+        return Inertia::render('Footer'); //Return the footer view
     }
 }
 

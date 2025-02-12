@@ -65,25 +65,27 @@ class ControllerOllama extends Controller
     {
         //
     }
+    //Generate a description with Ollama AI
     public function generateDescription(Request $request)
     {
-        // Validar la entrada del usuario (por ejemplo, ingredientes o tipo de receta)
+        // Validate the user input (for example, Clothes, Shoes, Mobiles...)
         $request->validate([
             'description' => 'required|string',
         ]);
 
-        // Obtener los ingredientes del request
+        //Get the description
         $description = $request->input('description');
 
-        // Enviar una solicitud a Ollama
+        // Send a request to Ollama
         $response = Http::post('http://localhost:11434/api/generate', [
             'model' => 'deepseek-r1',
-            'prompt' => "Genera una descripción para un producto con el siguiente nombre: $description",
+            'prompt' => "Genera una descripción para un producto: $description", //Generate a description for a product with the following name
         ]);
-        dd($response);
-        // Devolver la respuesta al cliente
+        dd($response); //Debug the response
+        
+        // Return the response to the client
         return response()->json([
-            'description' => $response->json()['response'],
+            'description' => $response->json()['response'], 
         ]);
     }
 }
