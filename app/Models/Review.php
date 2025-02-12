@@ -10,21 +10,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Review extends Model
 {
-    protected $fillable = [
-        'user_id',
-        'product_id',
-        'rating',
-        'comment'
+    protected $fillable = [ //Fillable attributes
+        'user_id', //User id
+        'product_id', //Product id
+        'rating', //Rating
+        'comment' //Comment
     ];
 
-    public function user()
+    public function user() //Function to get the user
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class); //Return the user
     }
 
-    public function product()
+    public function product() //Function to get the product
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class); //Return the product
     }
 
 }

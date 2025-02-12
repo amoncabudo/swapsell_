@@ -19,7 +19,7 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-    protected $fillable = [
+    protected $fillable = [ //Fillable attributes
         'name',
         'surname',
         'email',
@@ -33,7 +33,7 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-    protected $hidden = [
+    protected $hidden = [ //Hidden attributes
         'password',
         'remember_token',
     ];
@@ -43,37 +43,37 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
-    protected function casts(): array
+    protected function casts(): array //Function to cast the attributes
     {
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
     }
-    public function comments()
+    public function comments() //Function to get the comments
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class); //Return the comments
     }
 
-    public function products(){
-        return $this->hasMany(Product::class);
+    public function products(){ //Function to get the products
+        return $this->hasMany(Product::class); //Return the products
 
     }
-        public function events() {
+        public function events() { //Function to get the events
     {
-        return $this->hasMany(Event::class);
+        return $this->hasMany(Event::class); //Return the events
     }
 }
-    public function basket(){
-        return $this->belongsTo(Basket::class);
+    public function basket(){ //Function to get the basket
+        return $this->belongsTo(Basket::class); //Return the basket
     }
 
-    public function review(){
-        return $this->belongsTo(Review::class);
+    public function review(){ //Function to get the review
+        return $this->belongsTo(Review::class); //Return the review
     }
 
-    public function transactions()
+    public function transactions() //Function to get the transactions
     {
-        return $this->hasMany(Transaction::class);
+        return $this->hasMany(Transaction::class); //Return the transactions
     }
 }
