@@ -3,6 +3,7 @@ import { useForm } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
 import { Head } from '@inertiajs/vue3';
+import Cookies from "@/Components/Cookies.vue";
 
 const props = defineProps({
     isAuthenticated: Boolean,
@@ -151,4 +152,5 @@ let form = useForm({
     </div>
   </div>
 </component>
+<Cookies />
 </template>

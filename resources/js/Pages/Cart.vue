@@ -6,6 +6,7 @@ import { Link } from '@inertiajs/vue3';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { Head } from '@inertiajs/vue3';
+import Cookies from "@/Components/Cookies.vue";
 
 const props = defineProps({
     products_baskets: Array,
@@ -185,6 +186,7 @@ onMounted(() => {
         </div>
     </component>
 
+    <Cookies />
 
 </template>
 

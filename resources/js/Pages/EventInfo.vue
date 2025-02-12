@@ -1,6 +1,7 @@
 <script setup>
 import NavbarS from '@/Layouts/NavbarS.vue';
 import { Head } from '@inertiajs/vue3';
+import Cookies from "@/Components/Cookies.vue";
 defineProps({
     isAuthenticated: Boolean,
 })
@@ -29,4 +30,5 @@ defineProps({
     </div>
 </div>
 </component>
+<Cookies />
 </template>

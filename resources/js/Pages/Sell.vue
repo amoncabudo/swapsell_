@@ -5,6 +5,7 @@ import NavbarS from '@/Layouts/NavbarS.vue';
 import { ref } from 'vue';
 import { Head } from '@inertiajs/vue3';
 import ProgressSpinner from 'primevue/progressspinner';
+import Cookies from "@/Components/Cookies.vue";
 
 defineProps({
   isAuthenticated: Boolean,
@@ -186,6 +187,7 @@ const generateDescription = async () => {
       </div>
     </div>
   </component>
+  <Cookies />
 </template>
 
 <style scoped>

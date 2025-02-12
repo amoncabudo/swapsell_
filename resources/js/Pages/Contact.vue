@@ -98,6 +98,7 @@
                 </div>
             </div>
         </main>
+        <Cookies />
         <Footer />
     </div>
 </template>
@@ -106,6 +107,7 @@
 import Footer from '../Components/Footer.vue';
 import { ref } from 'vue';
 import { Head } from '@inertiajs/vue3';
+import Cookies from "@/Components/Cookies.vue";
 
 const items = ref([
     { label: 'Inici', url: '/' },
