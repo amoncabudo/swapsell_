@@ -31,7 +31,7 @@ let form = useForm({
         </div>
 
         <div class="bg-white rounded-2xl shadow-xl p-8">
-          <form @submit.prevent="form.post(route('updateEvent'))" class="space-y-6">
+          <form @submit.prevent="form.post(route('events.update'))" class="space-y-6">
             <div class="mb-4">
           <label for="id_Event" class="block text-gray-700 font-medium mb-2">Id Event:</label>
           <input

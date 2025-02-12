@@ -58,11 +58,29 @@ Route::get('/adminpanel', function () {return Inertia::render('AdminPanel', [
 //Route UsersList
 Route::get('adminpanel/users/list', [UserController::class, 'getAllUsers'])->name('users.list');
 
+//Route ProductsList
+Route::get('adminpanel/products/list', [ProductController::class, 'getAllProductsAdmin'])->name('products.list');
+
+//Route EventsList
+Route::get('adminpanel/events/list', [EventController::class, 'getAllEventsAdmin'])->name('events.list');
+
 //Route DeleteUser
 Route::delete('adminpanel/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 
+//Route DeleteProduct
+Route::delete('adminpanel/products/{id}', [ProductController::class, 'AdminDeleteProduct'])->name('products.delete');
+
+//Route DeleteEvent
+Route::delete('adminpanel/events/{id}', [EventController::class, 'AdminDeleteEvent'])->name('events.delete');
+
 //Route UpdateUser
 Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
+
+//Route UpdateProduct
+Route::put('adminpanel/products/{id}', [ProductController::class, 'AdminUpdateProduct'])->name('products.update');
+
+//Route UpdateEvent
+Route::put('adminpanel/events/{id}', [EventController::class, 'AdminUpdateEvent'])->name('events.update');
 
 //Route CreateProduct
 Route::post('adminpanel/products', [ProductController::class, 'addProduct'])->name('products.addProduct');
@@ -165,7 +183,7 @@ Route::get('/mapae', [EventController::class, "mapae"])->name("mapae");
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile2', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile2', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile2', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile2', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 Route::middleware(['auth'])->group(function () {

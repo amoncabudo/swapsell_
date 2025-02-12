@@ -15,9 +15,11 @@ const props = defineProps({
 
 })
 
-// console.log(props.user)
+
+
+console.log(props)
 // console.log(props.products)
-console.log(props.auction)
+
 
 </script>
 
@@ -32,7 +34,9 @@ console.log(props.auction)
             <!-- Imagen de perfil con borde y sombra -->
             <div class="relative">
               <div class="w-32 h-32 rounded-full overflow-hidden">
-                <img src="/images/User.png" alt="Foto de perfil" class="w-full h-full object-cover">
+                <img :src="user.image" alt="Foto de perfil" class="w-full h-full object-cover">
+                <!-- '/storage/app/public/logo.png' -->
+
               </div>
             </div>
 

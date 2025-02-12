@@ -13,6 +13,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\Product;
 use App\Models\Auction;
+use App\Models\User;
 use App\Models\Review;
 
 class ProfileController extends Controller
@@ -34,7 +35,14 @@ class ProfileController extends Controller
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $request->user()->fill($request->validated());
-
+        $file=$request->file('image');
+        if($file){
+            $name = time() . $file->getClientOriginalName();
+    
+            $path = $file->storeAs('images', $name, 'public');
+        
+            $request->user()->image = "storage/".$path;
+        }
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
@@ -69,6 +77,7 @@ class ProfileController extends Controller
     {   
         $user = Auth::user();
         $isAuthenticated = Auth::check();
+        $image = User::where('id',$user->id)->get();
         $products = Product::where('user_id', $user->id)->get();
         $soldProducts = Product::where('user_id', $user->id)
             ->where('status', 0)
@@ -77,6 +86,7 @@ class ProfileController extends Controller
         $auction = Auction::where('user_id', $user->id)->with('product')->get();
         return Inertia::render("Profile", [
             "user" => $user,
+            "image" => $image,
             "formattedDate" => Carbon::parse($user->created_at)->isoFormat('D [de] MMM [de] YYYY'),
             "isAuthenticated" => $isAuthenticated,
             "products" => $products,
@@ -85,4 +95,6 @@ class ProfileController extends Controller
             "mediaReview" => $mediaReview
         ]);
     }
+
+   
 }
