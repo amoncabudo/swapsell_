@@ -6,6 +6,7 @@ import { ref, onMounted, onUnmounted } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import axios from 'axios';
 import jsPDF from 'jspdf';
+import Cookies from "@/Components/Cookies.vue";
 
 const props = defineProps({
     isAuthenticated: Boolean,
@@ -309,6 +310,7 @@ const downloadAuctionCertificate = (product) => {
             </div>
         </div>
     </component>
+    <Cookies />
 </template>
 
 <style scoped>

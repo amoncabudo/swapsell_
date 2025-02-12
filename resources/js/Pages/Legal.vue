@@ -6,6 +6,7 @@ import AccordionTab from 'primevue/accordiontab';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
 import { Head } from '@inertiajs/vue3';
+import Cookies from "@/Components/Cookies.vue";
 
 defineProps({
     isAuthenticated: Boolean,
@@ -123,6 +124,7 @@ const items = ref([
                 </div>
             </div>
         </main>
+        <Cookies />
         <Footer />
     </div>
 </component>

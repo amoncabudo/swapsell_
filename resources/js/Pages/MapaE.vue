@@ -15,6 +15,7 @@
       ></div>
     </div>
   </component>
+  <Cookies />
 </template>
 
 <script setup>
@@ -24,6 +25,8 @@ import { onMounted, ref } from "vue";
 import { Head } from '@inertiajs/vue3';
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import Cookies from "@/Components/Cookies.vue";
+
 let props = defineProps({
   events: Array,
   isAuthenticated: Boolean,

@@ -5,6 +5,7 @@ import NavbarS from '@/Layouts/NavbarS.vue';
 import Review from '@/Components/Review.vue';
 import { Link } from '@inertiajs/vue3';
 import { Head } from '@inertiajs/vue3';
+import Cookies from "@/Components/Cookies.vue";
 
 const props = defineProps({
   isAuthenticated: Boolean,
@@ -49,6 +50,7 @@ console.log(props.transaction);
       </div>
     </div>
   </component>
+  <Cookies />
 </template>
 
 

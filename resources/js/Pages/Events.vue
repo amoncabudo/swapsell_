@@ -7,6 +7,7 @@ import Button from 'primevue/button';
 import Paginator from 'primevue/paginator';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import Cookies from "@/Components/Cookies.vue";
 
 dayjs.extend(relativeTime);
 dayjs.locale('ca'); 
@@ -156,6 +157,7 @@ const navigateToEvent = (event) => {
             </div>
         </div>
     </component>
+    <Cookies />
 </template>
 
 <style scoped>

@@ -6,6 +6,7 @@ import { ref } from 'vue';
 import Card from 'primevue/card';
 import Timeline from 'primevue/timeline';
 import { Head } from '@inertiajs/vue3';
+import Cookies from "@/Components/Cookies.vue";
 
 defineProps({
     isAuthenticated: Boolean,
@@ -136,6 +137,7 @@ const objectives = ref([
         </div>
     </div>
     </component>
+    <Cookies />
     <Footer />
 </template>
 

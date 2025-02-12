@@ -3,6 +3,7 @@ import { useForm } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
 import { Head } from '@inertiajs/vue3';
+import Cookies from "@/Components/Cookies.vue";
 
 const props = defineProps({
     event: Object,
@@ -179,6 +180,7 @@ console.log(props.event);
       </div>
     </div>
   </component>
+  <Cookies />
 </template>
 
 <style scoped>

@@ -2,6 +2,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
 import { Link, Head } from '@inertiajs/vue3';
+import Cookies from "@/Components/Cookies.vue";
 
 const props = defineProps({
   user: Object,
@@ -143,6 +144,7 @@ console.log(props.auction)
       </div>
     </div>
   </component>
+  <Cookies />
 </template>
 
 <style scoped>

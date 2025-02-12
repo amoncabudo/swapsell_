@@ -1,6 +1,7 @@
 <script setup>
 import { Link, Head } from '@inertiajs/vue3';
 import { defineProps, ref, onMounted, computed } from 'vue';
+import Cookies from "@/Components/Cookies.vue";
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
@@ -272,6 +273,7 @@ const searchedProducts = computed(() => { // Computed for search products
         </Link>
       </div>
     </component>
+    <Cookies />
   </div>
 </template>
 
