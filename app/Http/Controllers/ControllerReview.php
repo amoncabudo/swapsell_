@@ -15,16 +15,17 @@ class ControllerReview extends Controller
     /**
      * Display a listing of the resource.
      */
+    //Show the review view
     public function index()
 {
-    $userId = Auth::id();
-    $transaction = Transaction::with(['product', 'user', 'buyer'])
-        ->where('buyer_id', $userId)
-        ->get();
+    $userId = Auth::id(); //Get the user id
+    $transaction = Transaction::with(['product', 'user', 'buyer']) //Get the transaction with the product, user and buyer
+        ->where('buyer_id', $userId) //Where the buyer id is the user id
+        ->get(); //Get the transactions
 
-    return Inertia::render('Review', [
-        'isAuthenticated' => Auth::check(),
-        'transaction' => $transaction,
+    return Inertia::render('Review', [ //Return the review view
+        'isAuthenticated' => Auth::check(), //Check if the user is authenticated
+        'transaction' => $transaction, //Get the transactions
     ]);
 }
 
@@ -41,17 +42,17 @@ class ControllerReview extends Controller
      */
     public function store(Request $request)
     {
-        $rating = $request->get("rating");
-        $comment = $request->get("comment");
+        $rating = $request->get("rating"); //Get the rating
+        $comment = $request->get("comment"); //Get the comment
 
-        $review = new Review();
-        $review->rating = $rating;
-        $review->comment = $comment;
-        $review->user_id = $request->user_id;
-        $review->product_id = 1;
+        $review = new Review(); //Create a new review
+        $review->rating = $rating; //Set the rating
+        $review->comment = $comment; //Set the comment
+        $review->user_id = $request->user_id; //Set the user id
+        $review->product_id = 1; //Set the product id
         // dd($review);
-        $review->save();
-        return redirect()->route('Products')->with('success', 'Producte publicat correctament');
+        $review->save(); //Save the review
+        return redirect()->route('Products')->with('success', 'Producte publicat correctament'); //Redirect to the products view with the success message
     }
 
     /**

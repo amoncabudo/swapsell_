@@ -12,37 +12,40 @@ use App\Models\Winner;
 class AuctionController extends Controller
 {
     
-
+    //Index of auctions
     public function index()
     {
-        $auctions = Auction::active()->get();
-        $products = Product::all();
-        return Inertia::render('Auctions', [
-            'auctions' => $auctions,
-            'products' => $products,
-            'isAuthenticated' => Auth::check()
+        $auctions = Auction::active()->get(); //Get all active auctions
+        $products = Product::all(); //Get all products
+        return Inertia::render('Auctions', [ //Render the auctions view
+            'auctions' => $auctions, //Pass the auctions to the view
+            'products' => $products, //Pass the products to the view
+            'isAuthenticated' => Auth::check() //Check if the user is authenticated
         ]);
     }
 
+    //Create a new auction
     public function create()
     {
-        return Inertia::render('FormSubasta', [
-            'isAuthenticated' => Auth::check(),
-            'userProducts' => Auth::user()->products
+        return Inertia::render('FormSubasta', [ //Render the form subasta view
+            'isAuthenticated' => Auth::check(), //Check if the user is authenticated
+            'userProducts' => Auth::user()->products //Get the user's products
         ]);
     }
 
+    //Store a new auction
     public function store(Request $request)
     {   
         $validated = $request->validate([
-            'product_id' => 'required|exists:products,id',
-            'start_price' => 'required|numeric|min:0',
-            'current_price' => 'required|numeric|min:0',
-            'start_time' => 'required|date',
-            'end_time' => 'required|date|after:start_time',
-            'status' => 'required|boolean'
+            'product_id' => 'required|exists:products,id', //Validate the product id
+            'start_price' => 'required|numeric|min:0', //Validate the start price
+            'current_price' => 'required|numeric|min:0', //Validate the current price
+            'start_time' => 'required|date', //Validate the start time
+            'end_time' => 'required|date|after:start_time', //Validate the end time
+            'status' => 'required|boolean' //Validate the status
         ]);
-
+        
+        //Creathe the auction with the validated data
         $auction = Auction::create([
             'product_id' => $validated['product_id'],
             'user_id' => Auth::id(),
@@ -53,44 +56,47 @@ class AuctionController extends Controller
             'status' => $validated['status']
         ]);
 
+        //Update the product bid to true
         $product = Product::find($validated['product_id']);
         $product->update(['bid' => true]);
 
-        return redirect()->route('auction');
+        return redirect()->route('auction'); //Redirect to the auction index
     }
 
+    //Bid on an auction
     public function bid(Request $request)
     {
         $validated = $request->validate([
-            'auction_id' => 'required|exists:auctions,id',
-            'bid_amount' => 'required|numeric|min:0'
+            'auction_id' => 'required|exists:auctions,id', //Validate the auction id
+            'bid_amount' => 'required|numeric|min:0' //Validate the bid amount
         ]);
 
-        $auction = Auction::findOrFail($validated['auction_id']);
+        $auction = Auction::findOrFail($validated['auction_id']); //Find the auction
 
-        // Verificar que la puja sea mayor que el precio actual
+        // Verify that the bid is greater than the current price
         if ($validated['bid_amount'] <= $auction->current_price) {
             return back()->withErrors(['bid_amount' => 'La puja debe ser mayor al precio actual']);
         }
 
-        // Actualizar el precio actual y el último pujador
+        // Update the current price and the last bidder
         $auction->update([
             'current_price' => $validated['bid_amount'],
-            'last_bidder_id' => Auth::id() // Agregamos el ID del usuario actual como último pujador
+            'last_bidder_id' => Auth::id() // Add the current user's ID as the last bidder
         ]);
 
-        return back()->with('success', 'Puja realizada con éxito');
+        return back()->with('success', 'Licitació realitzada amb èxit');
     }
 
+    //Finish an auction
     public function finish($id)
     {
-        $auction = Auction::with('lastBidder')->findOrFail($id);
+        $auction = Auction::with('lastBidder')->findOrFail($id); //Find the auction
         
         if ($auction->status) {
-            // Actualizar el estado de la subasta a finalizada
+            // Update the auction status to finished
             $auction->update(['status' => false]);
             
-            // Si hay un ganador, crear el registro en la tabla winner
+            // If there is a winner, create the record in the winner table with the next data
             if ($auction->last_bidder_id) {
                 Winner::create([
                     'product_id' => $auction->product_id,
@@ -102,12 +108,12 @@ class AuctionController extends Controller
             
             return response()->json([
                 'winner' => $auction->lastBidder,
-                'message' => 'Subasta finalizada exitosamente'
+                'message' => 'Subhasta finalitzada exitosament'
             ]);
         }
         
         return response()->json([
-            'message' => 'La subasta ya estaba finalizada'
+            'message' => 'La subhasta ja estava finalitzada'
         ]);
     }
 }

@@ -9,6 +9,6 @@ class ControllerLogin extends Controller
 {
     public function index()
     {
-        return Inertia::render('Auth/Login');
+        return Inertia::render('Auth/Login'); //Return the login view with auth
     }
 }
