@@ -9,54 +9,46 @@ use App\Models\Product;
 
 class SellController extends Controller
 {
-    /**
-     * Muestra el formulario de venta
-     */
 
-     public function index()
+     public function index() //Show the sell page
      {   
-         $isAuthenticated = Auth::check();
-         return Inertia::render('Sell', [
-             'name' => Auth::user(),
-             'isAuthenticated' => $isAuthenticated
+         $isAuthenticated = Auth::check(); //Check if the user is authenticated
+         return Inertia::render('Sell', [ //Render the sell page
+             'name' => Auth::user(), //Set the name of the user
+             'isAuthenticated' => $isAuthenticated //Set the is authenticated
          ]);
      }
      
-    public function create()
+    public function create() //Show the sell page
     {
-        return Inertia::render('sell', [
-            'name' => Auth::user()
+        return Inertia::render('sell', [ //Render the sell page
+            'name' => Auth::user() //Set the name of the user
         ]);
     }
 
-    /**
-     * Almacena un nuevo producto
-     */
-    public function store(Request $request)
+    public function store(Request $request) //Store the product
     {
-        // Validación de los datos del formulario
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'price' => 'required|numeric|min:0',
-            'category' => 'required|string',
-            'condition' => 'required|string',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+        $validated = $request->validate([ //Validate the request
+            'title' => 'required|string|max:255', //Validate the title
+            'description' => 'required|string', //Validate the description
+            'price' => 'required|numeric|min:0', //Validate the price
+            'category' => 'required|string', //Validate the category
+            'condition' => 'required|string', //Validate the condition
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048' //Validate the images
         ]);
 
-        // Crear el producto con los campos correctos
-        $product = Product::create([
-            'user_id' => Auth::id(),
-            'name' => $validated['title'],
-            'description' => $validated['description'],
-            'price' => $validated['price'],
-            'status' => $validated['condition'],
-            'category_id' => 1, // Temporal hasta que implementemos categorías
-            'longitude' => '0', // Temporal
-            'latitude' => '0',  // Temporal
-            'image' => 'default.jpg' // Temporal hasta que implementemos subida de imágenes
+        $product = Product::create([ //Create the product
+            'user_id' => Auth::id(), //Set the user id
+            'name' => $validated['title'], //Set the name
+            'description' => $validated['description'], //Set the description
+            'price' => $validated['price'], //Set the price
+            'status' => $validated['condition'], //Set the condition
+            'category_id' => 1, //Set the category id
+            'longitude' => '0', //Set the longitude
+            'latitude' => '0',  //Set the latitude
+            'image' => 'default.jpg' //Set the image
         ]);
 
-        return redirect()->route('products')->with('success', 'Producto publicado exitosamente');
+        return redirect()->route('products')->with('success', 'Producto publicado exitosamente'); //Redirect to the products page
     }
 } 

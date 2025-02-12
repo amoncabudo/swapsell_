@@ -10,45 +10,43 @@ use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
-
-
-
-   
+    //Calculate the time elapsed
     private function calcularTiempoTranscurrido($fecha)
 {
-    $fecha = Carbon::parse($fecha);
-    $ahora = Carbon::now();
+    $fecha = Carbon::parse($fecha); //Parse the date
+    $ahora = Carbon::now(); //Get the current date
     
-    $diferencia = (int)$fecha->diffInSeconds($ahora);
+    $diferencia = (int)$fecha->diffInSeconds($ahora); //Get the difference in seconds
     
-    if ($diferencia < 60) {
-        return "Hace " . $diferencia . " segundo" . ($diferencia == 1 ? '' : 's');
+    if ($diferencia < 60) { //If the difference is less than 60 seconds
+        return "Hace " . $diferencia . " segundo" . ($diferencia == 1 ? '' : 's'); //Return the time elapsed
     }
     
-    $diferencia = (int)$fecha->diffInMinutes($ahora);
-    if ($diferencia < 60) {
-        return "Hace " . $diferencia . " minuto" . ($diferencia == 1 ? '' : 's');
+    $diferencia = (int)$fecha->diffInMinutes($ahora); //Get the difference in minutes
+    if ($diferencia < 60) { //If the difference is less than 60 minutes
+        return "Hace " . $diferencia . " minuto" . ($diferencia == 1 ? '' : 's'); //Return the time elapsed
     }
     
-    $diferencia = (int)$fecha->diffInHours($ahora);
-    if ($diferencia < 24) {
-        return "Hace " . $diferencia . " hora" . ($diferencia == 1 ? '' : 's');
+    $diferencia = (int)$fecha->diffInHours($ahora); //Get the difference in hours
+    if ($diferencia < 24) { //If the difference is less than 24 hours
+        return "Hace " . $diferencia . " hora" . ($diferencia == 1 ? '' : 's'); //Return the time elapsed
     }
     
-    $diferencia = (int)$fecha->diffInDays($ahora);
-    return "Hace " . $diferencia . " día" . ($diferencia == 1 ? '' : 's');
+    $diferencia = (int)$fecha->diffInDays($ahora); //Get the difference in days
+    return "Hace " . $diferencia . " día" . ($diferencia == 1 ? '' : 's'); //Return the time elapsed
 }
 
-    public function addcomment(Request $request)
+    //Add a comment
+    public function addcomment(Request $request) 
     {
-        $id = Auth::user()->id;
-        $product_id = $request->get("comment")["id_product"];
-        $description = $request->get("comment")["message"];
+        $id = Auth::user()->id; //Get the user id
+        $product_id = $request->get("comment")["id_product"]; //Get the product id
+        $description = $request->get("comment")["message"]; //Get the description
 
-        $comment = new Comment();
-        $comment->product_id = $product_id;
-        $comment->user_id = auth()->id();
-        $comment->description = $description;
+        $comment = new Comment(); //Create a new comment
+        $comment->product_id = $product_id; //Set the product id
+        $comment->user_id = auth()->id(); //Set the user id
+        $comment->description = $description; //Set the description
 
 
 

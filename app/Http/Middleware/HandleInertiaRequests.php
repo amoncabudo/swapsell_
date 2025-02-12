@@ -12,14 +12,14 @@ class HandleInertiaRequests extends Middleware
      *
      * @var string
      */
-    protected $rootView = 'app';
+    protected $rootView = 'app'; //Set the root view
 
     /**
      * Determine the current asset version.
      */
     public function version(Request $request): ?string
     {
-        return parent::version($request);
+        return parent::version($request); //Return the version of the request
     }
 
     /**
@@ -27,12 +27,12 @@ class HandleInertiaRequests extends Middleware
      *
      * @return array<string, mixed>
      */
-    public function share(Request $request): array
+    public function share(Request $request): array //Function to share the props
     {
         return [
-            ...parent::share($request),
+            ...parent::share($request), //Return the shared props
             'auth' => [
-                'user' => $request->user(),
+                'user' => $request->user(), //Return the user
             ],
         ];
     }
