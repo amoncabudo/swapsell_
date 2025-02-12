@@ -12,62 +12,57 @@ use App\Models\Review;
 
 class Product extends Model
 {
-    protected $fillable = [
-        'name',
-        'category_id',
-        'bid',
-        'user_id',
-        'description',
-        'price',
-        'longitude',
-        'latitude',
-        'image',
-        'status'
+    protected $fillable = [ //Fillable attributes
+        'name', //Name
+        'category_id', //Category id
+        'bid', //Bid
+        'user_id', //User id
+        'description', //Description
+        'price', //Price
+        'longitude', //Longitude
+        'latitude', //Latitude
+        'image', //Image
+        'status' //Status
     ];
     
-    public function user()
+    public function user() //Function to get the user
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class); //Return the user
     }
 
-    /**
-     * Obtiene la categoría del producto.
-     */
-    public function category()
+    public function category() //Function to get the category
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class); //Return the category
     }
 
-    public function basket()
+    public function basket() //Function to get the basket
     {
-        return $this->hasMany(Basket::class);
+        return $this->hasMany(Basket::class); //Return the basket
     }
 
-    public function favorite()
+    public function favorite() //Function to get the favorite
     {
-        return $this->hasMany(Favorite::class);
+        return $this->hasMany(Favorite::class); //Return the favorite
     }
 
-    /**
-     * Obtiene los comentarios del producto.
-     */
-    public function comments()
+    public function comments() //Function to get the comments
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class); //Return the comments
     }  
 
-    public function auction(){
-        return $this->hasOne(Auction::class);
+    public function auction() //Function to get the auction
+    {
+        return $this->hasOne(Auction::class); //Return the auction
     }
     
-    public function review()
+    public function review() //Function to get the review
     {
-        return $this->hasOne(Review::class);
+        return $this->hasOne(Review::class); //Return the review
     }
 
-    public function transactions()
+    public function transactions() //Function to get the transactions
     {
-        return $this->hasOne(Transaction::class);
+        return $this->hasOne(Transaction::class); //Return the transaction
     }
 }
 

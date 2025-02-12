@@ -8,15 +8,15 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AdminMiddleware
 {
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next): Response //Function to handle the middleware
     {
-        $role =  \Illuminate\Support\Facades\Auth::user()->role;
+        $role =  \Illuminate\Support\Facades\Auth::user()->role; //Get the role of the user
 
         if ($role != 0) {
-            return to_route("Welcome"); //Cambiar per pàgina error
+            return to_route("Welcome"); //Change to the welcome page
         } else {
 
-            return $next($request);
+            return $next($request); //Return the next request
         }
     }
 }
