@@ -2,6 +2,8 @@
 import { useForm } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
+import { Head } from '@inertiajs/vue3';
+import Cookies from "@/Components/Cookies.vue";
 
 let form = useForm({     
     title: "",
@@ -14,6 +16,7 @@ let form = useForm({
 </script>
 
 <template>
+  <Head title = "Editar event"></Head>
   <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
     <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 py-12 px-4 sm:px-6 lg:px-8">
       <div class="max-w-2xl mx-auto">
@@ -28,7 +31,7 @@ let form = useForm({
         </div>
 
         <div class="bg-white rounded-2xl shadow-xl p-8">
-          <form @submit.prevent="form.post(route('updateEvent'))" class="space-y-6">
+          <form @submit.prevent="form.post(route('events.update'))" class="space-y-6">
             <div class="mb-4">
           <label for="id_Event" class="block text-gray-700 font-medium mb-2">Id Event:</label>
           <input
@@ -172,6 +175,7 @@ let form = useForm({
       </div>
     </div>
   </component>
+  <Cookies />
 </template>
 
 <style scoped>

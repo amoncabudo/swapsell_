@@ -8,45 +8,45 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Transaction extends Model
 {
-    protected $table = 'transactions';
+    protected $table = 'transactions'; //Table name 
 
-    protected $fillable = [
-        'user_id',
-        'buyer_id',
-        'category_id',
-        'product_id',
-        'name',
-        'description',
-        'price',
-        'longitude',
-        'latitude',
-        'image',
-        'status',
-        'bid'
+    protected $fillable = [ //Fillable attributes
+        'user_id', 
+        'buyer_id', 
+        'category_id', 
+        'product_id', 
+        'name', 
+        'description', 
+        'price', 
+        'longitude', 
+        'latitude', 
+        'image', 
+        'status', 
+        'bid' 
     ];
 
-    public function seller()
+    public function seller() //Function to get the seller
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id'); //Return the seller
     }
 
-    public function buyer()
+    public function buyer() //Function to get the buyer
     {
-        return $this->belongsTo(User::class, 'buyer_id');
+        return $this->belongsTo(User::class, 'buyer_id'); //Return the buyer
     }
 
-    public function category()
+    public function category() //Function to get the category
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class); //Return the category
     }
 
-    public function product()
+    public function product() //Function to get the product
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class); //Return the product
     }
 
-    public function user()
+    public function user() //Function to get the user
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class); //Return the user
     }
 }

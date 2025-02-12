@@ -8,6 +8,6 @@ class ControllerAboutUs extends Controller
 {
     public function aboutus()
     {
-        return Inertia::render('AboutUs');
+        return Inertia::render('AboutUs'); //Return the about us view
     }
 }

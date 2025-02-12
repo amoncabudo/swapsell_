@@ -5,6 +5,8 @@ import Accordion from 'primevue/accordion';
 import AccordionTab from 'primevue/accordiontab';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
+import { Head } from '@inertiajs/vue3';
+import Cookies from "@/Components/Cookies.vue";
 
 defineProps({
     isAuthenticated: Boolean,
@@ -16,6 +18,7 @@ const items = ref([
 ]);
 </script>
 <template>
+    <Head title = "Avis legal"></Head>
     <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
     <div class="min-h-screen bg-gray-50">
         <main class="container mx-auto px-4 py-8">
@@ -121,6 +124,7 @@ const items = ref([
                 </div>
             </div>
         </main>
+        <Cookies />
         <Footer />
     </div>
 </component>

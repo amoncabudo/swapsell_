@@ -3,6 +3,8 @@ import { useForm } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
 import { watch, ref } from 'vue';
+import { Head } from '@inertiajs/vue3';
+import Cookies from "@/Components/Cookies.vue";
 
 defineProps({
     isAuthenticated: Boolean,
@@ -41,6 +43,7 @@ watch(() => form.end_time, (newEndTime) => {
 </script>
 
 <template>
+  <Head title = "Formulari subhaste"></Head>
   <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
     <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 py-12 px-4 sm:px-6 lg:px-8">
       <div class="max-w-2xl mx-auto">
@@ -166,6 +169,7 @@ watch(() => form.end_time, (newEndTime) => {
       </div>
     </div>
   </component>
+  <Cookies />
 </template>
 
 <style scoped>

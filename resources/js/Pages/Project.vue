@@ -5,6 +5,8 @@ import NavbarS from '@/Layouts/NavbarS.vue';
 import { ref } from 'vue';
 import Card from 'primevue/card';
 import Timeline from 'primevue/timeline';
+import { Head } from '@inertiajs/vue3';
+import Cookies from "@/Components/Cookies.vue";
 
 defineProps({
     isAuthenticated: Boolean,
@@ -60,6 +62,7 @@ const objectives = ref([
 </script>
 
 <template>
+    <Head title = "Projecte"></Head>
       <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
 
     <div class="min-h-screen bg-gray-50">
@@ -134,6 +137,7 @@ const objectives = ref([
         </div>
     </div>
     </component>
+    <Cookies />
     <Footer />
 </template>
 

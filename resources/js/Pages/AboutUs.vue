@@ -1,8 +1,10 @@
 <script setup>
 import Footer from "../Components/Footer.vue";
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import Cookies from "@/Components/Cookies.vue";
 import NavbarS from '@/Layouts/NavbarS.vue';
 import { ref, computed } from 'vue';
+import { Head } from '@inertiajs/vue3';
 defineProps({
     isAuthenticated: Boolean
 })
@@ -32,6 +34,7 @@ const items = ref([
 </script>
 
 <template>
+    <Head title = "Sobre nosaltres"></Head>
 <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
 <div class="min-h-screen bg-gray-50">
 
@@ -143,9 +146,11 @@ const items = ref([
                 </div>
             </div>
         </main>
-        
+
+        <Cookies />
+
         <Footer />
-        
+
     </div>
 </component>
 </template>

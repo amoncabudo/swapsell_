@@ -5,6 +5,8 @@ import NavbarS from '@/Layouts/NavbarS.vue';
 import { Link } from '@inertiajs/vue3';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { Head } from '@inertiajs/vue3';
+import Cookies from "@/Components/Cookies.vue";
 
 const props = defineProps({
     products_baskets: Array,
@@ -100,7 +102,7 @@ onMounted(() => {
                         icon: 'success',
                         confirmButtonText: 'Acceptar'
                     }).then(() => {
-                        window.location.href = route('products_favs');
+                        window.location.href = route('reviews.index');
                     });
                 })
                 .catch((error) => {
@@ -122,6 +124,7 @@ onMounted(() => {
 </script>
 
 <template>
+    <Head title = "Carret"></Head>
     <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
         <div class="flex flex-col lg:flex-row min-h-screen bg-gray-100 p-4">
             <!-- Lista de productos -->
@@ -183,6 +186,7 @@ onMounted(() => {
         </div>
     </component>
 
+    <Cookies />
 
 </template>
 

@@ -2,6 +2,8 @@
 import { useForm } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
+import { Head } from '@inertiajs/vue3';
+import Cookies from "@/Components/Cookies.vue";
 
 const props = defineProps({
     isAuthenticated: Boolean,
@@ -23,6 +25,7 @@ let form = useForm({
 
 </script>
 <template>
+  <Head title = "Editar producte"></Head>
   <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
   <div id="app" class="p-8 bg-gray-100 min-h-screen flex items-center justify-center">
     <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
@@ -149,4 +152,5 @@ let form = useForm({
     </div>
   </div>
 </component>
+<Cookies />
 </template>

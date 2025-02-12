@@ -14,51 +14,49 @@ use Illuminate\Support\Facades\Auth;
 
 class PayPalController extends Controller
 {
-    private $client;
+    private $client; //PayPal client
 
-    public function __construct()
+    public function __construct() //Constructor
     {
-        $env = new SandboxEnvironment(config('paypal.client_id'), config('paypal.secret'));
-        $this->client = new PayPalHttpClient($env);
+        $env = new SandboxEnvironment(config('paypal.client_id'), config('paypal.secret')); //Environment
+        $this->client = new PayPalHttpClient($env); //Client
     }
 
-    public function createOrder(Request $request)
+    public function createOrder(Request $request) //Create an order
     {
-        $requestPayPal = new OrdersCreateRequest();
-        $requestPayPal->prefer('return=representation');
-        $requestPayPal->body = [
-            'intent' => 'CAPTURE',
-            'purchase_units' => [[
-                'amount' => [
-                    'currency_code' => 'USD',
-                    'value' => '10.00'
+        $requestPayPal = new OrdersCreateRequest(); //Request
+        $requestPayPal->prefer('return=representation'); //Prefer
+        $requestPayPal->body = [ //Body
+            'intent' => 'CAPTURE', //Intent
+            'purchase_units' => [[ //Purchase units
+                'amount' => [ //Amount
+                    'currency_code' => 'USD', //Currency code
+                    'value' => '10.00' //Value
                 ]
             ]]
         ];
 
         try {
-            $response = $this->client->execute($requestPayPal);
-            return response()->json($response->result);
-        } catch (\Exception $ex) {
-            return response()->json(['error' => $ex->getMessage()], 500);
+            $response = $this->client->execute($requestPayPal); //Execute the request
+            return response()->json($response->result); //Return the response
+        } catch (\Exception $ex) { //Catch the exception
+            return response()->json(['error' => $ex->getMessage()], 500); //Return the error
         }
     }
 
-    public function captureOrder($orderId)
+    public function captureOrder($orderId) //Capture an order
     {
-        $request = new OrdersCaptureRequest($orderId);
-        $response = $this->client->execute($request);
+        $request = new OrdersCaptureRequest($orderId); //Request
+        $response = $this->client->execute($request); //Execute the request
         
-        if ($response->result->status === 'COMPLETED') {
-            // Obtener todos los productos del carrito del usuario
-            $baskets = Basket::where('user_id', Auth::id())->get();
+        if ($response->result->status === 'COMPLETED') { //If the response status is completed
+            $baskets = Basket::where('user_id', Auth::id())->get(); // Get all the products of the user's cart
             
-            foreach ($baskets as $basket) {
-                $product = Product::find($basket->product_id);
+            foreach ($baskets as $basket) { 
+                $product = Product::find($basket->product_id); //If $products is = PRoduct, find the product id on basket
                 
-                if ($product) {
-                    // Crear la transacción
-                    Transaction::create([
+                if ($product) { 
+                    Transaction::create([ //Create the transaction with the next data
                         'user_id' => $product->user_id,
                         'buyer_id' => Auth::id(),
                         'category_id' => $product->category_id,
@@ -72,11 +70,11 @@ class PayPalController extends Controller
                         'bid' => false
                     ]);
 
-                    // Eliminar el producto
+                    // Delete the product if status is false
                     $product->status = false;
                     $product->save();
                     
-                    // Eliminar el registro del carrito
+                    // Delete the basket
                     $basket->delete();
                 }
             }

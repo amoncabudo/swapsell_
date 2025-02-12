@@ -1,4 +1,5 @@
 <template>
+    <Head title = "Contacte"></Head>
     <div class="min-h-screen bg-gray-50">
         <main class="container mx-auto px-4 py-8">
             <div class="max-w-4xl mx-auto">
@@ -97,6 +98,7 @@
                 </div>
             </div>
         </main>
+        <Cookies />
         <Footer />
     </div>
 </template>
@@ -104,6 +106,8 @@
 <script setup>
 import Footer from '../Components/Footer.vue';
 import { ref } from 'vue';
+import { Head } from '@inertiajs/vue3';
+import Cookies from "@/Components/Cookies.vue";
 
 const items = ref([
     { label: 'Inici', url: '/' },

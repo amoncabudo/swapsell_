@@ -6,6 +6,8 @@ import { Link } from '@inertiajs/vue3';
 import Footer from "../Components/Footer.vue";
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { Head } from '@inertiajs/vue3';
+import Cookies from "@/Components/Cookies.vue";
 
 dayjs.extend(relativeTime);
 dayjs.locale('ca'); 
@@ -126,6 +128,7 @@ const isFavorite = (product) => {
 
 
 <template>
+    <Head title="Favorits"></Head>
     <div class="min-h-screen bg-gray-50">
         <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
             <main class="container mx-auto px-4 py-8">
@@ -191,6 +194,7 @@ const isFavorite = (product) => {
                 </div>
             </main>
         </component>
+        <Cookies />
         <Footer/>
     </div>
 </template>

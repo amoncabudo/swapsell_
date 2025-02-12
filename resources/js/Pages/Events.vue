@@ -1,5 +1,5 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { Link, Head } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import { defineProps, onMounted, computed } from 'vue';
 import Card from 'primevue/card';
@@ -7,6 +7,7 @@ import Button from 'primevue/button';
 import Paginator from 'primevue/paginator';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import Cookies from "@/Components/Cookies.vue";
 
 dayjs.extend(relativeTime);
 dayjs.locale('ca'); 
@@ -89,9 +90,10 @@ const navigateToEvent = (event) => {
 
 </script>
 <template>
+  <Head title = "Events"></Head>
     <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
     <div class="min-h-screen bg-gray-50 p-8">
-        <h1 class="text-4xl font-bold text-center mb-12 text-black">ESDEVENIMENTS</h1>
+        <h1 class="text-4xl font-bold text-center mb-12 text-black">Esdeveniments</h1>
 
         <!-- Events List -->
         <div v-if="events.length" class="max-w-5xl mx-auto space-y-4">
@@ -157,6 +159,7 @@ const navigateToEvent = (event) => {
             </div>
         </div>
     </component>
+    <Cookies />
 </template>
 
 <style scoped>

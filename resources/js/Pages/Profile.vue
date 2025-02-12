@@ -1,10 +1,12 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
-import { Link } from '@inertiajs/vue3';
+import { Link, Head } from '@inertiajs/vue3';
+import Cookies from "@/Components/Cookies.vue";
 
 const props = defineProps({
   user: Object,
+  formattedDate: String,
   isAuthenticated: Boolean,
   products: Array,
   auction: Array,
@@ -13,13 +15,16 @@ const props = defineProps({
 
 })
 
-// console.log(props.user)
+
+
+console.log(props)
 // console.log(props.products)
-console.log(props.auction)
+
 
 </script>
 
 <template>
+  <Head title = "Perfil"></Head>
   <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
     <div class="bg-gray-50 min-h-screen">
       <div class="container mx-auto p-6">
@@ -29,7 +34,9 @@ console.log(props.auction)
             <!-- Imagen de perfil con borde y sombra -->
             <div class="relative">
               <div class="w-32 h-32 rounded-full overflow-hidden">
-                <img src="/images/User.png" alt="Foto de perfil" class="w-full h-full object-cover">
+                <img :src="user.image" alt="Foto de perfil" class="w-full h-full object-cover">
+                <!-- '/storage/app/public/logo.png' -->
+
               </div>
             </div>
 
@@ -41,15 +48,9 @@ console.log(props.auction)
               <div class="flex flex-wrap gap-4 mb-4">
                 <div class="flex items-center space-x-2 text-gray-600">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  </svg>
-                  <span>Barcelona, Espanya</span>
-                </div>
-                <div class="flex items-center space-x-2 text-gray-600">
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <span>Membre desde 2024</span>
+                  <span>Membre desde {{ props.formattedDate }}</span>
                 </div>
               </div>
               <div class="flex space-x-4">
@@ -85,7 +86,7 @@ console.log(props.auction)
               Veure tots
             </button>
           </div>
-
+ 
           <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div v-for="product in props.products" :key="product.id" class="group relative">
               <Link :href="route('product.show', product.id)">
@@ -93,7 +94,7 @@ console.log(props.auction)
                 <img :src="`/storage/${product.image}`" alt="Producto"
                   class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
               </div>
-              <div class="mt-4">
+              <div class="mt-4">  
 
                 <h3 class="text-lg font-semibold text-gray-800">{{ product.name }}</h3>
                 <p class="text-gray-600">{{ product.price }}€</p>
@@ -147,6 +148,7 @@ console.log(props.auction)
       </div>
     </div>
   </component>
+  <Cookies />
 </template>
 
 <style scoped>
