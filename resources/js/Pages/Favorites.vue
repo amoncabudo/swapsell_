@@ -141,7 +141,7 @@ const isFavorite = (product) => {
                         </div>
 
                         <!-- Removed the extra wrapping div and moved v-if to the grid container -->
-                        <div v-if="products_favs" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div v-if="products_favs && products_favs.length" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                             <div v-for="products_favs in products_favs" :key="products_favs.id"
                                 class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
                                 <div class="relative">
@@ -190,6 +190,7 @@ const isFavorite = (product) => {
                                 </div>
                             </div>
                         </div>
+                        <p v-else class="text-center text-gray-500 mt-4">No hi han favorits ara mateix</p>
                     </div>
                 </div>
             </main>
