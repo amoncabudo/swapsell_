@@ -304,6 +304,9 @@ const isBasket = (product) => {
     </div>
     </div>
   </component>
+  <div v-if="isEditEventModalOpen" class="modal">
+    <!-- Contenido del modal -->
+  </div>
 </template>
 
 <style scoped>
