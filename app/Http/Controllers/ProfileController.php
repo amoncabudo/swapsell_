@@ -78,7 +78,7 @@ class ProfileController extends Controller
         $user = Auth::user();
         $isAuthenticated = Auth::check();
         $image = User::where('id',$user->id)->get();
-        $products = Product::where('user_id', $user->id)->get();
+        $products = Product::where('user_id', $user->id)->where('status', 1)->get();
         $soldProducts = Product::where('user_id', $user->id)
             ->where('status', 0)
             ->count();
