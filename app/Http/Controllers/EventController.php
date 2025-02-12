@@ -98,6 +98,16 @@ class EventController extends Controller
     ]);
     }
 
+    public function EventInfo($id){
+        $events = Event::find($id);
+        $isAuthenticated = Auth::check();
+        return Inertia::render("EventInfo", [
+            "events" => $events,
+            "isAuthenticated" => $isAuthenticated,
+        ]);
+    }
+
+
     public function mapae(){
 
         $isAuthenticated = Auth::check();

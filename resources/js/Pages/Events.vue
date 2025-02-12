@@ -104,12 +104,14 @@ const navigateToEvent = (event) => {
                    class="w-full h-56 object-cover">
             </div>
             <div class="p-6">
+              <Link :href="route('eventInfo', event.id)" class="block">
                 <h2 class="text-xl font-semibold text-gray-900 mb-3 font-bold">{{ event.title }}</h2>
                 <p class="text-gray-800 text-base mb-4 line-clamp-2">{{ event.description }}</p>
                 <div class="flex justify-between items-center mb-4">
                   <span class="text-black font-bold">Data: {{ event.date }}</span>
                   <span class="text-black font-bold">Hora: {{ event.time }}h</span>
                 </div>
+              </Link>
                 <div class="mt-2 flex items-center justify-between text-sm text-gray-500">
                   <div class="flex items-center">
                     <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
