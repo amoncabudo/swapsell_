@@ -7,6 +7,7 @@ import L from 'leaflet';
 import { defineProps, ref , computed} from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import { Link, Head } from '@inertiajs/vue3';
+import Cookies from "@/Components/Cookies.vue";
 
 
 import axios from 'axios';
@@ -304,6 +305,7 @@ const isBasket = (product) => {
     </div>
     </div>
   </component>
+  <Cookies />
 </template>
 
 <style scoped>

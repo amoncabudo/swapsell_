@@ -4,6 +4,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
 import { watch, ref } from 'vue';
 import { Head } from '@inertiajs/vue3';
+import Cookies from "@/Components/Cookies.vue";
 
 defineProps({
     isAuthenticated: Boolean,
@@ -168,6 +169,7 @@ watch(() => form.end_time, (newEndTime) => {
       </div>
     </div>
   </component>
+  <Cookies />
 </template>
 
 <style scoped>

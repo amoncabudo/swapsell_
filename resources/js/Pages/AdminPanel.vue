@@ -8,6 +8,7 @@ import { Events } from 'leaflet';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { Head } from '@inertiajs/vue3';
+import Cookies from "@/Components/Cookies.vue";
 
 //Define variables
 const flashMessage = ref(null);
@@ -1466,6 +1467,7 @@ const closeEditEventModal = () => {
             </div>
         </div>
     </component>
+    <Cookies />
 </template>
 
 <style scoped>

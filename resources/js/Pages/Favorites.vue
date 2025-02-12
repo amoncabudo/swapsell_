@@ -7,6 +7,7 @@ import Footer from "../Components/Footer.vue";
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { Head } from '@inertiajs/vue3';
+import Cookies from "@/Components/Cookies.vue";
 
 dayjs.extend(relativeTime);
 dayjs.locale('ca'); 
@@ -193,6 +194,7 @@ const isFavorite = (product) => {
                 </div>
             </main>
         </component>
+        <Cookies />
         <Footer/>
     </div>
 </template>
