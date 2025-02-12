@@ -105,6 +105,7 @@ Route::post('/deleteEvent/{id}', [EventController::class, "deleteEvent"])->middl
 
 //Route EventInfo
 Route::get('/eventInfo', function(){return Inertia::render('EventInfo',['isAuthenticated' => auth()->check(),]);});
+Route::get('/events/{id}', [EventController::class, "EventInfo"])->name("eventInfo");
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
 //Routes Products
