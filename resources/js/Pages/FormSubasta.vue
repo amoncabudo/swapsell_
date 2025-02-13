@@ -6,7 +6,7 @@ import { watch, ref } from 'vue';
 import { Head } from '@inertiajs/vue3';
 import Cookies from "@/Components/Cookies.vue";
 
-defineProps({
+const props = defineProps({
     isAuthenticated: Boolean,
     userProducts: Array
 });
@@ -76,10 +76,13 @@ watch(() => form.end_time, (newEndTime) => {
                   required
                 >
                   <option value="">Selecciona un producte</option>
-                  <option v-for="product in userProducts" 
-                          :key="product.id" 
-                          :value="product.id">
-                    {{ product.name }} - {{ product.price }}€
+                  <option 
+                    v-for="product in userProducts"
+                    :key="product.id" 
+                    :value="product.id"
+                    v-show="product.bid === 0"
+                  >
+                    {{ product.name }} - {{ product.price }}€ 
                   </option>
                 </select>
                 <span class="form-icon">

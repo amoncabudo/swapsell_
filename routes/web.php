@@ -272,12 +272,6 @@ Route::get('/project', function () {
 //Route Auction
 Route::get('/auction', [ProductController::class, 'auction'])->name('auction');
 
-//Route Subasta
-Route::get('/subasta', function(){
-    return Inertia::render('Subasta', [
-        'isAuthenticated' => auth()->check(),
-    ]);
-});
 
 //Route CreateAuction
 Route::middleware(['auth'])->group(function () {
