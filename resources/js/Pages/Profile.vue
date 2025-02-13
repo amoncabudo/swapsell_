@@ -82,9 +82,6 @@ console.log(props)
         <div class="bg-white rounded-xl shadow-lg p-8">
           <div class="flex justify-between items-center mb-6">
             <h2 class="text-2xl font-bold text-gray-800">Els meus Productes</h2>
-            <button class="text-blue-800 hover:text-blue-900 transition">
-              Veure tots
-            </button>
           </div>
  
           <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -125,9 +122,7 @@ console.log(props)
         <div class="bg-white rounded-xl shadow-lg p-8 mt-8">
           <div class="flex justify-between items-center mb-6">
             <h2 class="text-2xl font-bold text-gray-800">Les meves Subhastas</h2>
-            <button class="text-blue-800 hover:text-blue-900 transition">
-              Veure tots
-            </button>
+            
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
