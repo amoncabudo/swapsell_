@@ -111,6 +111,7 @@
     </footer>
 </template>
 <style>
+/*Footer background color*/
 .bg-color-footer {
     background-color: #004266;
 }
