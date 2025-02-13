@@ -62,7 +62,7 @@ onMounted(() => {
             <!-- Detalles del evento -->
             <div class="w-full lg:w-1/2">
               <div class="bg-white rounded-xl shadow-lg p-6">
-                <h2 class="text-3xl font-semibold text-gray-800 mb-4">Detalls del producte</h2>
+                <h2 class="text-3xl font-semibold text-gray-800 mb-4">Detalls de l'esdeveniment</h2>
                 <div class="space-y-4">
                   <div class="flex justify-between items-center py-2 border-b border-gray-300">
                     <span class="text-gray-600">Nom:</span>
