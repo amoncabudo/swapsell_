@@ -81,6 +81,8 @@ const form = useForm({ //Form for add user
     surname: '',
     email: '',
     password: '',
+    role: 2,
+    image: null
 });
 const closeModalU = () => { //Close modal for add user
     isModalUserOpen.value = false;
@@ -88,24 +90,26 @@ const closeModalU = () => { //Close modal for add user
 
 //Function for add user
 function addUser() { //Add user
-    axios.post(route('users'), form) //Post request for add user
-        .then(response => {
+    form.post(route('users'), {
+        forceFormData: true,
+        onSuccess: () => {
             closeModalU(); //Close modal for add user
-            toastMessage.value = 'Usuari creat correctament!'; //Toast message for add user
+            toastMessage.value = 'Usuario creado correctamente'; //Toast message for add user
             toastType.value = 'success'; //Toast type for add user
             showToast.value = true; //Show toast for add user
             setTimeout(() => {
                 showToast.value = false; //Hide toast for add user
             }, 3000); //Hide toast for add user
-        })
-        .catch(error => {
-            toastMessage.value = 'Error al crear usuari'; //Toast message for add user
+        },
+        onError: () => {
+            toastMessage.value = 'Error al crear el usuario'; //Toast message for add user
             toastType.value = 'error';
             showToast.value = true;
             setTimeout(() => {
                 showToast.value = false;
             }, 3000);
-        });
+        }
+    });
 }
 //Modal Events
 const openModalE = () => { //Open modal for add event
@@ -499,6 +503,13 @@ const closeEditEventModal = () => {
     editEventForm.reset();
 };
 
+const handleUserImageUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+        form.image = file;
+    }
+};
+
 </script>
 
 <template>
@@ -606,17 +617,15 @@ const closeEditEventModal = () => {
                                 <tbody class="divide-y divide-gray-200 bg-white">
                                     <tr v-for="user in users" :key="user.id" class="hover:bg-gray-50 transition-colors duration-200">
                                         <td class="px-8 py-5 whitespace-nowrap">
-                                            <div class="flex items-center">
-                                                <div class="h-10 w-10 flex-shrink-0">
-                                                    <img 
-                                                        :src="user.image || '/images/default-avatar.png'" 
-                                                        class="h-10 w-10 rounded-full object-cover border-2 border-gray-200"
-                                                        :alt="user.name"
-                                                    >
-                                                </div>
-                                                <div class="ml-4">
-                                                    <div class="font-medium text-gray-900">{{ user.name }}</div>
-                                                    <div class="text-gray-500">{{ user.surname }}</div>
+                                            <div class="flex items-center space-x-4">
+                                                <img 
+                                                    :src="user.image ? `/${user.image}` : '/images/default-avatar.png'" 
+                                                    :alt="user.name"
+                                                    class="h-10 w-10 rounded-full object-cover border-2 border-gray-200"
+                                                >
+                                                <div>
+                                                    <p class="font-semibold text-gray-800">{{ user.name }} {{ user.surname }}</p>
+                                                    <p class="text-sm text-gray-600">{{ user.email }}</p>
                                                 </div>
                                             </div>
                                         </td>

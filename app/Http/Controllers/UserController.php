@@ -11,21 +11,29 @@ class UserController extends Controller
 {
     public function addUser(Request $request)
     {
-        $request->validate([ //Validate the request
-            'name' => 'required|string|max:255', //Validate the name
-            'surname' => 'required|string|max:255', //Validate the surname
-            'email' => 'required|string|email|max:255|unique:users', //Validate the email
-            'password' => 'required|string|min:8', //Validate the password
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'surname' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
-        $user = User::create([ //Create the user
-            'name' => $request->name, //Set the name
-            'surname' => $request->surname, //Set the surname
-            'email' => $request->email, //Set the email
-            'password' => bcrypt($request->password), //Set the password
+        $user = new User([
+            'name' => $request->name,
+            'surname' => $request->surname,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
         ]);
 
-        return $user; //Return the user created
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('public/users');
+            $user->image = 'storage/users/' . basename($imagePath);
+        }
+
+        $user->save();
+
+        return redirect()->back()->with('success', 'Usuario creado correctamente');
     }
     
     public function getAllUsers()
