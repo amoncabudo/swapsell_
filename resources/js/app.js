@@ -55,7 +55,7 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
         const app = createApp({ render: () => h(App, props) });
         app.use(plugin)
-           .use(PrimeVue, {
+           .use(PrimeVue, { //use Prime Vue themepe with the preset called Aura
                theme: {
                    preset: Aura
                }
@@ -63,18 +63,18 @@ createInertiaApp({
            .use(ZiggyVue);
         
         // Register PrimeVue components globally
-        app.component('Breadcrumb', Breadcrumb);
-        app.component('Tabs', Tabs);
-        app.component('TabList', TabList);
-        app.component('Tab', Tab);
-        app.component('TabPanels', TabPanels);
-        app.component('TabPanel', TabPanel);
-        app.component('Chart', Chart);
+        app.component('Breadcrumb', Breadcrumb); //Register Breadcrumb component
+        app.component('Tabs', Tabs); //Register Tabs component
+        app.component('TabList', TabList); //Register TabList component
+        app.component('Tab', Tab); //Register Tab component
+        app.component('TabPanels', TabPanels); //Register TabPanels component
+        app.component('TabPanel', TabPanel); //Register TabPanel component
+        app.component('Chart', Chart); //Register Chart component
         
         return app.mount(el);
     },
     progress: {
-        color: '#4B5563',
+        color: '#4B5563', //Progress color
     },
 });
 
