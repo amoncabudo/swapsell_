@@ -4,13 +4,14 @@ import NavbarS from '@/Layouts/NavbarS.vue';
 import { onMounted } from 'vue';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import { defineProps, ref , computed} from 'vue';
+import { defineProps, ref, computed } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import { Link, Head } from '@inertiajs/vue3';
 import Cookies from "@/Components/Cookies.vue";
-
-
 import axios from 'axios';
+
+
+
 let comments = ref([]);
 let props = defineProps({
   isAuthenticated: Boolean,
@@ -32,7 +33,6 @@ onMounted(() => {
 });
 
 
-
 const submitData = () => {
   console.log("----")
   axios.post('/comentarios', {
@@ -42,13 +42,13 @@ const submitData = () => {
       // Manejo de éxito
       comments.value = response.data;
 
-       // Limpiar mensaje de error si hay éxito 
+      // Limpiar mensaje de error si hay éxito 
     })
     .catch((error) => {
       // Manejo de error
-      
+
       console.error('Error al enviar datos:', error);
-      
+
     });
 };
 
@@ -59,7 +59,15 @@ let form = useForm({
   description: "",
   id_product: props.product.id,
   message: "",
+  image: null,
+  
 });
+
+
+
+const handleFileUpload = (event) => {
+  form.image = event.target.files[0]; // Guardamos el archivo en form.image
+};
 
 onMounted(() => {
   // Inicializar el mapa
@@ -146,29 +154,38 @@ const calcularAntiguedad = (fecha) => {
 // Computed para actualizar automáticamente si cambia el `user.created_at`
 const miembroDesde = computed(() => props.user?.created_at ? calcularAntiguedad(props.user.created_at) : "Cargando...");
 
+const sellerImage = computed(() => {
+  return props.user?.image ? props.user.image : '/storage/logo.png';
+});
+
+
+
 console.log(miembroDesde);
 
 console.log(props.user.created_at);
 
 function toggleBasket(product) {
-    axios.post(route('baskets_products'), { id: product.id }) 
-        .then(response => {
-            // Actualizar el estado del favorito basado en la respuesta del servidor
-            product.is_basket = response.data.is_basket;
-        })
-        .catch(error => {
-            console.error("Error al actualizar el estado de favorito:", error);
-        });
+  axios.post(route('baskets_products'), { id: product.id })
+    .then(response => {
+      // Actualizar el estado del favorito basado en la respuesta del servidor
+      product.is_basket = response.data.is_basket;
+    })
+    .catch(error => {
+      console.error("Error al actualizar el estado de favorito:", error);
+    });
 }
 
 const isBasket = (product) => {
-    return product.is_basket;
+  return product.is_basket;
 };
+
+
 
 </script>
 
 <template>
-  <Head title = "Producte Ampliat"></Head>
+
+  <Head title="Producte Ampliat"></Head>
   <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
     <div class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 py-12 text-black">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -205,11 +222,11 @@ const isBasket = (product) => {
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    
-                            <span>Subastar</span>
-                   
+
+                    <span>Subastar</span>
+
                   </button>
-                </Link>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -220,9 +237,9 @@ const isBasket = (product) => {
               <div class="bg-white rounded-xl shadow-lg p-6">
                 <h2 class="text-2xl font-bold text-gray-800 mb-4">Informació del venedor</h2>
                 <div class="flex items-center space-x-4">
-                  <img src="/images/User.png" alt="User" class="w-16 h-16 rounded-full border-2 border-gray-200">
+                  <img :src="sellerImage" alt="User" class="w-16 h-16 rounded-full border-2 border-gray-200">
                   <div>
-                    <p class="font-semibold text-lg">{{ props.user.name }} {{ props.user.surname }}</p>
+                    <p class="font-semibold text-lg">{{ product.user.name }} {{ product.user.surname }}</p>
                     <div class="flex items-center space-x-2 text-sm text-gray-500">
                       <span>⭐ {{ props.mediaReview }}</span>
                       <span>•</span>
@@ -262,47 +279,48 @@ const isBasket = (product) => {
           <!-- Formulario para nuevo comentario -->
           <div class="mb-8">
             <div class="flex items-start space-x-4">
-              <img :src="'/images/User.png'" alt="User Avatar" class="w-10 h-10 rounded-full">
+              <img :src="userImage" alt="User Avatar" class="w-10 h-10 rounded-full">
               <div class="flex-1">
                 <textarea aria-label="Comments TextArea"
                   class="w-full p-4 border rounded-lg focus:ring-2 focus:ring-blue-500 text-black focus:border-blue-500"
-                  placeholder="Escriu el teu comentari..."
-                  rows="3" id="description" name="description" required v-model="form.message"
-                ></textarea>
-                <button type="submit" @click="submitData" class="mt-2 bg-SubastaButton1 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-all duration-300">
+                  placeholder="Escriu el teu comentari..." rows="3" id="description" name="description" required
+                  v-model="form.message"></textarea>
+                <button type="submit" @click="submitData"
+                  class="mt-2 bg-SubastaButton1 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-all duration-300">
                   Publicar comentari
                 </button>
-                
+
               </div>
             </div>
           </div>
-       
 
 
-        <!-- Lista de comentarios -->
-        <div class="space-y-6">
-      <!-- Comentarios con scroll estilizado -->
-      <div class="max-h-[300px] overflow-y-auto pr-4 space-y-6 custom-scrollbar">
-              <div v-for="(comentario,i) in comments" :key="i" class="flex items-start space-x-4">
-          <img src="/images/User.png" alt="User" class="w-10 h-10 rounded-full">
-          <div class="flex-1">
-            <div class="bg-white/80 backdrop-blur-sm rounded-lg p-4 shadow-sm hover:shadow-md transition-all duration-300">
-              <div class="flex justify-between items-center mb-2">
-                      <p class="font-semibold text-gray-800" >{{ comentario.user.name }} </p>
+
+          <!-- Lista de comentarios -->
+          <div class="space-y-6">
+            <!-- Comentarios con scroll estilizado -->
+            <div class="max-h-[300px] overflow-y-auto pr-4 space-y-6 custom-scrollbar">
+              <div v-for="(comentario, i) in comments" :key="i" class="flex items-start space-x-4">
+                <img :src="comentario.user.image" alt="User" class="w-10 h-10 rounded-full">
+                <div class="flex-1">
+                  <div
+                    class="bg-white/80 backdrop-blur-sm rounded-lg p-4 shadow-sm hover:shadow-md transition-all duration-300">
+                    <div class="flex justify-between items-center mb-2">
+                      <p class="font-semibold text-gray-800">{{ comentario.user.name }} </p>
                       <span class="text-sm text-gray-500">{{ comentario.tiempo_transcurrido }}</span>
                     </div>
-                    <p class="text-black" > {{ comentario.description }}</p>
+                    <p class="text-black"> {{ comentario.description }}</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+        <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 mt-8">
+          <h2 class="text-2xl font-bold text-gray-800 mb-6">Ubicació del producte</h2>
+          <div id="map" class="h-[400px] w-full rounded-lg"></div>
+        </div>
       </div>
-    </div>
-  </div>
-      <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 mt-8">
-        <h2 class="text-2xl font-bold text-gray-800 mb-6">Ubicació del producte</h2>
-        <div id="map" class="h-[400px] w-full rounded-lg"></div>
-      </div>
-    </div>
     </div>
   </component>
   <Cookies />

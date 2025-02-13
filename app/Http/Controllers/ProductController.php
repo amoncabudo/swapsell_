@@ -140,6 +140,8 @@ class ProductController extends Controller
     {
         $products = Product::where('category_id', 7)->get(); //Get the products of the category
         return $products;
+
+        
     }
     public function mapa(){
         $isAuthenticated = Auth::check();
@@ -186,6 +188,10 @@ class ProductController extends Controller
             $product->is_basket = \App\Models\Basket::where('user_id', $userId)
                 ->where('product_id', $id)
                 ->exists();
+        }
+
+        if ($product->user){
+            $product->user->image = $product->user->image ? Storage::url($product->user->image) : '/storage/logo.png';
         }
 
         $comments = $product->comments()

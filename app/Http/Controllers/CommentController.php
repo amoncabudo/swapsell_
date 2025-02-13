@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Comment;
 use Carbon\Carbon;
+use App\Models\User;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -39,14 +40,29 @@ class CommentController extends Controller
     //Add a comment
     public function addcomment(Request $request) 
     {
+
+        $request->validate([
+            'comment.id_product' => 'required|integer|exists:products,id',
+            'comment.message' => 'required|string|max:1000',
+            
+        ]);
+
         $id = Auth::user()->id; //Get the user id
         $product_id = $request->get("comment")["id_product"]; //Get the product id
         $description = $request->get("comment")["message"]; //Get the description
+        $image = Auth::user()->image;
+
+        $imagePath = null;
+        if ($image) {
+            $imagePath = $image->store('comment_images', 'public'); // Guardar la imagen en el disco público
+        }
 
         $comment = new Comment(); //Create a new comment
         $comment->product_id = $product_id; //Set the product id
         $comment->user_id = auth()->id(); //Set the user id
         $comment->description = $description; //Set the description
+        $comment->image = $image; //Set the image
+
 
 
 
@@ -59,10 +75,16 @@ class CommentController extends Controller
             $comment->tiempo_transcurrido = $this->calcularTiempoTranscurrido($comment->created_at);
             return $comment;
         });
+
+        
         return $comments;
     }
 
-
+    public function showUserImage($image)
+    {
+        return url('storage/' . $image); // Genera la URL pública para la imagen
+    }
+    
     public function show($id)
     {
         $comment = Comentario::find($id);
@@ -76,16 +98,16 @@ class CommentController extends Controller
         return redirect()->route('Products')->with('success', 'Comentari eliminat correctament');
     }
 
-    public function update(Request $request, $id)
-    {
-        $comment = Comentario::find($id);
+    // public function update(Request $request, $id)
+    // {
+    //     $comment = Comentario::find($id);
 
-        if (!$comment) {
-            return redirect()->route('Products')->with('error', 'Comentari no trobat');
-        }
+    //     if (!$comment) {
+    //         return redirect()->route('Products')->with('error', 'Comentari no trobat');
+    //     }
 
-        $comment->description = $request->get("description");
-        $comment->save();
-        return redirect()->route('Products')->with('success', 'Comentari actualitzat correctament');
-    }
+    //     $comment->description = $request->get("description");
+    //     $comment->save();
+    //     return redirect()->route('Products')->with('success', 'Comentari actualitzat correctament');
+    // }
 }
