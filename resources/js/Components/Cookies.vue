@@ -2,68 +2,68 @@
 import { ref, onMounted, watch } from 'vue';
 import Cookies from 'js-cookie';
 
-// Estats de consentiment de cookies
+// States of cookie consent
 const consentStatus = ref({
   necessaries: true,
   analitiques: false,
   marqueting: false
 });
 
-// Configuració de tipus de cookies
+// Configuration of cookie types
 const cookieTypes = [
   { 
-    nom: 'Cookies Necessàries', 
-    descripcio: 'Cookies essencials per al funcionament bàsic del lloc web',
-    key: 'necessaries',
-    obligatori: true
+    nom: 'Cookies Necessàries',  //Cookies necessary
+    descripcio: 'Cookies essencials per al funcionament bàsic del lloc web', //Cookies essential for the basic functioning of the website
+    key: 'necessaries', //Key
+    obligatori: true //Mandatory
   },
   { 
-    nom: 'Cookies Analítiques', 
-    descripcio: 'Cookies que ens ajuden a entendre com interactues amb el lloc web',
-    key: 'analitiques',
-    obligatori: false
+    nom: 'Cookies Analítiques',  //Analytical cookies
+    descripcio: 'Cookies que ens ajuden a entendre com interactues amb el lloc web', //Cookies that help us understand how you interact with the website
+    key: 'analitiques', //Key
+    obligatori: false //Not mandatory
   },
   { 
-    nom: 'Cookies de Màrqueting', 
-    descripcio: 'Cookies utilitzades per personalitzar publicitat i seguiment',
-    key: 'marqueting',
-    obligatori: false
+    nom: 'Cookies de Màrqueting',  //Marketing cookies
+    descripcio: 'Cookies utilitzades per personalitzar publicitat i seguiment', //Cookies used to personalize advertising and tracking
+    key: 'marqueting', //Key
+    obligatori: false //Not mandatory
   }
 ];
 
-// Estat del banner de cookies
+// State of the cookie banner
 const mostrarBanner = ref(true);
 const mostrarConfiguracio = ref(false);
 
-// Guardar preferències de cookies
+// Save cookie preferences
 const guardarPreferencies = () => {
-  // Guardar configuració de cookies a localStorage
+  // Save cookie configuration to localStorage
   localStorage.setItem('cookieConsent', JSON.stringify(consentStatus.value));
   
-  // Establir cookies segons preferències
+  // Establish cookies according to preferences
   if (consentStatus.value.analitiques) {
-    Cookies.set('analytics_cookie', 'accepted', { expires: 365 });
+    Cookies.set('analytics_cookie', 'accepted', { expires: 365 }); //Set the analytics cookie if the user accepts it, it will expire in 365 days
   } else {
-    Cookies.remove('analytics_cookie');
+    Cookies.remove('analytics_cookie'); //Remove the analytics cookie if the user does not accept it
   }
 
   if (consentStatus.value.marqueting) {
-    Cookies.set('marketing_cookie', 'accepted', { expires: 365 });
+    Cookies.set('marketing_cookie', 'accepted', { expires: 365 }); //Set the marketing cookie if the user accepts it, it will expire in 365 days
   } else {
-    Cookies.remove('marketing_cookie');
+    Cookies.remove('marketing_cookie'); //Remove the marketing cookie if the user does not accept it
   }
 
-  // Emetre un event personalitzat per notificar altres components
+  // Emit a custom event to notify other components
   window.dispatchEvent(new CustomEvent('cookie-preferences-updated', {
     detail: consentStatus.value
   }));
 
-  // Amagar banner
+  // Hide banner
   mostrarBanner.value = false;
   mostrarConfiguracio.value = false;
 };
 
-// Acceptar totes les cookies
+// Accept all cookies
 const acceptarTotes = () => {
   consentStatus.value = {
     necessaries: true,
@@ -73,7 +73,7 @@ const acceptarTotes = () => {
   guardarPreferencies();
 };
 
-// Rebutjar cookies no necessàries
+// Reject all non-necessary cookies
 const rebutjarTotes = () => {
   consentStatus.value = {
     necessaries: true,
@@ -83,7 +83,7 @@ const rebutjarTotes = () => {
   guardarPreferencies();
 };
 
-// Inicialitzar estat de consentiment al muntar
+// Initialize cookie consent when mounting
 onMounted(() => {
   const guardat = localStorage.getItem('cookieConsent');
   if (guardat) {
@@ -91,7 +91,7 @@ onMounted(() => {
     mostrarBanner.value = false;
   }
 
-  // Escoltar canvis de cookies des d'altres finestres/pestanyes
+  // Listen for cookie changes from other windows/tabs
   window.addEventListener('storage', (event) => {
     if (event.key === 'cookieConsent') {
       const nouConsent = JSON.parse(event.newValue);
@@ -101,9 +101,9 @@ onMounted(() => {
   });
 });
 
-// Sincronitzar amb altres pestanyes quan canvien les preferències
+// Synchronize with other tabs when preferences change
 watch(consentStatus, (nouValor) => {
-  localStorage.setItem('cookieConsent', JSON.stringify(nouValor));
+  localStorage.setItem('cookieConsent', JSON.stringify(nouValor)); //Save the cookie configuration to localStorage
 }, { deep: true });
 </script>
 
@@ -146,134 +146,134 @@ watch(consentStatus, (nouValor) => {
 </template>
 
 <style scoped>
-.cookie-banner {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  transform: none;
-  background-color: rgba(248, 249, 250, 0.95);
-  border-radius: 0;
-  border-top: 2px solid #007bff;
-  box-shadow: 0 -4px 6px rgba(0,0,0,0.1);
-  padding: 20px;
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.cookie-banner { /*Cookie banner*/
+  position: fixed; /*Fixed position*/
+  bottom: 0; /*Bottom position*/
+  left: 0; /*Left position*/
+  width: 100%; /*Width*/
+  transform: none; /*No transform*/
+  background-color: rgba(248, 249, 250, 0.95); /*Background color*/
+  border-radius: 0; /*No border radius*/
+  border-top: 2px solid #007bff; /*Border top*/
+  box-shadow: 0 -4px 6px rgba(0,0,0,0.1); /*Box shadow*/
+  padding: 20px; /*Padding*/
+  z-index: 1000; /*Z-index*/
+  display: flex; /*Display*/
+  flex-direction: column; /*Flex direction*/
+  align-items: center; /*Align items*/
 }
 
-.banner-content, .cookie-configuracio {
-  max-width: 800px;
-  width: 90%;
+.banner-content, .cookie-configuracio { /*Banner content and cookie configuration*/
+  max-width: 800px; /*Max width*/
+  width: 90%; /*Width*/
 }
 
-.banner-actions, .configuracio-actions {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 15px;
-  width: 100%;
+.banner-actions, .configuracio-actions { /*Banner actions and cookie configuration actions*/
+  display: flex; /*Display*/
+  justify-content: center; /*Justify content*/
+  gap: 15px; /*Gap*/
+  margin-top: 15px; /*Margin top*/
+  width: 100%; /*Width*/
 }
 
-.btn-acceptar, .btn-guardar { 
-  background-color: #28a745; 
-  color: white; 
+.btn-acceptar, .btn-guardar { /*Accept and save buttons*/
+  background-color: #28a745; /*Background color*/
+  color: white; /*Color*/
 }
-.btn-configurar { 
-  background-color: #007bff; 
-  color: white; 
+.btn-configurar { /*Configure button*/
+  background-color: #007bff; /*Background color*/
+  color: white; /*Color*/
 }
-.btn-rebutjar, .btn-cancelar { 
-  background-color: #dc3545; 
-  color: white; 
-}
-
-button {
-  padding: 12px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 16px;
-  min-width: 120px;
+.btn-rebutjar, .btn-cancelar { /*Reject and cancel buttons*/
+  background-color: #dc3545; /*Background color*/
+  color: white; /*Color*/
 }
 
-button:hover {
-  opacity: 0.9;
-  transform: translateY(-2px);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+button { /*Button*/
+  padding: 12px 20px; /*Padding*/
+  border: none; /*No border*/
+  border-radius: 5px; /*Border radius*/
+  cursor: pointer; /*Cursor*/
+  transition: all 0.3s ease; /*Transition*/
+  font-size: 16px; /*Font size*/
+  min-width: 120px; /*Min width*/
 }
 
-.cookie-configuracio-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1100;
-  padding: 20px;
+button:hover { /*Button hover*/
+  opacity: 0.9; /*Opacity*/
+  transform: translateY(-2px); /*Transform*/
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2); /*Box shadow*/
 }
 
-.cookie-configuracio {
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  max-width: 600px;
-  width: 100%;
-  padding: 30px;
-  position: relative;
-  animation: slideDown 0.3s ease;
+.cookie-configuracio-overlay { /*Cookie configuration overlay*/
+  position: fixed; /*Fixed position*/
+  top: 0; /*Top position*/
+  left: 0; /*Left position*/
+  width: 100%; /*Width*/
+  height: 100%; /*Height*/
+  background-color: rgba(0, 0, 0, 0.5); /*Background color*/
+  display: flex; /*Display*/
+  justify-content: center; /*Justify content*/
+  align-items: center; /*Align items*/
+  z-index: 1100; /*Z-index*/
+  padding: 20px; /*Padding*/
 }
 
-.btn-tancar {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: #dc3545;
-  min-width: auto;
-  padding: 0;
-  transition: color 0.3s ease;
+.cookie-configuracio { /*Cookie configuration*/
+  background-color: white; /*Background color*/
+  border-radius: 10px; /*Border radius*/
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1); /*Box shadow*/
+  max-width: 600px; /*Max width*/
+  width: 100%; /*Width*/
+  padding: 30px; /*Padding*/
+  position: relative; /*Position*/
+  animation: slideDown 0.3s ease; /*Animation*/
 }
 
-.btn-tancar:hover {
-  color: #a71d2a;
-  transform: none;
-  box-shadow: none;
+.btn-tancar { /*Close button*/
+  position: absolute; /*Position*/
+  top: 10px; /*Top position*/
+  right: 10px; /*Right position*/
+  background: none; /*No background*/
+  border: none; /*No border*/
+  font-size: 24px; /*Font size*/
+  cursor: pointer; /*Cursor*/
+  color: #dc3545; /*Color*/
+  min-width: auto; /*Min width*/
+  padding: 0; /*Padding*/
+  transition: color 0.3s ease; /*Transition*/
 }
 
-.tipus-cookie {
-  margin-bottom: 15px;
-  padding: 15px;
-  background-color: #f1f3f5;
-  border-radius: 5px;
-  width: 100%;
+.btn-tancar:hover { /*Close button hover*/
+  color: #a71d2a; /*Color*/
+  transform: none; /*No transform*/
+  box-shadow: none; /*No box shadow*/
 }
 
-.tipus-cookie label {
-  display: flex;
-  align-items: center;
-  font-weight: bold;
+.tipus-cookie { /*Cookie type*/
+  margin-bottom: 15px; /*Margin bottom*/
+  padding: 15px; /*Padding*/
+  background-color: #f1f3f5; /*Background color*/
+  border-radius: 5px; /*Border radius*/
+  width: 100%; /*Width*/
 }
 
-.tipus-cookie input[type="checkbox"] {
-  margin-right: 10px;
-  width: 18px;
-  height: 18px;
+.tipus-cookie label { /*Cookie type label*/
+  display: flex; /*Display*/
+  align-items: center; /*Align items*/
+  font-weight: bold; /*Font weight*/
 }
 
-@keyframes slideDown {
+.tipus-cookie input[type="checkbox"] { /*Cookie type input checkbox*/
+  margin-right: 10px; /*Margin right*/
+  width: 18px; /*Width*/
+  height: 18px; /*Height*/
+}
+
+@keyframes slideDown { /*Slide down animation*/
   from {
-    opacity: 0;
-    transform: translateY(-50px);
+    opacity: 0; /*Opacity*/
+    transform: translateY(-50px); /*Transform*/
   }
   to {
     opacity: 1;
@@ -283,19 +283,19 @@ button:hover {
 
 /* Responsive adjustments */
 @media (max-width: 600px) {
-  .banner-actions, .configuracio-actions {
-    flex-direction: column;
-    align-items: center;
+  .banner-actions, .configuracio-actions { /*Banner actions and cookie configuration actions*/
+    flex-direction: column; /*Flex direction*/
+    align-items: center; /*Align items*/
   }
 
-  button {
-    width: 100%;
-    margin-bottom: 10px;
+  button { /*Button*/
+    width: 100%; /*Width*/
+    margin-bottom: 10px; /*Margin bottom*/
   }
 
-  .cookie-configuracio {
-    width: 95%;
-    padding: 20px;
+  .cookie-configuracio { /*Cookie configuration*/
+    width: 95%; /*Width*/
+    padding: 20px; /*Padding*/
   }
 }
 </style>
