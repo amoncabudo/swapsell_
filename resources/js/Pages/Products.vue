@@ -185,7 +185,7 @@ const searchedProducts = computed(() => { // Computed for search products
 
       <!-- Products grid -->
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div v-if="searchedProducts" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div v-if="searchedProducts && searchedProducts.length" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div v-for="product in searchedProducts" :key="product.id"
             class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
             <div class="relative">

@@ -105,6 +105,7 @@ Route::post('/deleteEvent/{id}', [EventController::class, "deleteEvent"])->middl
 
 //Route EventInfo
 Route::get('/eventInfo', function(){return Inertia::render('EventInfo',['isAuthenticated' => auth()->check(),]);});
+Route::get('/events/{id}', [EventController::class, "EventInfo"])->name("eventInfo");
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
 //Routes Products
@@ -271,12 +272,6 @@ Route::get('/project', function () {
 //Route Auction
 Route::get('/auction', [ProductController::class, 'auction'])->name('auction');
 
-//Route Subasta
-Route::get('/subasta', function(){
-    return Inertia::render('Subasta', [
-        'isAuthenticated' => auth()->check(),
-    ]);
-});
 
 //Route CreateAuction
 Route::middleware(['auth'])->group(function () {
