@@ -1,34 +1,95 @@
 <script setup>
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
-import { Head } from '@inertiajs/vue3';
-import Cookies from "@/Components/Cookies.vue";
-defineProps({
-    isAuthenticated: Boolean,
-})
+import { onMounted } from 'vue';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+import { defineProps, ref, computed } from 'vue';
+import { useForm } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3';
 
+const props = defineProps({
+  events: Object,
+  isAuthenticated: Boolean,
+});
+
+let map;
+
+onMounted(() => {
+  // Inicializar el mapa
+  map = L.map('map').setView([props.events.latitude, props.events.longitude], 13);
+
+  // Añadir capa de OpenStreetMap
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(map);
+
+  // Crear icono personalizado
+  const customIcon = L.icon({
+    iconUrl: 'storage/app/public/product_marker_map.png',
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+    popupAnchor: [0, -40]
+  });
+
+  // Añadir marcador con la ubicación del evento
+  L.marker([props.events.latitude, props.events.longitude], { icon: customIcon })
+    .bindPopup(`<b>${props.events.title}</b><br>${props.events.time}H`)
+    .addTo(map);
+});
 </script>
+
 <template>
-  <Head title = "Event ampliat"></Head>
-      <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
+  <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
+    <div class="min-h-screen from-indigo-100 to-blue-200 py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Contenedor principal con fondo blanco y sombras -->
+        <div class="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl p-8 mb-8">
+          <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Imagen del evento -->
+            <div class="w-full lg:w-1/2">
+              <div class="bg-white rounded-xl shadow-lg p-4">
+                <h1 class="text-3xl font-semibold text-gray-800 mb-4 text-center">{{ events.title }}</h1>
+                <div class="relative group">
+                  <img :src="`/storage/${events.image}`" :alt="events.title"
+                    class="w-full h-[300px] object-cover rounded-xl transition-transform duration-300 group-hover:scale-105">
+                  <div
+                    class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
+                </div>
+              </div>
+            </div>
 
-    <div class="flex justify-center font-bold">
-    <h1 class="text-5xl font-bold">Esdeveniment1</h1>
+            <!-- Detalles del evento -->
+            <div class="w-full lg:w-1/2">
+              <div class="bg-white rounded-xl shadow-lg p-6">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-4">Detalls de l'esdeveniment</h2>
+                <div class="space-y-4">
+                  <div class="flex justify-between items-center py-2 border-b border-gray-300">
+                    <span class="text-gray-600">Nom:</span>
+                    <span class="font-semibold text-gray-800">{{ events.title }}</span>
+                  </div>
+                  <div class="flex justify-between items-center py-2 border-b border-gray-300">
+                    <span class="mt-6 text-gray-600">Descripció:</span>
+                    <span class="text-gray-800">{{ events.description }}</span>
+                  </div>
+                  <div class="flex justify-between items-center py-2 border-b border-gray-300">
+                    <span class="mt-6 text-gray-600">Data:</span>
+                    <span class="text-gray-800">{{ events.date }}</span>
+                  </div>
+                  <div class="flex justify-between items-center py-2">
+                    <span class="mt-6 text-gray-600">Hora:</span>
+                    <span class="font-bold text-gray-800">{{ events.time }}h</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 mt-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">Ubicació de l'esdeveniment</h2>
+        <div id="map" class="h-[400px] w-full rounded-lg"></div>
+      </div>
+      </div>
     </div>
-
-    <div class="flex flex-row h-screen w-full justify-center items-center">
-    <div>
-      <img src="/images/logo.png" alt="Event_Image" width="500" height="500">
-    </div>
-
-    <div class="ml-20">
-      <p class="text-3xl font-bold">Titol Esdeveniment</p>
-      <p>Descripció de l'esdeveniment</p>
-      <p class="text-2xl font-bold">Localització:</p>
-      <p>Mapa</p>
-      <p class="text-2xl font-bold">Data i Hora:</p>
-      <p>dd/mm/yyyy - hh:mm</p>
-    </div>
-</div>
-</component>
-<Cookies />
+  </component>
 </template>

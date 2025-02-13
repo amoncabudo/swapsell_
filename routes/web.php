@@ -6,10 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ControllerProducts;
-use App\Http\Controllers\ControllerEvents;
 use App\Http\Controllers\ControllerProject;
-use App\Http\Controllers\ControllerFavorites;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\SellController;
@@ -108,6 +105,7 @@ Route::post('/deleteEvent/{id}', [EventController::class, "deleteEvent"])->middl
 
 //Route EventInfo
 Route::get('/eventInfo', function(){return Inertia::render('EventInfo',['isAuthenticated' => auth()->check(),]);});
+Route::get('/events/{id}', [EventController::class, "EventInfo"])->name("eventInfo");
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
 //Routes Products
