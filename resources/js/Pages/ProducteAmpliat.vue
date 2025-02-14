@@ -8,7 +8,7 @@ import { defineProps, ref , computed} from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import { Link, Head } from '@inertiajs/vue3';
 import Cookies from "@/Components/Cookies.vue";
-
+import { cartCount, incrementCartCount, decrementCartCount } from '@/cartState';
 
 import axios from 'axios';
 let comments = ref([]);
@@ -155,6 +155,11 @@ function toggleBasket(product) {
         .then(response => {
             // Actualizar el estado del favorito basado en la respuesta del servidor
             product.is_basket = response.data.is_basket;
+            if (product.is_basket) {
+                incrementCartCount();
+            } else {
+                decrementCartCount();
+            }
         })
         .catch(error => {
             console.error("Error al actualizar el estado de favorito:", error);
