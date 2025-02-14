@@ -212,6 +212,7 @@ const isBasket = (product) => {
             <!-- Sección de información --->
             <div class="w-full lg:w-1/2 space-y-6">
               <!-- Información del vendedor -->
+              <Link :href="route('profile.getUserById',props.user.id)">
               <div class="bg-white rounded-xl shadow-lg p-6">
                 <h2 class="text-2xl font-bold text-gray-800 mb-4">Informació del venedor</h2>
                 <div class="flex items-center space-x-4">
@@ -227,7 +228,7 @@ const isBasket = (product) => {
                   </div>
                 </div>
               </div>
-
+              </Link>
               <!-- Detalles del producto -->
               <div class="bg-white rounded-xl shadow-lg p-6">
                 <h2 class="text-2xl font-bold text-gray-800 mb-4">Detalls del producte</h2>
