@@ -29,7 +29,7 @@ let form = useForm({
   <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
   <div id="app" class="p-8 bg-gray-100 min-h-screen flex items-center justify-center">
     <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
-      <h1 class="text-2xl font-bold mb-6 text-center">Formulario de Registro</h1>
+      <h1 class="text-2xl font-bold mb-6 text-center text-black">Formulario de Registro</h1>
       <form @submit.prevent="form.post(route('updateProduct', { id: form.id }))">
         <div class="mb-4">
           <label for="id" class="block text-gray-700 font-medium mb-2"></label>
@@ -44,96 +44,82 @@ let form = useForm({
         </div>
         
         <div class="mb-4">
-          <label for="name" class="block text-gray-700 font-medium mb-2">Nombre:</label>
+          <label for="name" class="block text-black font-medium mb-2">Nombre:</label>
           <input
             type="text"
             id="name"
             name="name"
             v-model="form.name"
-            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200 text-black"
             required
           />
         </div>
 
         <div class="mb-4">
-          <label for="description" class="block text-gray-700 font-medium mb-2">Descripción:</label>
+          <label for="description" class="block text-black font-medium mb-2">Descripción:</label>
           <textarea
             id="description"
             name="description"
             v-model="form.description"
-            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200 text-black"
             required
           ></textarea>
         </div>
 
         <div class="mb-4">
-          <label for="price" class="block text-gray-700 font-medium mb-2">Precio:</label>
+          <label for="price" class="block text-black font-medium mb-2">Precio:</label>
           <input
             type="number"
             id="price"
             name="price"
             v-model="form.price"
-            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200 text-black"
             required
           />
         </div>
 
         <div class="mb-4">
-          <label for="longitude" class="block text-gray-700 font-medium mb-2">Longitud:</label>
+          <label for="longitude" class="block text-black font-medium mb-2">Longitud:</label>
           <input
             type="number"
             step="any"
             id="longitude"
             name="longitude"
             v-model="form.longitude"
-            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200 text-black"
             required
           />
         </div>
 
         <div class="mb-4">
-          <label for="latitude" class="block text-gray-700 font-medium mb-2">Latitud:</label>
+          <label for="latitude" class="block text-black font-medium mb-2">Latitud:</label>
           <input
             type="number"
             step="any"
             id="latitude"
             name="latitude"
             v-model="form.latitude"
-            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200 text-black"
             required
           />
         </div>
 
-        <div class="mb-4">
-          <label for="status" class="block text-gray-700 font-medium mb-2">Estado:</label>
-          <select
-            id="status"
-            name="status"
-            v-model="form.status"
-            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200"
-            required
-          >
-            <option value="active">Activo</option>
-            <option value="inactive">Inactivo</option>
-          </select>
-        </div>
 
         <div class="mb-4">
-          <label for="status" class="block text-gray-700 font-medium mb-2">Categoria</label>
+          <label for="status" class="block text-black font-medium mb-2">Categoria</label>
           <select
             id="category_id"
             name="category_id"
             v-model="form.category_id"
-            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200 text-black"
             required
           >
-            <option value="1">Hogar</option>
-            <option value="2">Tecnologia</option>
-            <option value="3">Deportes</option>
-            <option value="4">Moda</option>
-            <option value="5">Salud y belleza</option>
-            <option value="6">Juguetes</option>
-
+            <option value="1" class="text-black">Hogar</option>
+            <option value="2" class="text-black">Tecnologia</option>
+            <option value="3" class="text-black">Deportes</option>
+            <option value="4" class="text-black">Moda</option>
+            <option value="5" class="text-black">Salud y belleza</option>
+            <option value="6" class="text-black">Juguetes</option>
           </select>
         </div>
 
@@ -146,8 +132,8 @@ let form = useForm({
       </form>
 
       <div v-if="submitted" class="mt-6">
-        <h2 class="text-xl font-semibold mb-4">Datos enviados:</h2>
-        <pre class="bg-gray-100 p-4 rounded-lg">{{ form }}</pre>
+        <h2 class="text-xl font-semibold mb-4 text-black">Datos enviados:</h2>
+        <pre class="bg-gray-100 p-4 rounded-lg text-black">{{ form }}</pre>
       </div>
     </div>
   </div>

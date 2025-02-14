@@ -190,6 +190,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
+    Route::get('/profile/{id}', [ProfileController::class, 'getUserById'])->name('profile.getUserById');
 });
 
 

@@ -11,7 +11,8 @@ const props = defineProps({
   products: Array,
   auction: Array,
   soldProducts: Number,
-  mediaReview: Number
+  mediaReview: Number,
+  auth: Object
 
 })
 
@@ -63,6 +64,7 @@ console.log(props)
         </div>
 
         <!-- Estadísticas -->
+         <div v-if="props.products">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <div class="bg-white p-6 rounded-xl shadow-lg text-center">
             <div class="text-3xl font-bold text-blue-800 mb-2">{{ props.products.length }}</div>
@@ -77,7 +79,7 @@ console.log(props)
             <div class="text-gray-600">Valoració</div>
           </div>
         </div>
-
+        
         <!-- Productos -->
         <div class="bg-white rounded-xl shadow-lg p-8">
           <div class="flex justify-between items-center mb-6">
@@ -98,7 +100,8 @@ console.log(props)
 
               </div>
               </Link>
-              <Link aria-label="Edit Product"  :href="route('editProductId', product.id)"
+
+              <Link v-if="props.auth.user.id == product.user_id" aria-label="Edit Product"  :href="route('editProductId', product.id)"
                 class="absolute top-2 left-2 bg-white/80 p-2 rounded-full hover:bg-white transition">
               <svg class="w-5 h-5 text-blue-500 hover:text-blue-700 transition-colors" fill="none" stroke="currentColor"
                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-label="Editar producto">
@@ -107,7 +110,7 @@ console.log(props)
               </svg>
               </Link>
 
-              <Link aria-label="Delete Product" :href="route('deleteProduct', product.id)"
+              <Link v-if="props.auth.user.id == product.user_id" aria-label="Delete Product" :href="route('deleteProduct', product.id)"
                 class="absolute top-2 right-2 bg-white/80 p-2 rounded-full hover:bg-white transition">
               <svg class="w-5 h-5 text-red-500 hover:text-red-700 transition-colors" fill="none" stroke="currentColor"
                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-label="Eliminar producto">
@@ -117,14 +120,14 @@ console.log(props)
             </div>
           </div>
         </div>
-
+        </div>
         <!-- Subastas -->
         <div class="bg-white rounded-xl shadow-lg p-8 mt-8">
           <div class="flex justify-between items-center mb-6">
             <h2 class="text-2xl font-bold text-gray-800">Les meves Subhastas</h2>
             
           </div>
-
+          <div v-if="props.auction">
           <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div v-for="auction in props.auction" :key="auction.id" class="group relative">
               <Link :href="route('auction')">
@@ -139,6 +142,7 @@ console.log(props)
                </Link>
             </div>
           </div>
+        </div>
         </div>
       </div>
     </div>
