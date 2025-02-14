@@ -39,7 +39,7 @@ class ProfileController extends Controller
         if($file){ //If the file exists
             $name = time() . $file->getClientOriginalName(); //Get the name of the file
     
-            $path = $file->storeAs('images', $name, 'public'); //Store the file
+            $path = $file->storeAs('users', $name, 'public'); //Store the file
         
             $request->user()->image = "storage/".$path; //Set the image of the user
         }
@@ -63,7 +63,7 @@ class ProfileController extends Controller
 
         $user = $request->user(); //Get the user
 
-        Auth::logout(); //Logout the user
+        Auth::lout(); //Logout the user
 
         $user->delete(); //Delete the user
 

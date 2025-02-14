@@ -221,7 +221,7 @@ const isBasket = (product) => {
               <div class="bg-white rounded-xl shadow-lg p-6">
                 <h2 class="text-2xl font-bold text-gray-800 mb-4">Informació del venedor</h2>
                 <div class="flex items-center space-x-4">
-                  <img src="/images/User.png" alt="User" class="w-16 h-16 rounded-full border-2 border-gray-200">
+                  <img :src="`/${user.image}`" alt="User" class="w-16 h-16 rounded-full border-2 border-gray-200">
                   <div>
                     <p class="font-semibold text-lg">{{ props.user.name }} {{ props.user.surname }}</p>
                     <div class="flex items-center space-x-2 text-sm text-gray-500">
@@ -263,7 +263,7 @@ const isBasket = (product) => {
           <!-- Form for new comment -->
           <div class="mb-8">
             <div class="flex items-start space-x-4">
-              <img :src="'/images/User.png'" alt="User Avatar" class="w-10 h-10 rounded-full">
+              <img :src="`/${user.image}`" alt="User Avatar" class="w-10 h-10 rounded-full">
               <div class="flex-1">
                 <textarea aria-label="Comments TextArea"
                   class="w-full p-4 border rounded-lg focus:ring-2 focus:ring-blue-500 text-black focus:border-blue-500"
@@ -277,9 +277,6 @@ const isBasket = (product) => {
               </div>
             </div>
           </div>
-
-
-
           <!-- List of comments -->
           <div class="space-y-6">
             <!-- Comments with styled scroll -->

@@ -88,4 +88,13 @@ class CommentController extends Controller
         $comment->save();
         return redirect()->route('Products')->with('success', 'Comentari actualitzat correctament');
     }
+
+    public function getCommentsWithUsers()
+    {
+        $comments = Comment::with('user')->get();
+
+        return Inertia::render('Comments', [
+            'comments' => $comments,
+        ]);
+    }
 }
