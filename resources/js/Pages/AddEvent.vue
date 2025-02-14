@@ -5,22 +5,22 @@ import NavbarS from '@/Layouts/NavbarS.vue';
 import { Head } from '@inertiajs/vue3';
 import Cookies from "@/Components/Cookies.vue";
 
-const props = defineProps({
+const props = defineProps({ //Define props
     isAuthenticated: Boolean
 });
 
-let form = useForm({
-  title: "",
-  description: "",
-  date: null,
-  time: "active",
-  longitude: null,
-  latitude: null,
-  image: null
+let form = useForm({ //Define form
+  title: "", //Define title
+  description: "", //Define description
+  date: null, //Define date
+  time: "active", //Define time
+  longitude: null, //Define longitude
+  latitude: null, //Define latitude
+  image: null //Define image
 });
 
-function handleFileUpload(event) {
-  form.image = event.target.files[0];
+function handleFileUpload(event) { //Define handleFileUpload
+  form.image = event.target.files[0]; //Define image
 }
 
 </script>
@@ -49,7 +49,7 @@ function handleFileUpload(event) {
               </div>
             </div>
 
-            <!-- Campo Descripción -->
+            <!-- Description camp -->
             <div class="form-group">
               <label for="description" class="form-label">Descripció</label>
               <div class="relative">
@@ -57,7 +57,7 @@ function handleFileUpload(event) {
               </div>
             </div>
 
-            <!-- Campo Precio -->
+            <!-- Date camp -->
             <div class="form-group">
               <label for="date" class="form-label">Data</label>
               <div class="relative">
@@ -73,7 +73,7 @@ function handleFileUpload(event) {
               </div>
             </div>
 
-            <!-- Campo Estado -->
+            <!-- Time camp -->
             <div class="form-group">
               <label for="time" class="form-label">Hora</label>
               <div class="relative">
@@ -88,7 +88,7 @@ function handleFileUpload(event) {
               </div>
             </div>
 
-            <!-- Campos de Ubicación -->
+            <!-- Longitude camp -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div class="form-group">
                 <label for="longitude" class="form-label">Longitud</label>
@@ -106,7 +106,7 @@ function handleFileUpload(event) {
                   </span>
                 </div>
               </div>
-
+              <!-- Latitude camp -->
               <div class="form-group">
                 <label for="latitude" class="form-label">Latitud</label>
                 <div class="relative">
@@ -124,14 +124,14 @@ function handleFileUpload(event) {
                 </div>
               </div>
             </div>
-            <!-- Campo Imagen -->
+            <!-- Image camp -->
             <div class="form-group">
               <label for="image" class="form-label">Imatge de l'esdeveniment</label>
               <div class="relative">
                 <input type="file" id="image" @change="handleFileUpload" required />
               </div>
             </div>
-            <!-- Botón de envío -->
+            <!-- Submit button -->
             <div class="mt-8">
               <button type="submit" class="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold py-3 px-4 rounded-xl
                        hover:from-blue-600 hover:to-indigo-700 transform hover:-translate-y-0.5 transition-all duration-150
@@ -148,70 +148,70 @@ function handleFileUpload(event) {
 </template>
 
 <style scoped>
-/* Estilos del formulario */
+/* Form styles */
 .form-group {
-  margin-top: 0.25rem;
+  margin-top: 0.25rem; /*Margin top*/
 }
 
 .form-label {
-  display: block;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: rgb(55, 65, 81);
+  display: block; /*Display block*/
+  font-size: 0.875rem; /*Font size*/
+  font-weight: 500; /*Font weight*/
+  color: rgb(55, 65, 81); /*Color in grey*/
 }
 
 .form-input {
-  display: block;
-  width: 100%;
-  border-radius: 0.5rem;
-  border-color: rgb(209, 213, 219);
-  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  padding-left: 3rem;
-  color: rgb(17, 24, 39);
-  transition-property: color, background-color, border-color;
-  transition-duration: 200ms;
+  display: block; /*Display block*/
+  width: 100%; /*Width*/
+  border-radius: 0.5rem; /*Border radius*/
+  border-color: rgb(209, 213, 219); /*Border color in white*/
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); /*Box shadow*/
+  padding-left: 3rem; /*Padding left*/
+  color: rgb(17, 24, 39); /*Color*/
+  transition-property: color, background-color, border-color; /*Transition property*/
+  transition-duration: 200ms; /*Transition duration*/
 }
 
 .form-input:focus {
-  border-color: rgb(59, 130, 246);
-  outline: 2px solid rgb(59, 130, 246);
+  border-color: rgb(59, 130, 246); /*Border color in blue*/
+  outline: 2px solid rgb(59, 130, 246); /*Outline in blue*/
 }
 
 .form-icon {
-  position: absolute;
-  left: 0.70rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: rgb(156, 163, 175);
-  pointer-events: none;
-  border-right: 1px solid rgb(209, 213, 219);
-  padding-right: 0.75rem;
+  position: absolute; /*Position absolute*/
+  left: 0.70rem; /*Left*/
+  top: 50%; /*Top*/
+  transform: translateY(-50%); /*Transform translateY*/
+  color: rgb(156, 163, 175); /*Color*/
+  pointer-events: none; /*Pointer events*/
+  border-right: 1px solid rgb(209, 213, 219); /*Border right*/
+  padding-right: 0.75rem; /*Padding right*/
 }
 
-/* Estilos específicos para el textarea */
+/* Styles for textarea */
 textarea.form-input {
-  padding-left: 3rem;
-  resize: none;
-  color: rgb(17, 24, 39);
+  padding-left: 3rem; /*Padding left*/
+  resize: none; /*Resize none*/
+  color: rgb(17, 24, 39); /*Color*/
 }
 
-/* Deshabilitar flechas en inputs numéricos */
+/* Disable arrows in numeric inputs */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-/* Efectos y animaciones */
+/* Effects and animations */
 .wave-bg {
-  background: linear-gradient(45deg, #004266, #006699);
-  background-size: 400% 400%;
-  animation: gradient 15s ease infinite;
+  background: linear-gradient(45deg, #004266, #006699); /*Background in blue*/
+  background-size: 400% 400%; /*Background size*/
+  animation: gradient 15s ease infinite; /*Animation*/
 }
 
 @keyframes gradient {
   0% {
-    background-position: 0% 50%;
+    background-position: 0% 50%; /*Background position*/
   }
 
   50% {
@@ -223,41 +223,41 @@ input[type="number"]::-webkit-outer-spin-button {
   }
 }
 
-/* Efecto glass */
+/* Glass effect */
 .glass-effect {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px 0 rgba(0, 66, 102, 0.2);
+  background: rgba(255, 255, 255, 0.7); /*Background in white*/
+  backdrop-filter: blur(10px); /*Backdrop filter*/
+  border: 1px solid rgba(255, 255, 255, 0.2); /*Border*/
+  box-shadow: 0 8px 32px 0 rgba(0, 66, 102, 0.2); /*Box shadow*/
 }
 
-/* Colores personalizados */
+/* Custom colors */
 .bg-custom-blue {
-  background-color: #004266;
+  background-color: #004266; /*Background in blue*/
 }
 
 .text-custom-blue {
-  color: #004266;
+  color: #004266; /*Color in blue*/
 }
 
-/* Estilos para el botón de envío */
+/* Styles for the submit button */
 .submit-button {
-  width: 100%;
-  background: linear-gradient(to right, #004266, #006699);
-  color: white;
-  font-weight: bold;
-  padding: 0.75rem 1rem;
-  border-radius: 0.75rem;
-  transition: background 0.15s ease-in-out;
+  width: 100%; /*Width*/
+  background: linear-gradient(to right, #004266, #006699); /*Background in blue*/
+  color: white; /*Color in white*/
+  font-weight: bold; /*Font weight*/
+  padding: 0.75rem 1rem; /*Padding*/
+  border-radius: 0.75rem; /*Border radius*/
+  transition: background 0.15s ease-in-out; /*Transition*/
 }
 
 .submit-button:hover {
-  background: linear-gradient(to right, #00334d, #00527a);
-  transform: translateY(-0.25rem);
+  background: linear-gradient(to right, #00334d, #00527a); /*Background in blue*/
+  transform: translateY(-0.25rem); /*Transform translateY*/
 }
 
 .submit-button:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+  outline: none; /*Outline none*/
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5); /*Box shadow*/
 }
 </style>

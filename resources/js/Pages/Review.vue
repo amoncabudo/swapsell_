@@ -27,21 +27,21 @@ console.log(props.transaction);
             :key="transaction.id" 
             class="p-4 border rounded-lg shadow-sm bg-gray-50 flex items-center"
           >
-            <!-- Sección izquierda: Imagen y nombre del producto -->
+            <!-- Left section: Image and name of the product -->
             <div class="w-1/3 flex items-center space-x-4">
               <img :src="`/storage/${transaction.product.image}`" :alt="transaction.product.name" class="w-24 h-24 object-cover rounded">
               <h3 class="text-lg font-semibold">{{ transaction.name }}</h3>
             </div>
 
-            <!-- Sección central: Comprador -->
+            <!-- Section central: Buyer -->
             <div class="w-1/3 text-center">
-              <p class="text-gray-600 font-semibold">Comprado por:</p>
+              <p class="text-gray-600 font-semibold">Comprat per:</p>
               <p class="text-gray-800 font-bold">{{ transaction.buyer.name }}</p>
             </div>
 
-            <!-- Sección derecha: Vendedor -->
+            <!-- Right section: Seller -->
             <div class="w-1/3 text-right">
-              <p class="text-gray-600 font-semibold">Vendido por:</p>
+              <p class="text-gray-600 font-semibold">Venut per:</p>
               <p class="text-gray-800 font-bold">{{ transaction.user?.name }}</p>
               <Review :userId="transaction.user?.id" />
             </div>

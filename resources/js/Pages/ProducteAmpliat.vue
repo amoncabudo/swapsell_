@@ -8,6 +8,11 @@ import { defineProps, ref, computed } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import { Link, Head } from '@inertiajs/vue3';
 import Cookies from "@/Components/Cookies.vue";
+<<<<<<< HEAD
+=======
+import { cartCount, incrementCartCount, decrementCartCount } from '@/cartState';
+
+>>>>>>> 91da8e129a1bda4ee25c03bb557ae4a81a78a1f3
 import axios from 'axios';
 
 
@@ -17,20 +22,25 @@ let props = defineProps({
   isAuthenticated: Boolean,
   product: Object,
   user: Object,
+<<<<<<< HEAD
   commentarios: Array, // Asegúrate de que estás pasando "comments"
   mediaReview: Number,
   authUser: Object,
+=======
+  commentarios: Array, // Ensure you are passing "comments"
+  mediaReview: Number
+>>>>>>> 91da8e129a1bda4ee25c03bb557ae4a81a78a1f3
 });
 
 onMounted(() => {
   if (props.commentarios) {
-    comments.value = props.commentarios; // Asignamos los comentarios correctamente
+    comments.value = props.commentarios; // Assign the comments correctly
   } else {
-    console.warn("Los comentarios no están definidos en las props.");
+    console.warn("Els comentaris no estan definits en les props.");
   }
 
-  console.log("Comentarios en ref:", comments.value);
-  console.log("Comentarios en props:", props.commentarios);
+  console.log("Comentaris en ref:", comments.value);
+  console.log("Comentaris en props:", props.commentarios);
 });
 
 
@@ -40,15 +50,23 @@ const submitData = () => {
     comment: form,
   })
     .then((response) => {
-      // Manejo de éxito
-      comments.value = response.data;
+      comments.value = response.data; // Update the comments
 
+<<<<<<< HEAD
       // Limpiar mensaje de error si hay éxito 
     })
     .catch((error) => {
       // Manejo de error
 
       console.error('Error al enviar datos:', error);
+=======
+      // Clear error message if successful
+    })
+    .catch((error) => {
+      // Error handling
+
+      console.error('Error al enviar dades:', error);
+>>>>>>> 91da8e129a1bda4ee25c03bb557ae4a81a78a1f3
 
     });
 };
@@ -71,15 +89,15 @@ const handleFileUpload = (event) => {
 };
 
 onMounted(() => {
-  // Inicializar el mapa
+  // Initialize and set the map
   map = L.map('map').setView([props.product.latitude, props.product.longitude], 13);
 
-  // Añadir capa de OpenStreetMap
+  // Add OpenStreetMap layer
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
   }).addTo(map);
 
-  // Crear icono personalizado
+  // Create a custom icon
   const customIcon = L.icon({
     iconUrl: 'storage/app/public/product_marker_map.png',
     iconSize: [40, 40],
@@ -87,68 +105,65 @@ onMounted(() => {
     popupAnchor: [0, -40]
   });
 
-  // Añadir marcador con la ubicación del producto
+  // Add marker with the product location
   L.marker([props.product.latitude, props.product.longitude], { icon: customIcon })
     .bindPopup(`<b>${props.product.name}</b><br>${props.product.price}€`)
     .addTo(map);
 });
 const calcularTiempo = (fecha) => {
-  if (!fecha) return "Hace N/A"; // Si la fecha es nula, retorna "N/A"
+  if (!fecha) return "Hace N/A"; // If the date is null, return "N/A"
 
   const fechaComentario = new Date(fecha);
   const fechaHoy = new Date();
 
-  // Calcular la diferencia en milisegundos
+  // Calculate the difference in milliseconds
   const diferenciaTiempo = fechaHoy - fechaComentario;
 
-  // Calcular la diferencia en segundos, minutos, horas y días
-  const segundosTranscurridos = Math.floor(diferenciaTiempo / 1000);
-  const minutosTranscurridos = Math.floor(diferenciaTiempo / (1000 * 60));
-  const horasTranscurridas = Math.floor(diferenciaTiempo / (1000 * 60 * 60));
-  const diasTranscurridos = Math.floor(diferenciaTiempo / (1000 * 60 * 60 * 24));
+  // Calculate the difference in seconds, minutes, hours and days
+  const segundosTranscurridos = Math.floor(diferenciaTiempo / 1000); // Calculate the difference in seconds
+  const minutosTranscurridos = Math.floor(diferenciaTiempo / (1000 * 60)); // Calculate the difference in minutes
+  const horasTranscurridas = Math.floor(diferenciaTiempo / (1000 * 60 * 60)); // Calculate the difference in hours
+  const diasTranscurridos = Math.floor(diferenciaTiempo / (1000 * 60 * 60 * 24)); // Calculate the difference in days
 
-  // Si es hoy, mostrar los segundos, minutos u horas
+  // If it is today, show the seconds, minutes or hours
   if (diasTranscurridos === 0) {
     if (horasTranscurridas > 0) {
-      return `Hace ${horasTranscurridas} hora${horasTranscurridas === 1 ? '' : 's'}`;
+      return `Hace ${horasTranscurridas} hora${horasTranscurridas === 1 ? '' : 's'}`; // If it is more than one hour, show the hours
     } else if (minutosTranscurridos > 0) {
-      return `Hace ${minutosTranscurridos} minuto${minutosTranscurridos === 1 ? '' : 's'}`;
+      return `Hace ${minutosTranscurridos} minuto${minutosTranscurridos === 1 ? '' : 's'}`; // If it is more than one minute, show the minutes
     } else {
-      return `Hace ${segundosTranscurridos} segundo${segundosTranscurridos === 1 ? '' : 's'}`;
+      return `Hace ${segundosTranscurridos} segundo${segundosTranscurridos === 1 ? '' : 's'}`; // If it is more than one second, show the seconds
     }
   }
 
-  // Si es más de un día, mostrar los días
+  // If it is more than one day, show the days
   return `Hace ${diasTranscurridos} día${diasTranscurridos === 1 ? '' : 's'}`;
 };
 
-
-
-
 const calcularAntiguedad = (fecha) => {
-  if (!fecha) return "Fecha no disponible";
+  if (!fecha) return "Data no disponible"; // If the date is null, return "No disponible"
 
   try {
     const fechaCreacion = new Date(fecha);
-    if (isNaN(fechaCreacion)) throw new Error("Fecha inválida");
+    if (isNaN(fechaCreacion)) throw new Error("Data inválida"); // If the date is invalid, throw an error
 
     const ahora = new Date();
     const diferencia = ahora - fechaCreacion;
 
-    const años = Math.floor(diferencia / (1000 * 60 * 60 * 24 * 365));
-    const meses = Math.floor(diferencia / (1000 * 60 * 60 * 24 * 30)) % 12;
-    const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24)) % 30;
-    const horas = Math.floor(diferencia / (1000 * 60 * 60)) % 24;
-    const minutos = Math.floor(diferencia / (1000 * 60)) % 60;
+    const años = Math.floor(diferencia / (1000 * 60 * 60 * 24 * 365)); // Calculate the difference in years
+    const meses = Math.floor(diferencia / (1000 * 60 * 60 * 24 * 30)) % 12; // Calculate the difference in months
+    const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24)) % 30; // Calculate the difference in days
+    const horas = Math.floor(diferencia / (1000 * 60 * 60)) % 24; // Calculate the difference in hours
+    const minutos = Math.floor(diferencia / (1000 * 60)) % 60; // Calculate the difference in minutes
 
-    if (años > 0) return `fa ${años} anys${años > 1 ? "s" : ""}`;
-    if (meses > 0) return `fa ${meses} mesos${meses > 1 ? "es" : ""}`;
-    if (dias > 0) return `fa ${dias} dies${dias > 1 ? "s" : ""}`;
-    if (horas > 0) return `fa ${horas} hores${horas > 1 ? "s" : ""}`;
-    return `fa ${minutos} minuts${minutos > 1 ? "s" : ""}`;
+    if (años > 0) return `fa ${años} anys${años > 1 ? "s" : ""}`; // If it is more than one year, show the years
+    if (meses > 0) return `fa ${meses} mesos${meses > 1 ? "es" : ""}`; // If it is more than one month, show the months
+    if (dias > 0) return `fa ${dias} dies${dias > 1 ? "s" : ""}`; // If it is more than one day, show the days
+    if (horas > 0) return `fa ${horas} hores${horas > 1 ? "s" : ""}`; // If it is more than one hour, show the hours
+    return `fa ${minutos} minuts${minutos > 1 ? "s" : ""}`; // If it is more than one minute, show the minutes
   } catch (error) {
-    console.error("Error al calcular antigüedad:", error);
-    return "Fecha no válida";
+    console.error("Error al calcular l'antiguitat:", error); // If the date is invalid, show an error
+    return "Data no vàlida"; // If the date is invalid, show "Data no vàlida"
   }
 };
 
@@ -168,16 +183,32 @@ console.log(props.user.created_at);
 function toggleBasket(product) {
   axios.post(route('baskets_products'), { id: product.id })
     .then(response => {
+<<<<<<< HEAD
       // Actualizar el estado del favorito basado en la respuesta del servidor
       product.is_basket = response.data.is_basket;
     })
     .catch(error => {
       console.error("Error al actualizar el estado de favorito:", error);
+=======
+      product.is_basket = response.data.is_basket; // Update the basket status based on the server response
+      if (product.is_basket) {
+        incrementCartCount(); // Increment the cart count
+      } else {
+        decrementCartCount(); // Decrement the cart count
+      }
+    })
+    .catch(error => {
+      console.error("Error al actualizar l'estat de favorits:", error); // If the basket status is invalid, show an error
+>>>>>>> 91da8e129a1bda4ee25c03bb557ae4a81a78a1f3
     });
 }
 
 const isBasket = (product) => {
+<<<<<<< HEAD
   return product.is_basket;
+=======
+  return product.is_basket; // Return the basket status
+>>>>>>> 91da8e129a1bda4ee25c03bb557ae4a81a78a1f3
 };
 
 
@@ -190,11 +221,11 @@ const isBasket = (product) => {
   <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
     <div class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 py-12 text-black">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Contenedor principal con efecto glass -->
+        <!-- Main container with glass effect -->
         <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 mb-8">
           <div class="flex flex-col lg:flex-row gap-8">
 
-            <!-- Sección de imagen y botones -->
+            <!-- Section of image and buttons -->
             <div class="w-full lg:w-1/2">
               <div class="bg-white rounded-xl shadow-lg p-4">
                 <h1 class="text-2xl font-bold text-black mb-4 text-center">{{ product.name }}</h1>
@@ -206,7 +237,7 @@ const isBasket = (product) => {
                   </div>
                 </div>
 
-                <!-- Botones de acción -->
+                <!-- Buttons of action -->
                 <div class="flex justify-center space-x-4 mt-6">
                   <button v-if="!product.bid" @click="toggleBasket(product)"
                     class="flex items-center space-x-2 bg-SubastaButton1 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-all duration-300 transform hover:-translate-y-1">
@@ -217,6 +248,7 @@ const isBasket = (product) => {
                     <span>{{ isBasket(product) ? 'Eliminar del carret' : 'Comprar ara' }}</span>
                   </button>
                   <Link :href="route('auction')" class="text-white">
+<<<<<<< HEAD
                   <button
                     class="flex items-center space-x-2 bg-amber-700 text-white px-6 py-3 rounded-lg hover:bg-amber-500 transition-all duration-300 transform hover:-translate-y-1">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -228,17 +260,25 @@ const isBasket = (product) => {
 
                   </button>
                   </Link>
+=======
+                </Link>
+>>>>>>> 91da8e129a1bda4ee25c03bb557ae4a81a78a1f3
                 </div>
               </div>
             </div>
 
-            <!-- Sección de información --->
+            <!-- Section of information -->
             <div class="w-full lg:w-1/2 space-y-6">
               <!-- Información del vendedor -->
+              <Link :href="route('profile.getUserById',props.user.id)">
               <div class="bg-white rounded-xl shadow-lg p-6">
                 <h2 class="text-2xl font-bold text-gray-800 mb-4">Informació del venedor</h2>
                 <div class="flex items-center space-x-4">
+<<<<<<< HEAD
                   <img :src="sellerImage" alt="User" class="w-16 h-16 rounded-full border-2 border-gray-200">
+=======
+                  <img :src="`/${user.image}`" alt="User" class="w-16 h-16 rounded-full border-2 border-gray-200">
+>>>>>>> 91da8e129a1bda4ee25c03bb557ae4a81a78a1f3
                   <div>
                     <p class="font-semibold text-lg">{{ product.user.name }} {{ product.user.surname }}</p>
                     <div class="flex items-center space-x-2 text-sm text-gray-500">
@@ -250,7 +290,7 @@ const isBasket = (product) => {
                   </div>
                 </div>
               </div>
-
+              </Link>
               <!-- Detalles del producto -->
               <div class="bg-white rounded-xl shadow-lg p-6">
                 <h2 class="text-2xl font-bold text-gray-800 mb-4">Detalls del producte</h2>
@@ -273,14 +313,18 @@ const isBasket = (product) => {
           </div>
         </div>
 
-        <!-- Nueva sección de comentarios -->
+        <!-- New section of comments -->
         <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 mt-8">
           <h2 class="text-2xl font-bold text-gray-800 mb-6">Comentaris</h2>
 
-          <!-- Formulario para nuevo comentario -->
+          <!-- Form for new comment -->
           <div class="mb-8">
             <div class="flex items-start space-x-4">
+<<<<<<< HEAD
               <img :src="'/storage/'+props.authUser.image" alt="User Avatar" class="w-10 h-10 rounded-full">
+=======
+              <img :src="`/${user.image}`" alt="User Avatar" class="w-10 h-10 rounded-full">
+>>>>>>> 91da8e129a1bda4ee25c03bb557ae4a81a78a1f3
               <div class="flex-1">
                 <textarea aria-label="Comments TextArea"
                   class="w-full p-4 border rounded-lg focus:ring-2 focus:ring-blue-500 text-black focus:border-blue-500"
@@ -294,6 +338,7 @@ const isBasket = (product) => {
               </div>
             </div>
           </div>
+<<<<<<< HEAD
 
 
 
@@ -303,6 +348,14 @@ const isBasket = (product) => {
             <div class="max-h-[300px] overflow-y-auto pr-4 space-y-6 custom-scrollbar">
               <div v-for="(comentario, i) in comments" :key="i" class="flex items-start space-x-4">
                 <img :src="'/storage/'+comentario.user.image" alt="User" class="w-10 h-10 rounded-full">
+=======
+          <!-- List of comments -->
+          <div class="space-y-6">
+            <!-- Comments with styled scroll -->
+            <div class="max-h-[300px] overflow-y-auto pr-4 space-y-6 custom-scrollbar">
+              <div v-for="(comentario, i) in comments" :key="i" class="flex items-start space-x-4">
+                <img src="/images/User.png" alt="User" class="w-10 h-10 rounded-full">
+>>>>>>> 91da8e129a1bda4ee25c03bb557ae4a81a78a1f3
                 <div class="flex-1">
                   <div
                     class="bg-white/80 backdrop-blur-sm rounded-lg p-4 shadow-sm hover:shadow-md transition-all duration-300">
@@ -335,12 +388,12 @@ const isBasket = (product) => {
   box-shadow: 0 8px 32px 0 rgba(0, 66, 102, 0.2);
 }
 
-/* Añadir estilos para el mapa */
+/* Add styles for the map */
 #map {
   z-index: 1;
 }
 
-/* Estilización del scrollbar */
+/* Styling the scrollbar */
 .custom-scrollbar::-webkit-scrollbar {
   width: 8px;
 }
@@ -361,7 +414,7 @@ const isBasket = (product) => {
   background: #003252;
 }
 
-/* Soporte para Firefox */
+/* Support for Firefox */
 .custom-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: #004266 rgba(255, 255, 255, 0.4);

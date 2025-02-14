@@ -12,7 +12,7 @@ defineProps({
     isAuthenticated: Boolean,
 });
 
-const features = ref([
+const features = ref([ // Features of the project
     {
         title: 'Compra-Venda Segura',
         description: 'Sistema segur de transaccions amb verificació d\'usuaris i protecció contra fraus.',
@@ -30,7 +30,7 @@ const features = ref([
     }
 ]);
 
-const technologies = ref([
+const technologies = ref([ // Technologies used
     { name: 'Laravel', icon: '/images/Laravel.png' },
     { name: 'Vue.js', icon: '/images/vue.png' },
     { name: 'PrimeVue', icon: '/images/primevue.png' },

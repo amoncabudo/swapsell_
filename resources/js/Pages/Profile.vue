@@ -11,36 +11,46 @@ const props = defineProps({
   products: Array,
   auction: Array,
   soldProducts: Number,
-  mediaReview: Number
+  mediaReview: Number,
+  auth: Object
 
 })
 
+<<<<<<< HEAD
 
 
 console.log(props.user)
 // console.log(props.products)
 
+=======
+console.log(props)
+>>>>>>> 91da8e129a1bda4ee25c03bb557ae4a81a78a1f3
 
 </script>
 
 <template>
-  <Head title = "Perfil"></Head>
+
+  <Head title="Perfil"></Head>
   <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
     <div class="bg-gray-50 min-h-screen">
       <div class="container mx-auto p-6">
-        <!-- Cabecera del perfil -->
+        <!-- Header of the profile -->
         <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
           <div class="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-8">
-            <!-- Imagen de perfil con borde y sombra -->
+            <!-- Profile image with border and shadow -->
             <div class="relative">
               <div class="w-32 h-32 rounded-full overflow-hidden">
+<<<<<<< HEAD
                 <img :src="'/storage/{{user.image}}'" alt="Foto de perfil" class="w-full h-full object-cover">
+=======
+                <img :src="`/${user.image}`" alt="Foto de perfil" class="w-full h-full object-cover">
+>>>>>>> 91da8e129a1bda4ee25c03bb557ae4a81a78a1f3
                 <!-- '/storage/app/public/logo.png' -->
 
               </div>
             </div>
 
-            <!-- Información del usuario -->
+            <!-- Information of the user -->
             <div class="flex-1">
               <!--Pop-->
               <h1 class="text-3xl font-bold text-gray-800 mb-2">{{ user.name }}</h1>
@@ -54,8 +64,9 @@ console.log(props.user)
                 </div>
               </div>
               <div class="flex space-x-4">
-                <Link :href="route('profile.edit')" class="bg-blue-800 text-white px-6 py-2 rounded-lg hover:bg-blue-900 transition">
-                  Editar Perfil
+                <Link :href="route('profile.edit')"
+                  class="bg-blue-800 text-white px-6 py-2 rounded-lg hover:bg-blue-900 transition">
+                Editar Perfil
                 </Link>
               </div>
             </div>
@@ -63,6 +74,7 @@ console.log(props.user)
         </div>
 
         <!-- Estadísticas -->
+         <div v-if="props.products">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <div class="bg-white p-6 rounded-xl shadow-lg text-center">
             <div class="text-3xl font-bold text-blue-800 mb-2">{{ props.products.length }}</div>
@@ -77,16 +89,13 @@ console.log(props.user)
             <div class="text-gray-600">Valoració</div>
           </div>
         </div>
-
+        
         <!-- Productos -->
         <div class="bg-white rounded-xl shadow-lg p-8">
           <div class="flex justify-between items-center mb-6">
             <h2 class="text-2xl font-bold text-gray-800">Els meus Productes</h2>
-            <button class="text-blue-800 hover:text-blue-900 transition">
-              Veure tots
-            </button>
           </div>
- 
+
           <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div v-for="product in props.products" :key="product.id" class="group relative">
               <Link :href="route('product.show', product.id)">
@@ -94,14 +103,15 @@ console.log(props.user)
                 <img :src="`/storage/${product.image}`" alt="Producto"
                   class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
               </div>
-              <div class="mt-4">  
+              <div class="mt-4">
 
                 <h3 class="text-lg font-semibold text-gray-800">{{ product.name }}</h3>
                 <p class="text-gray-600">{{ product.price }}€</p>
 
               </div>
               </Link>
-              <Link aria-label="Edit Product"  :href="route('editProductId', product.id)"
+
+              <Link v-if="props.auth.user.id == product.user_id" aria-label="Edit Product"  :href="route('editProductId', product.id)"
                 class="absolute top-2 left-2 bg-white/80 p-2 rounded-full hover:bg-white transition">
               <svg class="w-5 h-5 text-blue-500 hover:text-blue-700 transition-colors" fill="none" stroke="currentColor"
                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-label="Editar producto">
@@ -110,7 +120,7 @@ console.log(props.user)
               </svg>
               </Link>
 
-              <Link aria-label="Delete Product" :href="route('deleteProduct', product.id)"
+              <Link v-if="props.auth.user.id == product.user_id" aria-label="Delete Product" :href="route('deleteProduct', product.id)"
                 class="absolute top-2 right-2 bg-white/80 p-2 rounded-full hover:bg-white transition">
               <svg class="w-5 h-5 text-red-500 hover:text-red-700 transition-colors" fill="none" stroke="currentColor"
                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-label="Eliminar producto">
@@ -120,16 +130,14 @@ console.log(props.user)
             </div>
           </div>
         </div>
-
+        </div>
         <!-- Subastas -->
         <div class="bg-white rounded-xl shadow-lg p-8 mt-8">
           <div class="flex justify-between items-center mb-6">
-            <h2 class="text-2xl font-bold text-gray-800">Les meves Subhastas</h2>
-            <button class="text-blue-800 hover:text-blue-900 transition">
-              Veure tots
-            </button>
-          </div>
+            <h2 class="text-2xl font-bold text-gray-800">Les meves Subhastes</h2>
 
+          </div>
+          <div v-if="props.auction">
           <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div v-for="auction in props.auction" :key="auction.id" class="group relative">
               <Link :href="route('auction')">
@@ -141,9 +149,10 @@ console.log(props.user)
                 <h3 class="text-lg font-bold text-gray-800">{{ auction.product.name }}</h3>
                 <p class="text-gray-600">Preu actual: {{ auction.product.price }}€</p>
               </div>
-               </Link>
+              </Link>
             </div>
           </div>
+        </div>
         </div>
       </div>
     </div>

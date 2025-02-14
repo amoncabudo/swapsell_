@@ -214,9 +214,12 @@ class ProductController extends Controller
     }
 
     public function auction()
-    {
+    {   
         $products = Product::with(['auction.lastBidder'])
             ->where('bid', true)
+            ->leftJoin('auctions', 'products.id', '=', 'auctions.product_id')
+            ->whereDate('end_time', '>=', date('Y-m-d H-i-s', strtotime('-1 week')))
+            ->select('products.*')  // Importante: seleccionar solo las columnas de products
             ->get()
             ->map(function($product) {
                 if ($product->auction) {
