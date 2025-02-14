@@ -212,7 +212,7 @@ class ProductController extends Controller
             ->where('bid', true)
             ->leftJoin('auctions', 'products.id', '=', 'auctions.product_id')
             ->whereDate('end_time', '>=', date('Y-m-d H-i-s', strtotime('-1 week')))
-            ->select('produccts.*')  // Importante: seleccionar solo las columnas de products
+            ->select('products.*')  // Importante: seleccionar solo las columnas de products
             ->get()
             ->map(function($product) {
                 if ($product->auction) {

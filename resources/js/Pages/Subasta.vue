@@ -261,7 +261,6 @@ const downloadAuctionCertificate = (product) => {
                             </div>
 
                             <!-- Field to enter the bid price -->
-                            {{ product }}
                             <div v-if="false && countdowns[product.auction.id] > 0">
                                 <div class="mt-4">
                                     <input aria-label="Product Price" type="number" v-model="product.bidPrice"
