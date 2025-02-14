@@ -13,7 +13,7 @@ defineProps({
 });
 
 
-const steps = ref([
+const steps = ref([ // Steps of the welcome page
     {
         title: 'Crea el teu compte',
         description: 'Registra\'t gratuïtament i verifica el teu perfil en menys d\'un minut.',
@@ -35,18 +35,18 @@ const featuredProducts = ref([]);
 const trendingCategories = ref([]);
 
 onMounted(async () => {
-        const response = await axios.get(route('products.featured')); 
-        featuredProducts.value = response.data;
+    const response = await axios.get(route('products.featured')); // Get the featured products
+    featuredProducts.value = response.data; // Set the featured products
 });
 
 onMounted(async () => {
-        const response = await axios.get(route('categories.trending'));
-        trendingCategories.value = response.data.map((category, index) => ({
-            id: category.id,
-            name: category.name,
-            items: category.items,
-            image: `/storage/products/${category.image}`,
-            delay: (index + 1) * 100
+    const response = await axios.get(route('categories.trending')); // Get the trending categories
+    trendingCategories.value = response.data.map((category, index) => ({
+        id: category.id,
+        name: category.name,
+        items: category.items,
+        image: `/storage/products/${category.image}`,
+        delay: (index + 1) * 100
         }));
 });
 </script>
