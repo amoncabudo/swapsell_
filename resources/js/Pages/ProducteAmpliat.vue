@@ -200,24 +200,15 @@ const isBasket = (product) => {
                     <span>{{ isBasket(product) ? 'Eliminar del carret' : 'Comprar ara' }}</span>
                   </button>
                   <Link :href="route('auction')" class="text-white">
-                  <button
-                    class="flex items-center space-x-2 bg-amber-700 text-white px-6 py-3 rounded-lg hover:bg-amber-500 transition-all duration-300 transform hover:-translate-y-1">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-
-                    <span>Subastar</span>
-
-                  </button>
-                  </Link>
+                </Link>
                 </div>
               </div>
             </div>
 
             <!-- Section of information -->
             <div class="w-full lg:w-1/2 space-y-6">
-              <!-- Information of the seller -->
+              <!-- Información del vendedor -->
+              <Link :href="route('profile.getUserById',props.user.id)">
               <div class="bg-white rounded-xl shadow-lg p-6">
                 <h2 class="text-2xl font-bold text-gray-800 mb-4">Informació del venedor</h2>
                 <div class="flex items-center space-x-4">
@@ -233,8 +224,8 @@ const isBasket = (product) => {
                   </div>
                 </div>
               </div>
-
-              <!-- Details of the product -->
+              </Link>
+              <!-- Detalles del producto -->
               <div class="bg-white rounded-xl shadow-lg p-6">
                 <h2 class="text-2xl font-bold text-gray-800 mb-4">Detalls del producte</h2>
                 <div class="space-y-4">
