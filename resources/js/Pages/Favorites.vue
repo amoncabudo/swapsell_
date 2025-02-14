@@ -19,9 +19,9 @@ import NavbarS from '@/Layouts/NavbarS.vue';
 
 const locations = ref({});
 onMounted(() => {
-  setInterval(() => {
-    props.products_favs = [...props.products_favs];
-  }, 60000);
+  setInterval(() => { //Set interval
+    props.products_favs = [...props.products_favs]; //Update products favs
+  }, 60000); //60000 milliseconds
 });
 
 const props = defineProps({
@@ -29,40 +29,38 @@ const props = defineProps({
     isAuthenticated: Boolean
 });
 
-// Función para obtener el nombre de la ubicación
-const getLocationName = async (latitude, longitude) => {
-    const lat = Number(latitude).toFixed(6);
-    const lng = Number(longitude).toFixed(6);
-        const response = await axios.get(
-            `https://nominatim.openstreetmap.org/reverse`, {
+const getLocationName = async (latitude, longitude) => { //Get location name
+    const lat = Number(latitude).toFixed(6); //Latitude
+    const lng = Number(longitude).toFixed(6); //Longitude
+        const response = await axios.get( //Get response
+            `https://nominatim.openstreetmap.org/reverse`, { //Nominatim API
                 params: {
-                    format: 'json',
-                    lat: lat,
-                    lon: lng,
-                    'accept-language': 'es',
-                    zoom: 10
+                    format: 'json', //Format
+                    lat: lat, //Latitude
+                    lon: lng, //Longitude
+                    'accept-language': 'es', //Accept language
+                    zoom: 10 //Zoom
                 }
             }
         );
 
-        if (response.data && response.data.address) {
-            const address = response.data.address;
-            return address.city || 
-                   address.town || 
-                   address.village || 
-                   address.municipality || 
-                   address.county ||
-                   'Ubicación no disponible';
+        if (response.data && response.data.address) { //If response data and response data address
+            const address = response.data.address; //Address
+            return address.city || //City
+                   address.town || //Town
+                   address.village || //Village
+                   address.municipality || //Municipality
+                   address.county || //County
+                   'Ubicació no disponible'; //Location not available
         }
-        return 'Ubicación no disponible';
+        return 'Ubicació no disponible'; //Location not available
 };
 
-// Función para inicializar las ubicaciones
-const initializeLocations = async () => {
-  if (props.products_favs && props.products_favs.length > 0) {
-    for (const product of props.products_favs) {
-      if (product.latitude && product.longitude) {
-          locations.value[product.id] = await getLocationName(product.latitude, product.longitude);
+const initializeLocations = async () => { //Initialize locations
+  if (props.products_favs && props.products_favs.length > 0) { //If products favs and products favs length is greater than 0
+    for (const product of props.products_favs) { //For each product
+      if (product.latitude && product.longitude) { //If product latitude and product longitude
+          locations.value[product.id] = await getLocationName(product.latitude, product.longitude); //Get location name
       }
     }
   }
@@ -79,22 +77,22 @@ const timeAgo = (date) => {
 
 
 function toggleFavorite(product) {
-    axios.post(route('productFavorite'), { id: product.id }) 
+    axios.post(route('productFavorite'), { id: product.id }) //Post request
         .then(response => {
-            // Eliminar el producto de la lista si estamos en la página de favoritos
-            const index = props.products_favs.findIndex(p => p.id === product.id);
+            // Delete the product from the list if we are on the favorites page
+            const index = props.products_favs.findIndex(p => p.id === product.id); //Find index
             if (index !== -1) {
                 props.products_favs.splice(index, 1);
             }
         })
         .catch(error => {
-            console.error("Error al actualizar el estado de favorito:", error);
+            console.error("Error al actualizar el estado de favorito:", error); //Error updating favorite state
         });
 }
 
-const items = ref([
-    { label: 'Inici', url: '/' },
-    { label: 'Favorites' }
+const items = ref([ //Breadcumb 
+    { label: 'Inici', url: '/' }, // Label for the item from home page
+    { label: 'Favorites' } // Label for the item from favorites page
 ]);
 
 const favorites = ref([]);
@@ -103,26 +101,26 @@ const loading = ref(true);
 onMounted(() => {
     // Simulate API call
     setTimeout(() => {
-        favorites.value = sampleFavorites;
-        loading.value = false;
-    }, 500);
+        favorites.value = sampleFavorites; //Favorites
+        loading.value = false; //Loading
+    }, 500); //500 milliseconds
 });
 
 const formatCurrency = (value) => {
-    return new Intl.NumberFormat('es-ES', {
-        style: 'currency',
-        currency: 'EUR'
-    }).format(value);
+    return new Intl.NumberFormat('es-ES', { //Format currency
+        style: 'currency', //Style
+        currency: 'EUR' //Currency
+    }).format(value); //Format value
 };
 
 const removeFromFavorites = (product) => {
     // Implement remove from favorites logic
-    console.log('Removing product:', product.id);
+    console.log('Removing product:', product.id); //Log removing product
 };
 
 const isFavorite = (product) => {
-    // Si el producto está en la lista de favoritos, significa que es un favorito
-    return props.products_favs.some(p => p.id === product.id);
+    // If the product is in the favorites list, it means it is a favorite
+    return props.products_favs.some(p => p.id === product.id); //Return true if the product is in the favorites list
 };
 </script>
 
