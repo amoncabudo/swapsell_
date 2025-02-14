@@ -18,7 +18,8 @@ let props = defineProps({
   product: Object,
   user: Object,
   commentarios: Array, // Asegúrate de que estás pasando "comments"
-  mediaReview: Number
+  mediaReview: Number,
+  authUser: Object,
 });
 
 onMounted(() => {
@@ -279,7 +280,7 @@ const isBasket = (product) => {
           <!-- Formulario para nuevo comentario -->
           <div class="mb-8">
             <div class="flex items-start space-x-4">
-              <img :src="userImage" alt="User Avatar" class="w-10 h-10 rounded-full">
+              <img :src="'/storage/'+props.authUser.image" alt="User Avatar" class="w-10 h-10 rounded-full">
               <div class="flex-1">
                 <textarea aria-label="Comments TextArea"
                   class="w-full p-4 border rounded-lg focus:ring-2 focus:ring-blue-500 text-black focus:border-blue-500"
@@ -301,7 +302,7 @@ const isBasket = (product) => {
             <!-- Comentarios con scroll estilizado -->
             <div class="max-h-[300px] overflow-y-auto pr-4 space-y-6 custom-scrollbar">
               <div v-for="(comentario, i) in comments" :key="i" class="flex items-start space-x-4">
-                <img :src="comentario.user.image" alt="User" class="w-10 h-10 rounded-full">
+                <img :src="'/storage/'+comentario.user.image" alt="User" class="w-10 h-10 rounded-full">
                 <div class="flex-1">
                   <div
                     class="bg-white/80 backdrop-blur-sm rounded-lg p-4 shadow-sm hover:shadow-md transition-all duration-300">

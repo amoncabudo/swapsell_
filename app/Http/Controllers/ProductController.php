@@ -202,13 +202,14 @@ class ProductController extends Controller
                 $comment->tiempo_transcurrido = $this->calcularTiempoTranscurrido($comment->created_at);
                 return $comment;
             });
-        
+        $authUser=Auth::user();
         return Inertia::render("ProducteAmpliat", [
             "product" => $product,
             "isAuthenticated" => $isAuthenticated,
             "user" => $product->user,
             "commentarios" => $comments,
-            "mediaReview" => $mediaReview
+            "mediaReview" => $mediaReview,
+            "authUser" => $authUser
         ]);
     }
 

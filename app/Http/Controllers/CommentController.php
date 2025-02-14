@@ -50,18 +50,14 @@ class CommentController extends Controller
         $id = Auth::user()->id; //Get the user id
         $product_id = $request->get("comment")["id_product"]; //Get the product id
         $description = $request->get("comment")["message"]; //Get the description
-        $image = Auth::user()->image;
 
         $imagePath = null;
-        if ($image) {
-            $imagePath = $image->store('comment_images', 'public'); // Guardar la imagen en el disco público
-        }
+      
 
         $comment = new Comment(); //Create a new comment
         $comment->product_id = $product_id; //Set the product id
         $comment->user_id = auth()->id(); //Set the user id
         $comment->description = $description; //Set the description
-        $comment->image = $image; //Set the image
 
 
 
