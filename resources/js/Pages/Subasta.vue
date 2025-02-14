@@ -7,6 +7,7 @@ import { useForm } from '@inertiajs/vue3';
 import axios from 'axios';
 import jsPDF from 'jspdf';
 import Cookies from "@/Components/Cookies.vue";
+import { DialogDescription } from '@headlessui/vue';
 
 const props = defineProps({
     isAuthenticated: Boolean,
@@ -260,7 +261,8 @@ const downloadAuctionCertificate = (product) => {
                             </div>
 
                             <!-- Field to enter the bid price -->
-                            <div v-if="countdowns[product.auction.id] > 0">
+                            {{ product }}
+                            <div v-if="false && countdowns[product.auction.id] > 0">
                                 <div class="mt-4">
                                     <input aria-label="Product Price" type="number" v-model="product.bidPrice"
                                         :min="product.auction?.current_price + 1"
