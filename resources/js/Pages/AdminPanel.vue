@@ -89,20 +89,28 @@ const closeModalU = () => { //Close modal for add user
 };
 
 //Function for add user
-function addUser() { //Add user
+function addUser() {
     form.post(route('users'), {
         forceFormData: true,
         onSuccess: () => {
-            closeModalU(); //Close modal for add user
-            toastMessage.value = 'Usuario creado correctamente'; //Toast message for add user
-            toastType.value = 'success'; //Toast type for add user
-            showToast.value = true; //Show toast for add user
+            closeModalU();
+            // Actualizar lista de usuarios
+            axios.get(route('users.list'))
+                .then(response => {
+                    users.value = response.data;
+                    toastMessage.value = 'Usuario creado correctamente';
+                    toastType.value = 'success';
+                    showToast.value = true;
+                })
+                .catch(error => {
+                    console.error('Error al actualizar la lista:', error);
+                });
             setTimeout(() => {
-                showToast.value = false; //Hide toast for add user
-            }, 3000); //Hide toast for add user
+                showToast.value = false;
+            }, 3000);
         },
         onError: () => {
-            toastMessage.value = 'Error al crear el usuario'; //Toast message for add user
+            toastMessage.value = 'Error al crear el usuario';
             toastType.value = 'error';
             showToast.value = true;
             setTimeout(() => {
@@ -110,8 +118,7 @@ function addUser() { //Add user
             }, 3000);
         }
     });
-}
-//Modal Events
+}//Modal Events
 const openModalE = () => { //Open modal for add event
     isModalEventOpen.value = true;
 };
@@ -133,14 +140,21 @@ function addEvent() { //Add event
         onSuccess: () => {
             closeModalE(); //Close modal for add event  
             // Update the events list after creating a new one
-            axios.get(route('event.addEvent')).then(response => {
-                events.value = response.data;
-            });
-            toastMessage.value = 'Esdeveniment creat correctament!'; //Toast message for add event
-            showToast.value = true; //Show toast for add event
+            closeModalU();
+            // Actualizar lista de usuarios
+            axios.get(route('users.list'))
+                .then(response => {
+                    users.value = response.data;
+                    toastMessage.value = 'Usuario creado correctamente';
+                    toastType.value = 'success';
+                    showToast.value = true;
+                })
+                .catch(error => {
+                    console.error('Error al actualizar la lista:', error);
+                });
             setTimeout(() => {
-                showToast.value = false; //Hide toast for add event
-            }, 3000); //Hide toast for add event
+                showToast.value = false;
+            }, 3000);
         },
         onError: () => {
             toastMessage.value = 'Error al crear esdeveniment'; //Toast message for add event
@@ -178,41 +192,60 @@ const deleteEvent = async (eventId) => { //Delete Event
     }
 };
 
-function updateEvent() { //Update product
+// Función para cargar eventos
+const loadEvents = async () => {
+    try {
+        const response = await axios.get(route('events.list'));
+        events.value = response.data;
+    } catch (error) {
+        console.error('Error al cargar esdeveniments:', error);
+        toastMessage.value = 'Error al cargar els esdeveniments';
+        toastType.value = 'error';
+        showToast.value = true;
+        setTimeout(() => {
+            showToast.value = false;
+        }, 3000);
+    }
+};
+
+// Función para actualizar evento
+function updateEvent() {
     const eventData = {
         id: editEventForm.id,
-        title: editEventForm.title, //Set name for productData
-        description: editEventForm.description, //Set description for productData
-        date: editEventForm.date, //Set price for productData
-        time: editEventForm.time, //Set longitude for productData
-        longitude: editEventForm.longitude, //Set latitude for productData
-        latitude: editEventForm.latitude, //Set category_id for productData
-        status: editEventForm.status //Set status for productData
+        title: editEventForm.title,
+        description: editEventForm.description,
+        date: editEventForm.date,
+        time: editEventForm.time,
+        longitude: editEventForm.longitude,
+        latitude: editEventForm.latitude,
+        status: editEventForm.status
     };
 
-    axios.put(route('events.update', editEventForm.id), eventData) //Put request for update user
-        .then(response => {
-            closeEditEventModal(); //Close modal for edit user
-            // Update the users list after updating one
-            const index = events.value.findIndex(u => u.id === editEventForm.id);
-            if (index !== -1) {
-                events.value[index] = response.data;
-            }
-            toastMessage.value = 'Esdeveniment actualitzat correctament!'; //Toast message for update user
-            toastType.value = 'success'; //Toast type for update user
-            showToast.value = true; //Show toast for update user
+    axios.put(route('events.update', editEventForm.id), eventData)
+        .then(async response => {
+            closeEditEventModal();
+            // Recargar la lista de eventos
+            await loadEvents();
+            
+            toastMessage.value = 'Esdeveniment actualitzat correctament!';
+            toastType.value = 'success';
+            showToast.value = true;
+            
+            // Limpiar el formulario
+            editEventForm.reset();
+            
             setTimeout(() => {
-                showToast.value = false; //Hide toast for update user
-            }, 3000); //Hide toast for update user
+                showToast.value = false;
+            }, 3000);
         })
         .catch(error => {
             console.error('Error:', error);
-            toastMessage.value = 'Error al actualitzar l\'esdeveniment'; //Toast message for update user
-            toastType.value = 'error'; //Toast type for update user
-            showToast.value = true; //Show toast for update user
+            toastMessage.value = 'Error al actualitzar l\'esdeveniment';
+            toastType.value = 'error';
+            showToast.value = true;
             setTimeout(() => {
-                showToast.value = false; //Hide toast for update user
-            }, 3000); //Hide toast for update user
+                showToast.value = false;
+            }, 3000);
         });
 }
 
@@ -233,41 +266,60 @@ const closeEditUserModal = () => { //Close modal for edit user
     editUserForm.reset(); //Reset editUserForm
 };
 
-function updateUser() { //Update user
-    const userData = { //Set userData
-        name: editUserForm.name, //Set name for userData
-        surname: editUserForm.surname, //Set surname for userData
-        email: editUserForm.email, //Set email for userData
-        role: editUserForm.role //Set role for userData
+// Función para cargar usuarios
+const loadUsers = async () => {
+    try {
+        const response = await axios.get(route('users.list'));
+        users.value = response.data;
+    } catch (error) {
+        console.error('Error al cargar usuarios:', error);
+        toastMessage.value = 'Error al cargar els usuaris';
+        toastType.value = 'error';
+        showToast.value = true;
+        setTimeout(() => {
+            showToast.value = false;
+        }, 3000);
+    }
+};
+
+// Función para actualizar usuario
+function updateUser() {
+    const userData = {
+        name: editUserForm.name,
+        surname: editUserForm.surname,
+        email: editUserForm.email,
+        role: editUserForm.role
     };
-    // Only include the password if it has been entered
+
     if (editUserForm.password) {
         userData.password = editUserForm.password;
     }
 
-    axios.put(route('users.update', editUserForm.id), userData) //Put request for update user
-        .then(response => {
-            closeEditUserModal(); //Close modal for edit user
-            // Update the users list after updating one
-            const index = users.value.findIndex(u => u.id === editUserForm.id);
-            if (index !== -1) {
-                users.value[index] = response.data;
-            }
-            toastMessage.value = 'Usuari actualitzat correctament!'; //Toast message for update user
-            toastType.value = 'success'; //Toast type for update user
-            showToast.value = true; //Show toast for update user
+    axios.put(route('users.update', editUserForm.id), userData)
+        .then(async response => {
+            closeEditUserModal();
+            // Recargar la lista de usuarios
+            await loadUsers();
+            
+            toastMessage.value = 'Usuari actualitzat correctament!';
+            toastType.value = 'success';
+            showToast.value = true;
+            
+            // Limpiar el formulario
+            editUserForm.reset();
+            
             setTimeout(() => {
-                showToast.value = false; //Hide toast for update user
-            }, 3000); //Hide toast for update user
+                showToast.value = false;
+            }, 3000);
         })
         .catch(error => {
             console.error('Error:', error);
-            toastMessage.value = 'Error al actualitzar l\'usuari'; //Toast message for update user
-            toastType.value = 'error'; //Toast type for update user
-            showToast.value = true; //Show toast for update user
+            toastMessage.value = 'Error al actualitzar l\'usuari';
+            toastType.value = 'error';
+            showToast.value = true;
             setTimeout(() => {
-                showToast.value = false; //Hide toast for update user
-            }, 3000); //Hide toast for update user
+                showToast.value = false;
+            }, 3000);
         });
 }
 
@@ -364,72 +416,105 @@ const closeModalP = () => { //Close modal for add product
     };
 };
 
-function addProduct() { //Add product
-    const formData = new FormData(); //Create form data
+// Función para cargar productos
+const loadProducts = async () => {
+    try {
+        const response = await axios.get(route('products.list'));
+        products.value = response.data;
+    } catch (error) {
+        console.error('Error al cargar productes:', error);
+        toastMessage.value = 'Error al cargar els productes';
+        toastType.value = 'error';
+        showToast.value = true;
+        setTimeout(() => {
+            showToast.value = false;
+        }, 3000);
+    }
+};
+
+// Función para añadir producto
+function addProduct() {
+    const formData = new FormData();
     for (const key in product.value) {
         formData.append(key, product.value[key]);
     }
-    console.log(formData); //Log form data
+
     axios.post(route('products.addProduct'), formData, {
         headers: {
             'Content-Type': 'multipart/form-data'
         }
     })
-        .then(response => {
-            closeModalP(); //Close modal for add product
-            product.value.push(response.data); //Add product to the list
-            toastMessage.value = 'Producte creat correctament!'; //Toast message for add product
-            toastType.value = 'success'; //Toast type for add product
-            showToast.value = true; //Show toast for add product
-            setTimeout(() => {
-                showToast.value = false; //Hide toast for add product
-            }, 3000); //Hide toast for add product
-        })
-        .catch(error => {
-            console.error('Error al crear el producte:', error.response.data); //Error for add product
-            toastMessage.value = 'Error al crear el producte'; //Toast message for add product
-            toastType.value = 'error'; //Toast type for add product
-            showToast.value = true; //Show toast for add product
-            setTimeout(() => {
-                showToast.value = false; //Hide toast for add product
-            }, 3000); //Hide toast for add product
-        });
+    .then(async response => {
+        closeModalP();
+        await loadProducts(); // Recargar la lista de productos
+        
+        // Limpiar el formulario
+        product.value = {
+            name: '',
+            description: '',
+            price: '',
+            longitude: '',
+            latitude: '',
+            status: 'active',
+            category_id: '1',
+            image: null
+        };
+
+        toastMessage.value = 'Producte creat correctament!';
+        toastType.value = 'success';
+        showToast.value = true;
+        setTimeout(() => {
+            showToast.value = false;
+        }, 3000);
+    })
+    .catch(error => {
+        console.error('Error al crear el producte:', error.response?.data);
+        toastMessage.value = 'Error al crear el producte';
+        toastType.value = 'error';
+        showToast.value = true;
+        setTimeout(() => {
+            showToast.value = false;
+        }, 3000);
+    });
 }
 
-function updateProduct() { //Update product
-    const productData = { //Set productData
-        name: editProductForm.name, //Set name for productData
-        description: editProductForm.description, //Set description for productData
-        price: editProductForm.price, //Set price for productData
-        longitude: editProductForm.longitude, //Set longitude for productData
-        latitude: editProductForm.latitude, //Set latitude for productData
-        category_id: editProductForm.category_id, //Set category_id for productData
-        status: editProductForm.status //Set status for productData
+// Función para actualizar producto
+function updateProduct() {
+    const productData = {
+        name: editProductForm.name,
+        description: editProductForm.description,
+        price: editProductForm.price,
+        longitude: editProductForm.longitude,
+        latitude: editProductForm.latitude,
+        category_id: editProductForm.category_id,
+        status: editProductForm.status
     };
 
-    axios.put(route('products.update', editProductForm.id), productData) //Put request for update user
-        .then(response => {
-            closeEditProductModal(); //Close modal for edit user
-            // Update the users list after updating one
-            const index = products.value.findIndex(u => u.id === editProductForm.id);
-            if (index !== -1) {
-                products.value[index] = response.data;
-            }
-            toastMessage.value = 'Producte actualitzat correctament!'; //Toast message for update user
-            toastType.value = 'success'; //Toast type for update user
-            showToast.value = true; //Show toast for update user
+    axios.put(route('products.update', editProductForm.id), productData)
+        .then(async response => {
+            closeEditProductModal();
+            // Recargar la lista de productos
+            await loadProducts();
+            
+            toastMessage.value = 'Producte actualitzat correctament!';
+            toastType.value = 'success';
+            showToast.value = true;
+            
+            // Limpiar el formulario
+            editProductForm.reset();
+            
             setTimeout(() => {
-                showToast.value = false; //Hide toast for update user
-            }, 3000); //Hide toast for update user
+                showToast.value = false;
+            }, 3000);
         })
         .catch(error => {
             console.error('Error:', error);
-            toastMessage.value = 'Error al actualitzar el producte'; //Toast message for update user
-            toastType.value = 'error'; //Toast type for update user
-            showToast.value = true; //Show toast for update user
+            toastMessage.value = 'Error al actualitzar el producte';
+            toastType.value = 'error';
+            showToast.value = true;
             setTimeout(() => {
-                showToast.value = false; //Hide toast for update user
-            }, 3000); //Hide toast for update user
+                showToast.value = false;
+            }, 3000);
         });
 }
 
@@ -458,6 +543,7 @@ const deleteProduct = async (productId) => { //Delete product
     }
 };
 
+// Función para abrir el modal de edición
 const openEditProductModal = (product) => {
     editProductForm.id = product.id;
     editProductForm.name = product.name;
@@ -466,10 +552,12 @@ const openEditProductModal = (product) => {
     editProductForm.longitude = product.longitude;
     editProductForm.latitude = product.latitude;
     editProductForm.category_id = product.category_id;
+    editProductForm.status = product.status;
     editProductForm.image = null;
     isEditProductModalOpen.value = true;
 };
 
+// Función para cerrar el modal de edición
 const closeEditProductModal = () => {
     isEditProductModalOpen.value = false;
     editProductForm.reset();
