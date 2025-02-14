@@ -1,6 +1,6 @@
 <script>
-
 </script>
+
 <template>
     <footer class="bg-color-footer">
         <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
@@ -53,7 +53,6 @@
                             <li class="mb-4">
                                 <a href="#" class="hover:underline text-white">Termes i condicions</a>
                             </li>
-
                         </ul>
                     </div>
                 </div>
@@ -82,7 +81,6 @@
                                 d="M3 8a5 5 0 0 1 5-5h8a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8Zm5-3a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3H8Zm7.597 2.214a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2h-.01a1 1 0 0 1-1-1ZM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm-5 3a5 5 0 1 1 10 0 5 5 0 0 1-10 0Z"
                                 clip-rule="evenodd" />
                         </svg>
-
                         <span class="sr-only">Instagram</span>
                     </a>
                     <a href="https://twitter.com/cendrassos?lang=es"
@@ -110,9 +108,34 @@
         </div>
     </footer>
 </template>
+
 <style>
-/*Footer background color*/
+/* Footer background color */
 .bg-color-footer {
     background-color: #004266;
+}
+
+.dark .bg-color-footer {
+    background-color: #002233; /* Darker background for dark mode */
+}
+
+.dark .text-white {
+    color: #e0e0e0; /* Lighter text for dark mode */
+}
+
+.dark .hover\:text-blue-600:hover {
+    color: #5d9bca; /* Lighter blue hover effect */
+}
+
+.dark .hover\:text-blue-300:hover {
+    color: #66b3ff; /* Lighter blue hover effect */
+}
+
+.dark .border-gray-200 {
+    border-color: #444444; /* Lighter border in dark mode */
+}
+
+.dark .border-gray-700 {
+    border-color: #555555; /* Lighter border in dark mode */
 }
 </style>
