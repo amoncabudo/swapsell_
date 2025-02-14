@@ -118,39 +118,5 @@ class EventController extends Controller
         ]);
     }
 
-    public function getAllEventsAdmin()
-    {
-        $events = Event::all();
-        return response()->json($events);
-    }
-
-    public function AdminDeleteEvent($id){
-        $event = Event::find($id);
-        $event->delete();
-        return response()->json(['message' => 'Esdeveniment eliminat correctament']);
-    }
-
-    public function AdminUpdateEvent(Request $request, $id){
-        $id = $request->get("id");
-        $title = $request->get("title");
-        $description = $request->get("description");
-        $date = $request->get("date");
-        $time = $request->get("time");
-        $longitude = $request->get("longitude");
-        $latitude = $request->get("latitude");
-
-        $event = Event::find($id);
-        $event->title = $request->get("title", $event->title);
-        $event->description = $request->get("description", $event->description);
-        $event->date = $request->get("date", $event->date);
-        $event->time = $request->get("time", $event->time);
-        $event->longitude = $request->get("longitude", $event->longitude);
-        $event->latitude = $request->get("latitude", $event->latitude);
-        $event->user_id = Auth::id();
-
-        $event->save();
-        
-        return response()->json(['message' => 'Esdeveniment actualitzat correctament']);
-    }
 
 }
