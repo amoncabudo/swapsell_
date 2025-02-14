@@ -116,4 +116,36 @@ class AuctionController extends Controller
             'message' => 'La subhasta ja estava finalitzada'
         ]);
     }
+
+    public function auction()
+    {   
+        $products = Product::with(['auction.lastBidder'])
+            ->where('bid', true)
+            ->leftJoin('auctions', 'products.id', '=', 'auctions.product_id')
+            ->whereDate('end_time', '>=', date('Y-m-d H-i-s', strtotime('-1 week')))
+            ->select('products.*')  // Importante: seleccionar solo las columnas de products
+            ->get()
+            ->map(function($product) {
+                if ($product->auction) {
+                    $endTime = new \DateTime($product->auction->end_time);
+                    $now = new \DateTime();
+                    $interval = $now->diff($endTime);
+                    
+                    $product->auction->remaining = [
+                        'days' => $interval->d,
+                        'hours' => $interval->h,
+                        'minutes' => $interval->i,
+                        'seconds' => $interval->s,
+                        'total_seconds' => $endTime->getTimestamp() - $now->getTimestamp()
+                    ];
+                }
+                return $product;
+            });
+        
+        return Inertia::render('Subasta', [
+            'isAuthenticated' => auth()->check(),
+            'products' => $products
+        ]);
+    }
+
 }

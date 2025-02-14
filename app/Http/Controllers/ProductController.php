@@ -206,36 +206,6 @@ class ProductController extends Controller
         ]);
     }
 
-    public function auction()
-    {   
-        $products = Product::with(['auction.lastBidder'])
-            ->where('bid', true)
-            ->leftJoin('auctions', 'products.id', '=', 'auctions.product_id')
-            ->whereDate('end_time', '>=', date('Y-m-d H-i-s', strtotime('-1 week')))
-            ->select('products.*')  // Importante: seleccionar solo las columnas de products
-            ->get()
-            ->map(function($product) {
-                if ($product->auction) {
-                    $endTime = new \DateTime($product->auction->end_time);
-                    $now = new \DateTime();
-                    $interval = $now->diff($endTime);
-                    
-                    $product->auction->remaining = [
-                        'days' => $interval->d,
-                        'hours' => $interval->h,
-                        'minutes' => $interval->i,
-                        'seconds' => $interval->s,
-                        'total_seconds' => $endTime->getTimestamp() - $now->getTimestamp()
-                    ];
-                }
-                return $product;
-            });
-        
-        return Inertia::render('Subasta', [
-            'isAuthenticated' => auth()->check(),
-            'products' => $products
-        ]);
-    }
     public function editProduct($id) {
         $product = Product::find($id);
     
@@ -353,49 +323,5 @@ public function list()
         }
     }
 
-    public function getAllProductsAdmin()
-    {
-        try {
-            $products = Product::all();
-            return response()->json($products);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Error al cargar los productos: ' . $e->getMessage()], 500);
-        }
-    }
-    
-    public function AdminDeleteProduct($id){
-        $product = Product::find($id);
-        $product->delete();
-        return response()->json(['message' => 'Producte eliminat correctament']);
-    }
-
-    public function AdminUpdateProduct(Request $request, $id){
-        $product = Product::find($id);
-    
-        if (!$product) {
-            return redirect()->route('Products')->with('error', 'Producte no trobat');
-        }
-    
-        $name = $request->get("name");
-        $description = $request->get("description");
-        $price = $request->get("price");
-        $longitude = $request->get("longitude");
-        $latitude = $request->get("latitude");
-        $category = $request->get("category");
-    
-        $product->name = $request->get("name", $product->name);
-        $product->description = $request->get("description", $product->description);
-        $product->price = $request->get("price", $product->price);
-        $product->longitude = $request->get("longitude", $product->longitude);
-        $product->latitude = $request->get("latitude", $product->latitude);
-        $product->category_id = $request->get("category_id", $product->category_id);
-        
-    
-        $product->user_id = Auth::id();
-        $product->image = 'default.jpg';
-        
-        $product->save();
-        return response()->json(['message' => 'Producte actualitzat correctament']);
-    }
 
 }
