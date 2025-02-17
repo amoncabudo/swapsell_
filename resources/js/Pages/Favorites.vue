@@ -146,7 +146,7 @@ const isFavorite = (product) => {
                                     <img :src="`/storage/${products_favs.image}`" :alt="products_favs.name" class="w-full h-56 object-cover">
                                 </div>
                                 <div class="p-6">
-                                    <Link :href="`/product/${products_favs.id}`" class="block">
+                                    <Link :href="route('product.show', products_favs.id)" class="block">
                                     <h2 class="text-xl font-semibold text-gray-900 mb-3">{{ products_favs.name }}
                                     </h2>
                                     <p class="text-gray-800 text-base mb-4 line-clamp-2">{{
