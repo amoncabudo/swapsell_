@@ -267,7 +267,11 @@ const isBasket = (product) => {
           <!-- Formulario para nuevo comentario -->
           <div class="mb-8">
             <div class="flex items-start space-x-4">
-              <img :src="`/${user.image}`" alt="User Avatar" class="w-10 h-10 rounded-full">
+              <img 
+                :src="$page.props.auth.user?.image ? `/${$page.props.auth.user.image}` : '/images/default-avatar.png'" 
+                alt="User Avatar" 
+                class="w-10 h-10 rounded-full object-cover"
+              >
               <div class="flex-1">
                 <textarea aria-label="Comments TextArea"
                   class="w-full p-4 border rounded-lg focus:ring-2 focus:ring-blue-500 text-black focus:border-blue-500"
