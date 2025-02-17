@@ -21,20 +21,23 @@ const showingNavigationDropdown = ref(false);
                         </Link>
                     </div>
 
-                    
-                     <!-- Links Section --->
-                     <Link href="/" class="text-gray-600 hover:text-blue-500 transition-colors">
-                            Inici
+                    <!-- Links Section --->
+                    <div class="hidden sm:flex space-x-20">
+                        <Link href="/" class="text-gray-600 dark:text-gray-100 hover:text-blue-500 transition-colors">
+                        Inici
                         </Link>
                         <!-- Productes -->
-                        <Link href="/products" class="text-gray-600 hover:text-blue-500 transition-colors">
-                            Productes
+                        <Link href="/products" class="text-gray-600 dark:text-gray-100 hover:text-blue-500 transition-colors">
+                        Productes
                         </Link>
                         <!-- Events -->
-                        <Link href="/events" class="text-gray-600 hover:text-blue-500 transition-colors">
-                            Esdeveniments
+                        <Link href="/events" class="text-gray-600 dark:text-gray-100 hover:text-blue-500 transition-colors">
+                        Esdeveniments
                         </Link>
-
+                        <Link href="/auction" class="text-gray-600 dark:text-gray-100 hover:text-blue-500 transition-colors">
+                        Subhastes
+                        </Link>
+                    </div>
                     <div class="hidden sm:flex items-center space-x-6">
                         <Link href="/login" class="text-gray-600 hover:text-blue-500 transition-colors">
                             Iniciar sessió

@@ -65,7 +65,7 @@ onMounted(async () => {
                                 productes únics de segona mà.</p> 
                             <div class="flex gap-4">
                                 <button
-                                    class="border border-white text-gray-100 px-8 py-3 rounded-lg hover:bg-white hover:text-gray-900 transition-all dark:border-gray-800 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-900 dark:hover:text-gray-100 dark:hover:border-gray-200">
+                                    class="border border-white text-gray-100 px-8 py-3 rounded-lg hover:bg-white hover:text-gray-900 transition-all dark:border-gray-800 dark:bg-gray-900 dark:text-gray-100 dark:hover:bg-gray-100 dark:hover:text-gray-900 dark:hover:border-gray-200">
                                     <a href="/products">Començar ara</a>
                                 </button>
                             </div>

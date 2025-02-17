@@ -139,7 +139,7 @@ const searchedProducts = computed(() => { // Computed for search products
   <div class="bg-gray-50 min-h-screen">
     <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
       <!-- Hero Section con wave background -->
-      <div class="wave-bg pt-24 pb-16">
+      <div class="pt-24 pb-16 bg-gradient-to-r from-[#004266] to-[#006699] dark:from-[#1b2e37] dark:to-[#224466]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 class="text-4xl font-bold text-white text-center mb-8">
             Troba el que busques
@@ -161,7 +161,7 @@ const searchedProducts = computed(() => { // Computed for search products
 
       <!-- Categories with glass effect -->
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8">
-        <div class="glass-effect rounded-xl p-4">
+        <div class="dark:bg-black bg-white shadow-xl rounded-xl p-4">
           <div class="flex space-x-4 overflow-x-auto py-2">
             <button @click="selectedCategory = 'all'" :class="[
               'px-4 py-2 rounded-full flex items-center space-x-2',
@@ -305,10 +305,7 @@ const searchedProducts = computed(() => { // Computed for search products
 }
 
 /* Efectos */
-.glass-effect {
-  background: rgb(255, 255, 255);
-  box-shadow: 0 8px 32px 0 rgba(0, 66, 102, 0.2);
-}
+
 
 /* Fondos y animaciones */
 .wave-bg {
@@ -406,4 +403,5 @@ const searchedProducts = computed(() => { // Computed for search products
 .hover-scale:hover {
   transform: scale(1.05);
 }
+
 </style>
