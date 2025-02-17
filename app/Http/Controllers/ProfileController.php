@@ -41,7 +41,7 @@ class ProfileController extends Controller
     
             $path = $file->storeAs('users', $name, 'public'); //Store the file
         
-            $request->user()->image = "storage/".$path; //Set the image of the user
+            $request->user()->image = $path; //Set the image of the user
         }
         if ($request->user()->isDirty('email')) { //If the email is dirty
             $request->user()->email_verified_at = null; //Set the email verified at
