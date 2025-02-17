@@ -21,13 +21,18 @@ console.log(props.transaction);
       <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
         <h2 class="flex justify-center items-center text-2xl font-bold mb-4">Historial de Compras</h2>
         
+        <div v-if="transaction.length === 0" class="text-center text-gray-600">
+          No hi ha productes comprats.
+        </div>
+
         <div class="space-y-4">
           <div 
             v-for="transaction in transaction" 
             :key="transaction.id" 
             class="p-4 border rounded-lg shadow-sm bg-gray-50 flex items-center"
           >
-            <!-- Left section: Image and name of the product -->
+          
+            <!-- Left section: Image and name of the products -->
             <div class="w-1/3 flex items-center space-x-4">
               <img :src="`/storage/${transaction.product.image}`" :alt="transaction.product.name" class="w-24 h-24 object-cover rounded">
               <h3 class="text-lg font-semibold">{{ transaction.name }}</h3>
