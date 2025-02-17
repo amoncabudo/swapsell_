@@ -81,12 +81,13 @@ class EventController extends Controller
     }
 
     public function getAllEvents(){
-        $events = Event::all();
+        $events = Event::whereDate('date', '>=', date('Y-m-d H-i-s', strtotime('-0 day')))
+            ->get();
         $isAuthenticated = Auth::check();
-        return Inertia::render("Events", 
-        ["events" => $events,
-        "isAuthenticated" => $isAuthenticated
-    ]);
+        return Inertia::render("Events", [
+            "events" => $events,
+            "isAuthenticated" => $isAuthenticated
+        ]);
     }
 
     public function goEvent($id){

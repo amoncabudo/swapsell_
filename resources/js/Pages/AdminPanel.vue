@@ -1123,13 +1123,6 @@ const searchedUsers = computed(() => { // Computed for search users
                                     </div>
 
                                     <div class="grid grid-cols-2 gap-6">
-                                        <div class="form-group">
-                                            <label for="longitude"
-                                                class="block text-sm font-medium text-gray-700 mb-2">Longitud</label>
-                                            <input type="number" step="any" id="longitude" v-model="event.longitude"
-                                                class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 text-gray-800"
-                                                required />
-                                        </div>
 
                                         <div class="form-group">
                                             <label for="latitude"
@@ -1138,6 +1131,15 @@ const searchedUsers = computed(() => { // Computed for search users
                                                 class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 text-gray-800"
                                                 required />
                                         </div>
+
+                                        <div class="form-group">
+                                            <label for="longitude"
+                                                class="block text-sm font-medium text-gray-700 mb-2">Longitud</label>
+                                            <input type="number" step="any" id="longitude" v-model="event.longitude"
+                                                class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 text-gray-800"
+                                                required />
+                                        </div>
+
                                     </div>
 
                                     <div class="form-group">
@@ -1224,13 +1226,6 @@ const searchedUsers = computed(() => { // Computed for search users
                                     </div>
 
                                     <div class="grid grid-cols-2 gap-6">
-                                        <div class="form-group">
-                                            <label for="longitude"
-                                                class="block text-sm font-medium text-gray-700 mb-2">Longitud</label>
-                                            <input type="number" step="any" id="longitude" v-model="product.longitude"
-                                                class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 text-gray-800"
-                                                required />
-                                        </div>
 
                                         <div class="form-group">
                                             <label for="latitude"
@@ -1239,6 +1234,16 @@ const searchedUsers = computed(() => { // Computed for search users
                                                 class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 text-gray-800"
                                                 required />
                                         </div>
+
+                                        <div class="form-group">
+                                            <label for="longitude"
+                                                class="block text-sm font-medium text-gray-700 mb-2">Longitud</label>
+                                            <input type="number" step="any" id="longitude" v-model="product.longitude"
+                                                class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 text-gray-800"
+                                                required />
+                                        </div>
+
+
                                     </div>
 
                                     <div class="form-group">
@@ -1722,6 +1727,27 @@ const searchedUsers = computed(() => { // Computed for search users
                                 </div>
 
                                 <!-- Grid for longitude and latitude -->
+                                <div class="form-group space-y-2">
+                                        <label for="latitude" class="block text-sm font-semibold text-gray-800">
+                                            Latitud
+                                        </label>
+                                        <div class="relative">
+                                            <div
+                                                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                                <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24"
+                                                    stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                </svg>
+                                            </div>
+                                            <input type="number" id="latitude" v-model="editEventForm.latitude"
+                                                class="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 text-gray-800"
+                                                required step="any" />
+                                        </div>
+                                </div>
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                     <div class="form-group space-y-2">
                                         <label for="longitude" class="block text-sm font-semibold text-gray-800">
@@ -1743,27 +1769,7 @@ const searchedUsers = computed(() => { // Computed for search users
                                         </div>
                                     </div>
 
-                                    <div class="form-group space-y-2">
-                                        <label for="latitude" class="block text-sm font-semibold text-gray-800">
-                                            Latitud
-                                        </label>
-                                        <div class="relative">
-                                            <div
-                                                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                                <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24"
-                                                    stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        stroke-width="2"
-                                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                </svg>
-                                            </div>
-                                            <input type="number" id="latitude" v-model="editEventForm.latitude"
-                                                class="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 text-gray-800"
-                                                required step="any" />
-                                        </div>
-                                    </div>
+                                    
                                 </div>
 
                                 <!-- Improved buttons with effects -->

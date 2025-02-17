@@ -79,6 +79,19 @@ let form = useForm({
         </div>
 
         <div class="mb-4">
+          <label for="latitude" class="block text-black font-medium mb-2">Latitud:</label>
+          <input
+            type="number"
+            step="any"
+            id="latitude"
+            name="latitude"
+            v-model="form.latitude"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200 text-black"
+            required
+          />
+        </div>
+
+        <div class="mb-4">
           <label for="longitude" class="block text-black font-medium mb-2">Longitud:</label>
           <input
             type="number"
@@ -91,18 +104,7 @@ let form = useForm({
           />
         </div>
 
-        <div class="mb-4">
-          <label for="latitude" class="block text-black font-medium mb-2">Latitud:</label>
-          <input
-            type="number"
-            step="any"
-            id="latitude"
-            name="latitude"
-            v-model="form.latitude"
-            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200 text-black"
-            required
-          />
-        </div>
+
 
 
         <div class="mb-4">
