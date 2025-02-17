@@ -196,7 +196,7 @@ class ProductController extends Controller
         }
 
         if ($product->user){
-            $product->user->image = $product->user->image ? Storage::url($product->user->image) : '/storage/logo.png';
+            $product->user->image = $product->user->image;
         }
 
         $comments = $product->comments()

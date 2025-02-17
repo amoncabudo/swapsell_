@@ -76,10 +76,10 @@ class CommentController extends Controller
         return $comments;
     }
 
-    public function showUserImage($image)
-    {
-        return url('storage/' . $image); // Genera la URL pública para la imagen
-    }
+    // public function showUserImage($image)
+    // {
+    //     return url('storage/' . $image); // Genera la URL pública para la imagen
+    // }
     
     public function show($id)
     {

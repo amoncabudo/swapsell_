@@ -295,7 +295,7 @@ const isBasket = (product) => {
             <!-- Comments with styled scroll -->
             <div class="max-h-[300px] overflow-y-auto pr-4 space-y-6 custom-scrollbar">
               <div v-for="(comentario, i) in comments" :key="i" class="flex items-start space-x-4">
-                <img src="/images/User.png" alt="User" class="w-10 h-10 rounded-full">
+                <img :src="`/${comentario.user.image}`" alt="User" class="w-10 h-10 rounded-full">
                 <div class="flex-1">
                   <div
                     class="bg-white/80 backdrop-blur-sm rounded-lg p-4 shadow-sm hover:shadow-md transition-all duration-300">
