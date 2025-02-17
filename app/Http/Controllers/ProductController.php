@@ -56,34 +56,35 @@ class ProductController extends Controller
     }
     
     public function updateProduct(Request $request, $id){
-        $product = Product::find($id); //Find the product
-    
-        if (!$product) {
-            return redirect()->route('Products')->with('error', 'Producte no trobat'); //Redirect to the products page
-        }
-    
-        $name = $request->get("name"); //Get the name
-        $description = $request->get("description"); //Get the description
-        $price = $request->get("price"); //Get the price
-        $longitude = $request->get("longitude"); //Get the longitude
-        $latitude = $request->get("latitude"); //Get the latitude
-        $category = $request->get("category"); //Get the category
-    
-        $product->name = $request->get("name", $product->name); //Set the name
-        $product->description = $request->get("description", $product->description); //Set the description
-        $product->price = $request->get("price", $product->price); //Set the price
-        $product->longitude = $request->get("longitude", $product->longitude); //Set the longitude
-        $product->latitude = $request->get("latitude", $product->latitude); //Set the latitude
-        $product->category_id = $request->get("category_id", $product->category_id);
-        
-    
-        $product->user_id = Auth::id(); //Set the user id
-        $product->image = 'default.jpg'; //Set the image
-        
-        $product->save(); //Save the product
-        
-        return redirect()->route('profile'); //Redirect to the profile page
+        $product = Product::find($id);
 
+        if (!$product) {
+            return redirect()->route('Products')->with('error', 'Producte no trobat');
+        }
+
+        $product->name = $request->get("name", $product->name);
+        $product->description = $request->get("description", $product->description);
+        $product->price = $request->get("price", $product->price);
+        $product->longitude = $request->get("longitude", $product->longitude);
+        $product->latitude = $request->get("latitude", $product->latitude);
+        $product->category_id = $request->get("category_id", $product->category_id);
+        $product->user_id = Auth::id();
+
+        // Manejar la imagen
+        if ($request->hasFile('image')) {
+            // Eliminar la imagen anterior si no es la default
+            if ($product->image !== 'default.jpg') {
+                Storage::delete('public/' . $product->image);
+            }
+            
+            $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
+            $request->file('image')->storeAs('public', $imageName);
+            $product->image = $imageName;
+        }
+
+        $product->save();
+        
+        return redirect()->route('profile');
     }
 
     public function getAllProducts(){
