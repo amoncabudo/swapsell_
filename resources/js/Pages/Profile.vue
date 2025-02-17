@@ -16,15 +16,7 @@ const props = defineProps({
 
 })
 
-<<<<<<< HEAD
-
-
-console.log(props.user)
-// console.log(props.products)
-
-=======
 console.log(props)
->>>>>>> 91da8e129a1bda4ee25c03bb557ae4a81a78a1f3
 
 </script>
 
@@ -40,11 +32,7 @@ console.log(props)
             <!-- Profile image with border and shadow -->
             <div class="relative">
               <div class="w-32 h-32 rounded-full overflow-hidden">
-<<<<<<< HEAD
-                <img :src="'/storage/{{user.image}}'" alt="Foto de perfil" class="w-full h-full object-cover">
-=======
-                <img :src="`/${user.image}`" alt="Foto de perfil" class="w-full h-full object-cover">
->>>>>>> 91da8e129a1bda4ee25c03bb557ae4a81a78a1f3
+                <img :src="`/storage/${user.image}`" alt="Foto de perfil" class="w-full h-full object-cover">
                 <!-- '/storage/app/public/logo.png' -->
 
               </div>

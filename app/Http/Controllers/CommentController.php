@@ -102,16 +102,10 @@ class CommentController extends Controller
     //         return redirect()->route('Products')->with('error', 'Comentari no trobat');
     //     }
 
-<<<<<<< HEAD
     //     $comment->description = $request->get("description");
     //     $comment->save();
     //     return redirect()->route('Products')->with('success', 'Comentari actualitzat correctament');
     // }
-=======
-        $comment->description = $request->get("description");
-        $comment->save();
-        return redirect()->route('Products')->with('success', 'Comentari actualitzat correctament');
-    }
 
     public function getCommentsWithUsers()
     {
@@ -121,5 +115,4 @@ class CommentController extends Controller
             'comments' => $comments,
         ]);
     }
->>>>>>> 91da8e129a1bda4ee25c03bb557ae4a81a78a1f3
 }

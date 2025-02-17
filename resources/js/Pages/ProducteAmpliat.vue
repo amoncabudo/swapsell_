@@ -8,11 +8,8 @@ import { defineProps, ref, computed } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import { Link, Head } from '@inertiajs/vue3';
 import Cookies from "@/Components/Cookies.vue";
-<<<<<<< HEAD
-=======
 import { cartCount, incrementCartCount, decrementCartCount } from '@/cartState';
 
->>>>>>> 91da8e129a1bda4ee25c03bb557ae4a81a78a1f3
 import axios from 'axios';
 
 
@@ -22,14 +19,8 @@ let props = defineProps({
   isAuthenticated: Boolean,
   product: Object,
   user: Object,
-<<<<<<< HEAD
-  commentarios: Array, // Asegúrate de que estás pasando "comments"
-  mediaReview: Number,
-  authUser: Object,
-=======
   commentarios: Array, // Ensure you are passing "comments"
   mediaReview: Number
->>>>>>> 91da8e129a1bda4ee25c03bb557ae4a81a78a1f3
 });
 
 onMounted(() => {
@@ -52,21 +43,12 @@ const submitData = () => {
     .then((response) => {
       comments.value = response.data; // Update the comments
 
-<<<<<<< HEAD
-      // Limpiar mensaje de error si hay éxito 
-    })
-    .catch((error) => {
-      // Manejo de error
-
-      console.error('Error al enviar datos:', error);
-=======
       // Clear error message if successful
     })
     .catch((error) => {
       // Error handling
 
       console.error('Error al enviar dades:', error);
->>>>>>> 91da8e129a1bda4ee25c03bb557ae4a81a78a1f3
 
     });
 };
@@ -79,7 +61,7 @@ let form = useForm({
   id_product: props.product.id,
   message: "",
   image: null,
-  
+
 });
 
 
@@ -183,13 +165,6 @@ console.log(props.user.created_at);
 function toggleBasket(product) {
   axios.post(route('baskets_products'), { id: product.id })
     .then(response => {
-<<<<<<< HEAD
-      // Actualizar el estado del favorito basado en la respuesta del servidor
-      product.is_basket = response.data.is_basket;
-    })
-    .catch(error => {
-      console.error("Error al actualizar el estado de favorito:", error);
-=======
       product.is_basket = response.data.is_basket; // Update the basket status based on the server response
       if (product.is_basket) {
         incrementCartCount(); // Increment the cart count
@@ -199,16 +174,11 @@ function toggleBasket(product) {
     })
     .catch(error => {
       console.error("Error al actualizar l'estat de favorits:", error); // If the basket status is invalid, show an error
->>>>>>> 91da8e129a1bda4ee25c03bb557ae4a81a78a1f3
     });
 }
 
 const isBasket = (product) => {
-<<<<<<< HEAD
-  return product.is_basket;
-=======
   return product.is_basket; // Return the basket status
->>>>>>> 91da8e129a1bda4ee25c03bb557ae4a81a78a1f3
 };
 
 
@@ -248,21 +218,7 @@ const isBasket = (product) => {
                     <span>{{ isBasket(product) ? 'Eliminar del carret' : 'Comprar ara' }}</span>
                   </button>
                   <Link :href="route('auction')" class="text-white">
-<<<<<<< HEAD
-                  <button
-                    class="flex items-center space-x-2 bg-amber-700 text-white px-6 py-3 rounded-lg hover:bg-amber-500 transition-all duration-300 transform hover:-translate-y-1">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-
-                    <span>Subastar</span>
-
-                  </button>
                   </Link>
-=======
-                </Link>
->>>>>>> 91da8e129a1bda4ee25c03bb557ae4a81a78a1f3
                 </div>
               </div>
             </div>
@@ -270,15 +226,11 @@ const isBasket = (product) => {
             <!-- Section of information -->
             <div class="w-full lg:w-1/2 space-y-6">
               <!-- Información del vendedor -->
-              <Link :href="route('profile.getUserById',props.user.id)">
+              <Link :href="route('profile.getUserById', props.user.id)">
               <div class="bg-white rounded-xl shadow-lg p-6">
                 <h2 class="text-2xl font-bold text-gray-800 mb-4">Informació del venedor</h2>
                 <div class="flex items-center space-x-4">
-<<<<<<< HEAD
-                  <img :src="sellerImage" alt="User" class="w-16 h-16 rounded-full border-2 border-gray-200">
-=======
                   <img :src="`/${user.image}`" alt="User" class="w-16 h-16 rounded-full border-2 border-gray-200">
->>>>>>> 91da8e129a1bda4ee25c03bb557ae4a81a78a1f3
                   <div>
                     <p class="font-semibold text-lg">{{ product.user.name }} {{ product.user.surname }}</p>
                     <div class="flex items-center space-x-2 text-sm text-gray-500">
@@ -320,11 +272,7 @@ const isBasket = (product) => {
           <!-- Form for new comment -->
           <div class="mb-8">
             <div class="flex items-start space-x-4">
-<<<<<<< HEAD
-              <img :src="'/storage/'+props.authUser.image" alt="User Avatar" class="w-10 h-10 rounded-full">
-=======
               <img :src="`/${user.image}`" alt="User Avatar" class="w-10 h-10 rounded-full">
->>>>>>> 91da8e129a1bda4ee25c03bb557ae4a81a78a1f3
               <div class="flex-1">
                 <textarea aria-label="Comments TextArea"
                   class="w-full p-4 border rounded-lg focus:ring-2 focus:ring-blue-500 text-black focus:border-blue-500"
@@ -338,24 +286,12 @@ const isBasket = (product) => {
               </div>
             </div>
           </div>
-<<<<<<< HEAD
-
-
-
-          <!-- Lista de comentarios -->
-          <div class="space-y-6">
-            <!-- Comentarios con scroll estilizado -->
-            <div class="max-h-[300px] overflow-y-auto pr-4 space-y-6 custom-scrollbar">
-              <div v-for="(comentario, i) in comments" :key="i" class="flex items-start space-x-4">
-                <img :src="'/storage/'+comentario.user.image" alt="User" class="w-10 h-10 rounded-full">
-=======
           <!-- List of comments -->
           <div class="space-y-6">
             <!-- Comments with styled scroll -->
             <div class="max-h-[300px] overflow-y-auto pr-4 space-y-6 custom-scrollbar">
               <div v-for="(comentario, i) in comments" :key="i" class="flex items-start space-x-4">
                 <img src="/images/User.png" alt="User" class="w-10 h-10 rounded-full">
->>>>>>> 91da8e129a1bda4ee25c03bb557ae4a81a78a1f3
                 <div class="flex-1">
                   <div
                     class="bg-white/80 backdrop-blur-sm rounded-lg p-4 shadow-sm hover:shadow-md transition-all duration-300">
