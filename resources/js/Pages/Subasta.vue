@@ -155,7 +155,7 @@ const downloadAuctionCertificate = (product) => {
 
     <Head title="Subhastes"></Head>
     <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
-        <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 py-12">
+        <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 py-12 text-black">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <!-- Header Section with Wave Effect -->
                 <div class="text-center mb-12 relative overflow-hidden p-8 rounded-xl bg-SubastaButton1 shadow-xl">
@@ -261,7 +261,7 @@ const downloadAuctionCertificate = (product) => {
                             </div>
 
                             <!-- Field to enter the bid price -->
-                            <div v-if="false && countdowns[product.auction.id] > 0">
+                            <div v-if="countdowns[product.auction.id] > 0">
                                 <div class="mt-4">
                                     <input aria-label="Product Price" type="number" v-model="product.bidPrice"
                                         :min="product.auction?.current_price + 1"
@@ -365,5 +365,10 @@ const downloadAuctionCertificate = (product) => {
 /* Backgrounds and animations */
 .wave-bg {
     background-color: #004266;
+}
+
+/* Add this new style */
+.text-black {
+    color: #000000;
 }
 </style>

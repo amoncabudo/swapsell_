@@ -1,66 +1,117 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<p align="center"><img src="storage/app/public/logo.png" width="400" alt="Laravel Logo"></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+<h1 align="center">SwapSell 🔄🛒</h1>
 
-## About Laravel
+<h2>Català</h2>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🌍 Descripció
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Swapsell és una plataforma web dissenyada per facilitar la compravenda i subhasta d'objectes, promovent la seva reutilització. Creiem en donar una segona vida als objectes que ja no utilitzem, contribuint així a la sostenibilitat i a l'economia circular. 🌱
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+✨ Amb Swapsell, tant venedors com compradors en surten beneficiats:
+- 🏷️ Els venedors obtenen una remuneració pels seus productes.
+- 💰 Els compradors poden adquirir articles a preus més accessibles en comparació amb els nous.
 
-## Learning Laravel
+## 🎯 Objectius
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- ✅ Facilitar la venda segura de productes de segona mà.
+- 🔍 Ajudar els usuaris a trobar articles útils a preus competitius.
+- 🔄 Fomentar la reutilització i reduir el malbaratament.
+- 🤝 Crear una comunitat de compravenda fiable i accessible per a tothom.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## ⚙️ Funcionalitats
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- 🛍️ Compra i venda d'articles de segona mà.
+- 📢 Sistema de subhastes.
+- 🔐 Pagaments segurs i protecció per a compradors i venedors.
+- 🗺️ Filtres avançats per cercar productes.
+- ⭐ Sistema de valoracions i comentaris per garantir la confiança.
+- 📦 Opcions de lliurament i recollida segons preferència de l'usuari.
 
-## Laravel Sponsors
+💡 Uneix-te a Swapsell i dona una nova vida als teus objectes! 🚀
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 🛠 Instal·lació
 
-### Premium Partners
+Segueix aquests passos per instal·lar i executar el projecte:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+1. Clona el repositori:
+   ```sh
+   git clone https://github.com/cdecaprio/4-WALLAS.git
+   ```
+2. Accedeix al directori del projecte:
+   ```sh
+   cd swapsell
+   ```
+3. Instal·la les dependències:
+   ```sh
+   npm install
+   ```
+4. Executa l'aplicació en mode desenvolupament:
+   ```sh
+   npm run start
+   ```
+5. Per generar el build de producció:
+   ```sh
+   npm run build
+   ```
 
-## Contributing
+<p align="center"><img src="storage/app/public/logo.png" width="400" alt="Laravel Logo"></p>
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+<h1 align="center">SwapSell 🔄🛒</h1>
 
-## Code of Conduct
+<h2>English</h2>
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 🌍 Description
 
-## Security Vulnerabilities
+Swapsell is a web platform designed to facilitate the buying, selling, and auctioning of items, promoting their reuse. We believe in giving a second life to objects we no longer use, contributing to sustainability and the circular economy. 🌱
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+✨ With Swapsell, both sellers and buyers benefit:
+- 🏷️ Sellers earn compensation for their products.
+- 💰 Buyers can purchase items at more affordable prices compared to new ones.
 
-## License
+## 🎯 Objectives
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- ✅ Facilitate the safe sale of second-hand products.
+- 🔍 Help users find useful items at competitive prices.
+- 🔄 Promote reuse and reduce waste.
+- 🤝 Create a reliable and accessible buying and selling community.
+
+## ⚙️ Features
+
+- 🛍️ Buy and sell second-hand items.
+- 📢 Real-time auction system.
+- 🔐 Secure payments and protection for buyers and sellers.
+- 🗺️ Advanced filters to search for products by location, category, and price.
+- 💬 Integrated chat for user communication.
+- ⭐ Rating and review system to ensure trust.
+- 📦 Delivery and pickup options based on user preference.
+
+💡 Join Swapsell and give your items a new life! 🚀
+
+## 🛠 Installation
+
+Follow these steps to install and run the project:
+
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/your-username/swapsell.git
+   ```
+2. Navigate to the project directory:
+   ```sh
+   cd swapsell
+   ```
+3. Install dependencies:
+   ```sh
+   npm install
+   ```
+4. Run the application in development mode:
+   ```sh
+   npm run start
+   ```
+5. Build the production version:
+   ```sh
+   npm run build
+   ```
+
+
+
