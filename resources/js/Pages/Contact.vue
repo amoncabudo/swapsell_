@@ -3,13 +3,14 @@ import Footer from '../Components/Footer.vue';
 import { ref } from 'vue';
 import { Head } from '@inertiajs/vue3';
 import Cookies from "@/Components/Cookies.vue";
+import { useForm } from '@inertiajs/vue3';
 
 const items = ref([
     { label: 'Inici', url: '/' },
     { label: 'Contacte' }
 ]);
 
-const form = ref({
+const form = useForm({
     name: '',
     email: '',
     subject: '',
@@ -17,7 +18,14 @@ const form = ref({
 });
 
 const submitForm = () => {
-    console.log('Form submitted:', form.value);
+    form.post(route('contact.send'), {
+        onSuccess: () => {
+            console.log('Missatge enviat amb èxit!');
+        },
+        onError: (errors) => {
+            console.error('Error al enviar el missatge', errors);
+        }
+    });
 };
 </script>
 
@@ -62,7 +70,7 @@ const submitForm = () => {
                 </div>
 
                 <!-- Contact form -->
-                <div class="bg-white rounded-xl shadow-lg p-8" data-aos="fade-up" data-aos-delay="800">
+                <div class="bg-white rounded-xl shadow-lg p-8 text-black" data-aos="fade-up" data-aos-delay="800">
                     <h2 class="text-3xl font-bold text-gray-800 mb-6" data-aos="fade-right" data-aos-delay="900">
                         Envia'ns un Missatge
                     </h2>

@@ -20,7 +20,7 @@ use App\Http\Middleware\ManagerMiddleware;
 use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\ControllerReview;
-
+use App\Http\Controllers\ContactController;
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
 //Routes Welcome
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -251,9 +251,8 @@ Route::get('/legal', function(){
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
 
 //Route Contact
-Route::get('/contact', function(){
-    return Inertia::render('Contact');
-});
+Route::get('/contact', [ContactController::class, 'contact'])->name('contact');
+Route::post('/contact', [ContactController::class, 'sendContact'])->name('contact.send');
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
 //Route Project
