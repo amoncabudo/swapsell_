@@ -11,6 +11,9 @@ import Cookies from "@/Components/Cookies.vue";
 import { cartCount, incrementCartCount, decrementCartCount } from '@/cartState';
 
 import axios from 'axios';
+
+
+
 let comments = ref([]);
 let props = defineProps({
   isAuthenticated: Boolean,
@@ -30,7 +33,6 @@ onMounted(() => {
   console.log("Comentaris en ref:", comments.value);
   console.log("Comentaris en props:", props.commentarios);
 });
-
 
 
 const submitData = () => {
@@ -58,7 +60,15 @@ let form = useForm({
   description: "",
   id_product: props.product.id,
   message: "",
+  image: null,
+
 });
+
+
+
+const handleFileUpload = (event) => {
+  form.image = event.target.files[0]; // Guardamos el archivo en form.image
+};
 
 onMounted(() => {
   // Initialize and set the map
@@ -142,6 +152,12 @@ const calcularAntiguedad = (fecha) => {
 // Computed para actualizar automáticamente si cambia el `user.created_at`
 const miembroDesde = computed(() => props.user?.created_at ? calcularAntiguedad(props.user.created_at) : "Cargando...");
 
+const sellerImage = computed(() => {
+  return props.user?.image ? props.user.image : '/storage/logo.png';
+});
+
+
+
 console.log(miembroDesde);
 
 console.log(props.user.created_at);
@@ -164,6 +180,8 @@ function toggleBasket(product) {
 const isBasket = (product) => {
   return product.is_basket; // Return the basket status
 };
+
+
 
 </script>
 
@@ -200,16 +218,6 @@ const isBasket = (product) => {
                     <span>{{ isBasket(product) ? 'Eliminar del carret' : 'Comprar ara' }}</span>
                   </button>
                   <Link :href="route('auction')" class="text-white">
-                  <button
-                    class="flex items-center space-x-2 bg-amber-700 text-white px-6 py-3 rounded-lg hover:bg-amber-500 transition-all duration-300 transform hover:-translate-y-1">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-
-                    <span>Subastar</span>
-
-                  </button>
                   </Link>
                 </div>
               </div>
@@ -217,13 +225,14 @@ const isBasket = (product) => {
 
             <!-- Section of information -->
             <div class="w-full lg:w-1/2 space-y-6">
-              <!-- Information of the seller -->
+              <!-- Información del vendedor -->
+              <Link :href="route('profile.getUserById', props.user.id)">
               <div class="bg-white rounded-xl shadow-lg p-6">
                 <h2 class="text-2xl font-bold text-gray-800 mb-4">Informació del venedor</h2>
                 <div class="flex items-center space-x-4">
                   <img :src="`/${user.image}`" alt="User" class="w-16 h-16 rounded-full border-2 border-gray-200">
                   <div>
-                    <p class="font-semibold text-lg">{{ props.user.name }} {{ props.user.surname }}</p>
+                    <p class="font-semibold text-lg">{{ product.user.name }} {{ product.user.surname }}</p>
                     <div class="flex items-center space-x-2 text-sm text-gray-500">
                       <span>⭐ {{ props.mediaReview }}</span>
                       <span>•</span>
@@ -233,8 +242,8 @@ const isBasket = (product) => {
                   </div>
                 </div>
               </div>
-
-              <!-- Details of the product -->
+              </Link>
+              <!-- Detalles del producto -->
               <div class="bg-white rounded-xl shadow-lg p-6">
                 <h2 class="text-2xl font-bold text-gray-800 mb-4">Detalls del producte</h2>
                 <div class="space-y-4">

@@ -140,6 +140,8 @@ class ProductController extends Controller
     {
         $products = Product::where('category_id', 7)->get(); //Get the products of the category
         return $products;
+
+        
     }
     public function mapa(){
         $isAuthenticated = Auth::check();
@@ -188,6 +190,10 @@ class ProductController extends Controller
                 ->exists();
         }
 
+        if ($product->user){
+            $product->user->image = $product->user->image ? Storage::url($product->user->image) : '/storage/logo.png';
+        }
+
         $comments = $product->comments()
             ->with('user')
             ->orderBy('created_at', 'desc')
@@ -196,20 +202,24 @@ class ProductController extends Controller
                 $comment->tiempo_transcurrido = $this->calcularTiempoTranscurrido($comment->created_at);
                 return $comment;
             });
-        
+        $authUser=Auth::user();
         return Inertia::render("ProducteAmpliat", [
             "product" => $product,
             "isAuthenticated" => $isAuthenticated,
             "user" => $product->user,
             "commentarios" => $comments,
-            "mediaReview" => $mediaReview
+            "mediaReview" => $mediaReview,
+            "authUser" => $authUser
         ]);
     }
 
     public function auction()
-    {
+    {   
         $products = Product::with(['auction.lastBidder'])
             ->where('bid', true)
+            ->leftJoin('auctions', 'products.id', '=', 'auctions.product_id')
+            ->whereDate('end_time', '>=', date('Y-m-d H-i-s', strtotime('-1 week')))
+            ->select('products.*')  // Importante: seleccionar solo las columnas de products
             ->get()
             ->map(function($product) {
                 if ($product->auction) {
