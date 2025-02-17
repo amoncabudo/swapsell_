@@ -273,7 +273,7 @@ const isBasket = (product) => {
           <div class="mb-8">
             <div class="flex items-start space-x-4">
               <img 
-                :src="$page.props.auth.user?.image ? `/storage/ ${$page.props.auth.user.image}` : '/images/default-avatar.png'" 
+                :src="$page.props.auth.user?.image ? `/storage/${$page.props.auth.user.image}` : '/images/default-avatar.png'" 
                 alt="User Avatar" 
                 class="w-10 h-10 rounded-full object-cover"
               >
