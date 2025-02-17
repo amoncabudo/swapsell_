@@ -29,6 +29,7 @@ const sortBy = ref('recent');
 const categories = ref([]);
 const isEditProductModalOpen = ref(false);
 const isEditEventModalOpen = ref(false);
+
 //Edit User Form Variables
 const editUserForm = useForm({
     id: '',
@@ -42,7 +43,7 @@ const editUserForm = useForm({
 //Define variables for roles
 const roles = [
     { id: 0, name: 'Administrador' },
-    { id: 1, name: 'Scrum Manager' },
+    { id: 1, name: 'Manager' },
     { id: 2, name: 'Usuari' }
 ];
 //Define variables for products
@@ -599,7 +600,7 @@ const handleUserImageUpload = (event) => {
 };
 
 
-const searchedUsers = computed(() => { // Computed para buscar usuarios
+const searchedUsers = computed(() => { // Computed for search users
   if (!searchQuery.value) { // If the search query is empty, returns the list of users
     return users.value; // Returns the list of users
   }
@@ -729,7 +730,7 @@ const searchedUsers = computed(() => { // Computed para buscar usuarios
                             </div>
                             </div>
 
-                            <!-- Tabla de usuarios -->
+                            <!-- Users table -->
                             <div class="overflow-x-auto">
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-gray-50">
@@ -1071,7 +1072,7 @@ const searchedUsers = computed(() => { // Computed para buscar usuarios
 
                     <!-- Modal add Event -->
                     <div v-if="isModalEventOpen" class="fixed inset-0 flex items-center justify-center z-50">
-                        <!-- Overlay con efecto blur -->
+                        <!-- Overlay with blur effect -->
                         <div class="absolute inset-0 bg-gray-900/50 backdrop-blur-sm"></div>
 
                         <div
@@ -1185,7 +1186,7 @@ const searchedUsers = computed(() => { // Computed para buscar usuarios
 
                     <!-- Modal add Product -->
                     <div v-if="isModalProductOpen" class="fixed inset-0 flex items-center justify-center z-50">
-                        <!-- Overlay con efecto blur -->
+                        <!-- Overlay with blur effect -->
                         <div class="absolute inset-0 bg-gray-900/50 backdrop-blur-sm"></div>
 
                         <div
@@ -1288,14 +1289,14 @@ const searchedUsers = computed(() => { // Computed para buscar usuarios
                     <div v-if="isEditUserModalOpen"
                         class="fixed inset-0 flex items-center justify-center z-50 px-4 sm:px-0"
                         @click.self="closeEditUserModal">
-                        <!-- Overlay con efecto blur mejorado -->
+                        <!-- Overlay with improved blur effect -->
                         <div class="absolute inset-0 bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-md">
                         </div>
 
-                        <!-- Modal container con animación -->
+                        <!-- Modal container with animation -->
                         <div
                             class="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-2xl relative transform transition-all duration-300 scale-100 hover:scale-[1.02]">
-                            <!-- Header con diseño mejorado -->
+                            <!-- Header with improved design -->
                             <div class="flex items-center justify-between border-b border-gray-100 pb-6 mb-8">
                                 <div>
                                     <h2 class="text-3xl font-bold text-gray-800">
@@ -1316,7 +1317,7 @@ const searchedUsers = computed(() => { // Computed para buscar usuarios
                             </div>
 
                             <form @submit.prevent="updateUser" class="space-y-6">
-                                <!-- Grid para nombre y apellidos -->
+                                <!-- Grid for name and surname -->
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                     <div class="form-group space-y-2">
                                         <label for="name" class="block text-sm font-semibold text-gray-800">
@@ -1434,7 +1435,7 @@ const searchedUsers = computed(() => { // Computed para buscar usuarios
                                     </div>
                                 </div>
 
-                                <!-- Botones con efectos mejorados -->
+                                <!-- Improved buttons with effects -->
                                 <div class="flex justify-end space-x-4 pt-6 border-t border-gray-100">
                                     <button type="button" @click="closeEditUserModal"
                                         class="px-6 py-2.5 border-2 border-red-300 rounded-xl text-red-600 hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all duration-200 transform hover:scale-105">
@@ -1453,14 +1454,14 @@ const searchedUsers = computed(() => { // Computed para buscar usuarios
                     <div v-if="isEditProductModalOpen"
                         class="fixed inset-0 flex items-center justify-center z-50 px-4 sm:px-0"
                         @click.self="closeEditProductModal">
-                        <!-- Overlay con efecto blur mejorado -->
+                        <!-- Overlay with improved blur effect -->
                         <div class="absolute inset-0 bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-md">
                         </div>
 
-                        <!-- Modal container con animación -->
+                        <!-- Modal container with animation -->
                         <div
                             class="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-2xl relative transform transition-all duration-300 scale-100 hover:scale-[1.02]">
-                            <!-- Header con diseño mejorado -->
+                            <!-- Header with improved design -->
                             <div class="flex items-center justify-between border-b border-gray-100 pb-6 mb-8">
                                 <div>
                                     <h2 class="text-3xl font-bold text-gray-800">
@@ -1481,7 +1482,7 @@ const searchedUsers = computed(() => { // Computed para buscar usuarios
                             </div>
 
                             <form @submit.prevent="updateProduct" class="space-y-6">
-                                <!-- Grid para nombre y descripción -->
+                                <!-- Grid for name and description -->
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                     <div class="form-group space-y-2">
                                         <label for="name" class="block text-sm font-semibold text-gray-800">
@@ -1524,7 +1525,7 @@ const searchedUsers = computed(() => { // Computed para buscar usuarios
                                     </div>
                                 </div>
 
-                                <!-- Descripción -->
+                                <!-- Description -->
                                 <div class="form-group space-y-2">
                                     <label for="description" class="block text-sm font-semibold text-gray-800">
                                         Descripció del producte
@@ -1543,7 +1544,7 @@ const searchedUsers = computed(() => { // Computed para buscar usuarios
                                     </div>
                                 </div>
 
-                                <!-- Grid para longitud y latitud -->
+                                <!-- Grid for longitude and latitude -->
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                     <div class="form-group space-y-2">
                                         <label for="longitude" class="block text-sm font-semibold text-gray-800">
@@ -1588,7 +1589,7 @@ const searchedUsers = computed(() => { // Computed para buscar usuarios
                                     </div>
                                 </div>
 
-                                <!-- Botones con efectos mejorados -->
+                                <!-- Improved buttons with effects -->
                                 <div class="flex justify-end space-x-4 pt-6 border-t border-gray-100">
                                     <button type="button" @click="closeEditProductModal"
                                         class="px-6 py-2.5 border-2 border-red-300 rounded-xl text-red-600 hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all duration-200 transform hover:scale-105">
@@ -1607,14 +1608,14 @@ const searchedUsers = computed(() => { // Computed para buscar usuarios
                     <div v-if="isEditEventModalOpen"
                         class="fixed inset-0 flex items-center justify-center z-50 px-4 sm:px-0"
                         @click.self="closeEditEventModal">
-                        <!-- Overlay con efecto blur mejorado -->
+                        <!-- Overlay with improved blur effect -->
                         <div class="absolute inset-0 bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-md">
                         </div>
 
-                        <!-- Modal container con animación -->
+                        <!-- Modal container with animation -->
                         <div
                             class="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-2xl relative transform transition-all duration-300 scale-100 hover:scale-[1.02]">
-                            <!-- Header con diseño mejorado -->
+                            <!-- Header with improved design -->
                             <div class="flex items-center justify-between border-b border-gray-100 pb-6 mb-8">
                                 <div>
                                     <h2 class="text-3xl font-bold text-gray-800">
@@ -1635,7 +1636,7 @@ const searchedUsers = computed(() => { // Computed para buscar usuarios
                             </div>
 
                             <form @submit.prevent="updateEvent" class="space-y-6">
-                                <!-- Grid para título y descripción -->
+                                <!-- Grid for title and description -->
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                     <div class="form-group space-y-2">
                                         <label for="title" class="block text-sm font-semibold text-gray-800">
@@ -1677,7 +1678,7 @@ const searchedUsers = computed(() => { // Computed para buscar usuarios
                                     </div>
                                 </div>
 
-                                <!-- Grid para fecha y hora -->
+                                <!-- Grid for date and time -->
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                     <div class="form-group space-y-2">
                                         <label for="date" class="block text-sm font-semibold text-gray-800">
@@ -1720,7 +1721,7 @@ const searchedUsers = computed(() => { // Computed para buscar usuarios
                                     </div>
                                 </div>
 
-                                <!-- Grid para longitud y latitud -->
+                                <!-- Grid for longitude and latitude -->
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                     <div class="form-group space-y-2">
                                         <label for="longitude" class="block text-sm font-semibold text-gray-800">
@@ -1765,7 +1766,7 @@ const searchedUsers = computed(() => { // Computed para buscar usuarios
                                     </div>
                                 </div>
 
-                                <!-- Botones con efectos mejorados -->
+                                <!-- Improved buttons with effects -->
                                 <div class="flex justify-end space-x-4 pt-6 border-t border-gray-100">
                                     <button type="button" @click="closeEditEventModal"
                                         class="px-6 py-2.5 border-2 border-red-300 rounded-xl text-red-600 hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all duration-200 transform hover:scale-105">
@@ -1794,7 +1795,7 @@ const searchedUsers = computed(() => { // Computed para buscar usuarios
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Efectos hover */
+/* Hover effects */
 .hover-scale {
     transition: transform 0.3s ease;
 }
