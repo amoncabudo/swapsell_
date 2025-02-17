@@ -4,13 +4,15 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import NavbarS from '@/Layouts/NavbarS.vue';
 import { Head } from '@inertiajs/vue3';
 import Cookies from "@/Components/Cookies.vue";
+import { ref } from 'vue';
 
 const props = defineProps({
     isAuthenticated: Boolean,
     product: Object
 });
 
-console.log(props.product);
+const imagePreview = ref(props.product.image ? `/storage/${props.product.image}` : null);
+
 let form = useForm({
     id: props.product.id ?? "",
     name: props.product.name ?? "",
@@ -19,10 +21,22 @@ let form = useForm({
     longitude: props.product.longitude ?? null,
     latitude: props.product.latitude ?? null,
     status: props.product.status ?? "active",
-    category_id: props.product.category_id ?? "Hogar"
+    category_id: props.product.category_id ?? "Hogar",
+    image: null
 });
 
-
+const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    form.image = file;
+    
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            imagePreview.value = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+};
 </script>
 <template>
   <Head title = "Editar producte"></Head>
@@ -30,7 +44,10 @@ let form = useForm({
   <div id="app" class="p-8 bg-gray-100 min-h-screen flex items-center justify-center">
     <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
       <h1 class="text-2xl font-bold mb-6 text-center text-black">Formulario de Registro</h1>
-      <form @submit.prevent="form.post(route('updateProduct', { id: form.id }))">
+      <form @submit.prevent="form.post(route('updateProduct', { id: form.id }), {
+        forceFormData: true,
+        preserveScroll: true,
+    })">
         <div class="mb-4">
           <label for="id" class="block text-gray-700 font-medium mb-2"></label>
           <input
@@ -104,8 +121,33 @@ let form = useForm({
           />
         </div>
 
-
-
+        <div class="mb-4">
+          <label for="image" class="block text-black font-medium mb-2">Imatge:</label>
+          <input
+            type="file"
+            id="image"
+            @change="handleImageChange"
+            accept="image/*"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200 text-black"
+          />
+          
+          <div v-if="imagePreview" class="mt-4">
+            <img 
+              :src="imagePreview" 
+              alt="Vista previa" 
+              class="w-32 h-32 object-cover rounded-lg border border-gray-300"
+            />
+          </div>
+          
+          <div v-else-if="props.product.image" class="mt-4">
+            <p class="text-sm text-gray-600 mb-2">Imatge actual:</p>
+            <img 
+              :src="`/storage/${props.product.image}`" 
+              alt="Imagen actual" 
+              class="w-32 h-32 object-cover rounded-lg border border-gray-300"
+            />
+          </div>
+        </div>
 
         <div class="mb-4">
           <label for="status" class="block text-black font-medium mb-2">Categoria</label>
@@ -142,3 +184,10 @@ let form = useForm({
 </component>
 <Cookies />
 </template>
+
+<style scoped>
+.image-preview {
+    max-width: 200px;
+    margin-top: 10px;
+}
+</style>
