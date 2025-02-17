@@ -125,19 +125,6 @@ const generateDescription = async () => { // Generate the description of the pro
 
             <!-- Location fields -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div class="form-group">
-                <label for="longitude" class="form-label">Longitud</label>
-                <div class="relative">
-                  <input type="number" step="any" id="longitude" v-model="form.longitude" class="form-input pl-10"
-                    required />
-                  <span class="form-icon">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    </svg>
-                  </span>
-                </div>
-              </div>
 
               <div class="form-group">
                 <label for="latitude" class="form-label">Latitud</label>
@@ -152,6 +139,22 @@ const generateDescription = async () => { // Generate the description of the pro
                   </span>
                 </div>
               </div>
+              
+              <div class="form-group">
+                <label for="longitude" class="form-label">Longitud</label>
+                <div class="relative">
+                  <input type="number" step="any" id="longitude" v-model="form.longitude" class="form-input pl-10"
+                    required />
+                  <span class="form-icon">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+
+              
             </div>
 
             <!-- Category field -->
