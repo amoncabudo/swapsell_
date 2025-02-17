@@ -139,7 +139,7 @@ const searchedProducts = computed(() => { // Computed for search products
   <div class="bg-gray-50 min-h-screen">
     <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
       <!-- Hero Section con wave background -->
-      <div class="pt-24 pb-16 bg-gradient-to-r from-[#004266] to-[#006699] dark:from-[#1b2e37] dark:to-[#224466]">
+      <div class="pt-24 pb-16 bg-gradient-to-r from-[#004266] to-[#006699]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 class="text-4xl font-bold text-white text-center mb-8">
             Troba el que busques
@@ -161,7 +161,7 @@ const searchedProducts = computed(() => { // Computed for search products
 
       <!-- Categories with glass effect -->
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8">
-        <div class="dark:bg-black bg-white shadow-xl rounded-xl p-4">
+        <div class="bg-white shadow-xl rounded-xl p-4">
           <div class="flex space-x-4 overflow-x-auto py-2">
             <button @click="selectedCategory = 'all'" :class="[
               'px-4 py-2 rounded-full flex items-center space-x-2',
@@ -245,7 +245,7 @@ const searchedProducts = computed(() => { // Computed for search products
       <div class="fixed bottom-8 right-8 flex space-x-4">
         <!-- Sell button -->
         <Link aria-label="addProduct" href="/sell"
-          class="bg-custom-blue text-white rounded-full p-4 shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:bg-custom-blue-dark flex items-center">
+          class="bg-custom-blue text-white rounded-full p-4 shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex items-center">
         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
         </svg>
@@ -254,7 +254,7 @@ const searchedProducts = computed(() => { // Computed for search products
 
         <!-- Auction button -->
         <Link aria-label="Create Auction" href="/create-auction"
-          class="bg-custom-blue text-white rounded-full p-4 shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:bg-custom-blue-dark flex items-center">
+          class="bg-custom-blue text-white rounded-full p-4 shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex items-center">
         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -264,7 +264,7 @@ const searchedProducts = computed(() => { // Computed for search products
 
         <!-- Chat button -->
         <Link aria-label="Products Map" href="/mapa"
-          class="bg-custom-blue text-white rounded-full p-4 shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:bg-custom-blue-dark flex items-center">
+          class="bg-custom-blue text-white rounded-full p-4 shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex items-center">
         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -403,5 +403,4 @@ const searchedProducts = computed(() => { // Computed for search products
 .hover-scale:hover {
   transform: scale(1.05);
 }
-
 </style>
