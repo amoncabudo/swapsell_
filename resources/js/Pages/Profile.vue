@@ -32,7 +32,7 @@ console.log(props)
             <!-- Profile image with border and shadow -->
             <div class="relative">
               <div class="w-32 h-32 rounded-full overflow-hidden">
-                <img :src="`/${user.image}`" alt="Foto de perfil" class="w-full h-full object-cover">
+                <img :src="`/storage/${user.image}`" alt="Foto de perfil" class="w-full h-full object-cover">
                 <!-- '/storage/app/public/logo.png' -->
 
               </div>
