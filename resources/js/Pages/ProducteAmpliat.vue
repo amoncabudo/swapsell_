@@ -272,7 +272,11 @@ const isBasket = (product) => {
           <!-- Form for new comment -->
           <div class="mb-8">
             <div class="flex items-start space-x-4">
-              <img :src="`/${user.image}`" alt="User Avatar" class="w-10 h-10 rounded-full">
+              <img 
+                :src="$page.props.auth.user?.image ? `/${$page.props.auth.user.image}` : '/images/default-avatar.png'" 
+                alt="User Avatar" 
+                class="w-10 h-10 rounded-full object-cover"
+              >
               <div class="flex-1">
                 <textarea aria-label="Comments TextArea"
                   class="w-full p-4 border rounded-lg focus:ring-2 focus:ring-blue-500 text-black focus:border-blue-500"
@@ -291,7 +295,7 @@ const isBasket = (product) => {
             <!-- Comments with styled scroll -->
             <div class="max-h-[300px] overflow-y-auto pr-4 space-y-6 custom-scrollbar">
               <div v-for="(comentario, i) in comments" :key="i" class="flex items-start space-x-4">
-                <img src="/images/User.png" alt="User" class="w-10 h-10 rounded-full">
+                <img :src="`/${comentario.user.image}`" alt="User" class="w-10 h-10 rounded-full">
                 <div class="flex-1">
                   <div
                     class="bg-white/80 backdrop-blur-sm rounded-lg p-4 shadow-sm hover:shadow-md transition-all duration-300">

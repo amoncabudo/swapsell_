@@ -184,6 +184,11 @@ class ProductController extends Controller
         $userId = Auth::id();
         $mediaReview = round(Review::avg('rating'), 2);
         // Verificar si el producto está en el carrito del usuario
+        // Asegurarse de que el usuario autenticado tenga una imagen
+        $authUser = Auth::user();
+        if ($authUser && !$authUser->image) {
+            $authUser->image = 'images/default-avatar.png'; // Imagen por defecto
+        }
         if ($isAuthenticated) {
             $product->is_basket = \App\Models\Basket::where('user_id', $userId)
                 ->where('product_id', $id)
@@ -191,7 +196,7 @@ class ProductController extends Controller
         }
 
         if ($product->user){
-            $product->user->image = $product->user->image ? Storage::url($product->user->image) : '/storage/logo.png';
+            $product->user->image = $product->user->image;
         }
 
         $comments = $product->comments()
