@@ -13,113 +13,113 @@ const props = defineProps({
     isAuthenticated: Boolean
 });
 
-console.log('Products in basket:', props.products_baskets);
+console.log('Products in basket:', props.products_baskets); //Log products in basket
 
-const total = computed(() => {
-    if (!props.products_baskets) return 0;
-    return props.products_baskets.reduce((sum, product) => {
-        const price = parseFloat(product?.price) || 0;
-        return sum + price;
-    }, 0);
+const total = computed(() => { //Compute total
+    if (!props.products_baskets) return 0; //If no products in basket, return 0
+    return props.products_baskets.reduce((sum, product) => { //Reduce products in basket
+        const price = parseFloat(product?.price) || 0; //Parse float price
+        return sum + price; //Return sum of price
+    }, 0); //Return 0
 });
 
-function formatPrice(price) {
+function formatPrice(price) { //Format price
     return new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(price);
 }
 
-function removeFromBasket(product) {
-    axios.post(route('baskets_products'), { id: product.id })
-        .then(response => {
-            // Eliminar el producto de la lista si estamos en la página del carrito
-            const index = props.products_baskets.findIndex(p => p.id === product.id);
-            if (index !== -1) {
-                props.products_baskets.splice(index, 1);
+function removeFromBasket(product) { //Remove from basket
+    axios.post(route('baskets_products'), { id: product.id }) //Post request to remove from basket
+        .then(response => { //Then response
+            // Delete the product from the list if we are on the cart page
+            const index = props.products_baskets.findIndex(p => p.id === product.id); //Find index of product
+            if (index !== -1) { //If index is not -1
+                props.products_baskets.splice(index, 1); //Splice product from basket
             }
         })
-        .catch(error => {
-            console.error("Error al actualizar el carrito:", error);
+        .catch(error => { //Catch error
+            console.error("Error al actualizar el carrito:", error); //Log error
         });
 }
 
-const paypalLoaded = ref(false);
-const paypalClientId = import.meta.env.VITE_PAYPAL_CLIENT_ID;
+const paypalLoaded = ref(false); //Paypal loaded
+const paypalClientId = import.meta.env.VITE_PAYPAL_CLIENT_ID; //Paypal client id
 
-onMounted(() => {
-  const script = document.createElement('script');
-  script.src = `https://www.paypal.com/sdk/js?client-id=${paypalClientId}&currency=EUR`;
-  script.async = true;
-  
-  script.onload = () => {
-    paypalLoaded.value = true;
+onMounted(() => { 
+  const script = document.createElement('script'); //Create script
+  script.src = `https://www.paypal.com/sdk/js?client-id=${paypalClientId}&currency=EUR`; //Script src
+  script.async = true; //Script async
+
+  script.onload = () => { //On load
+    paypalLoaded.value = true; //Paypal loaded
     window.paypal.Buttons({
-      fundingSource: paypal.FUNDING.PAYPAL,
+      fundingSource: paypal.FUNDING.PAYPAL, //Funding source
       style: {
-        color: 'black',
-        shape: 'rect',
-        layout: 'vertical',
-        label: 'paypal'
+        color: 'black', //Color
+        shape: 'rect', //Shape
+        layout: 'vertical', //Layout
+        label: 'paypal' //Label
       },
-      createOrder: (data, actions) => {
-        return actions.order.create({
-          purchase_units: [{
-            amount: {
-              currency_code: 'EUR',
-              value: (total.value * 1.21).toFixed(2) // Total con IVA
+      createOrder: (data, actions) => { //Create order
+        return actions.order.create({ //Return actions order create
+          purchase_units: [{ //Purchase units
+            amount: { //Amount
+              currency_code: 'EUR', //Currency code
+              value: (total.value * 1.21).toFixed(2) // Total amb IVA
             }
           }]
         });
       },
-      onApprove: (data, actions) => {
-        return actions.order.capture().then((details) => {
-            // Procesamos cada producto en el carrito
-            const processTransactions = props.products_baskets.map(product => {
-                return axios.post(route('transactions.store'), {
-                    product_id: product.id,
-                    category_id: product.category_id,
-                    name: product.name,
-                    description: product.description,
-                    price: product.price,
-                    longitude: product.longitude || '0',
-                    latitude: product.latitude || '0',
-                    image: product.image,
-                    status: 'completed'
+      onApprove: (data, actions) => { //On approve
+        return actions.order.capture().then((details) => { //Return actions order capture
+            // Process each product in the cart
+            const processTransactions = props.products_baskets.map(product => { //Process transactions
+                return axios.post(route('transactions.store'), { //Return axios post request to store transactions
+                    product_id: product.id, //Product id
+                    category_id: product.category_id, //Category id
+                    name: product.name, //Name
+                    description: product.description, //Description
+                    price: product.price, //Price
+                    longitude: product.longitude || '0', //Longitude
+                    latitude: product.latitude || '0', //Latitude
+                    image: product.image, //Image
+                    status: 'completed' //Status
                 });
             });
 
-            // Esperamos a que todas las transacciones se completen
+            // Wait for all transactions to complete
             Promise.all(processTransactions)
                 .then(() => {
-                    // Eliminamos los productos del carrito
+                    // Remove products from the cart
                     props.products_baskets.forEach(product => {
                         removeFromBasket(product);
                     });
                 })
                 .then(() => {
-                    // Mostramos mensaje de éxitoop
+                    // Show success message
                     Swal.fire({
-                        title: '¡Èxit!',
-                        text: 'Pagament processat correctament!',
-                        icon: 'success',
-                        confirmButtonText: 'Acceptar'
+                        title: '¡Èxit!', //Success title
+                        text: 'Pagament processat correctament!', //Success text
+                        icon: 'success', //Success icon
+                        confirmButtonText: 'Acceptar' //Confirm button text
                     }).then(() => {
-                        window.location.href = route('reviews.index');
+                        window.location.href = route('reviews.index'); //Redirect to reviews index
                     });
                 })
                 .catch((error) => {
-                    console.error('Error:', error);
+                    console.error('Error:', error); //Log error
                     Swal.fire({
-                        title: 'Error',
-                        text: 'Hi ha hagut un problema en processar el pagament. Si us plau, contacta amb suport.',
-                        icon: 'error',
-                        confirmButtonText: 'Acceptar'
+                        title: 'Error', //Error title
+                        text: 'Hi ha hagut un problema en processar el pagament. Si us plau, contacta amb suport.', //Error text
+                        icon: 'error', //Error icon
+                        confirmButtonText: 'Acceptar' //Confirm button text
                     });
                 });
         });
       }
-    }).render('#paypal-button-container');
+    }).render('#paypal-button-container'); //Render paypal button container //Render paypal button container
   };
 
-  document.body.appendChild(script);
+  document.body.appendChild(script); //Append script to body //Append script to body
 });
 </script>
 
@@ -127,7 +127,7 @@ onMounted(() => {
     <Head title = "Carret"></Head>
     <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
         <div class="flex flex-col lg:flex-row min-h-screen bg-gray-100 p-4">
-            <!-- Lista de productos -->
+            <!-- Summary of the purchase -->
             <div class="w-full lg:w-2/3 pr-4">
                 <div class="bg-white rounded-lg shadow-lg p-6">
                     <h2 class="text-2xl font-bold mb-6 text-gray-800">El meu carret</h2>
@@ -158,7 +158,7 @@ onMounted(() => {
                 </div>
             </div>
 
-            <!-- Resumen de la compra -->
+            <!-- Summary of the purchase -->
             <div class="w-full lg:w-1/3 mt-6 lg:mt-0">
                 <div class="bg-white rounded-lg shadow-lg p-6">
                     <h2 class="text-xl font-bold mb-4 text-gray-800">Resum de la compra</h2>

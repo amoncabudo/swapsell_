@@ -16,15 +16,14 @@ const props = defineProps({
 let map;
 
 onMounted(() => {
-  // Inicializar el mapa
-  map = L.map('map').setView([props.events.latitude, props.events.longitude], 13);
+  map = L.map('map').setView([props.events.latitude, props.events.longitude], 13); //Start map
 
-  // Añadir capa de OpenStreetMap
+  // Add OpenStreetMap layer
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
   }).addTo(map);
 
-  // Crear icono personalizado
+  // Create custom icon
   const customIcon = L.icon({
     iconUrl: 'storage/app/public/product_marker_map.png',
     iconSize: [40, 40],
@@ -32,7 +31,7 @@ onMounted(() => {
     popupAnchor: [0, -40]
   });
 
-  // Añadir marcador con la ubicación del evento
+  // Add marker with the event location
   L.marker([props.events.latitude, props.events.longitude], { icon: customIcon })
     .bindPopup(`<b>${props.events.title}</b><br>${props.events.time}H`)
     .addTo(map);
@@ -43,10 +42,10 @@ onMounted(() => {
   <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
     <div class="min-h-screen from-indigo-100 to-blue-200 py-12">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Contenedor principal con fondo blanco y sombras -->
+        <!-- Main container with white background and shadows -->
         <div class="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl p-8 mb-8">
           <div class="flex flex-col lg:flex-row gap-8">
-            <!-- Imagen del evento -->
+            <!-- Event image -->
             <div class="w-full lg:w-1/2">
               <div class="bg-white rounded-xl shadow-lg p-4">
                 <h1 class="text-3xl font-semibold text-gray-800 mb-4 text-center">{{ events.title }}</h1>
@@ -59,10 +58,10 @@ onMounted(() => {
               </div>
             </div>
 
-            <!-- Detalles del evento -->
+            <!-- Event details -->
             <div class="w-full lg:w-1/2">
               <div class="bg-white rounded-xl shadow-lg p-6">
-                <h2 class="text-3xl font-semibold text-gray-800 mb-4">Detalls de l'esdeveniment</h2>
+                <h2 class="text-3xl font-semibold text-gray-800 mb-4">Event details</h2>
                 <div class="space-y-4">
                   <div class="flex justify-between items-center py-2 border-b border-gray-300">
                     <span class="text-gray-600">Nom:</span>

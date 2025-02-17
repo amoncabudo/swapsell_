@@ -8,6 +8,7 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
 import { usePage } from '@inertiajs/vue3';
 import { cartCount } from '@/cartState';
+import DarkModeToggle from '@/Components/DarkModeToggle.vue';
 
 const showingNavigationDropdown = ref(false);
 console.log(showingNavigationDropdown.value);
@@ -16,9 +17,10 @@ console.log(showingNavigationDropdown.value);
 </script>
 
 <template>
+  
     <div>
-      <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-        <nav class="w-full z-50 bg-white shadow-md dark:bg-gray-800">
+      <div class="min-h-screen bg-gray-100 ">
+        <nav class="w-full z-50 bg-white shadow-md dark:bg-black">
           <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
               <!-- Logo Section -->
@@ -26,31 +28,31 @@ console.log(showingNavigationDropdown.value);
                 <Link href="/" class="flex items-center space-x-2">
                   <img src="/images/logo.png" alt="SwapSell Logo" class="h-8 w-10 rounded-full">
                   <span class="text-2xl font-extrabold bg-gradient-to-r from-blue-500 to-indigo-400 bg-clip-text text-transparent">
-                    <span class="text-blue-700">SwapSell</span>
+                    <span class="text-blue-700 dark:text-gray-100">SwapSell</span>
                   </span>
                 </Link>
               </div>
   
               <!-- Links Section --->
               <div class="hidden sm:flex space-x-20">
-                <Link href="/" class="text-gray-600 hover:text-blue-500 transition-colors">
+                <Link href="/" class="text-gray-600 dark:text-gray-100 hover:text-blue-500 transition-colors">
                   Inici
                 </Link>
                 <!-- Productes -->
-                <Link href="/products" class="text-gray-600 hover:text-blue-500 transition-colors">
+                <Link href="/products" class="text-gray-600 dark:text-gray-100 hover:text-blue-500 transition-colors">
                   Productes
                 </Link>
                 <!-- Events -->
-                <Link href="/events" class="text-gray-600 hover:text-blue-500 transition-colors">
+                <Link href="/events" class="text-gray-600 dark:text-gray-100 hover:text-blue-500 transition-colors">
                   Esdeveniments
                 </Link>
-                <Link href="/auction" class="text-gray-600 hover:text-blue-500 transition-colors">
+                <Link href="/auction" class="text-gray-600 dark:text-gray-100 hover:text-blue-500 transition-colors">
                   Subhastes
                 </Link>
               </div>
               <div class="hidden sm:flex items-center space-x-6">
                 <Link aria-label="Cart Page" href="/Cart" class="relative text-gray-600 hover:text-blue-500 transition-colors">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 dark:stroke-white">
                     <circle cx="9" cy="21" r="1"></circle>
                     <circle cx="20" cy="21" r="1"></circle>
                     <path d="M1 1h4l2.4 12.8a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 1.9-1.4L23 6H6"></path>
@@ -58,13 +60,13 @@ console.log(showingNavigationDropdown.value);
                   <span v-if="cartCount > 0" class="cart-count">{{ cartCount }}</span>
                 </Link>
                 <Link aria-label="Favorites Page" href="/favorites" class="text-gray-600 hover:text-blue-500 transition-colors">
-                  <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg class="h-6 w-6 dark:stroke-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                   </svg>
                 </Link>
                 <Link aria-label="Profile Page" href="/profile" class="text-gray-600 hover:text-blue-500 transition-colors">
-                  <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg class="h-6 w-6 dark:stroke-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
@@ -75,14 +77,15 @@ console.log(showingNavigationDropdown.value);
                   <Dropdown align="right" width="48">
                     <template #trigger>
                       <span class="inline-flex rounded-md">
-                        <button type="button" class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-800 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-300">
+                        <button type="button" class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-800 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none dark:bg-gray-800 dark:text-gray-100 dark:hover:text-gray-300">
                           {{ $page.props.auth.user.name }}
-  
+                          
                           <svg class="-me-0.5 ms-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                           </svg>
                         </button>
                       </span>
+                      <DarkModeToggle @click.stop></DarkModeToggle>
                     </template>
                     <template #content>
                       <DropdownLink :href="route('profile')">Perfil</DropdownLink>

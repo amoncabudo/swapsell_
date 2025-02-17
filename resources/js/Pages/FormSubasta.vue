@@ -7,43 +7,44 @@ import { Head } from '@inertiajs/vue3';
 import Cookies from "@/Components/Cookies.vue";
 
 const props = defineProps({
-    isAuthenticated: Boolean,
-    userProducts: Array
+  isAuthenticated: Boolean,
+  userProducts: Array
 });
 
 const dateError = ref('');
 
-let form = useForm({     
-    product_id: null,
-    start_price: null,
-    current_price: null, // This should match the start_price initially
-    start_time: null,
-    end_time: null,
-    status: true
+let form = useForm({  //Form
+  product_id: null, //Product id
+  start_price: null, //Start price
+  current_price: null, //This should match the start_price initially
+  start_time: null, //Start time
+  end_time: null, //End time
+  status: true //Status
 });
 
 // Add a watcher to update current_price when start_price changes
 watch(() => form.start_price, (newPrice) => {
-    form.current_price = newPrice;
+  form.current_price = newPrice;
 });
 
 watch(() => form.end_time, (newEndTime) => {
-    if (form.start_time && newEndTime) {
-        const startDate = new Date(form.start_time);
-        const endDate = new Date(newEndTime);
-        
-        if (endDate <= startDate) {
-            dateError.value = 'La data de fi ha de ser posterior a la data de inici';
-            form.end_time = null;
-        } else {
-            dateError.value = '';
-        }
+  if (form.start_time && newEndTime) { //If start time and new end time
+    const startDate = new Date(form.start_time); //Start date
+    const endDate = new Date(newEndTime); //End date
+
+    if (endDate <= startDate) { //If end date is less than start date
+      dateError.value = 'La data de fi ha de ser posterior a la data de inici'; //Date error
+      form.end_time = null; //End time
+    } else {
+      dateError.value = ''; //Date error
     }
+  }
 });
 </script>
 
 <template>
-  <Head title = "Formulari subhaste"></Head>
+
+  <Head title="Formulari subhaste"></Head>
   <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
     <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 py-12 px-4 sm:px-6 lg:px-8">
       <div class="max-w-2xl mx-auto">
@@ -58,112 +59,82 @@ watch(() => form.end_time, (newEndTime) => {
 
         <div class="bg-white rounded-2xl shadow-xl p-8">
           <form @submit.prevent="form.post(route('auctions.store'), {
-              onSuccess: () => {
-                  // Redirect or show success message
-              },
-              onError: (errors) => {
-                  console.error(errors);
-              }
+            onSuccess: () => {
+              // Redirect or show success message
+            },
+            onError: (errors) => {
+              console.error(errors);
+            }
           })" class="space-y-6">
-            <!-- Selector de Producto -->
+            <!-- Select the product -->
             <div class="form-group">
               <label for="product" class="form-label">Selecciona el Producte</label>
               <div class="relative">
-                <select
-                  id="product"
-                  v-model="form.product_id"
-                  class="form-input pl-10"
-                  required
-                >
+                <select id="product" v-model="form.product_id" class="form-input pl-10" required>
                   <option value="">Selecciona un producte</option>
-                  <option 
-                    v-for="product in userProducts"
-                    :key="product.id" 
-                    :value="product.id"
-                    v-show="product.bid === 0"
-                  >
-                    {{ product.name }} - {{ product.price }}€ 
+                  <option v-for="product in userProducts" :key="product.id" :value="product.id"
+                    v-show="product.bid === 0">
+                    {{ product.name }} - {{ product.price }}€
                   </option>
                 </select>
                 <span class="form-icon">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                          d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                   </svg>
                 </span>
               </div>
             </div>
 
-            <!-- Precio Inicial -->
+            <!-- Initial price -->
             <div class="form-group">
               <label for="start_price" class="form-label">Preu Inicial (€)</label>
               <div class="relative">
-                <input
-                  type="number"
-                  id="start_price"
-                  v-model="form.start_price"
-                  class="form-input pl-10"
-                  required
-                  min="0"
-                  step="0.01"
-                />
+                <input type="number" id="start_price" v-model="form.start_price" class="form-input pl-10" required
+                  min="0" step="0.01" />
                 <span class="form-icon">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                          d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </span>
               </div>
             </div>
 
-            <!-- Fecha y Hora de Inicio -->
+            <!-- Start date and time -->
             <div class="form-group">
               <label for="start_time" class="form-label">Inici de la Subhasta</label>
               <div class="relative">
-                <input
-                  type="datetime-local"
-                  id="start_time"
-                  v-model="form.start_time"
-                  class="form-input pl-10"
-                  required
-                />
+                <input type="datetime-local" id="start_time" v-model="form.start_time" class="form-input pl-10"
+                  required />
                 <span class="form-icon">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                 </span>
               </div>
             </div>
 
-            <!-- Fecha y Hora de Fin -->
+            <!-- End date and time -->
             <div class="form-group">
               <label for="end_time" class="form-label">Fi de la Subhasta</label>
               <div class="relative">
-                <input
-                  type="datetime-local"
-                  id="end_time"
-                  v-model="form.end_time"
-                  class="form-input pl-10"
-                  :min="form.start_time"
-                  required
-                />
+                <input type="datetime-local" id="end_time" v-model="form.end_time" class="form-input pl-10"
+                  :min="form.start_time" required />
                 <span class="form-icon">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </span>
               </div>
               <p v-if="dateError" class="text-red-500 text-sm mt-1">{{ dateError }}</p>
             </div>
 
-            <!-- Botón de envío -->
+            <!-- Submit button -->
             <div class="mt-8">
-              <button
-                type="submit"
-                class="submit-button"
-              >
+              <button type="submit" class="submit-button">
                 Crear Subhasta
               </button>
             </div>
@@ -222,7 +193,7 @@ watch(() => form.end_time, (newEndTime) => {
   font-weight: 500;
 }
 
-.form-input, 
+.form-input,
 select,
 input {
   color: #000000;
@@ -325,12 +296,15 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
   top: 50%;
   transform: translateY(-50%);
   color: rgb(156, 163, 175);
-  pointer-events: all; /* Cambiado de none a all para permitir clicks */
+  pointer-events: all;
+  /* Cambiado de none a all para permitir clicks */
   border-right: 1px solid rgb(209, 213, 219);
   padding-right: 1rem;
   margin-right: 0.75rem;
-  cursor: pointer; /* Añadido cursor pointer */
-  z-index: 10; /* Asegurar que el icono esté por encima */
+  cursor: pointer;
+  /* Añadido cursor pointer */
+  z-index: 10;
+  /* Asegurar que el icono esté por encima */
 }
 
 /* Ocultar el indicador nativo del calendario */
@@ -364,7 +338,8 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 
 /* Ajustar el padding del input para el icono */
 .form-input {
-  padding-left: 3rem !important; /* Aumentado de 2.5rem a 3rem */
+  padding-left: 3rem !important;
+  /* Aumentado de 2.5rem a 3rem */
 }
 
 /* Asegurar que el icono no interfiera con el selector */
@@ -379,8 +354,10 @@ select.form-input {
 
 /* Ajustes específicos para input datetime-local */
 input[type="datetime-local"] {
-  padding-left: 3.5rem !important; /* Específico para inputs de fecha/hora */
-  min-width: 200px; /* Asegura un ancho mínimo */
+  padding-left: 3.5rem !important;
+  /* Específico para inputs de fecha/hora */
+  min-width: 200px;
+  /* Asegura un ancho mínimo */
 }
 
 /* Asegurar que el contenido no se solape */

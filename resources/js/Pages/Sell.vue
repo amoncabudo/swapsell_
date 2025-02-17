@@ -28,29 +28,29 @@ function handleFileUpload(event) {
   form.image = event.target.files[0];
 }
 
-const generateDescription = async () => {
-  loading.value = true;
+const generateDescription = async () => { // Generate the description of the product
+  loading.value = true; // Set the loading to true
   try {
-    const prompt = "Genera una descripción para un producto con el siguiente nombre: " + form.name;
-    const response = await axios.post('http://localhost:11434/api/generate', {
-      model: 'deepseek-r1',
-      prompt: prompt,
-      stream: false,
+    const prompt = "Genera una descripción para un producto con el siguiente nombre: " + form.name; // Generate the prompt
+    const response = await axios.post('http://localhost:11434/api/generate', { // Generate the response
+      model: 'deepseek-r1', // Model
+      prompt: prompt, // Prompt
+      stream: false, // Stream
     });
 
-    let text = response.data.response;
-    text = text.replace(/<think>[\s\S]*?<\/think>/g, '');
-    text = text.replace(/\*/g, '');
-    generatedDescription.value = text;
-    form.description = text;
+    let text = response.data.response; // Get the text
+    text = text.replace(/<think>[\s\S]*?<\/think>/g, ''); // Remove the think
+    text = text.replace(/\*/g, ''); // Remove the *
+    generatedDescription.value = text; // Set the generated description
+    form.description = text; // Set the description
 
-    console.log(generatedDescription.value);
+    console.log(generatedDescription.value); // Log the generated description
 
   } catch (error) {
-    console.error("Error al generar la descripción:", error);
-    alert("Hubo un error al generar la descripción. Por favor, inténtalo de nuevo.");
+    console.error("Error al generar la descripció:", error);
+    alert("Hi ha hagut un error al generar la descripció. Per favor, torna a provar.");
   } finally {
-    loading.value = false;
+    loading.value = false; // Set the loading to false
   }
 };
 
@@ -61,7 +61,7 @@ const generateDescription = async () => {
   <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
     <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 py-12 px-4 sm:px-6 lg:px-8">
       <div class="max-w-2xl mx-auto">
-        <!-- Encabezado del formulario -->
+        <!-- Header of the form -->
         <div class="text-center mb-8">
           <h1 class="text-3xl font-extrabold text-gray-900 mb-2">
             Publica el teu Producte
@@ -71,10 +71,10 @@ const generateDescription = async () => {
           </p>
         </div>
 
-        <!-- Tarjeta del formulario -->
+        <!-- Form Card -->
         <div class="bg-white rounded-2xl shadow-xl p-8">
           <form @submit.prevent="form.post(route('sell'))" enctype="multipart/form-data" class="space-y-6">
-            <!-- Campo Nombre -->
+            <!-- Name field -->
             <div class="form-group">
               <label for="name" class="form-label">Nom del Producte</label>
               <div class="relative">
@@ -88,7 +88,7 @@ const generateDescription = async () => {
               </div>
             </div>
 
-            <!-- Campo Descripción -->
+            <!-- Description field -->
             <div class="form-group">
               <label for="description" class="form-label">Descripció</label>
               <div class="relative">
@@ -101,7 +101,7 @@ const generateDescription = async () => {
               </button>
             </div>
 
-            <!-- Campo Imagen -->
+            <!-- Image field -->
             <div class="form-group">
               <label for="image" class="form-label">Imatge del Producte</label>
               <div class="relative">
@@ -109,7 +109,7 @@ const generateDescription = async () => {
               </div>
             </div>
 
-            <!-- Campo Precio -->
+            <!-- Price field -->
             <div class="form-group">
               <label for="price" class="form-label">Preu (€)</label>
               <div class="relative">
@@ -123,7 +123,7 @@ const generateDescription = async () => {
               </div>
             </div>
 
-            <!-- Campos de Ubicación -->
+            <!-- Location fields -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div class="form-group">
                 <label for="longitude" class="form-label">Longitud</label>
@@ -154,7 +154,7 @@ const generateDescription = async () => {
               </div>
             </div>
 
-            <!--category-->
+            <!-- Category field -->
             <div class="form-group">
               <label for="category" class="form-label">Categoria</label>
               <div class="relative">
@@ -174,7 +174,7 @@ const generateDescription = async () => {
                 </span>
               </div>
             </div>
-            <!-- Botón de envío -->
+            <!-- Submit button -->
             <div class="mt-8">
               <button type="submit" class="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold py-3 px-4 rounded-xl
                        hover:from-blue-600 hover:to-indigo-700 transform hover:-translate-y-0.5 transition-all duration-150
@@ -191,7 +191,7 @@ const generateDescription = async () => {
 </template>
 
 <style scoped>
-/* Estilos del formulario */
+/* Form styles */
 .form-group {
   margin-top: 0.25rem;
 }
@@ -231,21 +231,21 @@ const generateDescription = async () => {
   padding-right: 0.75rem;
 }
 
-/* Estilos específicos para el textarea */
+/* Specific styles for the textarea */
 textarea.form-input {
   padding-left: 3rem;
   resize: none;
   color: rgb(17, 24, 39);
 }
 
-/* Deshabilitar flechas en inputs numéricos */
+/* Disable arrows in numeric inputs */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-/* Efectos y animaciones */
+/* Effects and animations */
 .wave-bg {
   background: linear-gradient(45deg, #004266, #006699);
   background-size: 400% 400%;
@@ -266,7 +266,7 @@ input[type="number"]::-webkit-outer-spin-button {
   }
 }
 
-/* Efecto glass */
+/* Glass effect */
 .glass-effect {
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(10px);
@@ -274,7 +274,7 @@ input[type="number"]::-webkit-outer-spin-button {
   box-shadow: 0 8px 32px 0 rgba(0, 66, 102, 0.2);
 }
 
-/* Colores personalizados */
+/* Custom colors */
 .bg-custom-blue {
   background-color: #004266;
 }
@@ -283,7 +283,7 @@ input[type="number"]::-webkit-outer-spin-button {
   color: #004266;
 }
 
-/* Estilos para el botón de envío */
+/* Styles for the submit button */
 .submit-button {
   width: 100%;
   background: linear-gradient(to right, #004266, #006699);
@@ -305,6 +305,6 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .relative {
-  position: relative; /* Asegúrate de que el contenedor sea relativo */
+  position: relative; /* Ensure the container is relative */
 }
 </style>

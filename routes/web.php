@@ -20,7 +20,7 @@ use App\Http\Middleware\ManagerMiddleware;
 use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\ControllerReview;
-
+use App\Http\Controllers\AdminPanelController;
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
 //Routes Welcome
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -53,37 +53,37 @@ Route::get('/adminpanel', function () {return Inertia::render('AdminPanel', [
 ]);})->middleware(AdminMiddleware::class)->name("AdminPanel");
 
 //Route UsersList
-Route::get('adminpanel/users/list', [UserController::class, 'getAllUsers'])->name('users.list');
+Route::get('adminpanel/users/list', [AdminPanelController::class, 'getAllUsersAdmin'])->name('users.list');
 
 //Route ProductsList
-Route::get('adminpanel/products/list', [ProductController::class, 'getAllProductsAdmin'])->name('products.list');
+Route::get('adminpanel/products/list', [AdminPanelController::class, 'getAllProductsAdmin'])->name('products.list');
 
 //Route EventsList
-Route::get('adminpanel/events/list', [EventController::class, 'getAllEventsAdmin'])->name('events.list');
+Route::get('adminpanel/events/list', [AdminPanelController::class, 'getAllEventsAdmin'])->name('events.list');
 
 //Route DeleteUser
-Route::delete('adminpanel/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+Route::delete('adminpanel/users/{id}', [AdminPanelController::class, 'AdminDeleteUser'])->name('users.destroy');
 
 //Route DeleteProduct
-Route::delete('adminpanel/products/{id}', [ProductController::class, 'AdminDeleteProduct'])->name('products.delete');
+Route::delete('adminpanel/products/{id}', [AdminPanelController::class, 'AdminDeleteProduct'])->name('products.delete');
 
 //Route DeleteEvent
-Route::delete('adminpanel/events/{id}', [EventController::class, 'AdminDeleteEvent'])->name('events.delete');
+Route::delete('adminpanel/events/{id}', [AdminPanelController::class, 'AdminDeleteEvent'])->name('events.delete');
 
 //Route UpdateUser
-Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
+Route::put('/users/{id}', [AdminPanelController::class, 'AdminUpdateUser'])->name('users.update');
 
 //Route UpdateProduct
-Route::put('adminpanel/products/{id}', [ProductController::class, 'AdminUpdateProduct'])->name('products.update');
+Route::put('adminpanel/products/{id}', [AdminPanelController::class, 'AdminUpdateProduct'])->name('products.update');
 
 //Route UpdateEvent
-Route::put('adminpanel/events/{id}', [EventController::class, 'AdminUpdateEvent'])->name('events.update');
+Route::put('adminpanel/events/{id}', [AdminPanelController::class, 'AdminUpdateEvent'])->name('events.update');
 
 //Route CreateProduct
-Route::post('adminpanel/products', [ProductController::class, 'addProduct'])->name('products.addProduct');
+Route::post('adminpanel/products', [AdminPanelController::class, 'AdminAddProduct'])->name('products.addProduct');
 
 //Route CreateEvent
-Route::post('/adminpanel/events', [EventController::class, 'addEvent'])->name('event.addEvent');
+Route::post('/adminpanel/events', [AdminPanelController::class, 'AdminAddEvent'])->name('event.addEvent');
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
 //Routes Events
@@ -190,6 +190,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
+    Route::get('/profile/{id}', [ProfileController::class, 'getUserById'])->name('profile.getUserById');
 });
 
 
@@ -270,7 +271,7 @@ Route::get('/project', function () {
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
 
 //Route Auction
-Route::get('/auction', [ProductController::class, 'auction'])->name('auction');
+Route::get('/auction', [AuctionController::class, 'auction'])->name('auction');
 
 
 //Route CreateAuction

@@ -1,18 +1,14 @@
 <template>
+
   <Head title="Mapa"></Head>
   <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
-    <!-- Sección del mapa -->
+    <!-- Map section -->
     <div id="map-container">
-      <!-- Botón accesible para enfocar el mapa -->
-      
+      <!-- Accessible button to focus the map -->
 
-      <!-- Mapa interactivo con atributos de accesibilidad -->
-      <div
-        id="map"
-        role="region"
-        aria-label="Mapa interactiu mostrant ubicacions de productes"
-        tabindex="0"
-      ></div>
+
+      <!-- Interactive map with accessibility attributes -->
+      <div id="map" role="region" aria-label="Mapa interactiu mostrant ubicacions de productes" tabindex="0"></div>
     </div>
   </component>
   <Cookies />
@@ -33,29 +29,28 @@ let props = defineProps({
 });
 
 
-// Referencias y datos
-const map = ref(null); // Referencia al mapa
-let products = ref(props.products); // Productos cargados
+// References and data
+const map = ref(null); // Reference to the map
+let products = ref(props.products); // Loaded products
 
 
-// Inicializa el mapa
+// Initialize the map
 const initializeMap = () => {
-  // Primero intentamos obtener la ubicación del usuario
+  // First we try to get the user's location
   if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(
-      // Éxito en obtener la ubicación
       (position) => {
-        const userLat = position.coords.latitude;
-        const userLng = position.coords.longitude;
-        initializeMapWithPosition(userLat, userLng);
+        const userLat = position.coords.latitude; // User latitude
+        const userLng = position.coords.longitude; // User longitude
+        initializeMapWithPosition(userLat, userLng); // Initialize the map with the user's position
       },
-      // Error o rechazo de permisos
+      // Error or permission rejection
       (error) => {
         console.log("Error de geolocalització:", error);
-        // Usar posición por defecto
+        // Use default position
         initializeMapWithPosition(42.265507, 2.958105);
       },
-      // Opciones de geolocalización
+      // Geolocation options
       {
         enableHighAccuracy: true,
         timeout: 5000,
@@ -63,32 +58,32 @@ const initializeMap = () => {
       }
     );
   } else {
-    // Navegador no soporta geolocalización
-    console.log("Geolocalització no disponible");
+    // Browser does not support geolocation
+    console.log("Geolocation not available");
     initializeMapWithPosition(42.265507, 2.958105);
   }
 };
 
 const initializeMapWithPosition = (lat, lng) => {
-  // Crear el mapa con la vista inicial
+  // Create the map with the initial view
   map.value = L.map("map", {
-    zoomControl: true,
-    attributionControl: true,
-  }).setView([lat, lng], 13);
+    zoomControl: true, // Zoom control
+    attributionControl: true, // Attribution control
+  }).setView([lat, lng], 13); // Set the view to the user's position
 
-  // Añadir la capa de tiles
+  // Add the tiles layer
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  }).addTo(map.value);
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', // Attribution
+  }).addTo(map.value); // Add the tiles layer to the map
 
 
 
 
 
-  const locationButton = L.control({position: 'topright'});
-  
-  locationButton.onAdd = function(map) {
-    const div = L.DomUtil.create('div', 'leaflet-bar mainbutton ');
+  const locationButton = L.control({ position: 'topright' }); // Location button
+
+  locationButton.onAdd = function (map) {
+    const div = L.DomUtil.create('div', 'leaflet-bar mainbutton '); // Create the location button
     div.innerHTML = `
       <a aria-label="Product Page" href="#" title="La meva ubicació" role="button" 
          style="width: 30px; height: 30px; line-height: 30px; text-align: center; display: block; 
@@ -99,17 +94,17 @@ const initializeMapWithPosition = (lat, lng) => {
       </a>
     `;
 
-    div.onclick = function() {
-      if (navigator.geolocation) {
+    div.onclick = function () {
+      if (navigator.geolocation) { // If the browser supports geolocation
         navigator.geolocation.getCurrentPosition(
           (position) => {
-            const userLat = position.coords.latitude;
-            const userLng = position.coords.longitude;
-            map.setView([userLat, userLng], 15);
+            const userLat = position.coords.latitude; // User latitude
+            const userLng = position.coords.longitude; // User longitude
+            map.setView([userLat, userLng], 15); // Set the view to the user's position
           },
           (error) => {
-            console.error("Error getting location:", error);
-            alert("No s'ha pogut obtenir la vostre ubicació");
+            console.error("Error getting location:", error); // Error getting location
+            alert("No s'ha pogut obtenir la vostre ubicació"); // Error getting location
           }
         );
       }
@@ -120,60 +115,55 @@ const initializeMapWithPosition = (lat, lng) => {
   };
 
   locationButton.addTo(map.value);
-
-
-
-
-
-  // Crear un grupo de marcadores
+  // Create a markers group
   const markersGroup = L.featureGroup();
 
-  // Añadir marcador de ubicación actual si no es la posición por defecto
+  // Add the current location marker if it is not the default position
   if (lat !== 42.265507 || lng !== 2.958105) {
-    L.marker([lat, lng], {
-      icon: L.divIcon({
-        className: 'user-location-marker',
+    L.marker([lat, lng], { // Add the current location marker if it is not the default position
+      icon: L.divIcon({ // Icon
+        className: 'user-location-marker', // Class name
         html: '<div style="background-color: #4285f4; width: 12px; height: 12px; border-radius: 50%; border: 2px solid white;"></div>',
       })
     })
-    .bindPopup('Ubicació actual')
-    .addTo(map.value);
+      .bindPopup('Ubicació actual')
+      .addTo(map.value);
   }
 
-  // Añadir los marcadores de productos al grupo
+  // Add the products markers to the group
   products.value.forEach(element => {
     let contenido = `
     <p style="margin:0;font-weight:bold;">${element.name} </p> 
     <p style="margin:0;">  ${element.price}€ </p>
     <a  style="margin:0;" href="/products/${element.id}">Veure producte</a>
     `;
-    L.marker([element.latitude, element.longitude],{icon: Icon})
+    L.marker([element.latitude, element.longitude], { icon: Icon })
       .bindPopup(contenido)
       .addTo(markersGroup);
   });
 
-  // Añadir el grupo al mapa
+  // Add the group to the map
   markersGroup.addTo(map.value);
 };
 
-// Carga productos desde el backend (usando fetch)
+// Load products from the backend (using fetch)
 console.log(products.value);
 
 
-// Ejecuta al montar el componente
+// Execute when the component is mounted
 onMounted(() => {
-  initializeMap(); // Inicializa el mapa
+  initializeMap(); // Initialize the map
 });
 
 var Icon = L.icon({
   iconUrl: 'images/product_marker_map.png',
-  
 
-  iconSize:     [85, 75], // size of the icon
-  
-  iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-   
-  popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+
+  iconSize: [85, 75], // size of the icon
+
+  iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+
+  popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
 });
 </script>
 
@@ -185,7 +175,7 @@ var Icon = L.icon({
   margin: 0;
 }
 
-/* Botón para acceder al mapa */
+/* Button to access the map */
 #focus-map-button {
   position: absolute;
   top: 10px;
@@ -208,7 +198,8 @@ var Icon = L.icon({
 #map {
   height: 100%;
   width: 100%;
-  outline: none; /* Permite que sea navegable sin mostrar bordes innecesarios */
+  outline: none;
+  /* Allows navigation without showing unnecessary borders */
 }
 
 body,
@@ -240,11 +231,13 @@ html {
     transform: scale(1);
     opacity: 1;
   }
+
   100% {
     transform: scale(2);
     opacity: 0;
   }
 }
+
 .mainbutton {
   background-color: white;
   border-radius: 4px;
@@ -258,7 +251,7 @@ html {
   text-align: center;
   width: 30px;
   display: flex;
-    align-items: center;
-    justify-content: center;
+  align-items: center;
+  justify-content: center;
 }
 </style>
