@@ -74,6 +74,7 @@ class ContactController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'cognom' => 'required|string|max:255',
             'email' => 'required|email',
             'subject' => 'required|string|max:255',
             'message' => 'required|string',
@@ -81,6 +82,6 @@ class ContactController extends Controller
 
         Mail::to('swapsell6@gmail.com')->send(new ContactMail($request->all()));
 
-        return response()->json(['message' => 'Missatge enviat amb èxit!']);
+        return redirect()->route('contact')->with('message', 'Missatge enviat amb èxit!');
     }
 }
