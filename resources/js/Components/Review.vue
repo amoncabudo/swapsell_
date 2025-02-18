@@ -70,12 +70,17 @@ const submitForm = async (event) => {
     });
     
     closeModal();
+    
+    // Recargar la página después de cerrar el modal
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000); // Esperar 2 segundos para que se muestre el mensaje de éxito
+    
   } catch (error) {
     Swal.fire({
       icon: 'error',
       title: 'Error',
       text: 'No s\'ha pogut enviar la valoració',
-      confirmButtonColor: '#004265'
     });
   } finally {
     isSubmitting.value = false;
