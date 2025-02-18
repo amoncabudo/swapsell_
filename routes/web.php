@@ -127,8 +127,7 @@ Route::put('/updateProduct/{id}', [ProductController::class, "updateProduct"])->
 Route::get('/editProduct/{id}', [ProductController::class, "editProduct"])->name("editProductId");
 
 //Route DeleteProduct
-Route::get('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->middleware(['auth', 'verified'])->name("deleteProduct");
-Route::post('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->middleware(['auth', 'verified'])->name("deleteProduct");
+Route::delete('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->middleware(['auth', 'verified'])->name("deleteProduct");
 
 //Route GetAllProducts
 Route::get('/products', [ProductController::class, 'getAllProducts'])->name('Products');
