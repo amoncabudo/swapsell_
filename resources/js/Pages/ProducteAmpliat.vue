@@ -139,9 +139,9 @@ const calcularAntiguedad = (fecha) => {
     const minutos = Math.floor(diferencia / (1000 * 60)) % 60; // Calculate the difference in minutes
 
     if (años > 0) return `fa ${años} anys${años > 1 ? "s" : ""}`; // If it is more than one year, show the years
-    if (meses > 0) return `fa ${meses} mesos${meses > 1 ? "es" : ""}`; // If it is more than one month, show the months
-    if (dias > 0) return `fa ${dias} dies${dias > 1 ? "s" : ""}`; // If it is more than one day, show the days
-    if (horas > 0) return `fa ${horas} hores${horas > 1 ? "s" : ""}`; // If it is more than one hour, show the hours
+    if (meses > 0) return `fa ${meses} mesos${meses > 1 ? "" : ""}`; // If it is more than one month, show the months
+    if (dias > 0) return `fa ${dias} dies${dias > 1 ? "" : ""}`; // If it is more than one day, show the days
+    if (horas > 0) return `fa ${horas} hores${horas > 1 ? "" : ""}`; // If it is more than one hour, show the hours
     return `fa ${minutos} minuts${minutos > 1 ? "s" : ""}`; // If it is more than one minute, show the minutes
   } catch (error) {
     console.error("Error al calcular l'antiguitat:", error); // If the date is invalid, show an error
