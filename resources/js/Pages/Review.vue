@@ -85,7 +85,11 @@ console.log(props.transaction);
                       </div>
                     </div>
                     <div class="mt-4">
-                      <Review :userId="transaction.user?.id" :productId="transaction.product?.id" />
+                      <Review 
+                        :userId="transaction.user?.id" 
+                        :productId="transaction.product?.id" 
+                        :valoration="transaction.review?.valoration === 1"
+                      />                    
                     </div>
                   </div>
                 </div>
