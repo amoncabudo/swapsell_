@@ -57,7 +57,7 @@ Route::get('/adminpanel', function () {return Inertia::render('AdminPanel', [
 Route::get('adminpanel/users/list', [AdminPanelController::class, 'getAllUsersAdmin'])->middleware(AdminMiddleware::class)->name('users.list');
 
 //Route ProductsList
-Route::get('adminpanel/products/list', [AdminPanelController::class, 'getAllProductsAdmin']->middleware(AdminMiddleware::class))->name('products.list');
+Route::get('adminpanel/products/list', [AdminPanelController::class, 'getAllProductsAdmin'])->middleware(AdminMiddleware::class)->name('products.list');
 
 //Route EventsList
 Route::get('adminpanel/events/list', [AdminPanelController::class, 'getAllEventsAdmin'])->middleware(AdminMiddleware::class)->name('events.list');
