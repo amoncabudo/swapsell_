@@ -54,37 +54,37 @@ Route::get('/adminpanel', function () {return Inertia::render('AdminPanel', [
 ]);})->middleware(AdminMiddleware::class)->name("AdminPanel");
 
 //Route UsersList
-Route::get('adminpanel/users/list', [AdminPanelController::class, 'getAllUsersAdmin'])->name('users.list');
+Route::get('adminpanel/users/list', [AdminPanelController::class, 'getAllUsersAdmin'])->middleware(AdminMiddleware::class)->name('users.list');
 
 //Route ProductsList
-Route::get('adminpanel/products/list', [AdminPanelController::class, 'getAllProductsAdmin'])->name('products.list');
+Route::get('adminpanel/products/list', [AdminPanelController::class, 'getAllProductsAdmin']->middleware(AdminMiddleware::class))->name('products.list');
 
 //Route EventsList
-Route::get('adminpanel/events/list', [AdminPanelController::class, 'getAllEventsAdmin'])->name('events.list');
+Route::get('adminpanel/events/list', [AdminPanelController::class, 'getAllEventsAdmin'])->middleware(AdminMiddleware::class)->name('events.list');
 
 //Route DeleteUser
-Route::delete('adminpanel/users/{id}', [AdminPanelController::class, 'AdminDeleteUser'])->name('users.destroy');
+Route::delete('adminpanel/users/{id}', [AdminPanelController::class, 'AdminDeleteUser'])->middleware(AdminMiddleware::class)->name('users.destroy');
 
 //Route DeleteProduct
-Route::delete('adminpanel/products/{id}', [AdminPanelController::class, 'AdminDeleteProduct'])->name('products.delete');
+Route::delete('adminpanel/products/{id}', [AdminPanelController::class, 'AdminDeleteProduct'])->middleware(AdminMiddleware::class)->name('products.delete');
 
 //Route DeleteEvent
-Route::delete('adminpanel/events/{id}', [AdminPanelController::class, 'AdminDeleteEvent'])->name('events.delete');
+Route::delete('adminpanel/events/{id}', [AdminPanelController::class, 'AdminDeleteEvent'])->middleware(AdminMiddleware::class)->name('events.delete');
 
 //Route UpdateUser
-Route::put('/users/{id}', [AdminPanelController::class, 'AdminUpdateUser'])->name('users.update');
+Route::put('/users/{id}', [AdminPanelController::class, 'AdminUpdateUser'])->middleware(AdminMiddleware::class)->name('users.update');
 
 //Route UpdateProduct
-Route::put('adminpanel/products/{id}', [AdminPanelController::class, 'AdminUpdateProduct'])->name('products.update');
+Route::put('adminpanel/products/{id}', [AdminPanelController::class, 'AdminUpdateProduct'])->middleware(AdminMiddleware::class)->name('products.update');
 
 //Route UpdateEvent
-Route::put('adminpanel/events/{id}', [AdminPanelController::class, 'AdminUpdateEvent'])->name('events.update');
+Route::put('adminpanel/events/{id}', [AdminPanelController::class, 'AdminUpdateEvent'])->middleware(AdminMiddleware::class)->name('events.update');
 
 //Route CreateProduct
-Route::post('adminpanel/products', [AdminPanelController::class, 'AdminAddProduct'])->name('products.addProduct');
+Route::post('adminpanel/products', [AdminPanelController::class, 'AdminAddProduct'])->middleware(AdminMiddleware::class)->name('products.addProduct');
 
 //Route CreateEvent
-Route::post('/adminpanel/events', [AdminPanelController::class, 'AdminAddEvent'])->name('event.addEvent');
+Route::post('/adminpanel/events', [AdminPanelController::class, 'AdminAddEvent'])->middleware(AdminMiddleware::class)->name('event.addEvent');
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
 //Routes Events
