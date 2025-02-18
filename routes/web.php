@@ -101,8 +101,7 @@ Route::get('/updateEvent/{id}', [EventController::class, "goEvent"])->middleware
 Route::post('/delete/updateEvent', [EventController::class, "updateEvent"])->middleware(['auth', 'verified'])->name('updateEvent');
 
 //Route DeleteEvent
-Route::get('/deleteEvent/{id}', [EventController::class, "deleteEvent"])->middleware(ManagerMiddleware::class)->name("deleteEvent");
-Route::post('/deleteEvent/{id}', [EventController::class, "deleteEvent"])->middleware(ManagerMiddleware::class)->name("deleteEvent");
+Route::delete('/deleteEvent/{id}', [EventController::class, "deleteEvent"])->middleware(ManagerMiddleware::class)->name("deleteEvent");
 
 //Route EventInfo
 Route::get('/eventInfo', function(){return Inertia::render('EventInfo',['isAuthenticated' => auth()->check(),]);});
@@ -130,7 +129,7 @@ Route::get('/editProduct/{id}', [ProductController::class, "editProduct"])->name
 
 //Route DeleteProduct
 Route::get('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->middleware(['auth', 'verified'])->name("deleteProduct");
-Route::post('/delete/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->middleware(['auth', 'verified'])->name("deleteProduct");
+Route::post('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->middleware(['auth', 'verified'])->name("deleteProduct");
 
 //Route GetAllProducts
 Route::get('/products', [ProductController::class, 'getAllProducts'])->name('Products');
