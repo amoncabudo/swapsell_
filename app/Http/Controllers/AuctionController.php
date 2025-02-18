@@ -148,4 +148,11 @@ class AuctionController extends Controller
         ]);
     }
 
+    public function deleteAuction($id)
+    {
+        $auction = Auction::find($id);
+        $auction->delete();
+        return redirect()->route('profile');
+    }
+
 }

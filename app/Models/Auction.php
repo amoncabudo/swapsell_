@@ -16,7 +16,8 @@ class Auction extends Model //Class to manage the auctions
         'start_time', //Start time
         'end_time', //End time
         'status', //Status
-        'last_bidder_id' //Last bidder id
+        'last_bidder_id', //Last bidder id
+        'image' //Image
     ];
     
     
