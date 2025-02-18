@@ -101,6 +101,8 @@ Route::get('/updateEvent/{id}', [EventController::class, "goEvent"])->middleware
 Route::post('/delete/updateEvent', [EventController::class, "updateEvent"])->middleware(['auth', 'verified'])->name('updateEvent');
 
 //Route DeleteEvent
+Route::get('/deleteEvent/{id}', [EventController::class, "deleteEvent"])->middleware(ManagerMiddleware::class)->name("deleteEvent");
+
 Route::delete('/deleteEvent/{id}', [EventController::class, "deleteEvent"])->middleware(ManagerMiddleware::class)->name("deleteEvent");
 
 //Route EventInfo
