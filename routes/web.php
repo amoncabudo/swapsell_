@@ -282,6 +282,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/auctions/{id}/finish', [AuctionController::class, 'finish'])->name('auctions.finish');
 });
 
+
+//Route DeleteAuction
+Route::get('/deleteAuction/{id}', [AuctionController::class, 'deleteAuction'])->name('auctions.delete');
+
+Route::post('/deleteAuction/{id}', [AuctionController::class, 'deleteAuction'])->name('auctions.delete');
+
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
 //Route CategoriesTrending
 //--------------------------------------------------------------------------------------------------------------------------------------------------------

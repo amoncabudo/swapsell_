@@ -16,6 +16,7 @@ const props = defineProps({
 
 })
 
+
 console.log(props)
 
 </script>
@@ -137,6 +138,14 @@ console.log(props)
                 <h3 class="text-lg font-bold text-gray-800">{{ auction.product.name }}</h3>
                 <p class="text-gray-600">Preu actual: {{ auction.product.price }}€</p>
               </div>
+              </Link>
+
+              <Link v-if="props.auth.user.id == auction.user_id" aria-label="Delete Product" :href="route('auctions.delete', auction.id)"
+                class="absolute top-2 right-2 bg-white/80 p-2 rounded-full hover:bg-white transition">
+              <svg class="w-5 h-5 text-red-500 hover:text-red-700 transition-colors" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-label="Eliminar producto">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
               </Link>
             </div>
           </div>

@@ -86,7 +86,7 @@ const items = ref([
 
             <!-- Team Section -->
             <h2 class="text-3xl font-bold text-center mb-8 text-gray-800 team-title" id="team-section"
-                data-aos="fade-right" data-aos-delay="100">Equipo</h2>
+                data-aos="fade-right" data-aos-delay="100">Equip</h2>
             <div class="max-w-5xl mx-auto">
                 <!-- Primera fila -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
