@@ -22,7 +22,7 @@ class Transaction extends Model
         'latitude', 
         'image', 
         'status', 
-        'bid' 
+        'bid',
     ];
 
     public function seller() //Function to get the seller
@@ -48,5 +48,9 @@ class Transaction extends Model
     public function user() //Function to get the user
     {
         return $this->belongsTo(User::class); //Return the user
+    }
+    public function review() //Function to get the review
+    {
+        return $this->hasOne(Review::class, 'product_id', 'product_id'); //Return the review
     }
 }
