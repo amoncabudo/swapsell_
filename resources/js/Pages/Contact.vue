@@ -4,14 +4,19 @@ import { ref } from 'vue';
 import { Head } from '@inertiajs/vue3';
 import Cookies from "@/Components/Cookies.vue";
 import { useForm } from '@inertiajs/vue3';
+import axios from 'axios';
 
 const items = ref([
     { label: 'Inici', url: '/' },
     { label: 'Contacte' }
 ]);
+const showToast = ref(false);
+const toastMessage = ref('');
+const toastType = ref('success');
 
 const form = useForm({
     name: '',
+    cognom: '',
     email: '',
     subject: '',
     message: ''
@@ -20,16 +25,30 @@ const form = useForm({
 const submitForm = () => {
     form.post(route('contact.send'), {
         onSuccess: () => {
-            console.log('Missatge enviat amb èxit!');
+            console.log('Formulario enviado con éxito');
+            toastMessage.value = 'Formulari enviat amb èxit!';
+            toastType.value = 'success';
+            showToast.value = true;
+            form.reset();
+            setTimeout(() => {
+                showToast.value = false;
+            }, 5000);
         },
-        onError: (errors) => {
-            console.error('Error al enviar el missatge', errors);
+        onError: (error) => {
+            console.error('Error al enviar el formulario:', error);
+            toastMessage.value = 'Error al enviar el formulari';
+            toastType.value = 'error';
+            showToast.value = true;
+            setTimeout(() => {
+                showToast.value = false;
+            }, 5000);
         }
     });
 };
 </script>
 
 <template>
+
     <Head title="Contacte"></Head>
     <div class="min-h-screen bg-gray-50">
         <main class="container mx-auto px-4 py-8">
@@ -38,20 +57,20 @@ const submitForm = () => {
 
                 <!-- Information panel -->
                 <div class="bg-white rounded-xl shadow-lg p-8 mb-16" data-aos="fade-up">
-                    <h1 class="text-4xl font-bold text-gray-800 mb-8" data-aos="fade-right" data-aos-delay="200">
+                    <h1 class="text-4xl font-bold text-gray-800 mb-8" data-aos="fade-right" data-aos-delay="100">
                         Contacta amb Nosaltres
                     </h1>
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8" data-aos="fade-up" data-aos-delay="400">
-                        <div class="contact-card" data-aos="zoom-in" data-aos-delay="500">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8" data-aos="fade-up" data-aos-delay="300">
+                        <div class="contact-card" data-aos="zoom-in" data-aos-delay="400">
                             <div class="icon-wrapper">
                                 <i class="pi pi-envelope text-2xl"></i>
                             </div>
                             <h2 class="text-xl font-semibold mb-2 text-gray-800">Email</h2>
-                            <p class="text-gray-800">info@swapsell.com</p>
+                            <p class="text-gray-800">info@swapsell.cat</p>
                         </div>
 
-                        <div class="contact-card" data-aos="zoom-in" data-aos-delay="600">
+                        <div class="contact-card" data-aos="zoom-in" data-aos-delay="500">
                             <div class="icon-wrapper">
                                 <i class="pi pi-phone text-2xl"></i>
                             </div>
@@ -59,7 +78,7 @@ const submitForm = () => {
                             <p class="text-gray-800">+34 972 123 456</p>
                         </div>
 
-                        <div class="contact-card" data-aos="zoom-in" data-aos-delay="700">
+                        <div class="contact-card" data-aos="zoom-in" data-aos-delay="600">
                             <div class="icon-wrapper">
                                 <i class="pi pi-map-marker text-2xl"></i>
                             </div>
@@ -70,34 +89,39 @@ const submitForm = () => {
                 </div>
 
                 <!-- Contact form -->
-                <div class="bg-white rounded-xl shadow-lg p-8 text-black" data-aos="fade-up" data-aos-delay="800">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-6" data-aos="fade-right" data-aos-delay="900">
+                <div class="bg-white rounded-xl shadow-lg p-8 text-black" data-aos="fade-up" data-aos-delay="700">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6" data-aos="fade-right" data-aos-delay="800">
                         Envia'ns un Missatge
                     </h2>
 
-                    <form @submit.prevent="submitForm" class="space-y-6" data-aos="fade-up" data-aos-delay="1000">
-                        <div class="form-group" data-aos="fade-right" data-aos-delay="1100">
+                    <form @submit.prevent="submitForm" class="space-y-6" data-aos="fade-up" data-aos-delay="900">
+                        <div class="form-group" data-aos="fade-right" data-aos-delay="1000">
                             <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Nom</label>
                             <input type="text" id="name" v-model="form.name" class="form-input" required>
                         </div>
 
-                        <div class="form-group" data-aos="fade-right" data-aos-delay="1200">
+                        <div class="form-group" data-aos="fade-right" data-aos-delay="1000">
+                            <label for="cognom" class="block text-sm font-medium text-gray-700 mb-2">Cognom</label>
+                            <input type="text" id="cognom" v-model="form.cognom" class="form-input" required>
+                        </div>
+
+                        <div class="form-group" data-aos="fade-right" data-aos-delay="1100">
                             <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
                             <input type="email" id="email" v-model="form.email" class="form-input" required>
                         </div>
 
-                        <div class="form-group" data-aos="fade-right" data-aos-delay="1300">
+                        <div class="form-group" data-aos="fade-right" data-aos-delay="1200">
                             <label for="subject" class="block text-sm font-medium text-gray-700 mb-2">Assumpte</label>
                             <input type="text" id="subject" v-model="form.subject" class="form-input" required>
                         </div>
 
-                        <div class="form-group" data-aos="fade-right" data-aos-delay="1400">
+                        <div class="form-group" data-aos="fade-right" data-aos-delay="1300">
                             <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Missatge</label>
                             <textarea id="message" v-model="form.message" rows="5" class="form-input"
                                 required></textarea>
                         </div>
 
-                        <div class="flex justify-end" data-aos="fade-up" data-aos-delay="1500">
+                        <div class="flex justify-end" data-aos="fade-up" data-aos-delay="1300">
                             <button type="submit" class="submit-button btn-send">
                                 Enviar Missatge
                             </button>
@@ -106,8 +130,14 @@ const submitForm = () => {
                 </div>
             </div>
         </main>
+        <div v-if="showToast"
+                        class="fixed bottom-8 right-8 px-8 py-4 rounded-xl shadow-xl transition-all duration-500 transform"
+                        :class="toastType === 'success' ? 'bg-green-500' : 'bg-red-500'">
+                        <p class="text-white font-medium text-lg">{{ toastMessage }}</p>
+                    </div>
         <Cookies />
         <Footer />
+
     </div>
 </template>
 
