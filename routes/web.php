@@ -162,7 +162,7 @@ Route::middleware(['auth'])->group(function () {
 //Route AddUser
 
 Route::post('/users', [UserController::class, "addUser"])->name("users");
-Route::get('/users', [UserController::class, "index"])->name("users");
+Route::get('/users', [UserController::class, "index"])->name("Addusers");
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
 //Route Mapa
