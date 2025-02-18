@@ -123,8 +123,7 @@ Route::post('/products', [ProductController::class, "addProduct"])->name("produc
 
 //Route UpdateProduct
 Route::get('/updateProduct', function(){return Inertia::render('UpdateProduct',['isAuthenticated' => auth()->check(),]);})->middleware(['auth', 'verified'])->name('updateProduct');;
-Route::get('/updateProduct/{id}', [ProductController::class, "updateProduct"])->middleware(['auth', 'verified'])->name("updateProductId");
-Route::post('/updateProduct/{id}', [ProductController::class, "updateProduct"])->name("updateProduct");
+Route::put('/updateProduct/{id}', [ProductController::class, "updateProduct"])->middleware(['auth', 'verified'])->name("updateProductId");
 Route::get('/editProduct/{id}', [ProductController::class, "editProduct"])->name("editProductId");
 
 //Route DeleteProduct
