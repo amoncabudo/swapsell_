@@ -217,7 +217,7 @@ Route::get('/baskets', [BasketController::class, 'getAllBaskets'])->name('produc
 //Route Sell
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Route::get('/sell', [SellController::class, 'index'])->middleware(['auth', 'verified'])->name('sell');
+Route::get('/sell', [SellController::class, 'index'])->middleware(['auth', 'verified'])->name('AddSell');
 Route::post('/sell', [ProductController::class, "addProduct"])->middleware(['auth', 'verified'])->name("sell");
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
