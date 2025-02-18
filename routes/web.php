@@ -54,37 +54,37 @@ Route::get('/adminpanel', function () {return Inertia::render('AdminPanel', [
 ]);})->middleware(AdminMiddleware::class)->name("AdminPanel");
 
 //Route UsersList
-Route::get('adminpanel/users/list', [AdminPanelController::class, 'getAllUsersAdmin'])->name('users.list');
+Route::get('adminpanel/users/list', [AdminPanelController::class, 'getAllUsersAdmin'])->middleware(AdminMiddleware::class)->name('users.list');
 
 //Route ProductsList
-Route::get('adminpanel/products/list', [AdminPanelController::class, 'getAllProductsAdmin'])->name('products.list');
+Route::get('adminpanel/products/list', [AdminPanelController::class, 'getAllProductsAdmin'])->middleware(AdminMiddleware::class)->name('products.list');
 
 //Route EventsList
-Route::get('adminpanel/events/list', [AdminPanelController::class, 'getAllEventsAdmin'])->name('events.list');
+Route::get('adminpanel/events/list', [AdminPanelController::class, 'getAllEventsAdmin'])->middleware(AdminMiddleware::class)->name('events.list');
 
 //Route DeleteUser
-Route::delete('adminpanel/users/{id}', [AdminPanelController::class, 'AdminDeleteUser'])->name('users.destroy');
+Route::delete('adminpanel/users/{id}', [AdminPanelController::class, 'AdminDeleteUser'])->middleware(AdminMiddleware::class)->name('users.destroy');
 
 //Route DeleteProduct
-Route::delete('adminpanel/products/{id}', [AdminPanelController::class, 'AdminDeleteProduct'])->name('products.delete');
+Route::delete('adminpanel/products/{id}', [AdminPanelController::class, 'AdminDeleteProduct'])->middleware(AdminMiddleware::class)->name('products.delete');
 
 //Route DeleteEvent
-Route::delete('adminpanel/events/{id}', [AdminPanelController::class, 'AdminDeleteEvent'])->name('events.delete');
+Route::delete('adminpanel/events/{id}', [AdminPanelController::class, 'AdminDeleteEvent'])->middleware(AdminMiddleware::class)->name('events.delete');
 
 //Route UpdateUser
-Route::put('/users/{id}', [AdminPanelController::class, 'AdminUpdateUser'])->name('users.update');
+Route::put('/users/{id}', [AdminPanelController::class, 'AdminUpdateUser'])->middleware(AdminMiddleware::class)->name('users.update');
 
 //Route UpdateProduct
-Route::put('adminpanel/products/{id}', [AdminPanelController::class, 'AdminUpdateProduct'])->name('products.update');
+Route::put('adminpanel/products/{id}', [AdminPanelController::class, 'AdminUpdateProduct'])->middleware(AdminMiddleware::class)->name('products.update');
 
 //Route UpdateEvent
-Route::put('adminpanel/events/{id}', [AdminPanelController::class, 'AdminUpdateEvent'])->name('events.update');
+Route::put('adminpanel/events/{id}', [AdminPanelController::class, 'AdminUpdateEvent'])->middleware(AdminMiddleware::class)->name('events.update');
 
 //Route CreateProduct
-Route::post('adminpanel/products', [AdminPanelController::class, 'AdminAddProduct'])->name('products.addProduct');
+Route::post('adminpanel/products', [AdminPanelController::class, 'AdminAddProduct'])->middleware(AdminMiddleware::class)->name('products.addProduct');
 
 //Route CreateEvent
-Route::post('/adminpanel/events', [AdminPanelController::class, 'AdminAddEvent'])->name('event.addEvent');
+Route::post('/adminpanel/events', [AdminPanelController::class, 'AdminAddEvent'])->middleware(AdminMiddleware::class)->name('event.addEvent');
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
 //Routes Events
@@ -98,10 +98,10 @@ Route::get('/addEvent', function(){return Inertia::render('AddEvent', ['isAuthen
 
 //Route UpdateEvent
 Route::get('/updateEvent/{id}', [EventController::class, "goEvent"])->middleware(ManagerMiddleware::class)->name("event.show");
-Route::post('/updateEvent', [EventController::class, "updateEvent"])->middleware(['auth', 'verified'])->name('updateEvent');
+Route::post('/delete/updateEvent', [EventController::class, "updateEvent"])->middleware(['auth', 'verified'])->name('updateEvent');
 
 //Route DeleteEvent
-Route::get('/deleteEvent/{id}', [EventController::class, "deleteEvent"])->middleware(ManagerMiddleware::class)->name("deleteEvent");
+Route::get('/deleteEvent/{id}', [EventController::class, "deleteEvent"])->middleware(ManagerMiddleware::class)->name("ShowDeleteEvent");
 Route::post('/deleteEvent/{id}', [EventController::class, "deleteEvent"])->middleware(ManagerMiddleware::class)->name("deleteEvent");
 
 //Route EventInfo
@@ -123,13 +123,13 @@ Route::post('/products', [ProductController::class, 'store']);
 Route::post('/products', [ProductController::class, "addProduct"])->name("products");
 
 //Route UpdateProduct
-Route::get('/updateProduct', function(){return Inertia::render('UpdateProduct',['isAuthenticated' => auth()->check(),]);})->middleware(['auth', 'verified'])->name('updateProduct');;
+Route::get('/updateProduct', function(){return Inertia::render('UpdateProduct',['isAuthenticated' => auth()->check(),]);})->middleware(['auth', 'verified'])->name('ViewUpdateProduct');;
 Route::get('/updateProduct/{id}', [ProductController::class, "updateProduct"])->middleware(['auth', 'verified'])->name("updateProductId");
 Route::post('/updateProduct/{id}', [ProductController::class, "updateProduct"])->name("updateProduct");
 Route::get('/editProduct/{id}', [ProductController::class, "editProduct"])->name("editProductId");
 
 //Route DeleteProduct
-Route::get('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->middleware(['auth', 'verified'])->name("deleteProduct");
+Route::get('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->middleware(['auth', 'verified'])->name("ShowDeleteProduct");
 Route::post('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->middleware(['auth', 'verified'])->name("deleteProduct");
 
 //Route GetAllProducts
@@ -164,7 +164,7 @@ Route::middleware(['auth'])->group(function () {
 //Route AddUser
 
 Route::post('/users', [UserController::class, "addUser"])->name("users");
-Route::get('/users', [UserController::class, "index"])->name("users");
+Route::get('/users', [UserController::class, "index"])->name("Addusers");
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
 //Route Mapa
@@ -219,7 +219,7 @@ Route::get('/baskets', [BasketController::class, 'getAllBaskets'])->name('produc
 //Route Sell
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Route::get('/sell', [SellController::class, 'index'])->middleware(['auth', 'verified'])->name('sell');
+Route::get('/sell', [SellController::class, 'index'])->middleware(['auth', 'verified'])->name('AddSell');
 Route::post('/sell', [ProductController::class, "addProduct"])->middleware(['auth', 'verified'])->name("sell");
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -281,6 +281,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/auctions/bid', [AuctionController::class, 'bid'])->name('auctions.bid');
     Route::post('/auctions/{id}/finish', [AuctionController::class, 'finish'])->name('auctions.finish');
 });
+
+
+//Route DeleteAuction
+Route::get('/deleteAuction/{id}', [AuctionController::class, 'deleteAuction'])->name('get.auctions.delete');
+
+Route::post('/deleteAuction/{id}', [AuctionController::class, 'deleteAuction'])->name('auctions.delete');
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
 //Route CategoriesTrending

@@ -14,7 +14,8 @@ class Review extends Model
         'user_id', //User id
         'product_id', //Product id
         'rating', //Rating
-        'comment' //Comment
+        'comment', //Comment
+        'valoration', //Valoration
     ];
 
     public function user() //Function to get the user
