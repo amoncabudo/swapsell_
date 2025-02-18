@@ -98,10 +98,10 @@ Route::get('/addEvent', function(){return Inertia::render('AddEvent', ['isAuthen
 
 //Route UpdateEvent
 Route::get('/updateEvent/{id}', [EventController::class, "goEvent"])->middleware(ManagerMiddleware::class)->name("event.show");
-Route::post('/updateEvent', [EventController::class, "updateEvent"])->middleware(['auth', 'verified'])->name('updateEvent');
+Route::post('/delete/updateEvent', [EventController::class, "updateEvent"])->middleware(['auth', 'verified'])->name('updateEvent');
 
 //Route DeleteEvent
-Route::get('/deleteEvent/{id}', [EventController::class, "deleteEvent"])->middleware(ManagerMiddleware::class)->name("deleteEvent");
+Route::get('/deleteEvent/{id}', [EventController::class, "deleteEvent"])->middleware(ManagerMiddleware::class)->name("ShowDeleteEvent");
 Route::post('/deleteEvent/{id}', [EventController::class, "deleteEvent"])->middleware(ManagerMiddleware::class)->name("deleteEvent");
 
 //Route EventInfo
@@ -123,13 +123,13 @@ Route::post('/products', [ProductController::class, 'store']);
 Route::post('/products', [ProductController::class, "addProduct"])->name("products");
 
 //Route UpdateProduct
-Route::get('/updateProduct', function(){return Inertia::render('UpdateProduct',['isAuthenticated' => auth()->check(),]);})->middleware(['auth', 'verified'])->name('updateProduct');;
+Route::get('/updateProduct', function(){return Inertia::render('UpdateProduct',['isAuthenticated' => auth()->check(),]);})->middleware(['auth', 'verified'])->name('ViewUpdateProduct');;
 Route::get('/updateProduct/{id}', [ProductController::class, "updateProduct"])->middleware(['auth', 'verified'])->name("updateProductId");
 Route::post('/updateProduct/{id}', [ProductController::class, "updateProduct"])->name("updateProduct");
 Route::get('/editProduct/{id}', [ProductController::class, "editProduct"])->name("editProductId");
 
 //Route DeleteProduct
-Route::get('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->middleware(['auth', 'verified'])->name("deleteProduct");
+Route::get('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->middleware(['auth', 'verified'])->name("ShowDeleteProduct");
 Route::post('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->middleware(['auth', 'verified'])->name("deleteProduct");
 
 //Route GetAllProducts
@@ -164,7 +164,7 @@ Route::middleware(['auth'])->group(function () {
 //Route AddUser
 
 Route::post('/users', [UserController::class, "addUser"])->name("users");
-Route::get('/users', [UserController::class, "index"])->name("users");
+Route::get('/users', [UserController::class, "index"])->name("Addusers");
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
 //Route Mapa
@@ -219,7 +219,7 @@ Route::get('/baskets', [BasketController::class, 'getAllBaskets'])->name('produc
 //Route Sell
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Route::get('/sell', [SellController::class, 'index'])->middleware(['auth', 'verified'])->name('sell');
+Route::get('/sell', [SellController::class, 'index'])->middleware(['auth', 'verified'])->name('AddSell');
 Route::post('/sell', [ProductController::class, "addProduct"])->middleware(['auth', 'verified'])->name("sell");
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
