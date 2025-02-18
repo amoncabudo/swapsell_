@@ -98,7 +98,7 @@ Route::get('/addEvent', function(){return Inertia::render('AddEvent', ['isAuthen
 
 //Route UpdateEvent
 Route::get('/updateEvent/{id}', [EventController::class, "goEvent"])->middleware(ManagerMiddleware::class)->name("event.show");
-Route::post('/updateEvent', [EventController::class, "updateEvent"])->middleware(['auth', 'verified'])->name('updateEvent');
+Route::post('/delete/updateEvent', [EventController::class, "updateEvent"])->middleware(['auth', 'verified'])->name('updateEvent');
 
 //Route DeleteEvent
 Route::get('/deleteEvent/{id}', [EventController::class, "deleteEvent"])->middleware(ManagerMiddleware::class)->name("deleteEvent");
