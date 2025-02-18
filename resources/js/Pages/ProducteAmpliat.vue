@@ -230,7 +230,7 @@ const isBasket = (product) => {
               <div class="bg-white rounded-xl shadow-lg p-6">
                 <h2 class="text-2xl font-bold text-gray-800 mb-4">Informació del venedor</h2>
                 <div class="flex items-center space-x-4">
-                  <img :src="`/${user.image}`" alt="User" class="w-16 h-16 rounded-full border-2 border-gray-200">
+                  <img :src="`/storage/${user.image}`" alt="User" class="w-16 h-16 rounded-full border-2 border-gray-200">
                   <div>
                     <p class="font-semibold text-lg">{{ product.user.name }} {{ product.user.surname }}</p>
                     <div class="flex items-center space-x-2 text-sm text-gray-500">
@@ -273,7 +273,7 @@ const isBasket = (product) => {
           <div class="mb-8">
             <div class="flex items-start space-x-4">
               <img 
-                :src="$page.props.auth.user?.image ? `/${$page.props.auth.user.image}` : '/images/default-avatar.png'" 
+                :src="$page.props.auth.user?.image ? `/storage/${$page.props.auth.user.image}` : '/images/default-avatar.png'" 
                 alt="User Avatar" 
                 class="w-10 h-10 rounded-full object-cover"
               >
@@ -295,7 +295,7 @@ const isBasket = (product) => {
             <!-- Comments with styled scroll -->
             <div class="max-h-[300px] overflow-y-auto pr-4 space-y-6 custom-scrollbar">
               <div v-for="(comentario, i) in comments" :key="i" class="flex items-start space-x-4">
-                <img :src="`/${comentario.user.image}`" alt="User" class="w-10 h-10 rounded-full">
+                <img :src="`/storage/${comentario.user.image}`" alt="User" class="w-10 h-10 rounded-full">
                 <div class="flex-1">
                   <div
                     class="bg-white/80 backdrop-blur-sm rounded-lg p-4 shadow-sm hover:shadow-md transition-all duration-300">
