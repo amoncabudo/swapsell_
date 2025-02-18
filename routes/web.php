@@ -127,8 +127,10 @@ Route::get('/updateProduct', function(){return Inertia::render('UpdateProduct',[
 Route::get('/updateProduct/{id}', [ProductController::class, "updateProduct"])->middleware(['auth', 'verified'])->name("updateProductId");
 Route::post('/updateProduct/{id}', [ProductController::class, "updateProduct"])->name("updateProduct");
 Route::get('/editProduct/{id}', [ProductController::class, "editProduct"])->name("editProductId");
+
 //Route DeleteProduct
-Route::delete('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->middleware(['auth', 'verified'])->name("deleteProduct");
+Route::get('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->middleware(['auth', 'verified'])->name("ShowDeleteProduct");
+Route::post('/deleteProduct/{id}', [ProductController::class, "deleteProduct"])->middleware(['auth', 'verified'])->name("deleteProduct");
 
 //Route GetAllProducts
 Route::get('/products', [ProductController::class, 'getAllProducts'])->name('Products');
