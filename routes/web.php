@@ -284,7 +284,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 //Route DeleteAuction
-Route::get('/deleteAuction/{id}', [AuctionController::class, 'deleteAuction'])->name('auctions.delete');
+Route::get('/deleteAuction/{id}', [AuctionController::class, 'deleteAuction'])->name('get.auctions.delete');
 
 Route::post('/deleteAuction/{id}', [AuctionController::class, 'deleteAuction'])->name('auctions.delete');
 
