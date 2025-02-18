@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 
 const props = defineProps({
   userId: Number,
+  productId: Number,
   hasReview: {
     type: Boolean,
     default: false
@@ -14,7 +15,8 @@ const props = defineProps({
 const formData = ref({
   rating: 0,
   comment: '',
-  user_id: props.userId
+  user_id: props.userId,
+  product_id: props.productId
 });
 
 const isModalOpen = ref(false);

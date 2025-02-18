@@ -49,8 +49,9 @@ class ControllerReview extends Controller
         $review->rating = $rating; //Set the rating
         $review->comment = $comment; //Set the comment
         $review->user_id = $request->user_id; //Set the user id
-        $review->product_id = 1; //Set the product id
-        // dd($review);
+        $review->product_id = $request->product_id; //Set the product id
+        $review->valoration = 1; //Set the valoration
+       
         $review->save(); //Save the review
         return redirect()->route('Products')->with('success', 'Producte publicat correctament'); //Redirect to the products view with the success message
     }

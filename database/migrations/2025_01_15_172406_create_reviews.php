@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('product_id');
             $table->foreignId('user_id');
-            
+            $table->boolean('valoration');
             $table->integer('rating');
             $table->text('comment');
             $table->timestamps();
