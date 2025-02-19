@@ -19,8 +19,14 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Registra't"></Head>
-    <div class="min-h-screen bg-gradient-to-r from-[#004266] to-[#006699] dark:from-[#1b2e37] dark:to-[#224466] animate-gradient-x">
+ <Head title="Registra't"></Head>
+ <div class="min-h-screen bg-gradient-to-r from-[#004266] to-[#006699] dark:from-[#1b2e37] dark:to-[#224466] animate-gradient-x">
+    <Link aria-label="Volver" href="/"
+    class="bg-white rounded-full w-12 h-12 shadow-md transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center absolute top-4 left-4 z-10"> 
+  <svg class="h-6 w-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" role="img" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+  </svg>
+</Link>
         <section class="min-h-screen flex items-center justify-center p-4 relative">
             <div class="bg-white dark:bg-gray-800 rounded-3xl w-full max-w-md p-8 space-y-8 shadow-2xl">
                 <!-- Logo estático -->

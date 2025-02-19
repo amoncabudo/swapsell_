@@ -8,7 +8,7 @@ use App\Models\Category;
 use App\Models\Favorite;
 use App\Models\Basket;
 use App\Models\Review;
-
+use App\Models\Auction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -50,8 +50,13 @@ class ProductController extends Controller
     }
 
     public function deleteProduct($id){
+        $auction = Auction::where('product_id', $id)->first();
+        if($auction){
+                $auction->delete();  //Delete the auction
+        }
         $product = Product::find($id); //Find the product
-        $product->delete(); //Delete the product
+        $product->delete();
+      
         return redirect()->route('profile')->with('success', 'Producte eliminat correctament'); //Redirect to the profile page
     }
     
