@@ -155,13 +155,13 @@ const downloadAuctionCertificate = (product) => {
 
     <Head title="Subhastes"></Head>
     <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
-        <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 py-12 text-black">
+        <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-[#1b2e37] dark:to-[#224466] py-12 text-black">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <!-- Header Section with Wave Effect -->
-                <div class="text-center mb-12 relative overflow-hidden p-8 rounded-xl bg-SubastaButton1 shadow-xl">
+                <div class="text-center mb-12 relative overflow-hidden p-8 rounded-xl bg-white dark:bg-gray-800 shadow-xl">
                     <div class="relative z-10">
-                        <h1 class="text-4xl font-bold text-white mb-4">Subhastes actives</h1>
-                        <p class="text-lg text-white/90">Descobreix productes únics i participa a emocionants subhastes
+                        <h1 class="text-4xl font-bold dark:text-white mb-4">Subhastes actives</h1>
+                        <p class="text-lg dark:text-white/90">Descobreix productes únics i participa a emocionants subhastes
                         </p>
                         <Link v-if="isAuthenticated" :href="route('auctions.create')"
                             class="mt-6 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-white bg-SubastaButton1 hover:bg-opacity-90 transition-all transform hover:scale-105 shadow-md">
@@ -180,7 +180,7 @@ const downloadAuctionCertificate = (product) => {
                 <!-- Grid of auctions -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <div v-for="product in products" :key="product.id"
-                        class="bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl transform hover:-translate-y-2">
+                        class="bg-white dark:bg-gray-900 rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl transform hover:-translate-y-2">
                         <!-- Image and Badge -->
                         <div class="relative">
                             <img :src="`/storage/${product.image}`" :alt="product.name"
@@ -199,29 +199,29 @@ const downloadAuctionCertificate = (product) => {
 
                         <!-- Auction information -->
                         <div class="p-6 space-y-4">
-                            <h3 class="text-xl font-bold text-gray-900">{{ product.name }}</h3>
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">{{ product.name }}</h3>
 
                             <div class="grid grid-cols-2 gap-4">
-                                <div class="bg-blue-50 p-3 rounded-lg">
-                                    <p class="text-sm text-blue-600 font-medium">Preu actual</p>
-                                    <p class="text-lg font-bold text-blue-900">{{ product.auction?.current_price }}€</p>
+                                <div class="bg-blue-50 dark:bg-blue-900 p-3 rounded-lg">
+                                    <p class="text-sm text-blue-600 dark:text-blue-200 font-medium">Preu actual</p>
+                                    <p class="text-lg font-bold text-blue-900 dark:text-blue-100">{{ product.auction?.current_price }}€</p>
                                 </div>
-                                <div class="bg-green-50 p-3 rounded-lg">
-                                    <p class="text-sm text-green-600 font-medium">Preu inicial</p>
-                                    <p class="text-lg font-bold text-green-900">{{ product.auction?.start_price }}€</p>
+                                <div class="bg-green-50 dark:bg-green-900 p-3 rounded-lg">
+                                    <p class="text-sm text-green-600 dark:text-green-200 font-medium">Preu inicial</p>
+                                    <p class="text-lg font-bold text-green-900 dark:text-green-100">{{ product.auction?.start_price }}€</p>
                                 </div>
                             </div>
 
                             <!-- Countdown Timer -->
-                            <div class="bg-gray-50 p-3 rounded-lg">
-                                <p class="text-sm text-gray-600 font-medium flex items-center">
+                            <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg">
+                                <p class="text-sm text-gray-600 dark:text-gray-300 font-medium flex items-center">
                                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
                                     Temps restant
                                 </p>
-                                <p class="text-lg font-bold text-gray-900">
+                                <p class="text-lg font-bold text-gray-900 dark:text-gray-100">
                                     <template
                                         v-if="product.auction?.id && countdowns[product.auction.id] !== undefined">
                                         <template v-if="countdowns[product.auction.id] > 0">
@@ -233,7 +233,7 @@ const downloadAuctionCertificate = (product) => {
                                         <template v-else>
                                             <div class="text-center">
                                                 <p class="text-red-500 font-bold mb-2">Subhasta finalitzada</p>
-                                                <p v-if="product.auction.last_bidder" class="text-green-600">
+                                                <p v-if="product.auction.last_bidder" class="text-green-600 dark:text-green-300">
                                                     Guanyador: {{ product.auction.last_bidder.name }}
                                                     <button
                                                         v-if="product.auction.last_bidder.id === $page.props.auth.user?.id"
@@ -248,7 +248,7 @@ const downloadAuctionCertificate = (product) => {
                                                         Descarregar certificat
                                                     </button>
                                                 </p>
-                                                <p v-else class="text-gray-500">
+                                                <p v-else class="text-gray-500 dark:text-gray-400">
                                                     No hi ha hagut licitacions en aquesta subhasta
                                                 </p>
                                             </div>
@@ -266,7 +266,7 @@ const downloadAuctionCertificate = (product) => {
                                     <input aria-label="Product Price" type="number" v-model="product.bidPrice"
                                         :min="product.auction?.current_price + 1"
                                         :placeholder="`Mínim ${(product.auction?.current_price + 1)}€`"
-                                        class="border rounded-lg p-2 w-full"
+                                        class="border rounded-lg p-2 w-full dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
                                         :class="{ 'border-red-500': product.bidPrice <= product.auction?.current_price }" />
                                     <p v-if="product.bidPrice <= product.auction?.current_price"
                                         class="text-red-500 text-sm mt-1">
@@ -277,7 +277,7 @@ const downloadAuctionCertificate = (product) => {
                                 <!-- Action buttons -->
                                 <div class="grid grid-cols-2 gap-4 pt-4">
                                     <Link :href="route('product.show', product.id)"
-                                        class="inline-flex justify-center items-center px-4 py-2 border border-SubastaButton1 text-sm font-medium rounded-lg text-SubastaButton1 bg-white hover:bg-gray-50 transition-all">
+                                        class="inline-flex justify-center items-center px-4 py-2 border border-SubastaButton1 text-sm font-medium rounded-lg text-SubastaButton1 bg-white dark:bg-gray-800 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all">
                                     Veure detalls
                                     </Link>
                                     <button v-if="isAuthenticated" @click="placeBid(product)"
@@ -296,13 +296,13 @@ const downloadAuctionCertificate = (product) => {
                 </div>
 
                 <!-- Empty State -->
-                <div v-if="products.length === 0" class="text-center py-12 bg-white rounded-2xl shadow-lg">
-                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div v-if="products.length === 0" class="text-center py-12 bg-white dark:bg-gray-800 rounded-2xl shadow-lg">
+                    <svg class="mx-auto h-12 w-12 text-gray-400 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
                     </svg>
-                    <h3 class="mt-2 text-sm font-medium text-gray-900">No hi ha subhastes actives</h3>
-                    <p class="mt-1 text-sm text-gray-500">Torna més tard per veure noves subhastes</p>
+                    <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-white">No hi ha subhastes actives</h3>
+                    <p class="mt-1 text-sm text-gray-500 dark:text-white">Torna més tard per veure noves subhastes</p>
                 </div>
             </div>
         </div>
