@@ -399,6 +399,7 @@ function handleProductImageUpload(event) { //Handle product image upload
     }
 }
 
+
 // Modal add product
 const openModalP = () => { //Open modal for add product
     isModalProductOpen.value = true; //Set isModalProductOpen to true
@@ -484,42 +485,48 @@ function addProduct() {
 
 // Function to update product
 function updateProduct() {
-    const productData = {
-        name: editProductForm.name,
-        description: editProductForm.description,
-        price: editProductForm.price,
-        longitude: editProductForm.longitude,
-        latitude: editProductForm.latitude,
-        category_id: editProductForm.category_id,
-        status: editProductForm.status
-    };
+    const formData = new FormData();
+    formData.append('name', editProductForm.name);
+    formData.append('description', editProductForm.description);
+    formData.append('price', editProductForm.price);
+    formData.append('longitude', editProductForm.longitude);
+    formData.append('latitude', editProductForm.latitude);
+    formData.append('category_id', editProductForm.category_id);
+    formData.append('status', editProductForm.status);
+    
+    if (editProductForm.image) {
+        formData.append('image', editProductForm.image);
+    }
 
-    axios.put(route('products.update', editProductForm.id), productData)
-        .then(async response => {
-            closeEditProductModal();
-            // Reload the products list
-            await loadProducts();
+    axios.post(route('products.adminUpdate', editProductForm.id), formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        },
+        _method: 'PUT'
+    })
+    .then(async response => {
+        closeEditProductModal();
+        await loadProducts();
 
-            toastMessage.value = 'Producte actualitzat correctament!';
-            toastType.value = 'success';
-            showToast.value = true;
+        toastMessage.value = 'Producte actualitzat correctament!';
+        toastType.value = 'success';
+        showToast.value = true;
 
-            // Clean the form
-            editProductForm.reset();
+        editProductForm.reset();
 
-            setTimeout(() => {
-                showToast.value = false;
-            }, 3000);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            toastMessage.value = 'Error al actualitzar el producte';
-            toastType.value = 'error';
-            showToast.value = true;
-            setTimeout(() => {
-                showToast.value = false;
-            }, 3000);
-        });
+        setTimeout(() => {
+            showToast.value = false;
+        }, 3000);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        toastMessage.value = 'Error al actualitzar el producte';
+        toastType.value = 'error';
+        showToast.value = true;
+        setTimeout(() => {
+            showToast.value = false;
+        }, 3000);
+    });
 }
 
 //Function for delete product
@@ -622,6 +629,13 @@ const viewProductDetails = (productId) => {
 const viewEventDetails = (eventId) => {
     window.location.href = route('eventInfo', { id: eventId }); // Redirect to the event details page
 };
+
+function handleEditProductImageUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
+        editProductForm.image = file;
+    }
+}
 
 </script>
 
@@ -769,7 +783,7 @@ const viewEventDetails = (eventId) => {
                                         class="hover:bg-gray-50 transition-colors duration-200">
                                         <td class="px-8 py-5 whitespace-nowrap">
                                             <div class="flex items-center space-x-4">
-                                                <img :src="user.image ? `/${user.image}` : '/images/default-avatar.png'"
+                                                <img :src="user.image ? `/storage/${user.image}` : '/images/default-avatar.png'"
                                                     :alt="user.name"
                                                     class="h-10 w-10 rounded-full object-cover border-2 border-gray-200">
                                                 <div>
@@ -1629,6 +1643,31 @@ const viewEventDetails = (eventId) => {
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                    <label for="image"
+                                        class="block text-sm font-medium text-gray-700 mb-2">Imatge</label>
+                                    <div
+                                        class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-blue-500 transition-colors duration-200">
+                                        <div class="space-y-1 text-center">
+                                            <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor"
+                                                fill="none" viewBox="0 0 48 48">
+                                                <path
+                                                    d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                            <div class="flex text-sm text-gray-600">
+                                                <label for="image"
+                                                    class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
+                                                    <span>Pujar un arxiu</span>
+                                                    <input id="image" type="file" @change="handleEditProductImageUpload"
+                                                        class="sr-only" accept="image/*" />
+                                                </label>
+                                                <p class="pl-1">o arrossega i deixa anar</p>
+                                            </div>
+                                            <p class="text-xs text-gray-500">PNG, JPG, GIF fins a 10MB</p>
+                                        </div>
+                                    </div>
+                                </div>
 
                             <!-- Improved buttons with effects -->
                             <div class="flex justify-end space-x-4 pt-6 border-t border-gray-100">
