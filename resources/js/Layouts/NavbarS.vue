@@ -1,14 +1,15 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import DarkModeToggle from '@/Components/DarkModeToggle.vue';
 
 const showingNavigationDropdown = ref(false);
 </script>
 
 <template>
-    <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+    <div class="min-h-screen bg-gradient-to-r  dark:from-[#1b2e37] dark:to-[#224466]">
         <!-- Navigation -->
-        <nav class="w-full z-50 bg-white shadow-md dark:bg-gray-800">
+        <nav class="w-full z-50 bg-white shadow-md dark:bg-black">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center h-16">
                     <!-- Logo Section -->
@@ -39,14 +40,14 @@ const showingNavigationDropdown = ref(false);
                         </Link>
                     </div>
                     <div class="hidden sm:flex items-center space-x-6">
-                        <Link href="/login" class="text-gray-600 hover:text-blue-500 transition-colors">
+                        <Link href="/login" class="text-gray-600 dark:text-white hover:text-blue-500 transition-colors">
                             Iniciar sessió
                         </Link>
-                        <Link href="/register" class="text-gray-600 hover:text-blue-500 transition-colors">
+                        <Link href="/register" class="text-gray-600 dark:text-white hover:text-blue-500 transition-colors">
                             Registra't
                         </Link>
                     </div>
-
+                    <DarkModeToggle @click.stop></DarkModeToggle>
                     <!-- Hamburger -->
                     <div class="-me-2 flex items-center sm:hidden">
                         <button aria-label="button definition" @click="showingNavigationDropdown = !showingNavigationDropdown" class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 transition duration-150 ease-in-out hover:bg-gray-100 hover:text-gray-500 focus:bg-gray-100 focus:text-gray-500 focus:outline-none dark:text-gray-500 dark:hover:bg-gray-900 dark:hover:text-gray-400 dark:focus:bg-gray-900 dark:focus:text-gray-400">

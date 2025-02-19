@@ -93,35 +93,35 @@ const navigateToEvent = (event) => { //Navigate to event
 
   <Head title="Events"></Head>
   <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
-    <div class="min-h-screen bg-gray-50 p-8">
-      <h1 class="text-4xl font-bold text-center mb-12 text-black">Esdeveniments</h1>
+    <div class="min-h-screen bg-gradient-to-r from-[#ffffff] to-[#ffffff] dark:from-[#1b2e37] dark:to-[#224466] p-8">
+      <h1 class="text-4xl font-bold text-center mb-12 text-black dark:text-white">Esdeveniments</h1>
 
       <!-- Events List -->
       <div v-if="events.length" class="max-w-5xl mx-auto space-y-4">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div v-for="event in events" :key="event.id"
-            class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+            class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
             <div class="relative">
               <img :src="`/storage/${event.image}`" :alt="event.title" class="w-full h-56 object-cover">
             </div>
             <div class="p-6">
               <Link :href="route('eventInfo', event.id)" class="block">
-              <h2 class="text-xl font-semibold text-gray-900 mb-3 font-bold">{{ event.title }}</h2>
-              <p class="text-gray-800 text-base mb-4 line-clamp-2">{{ event.description }}</p>
+              <h2 class="text-xl text-gray-900 dark:text-white mb-3 font-bold">{{ event.title }}</h2>
+              <p class="text-gray-800 dark:text-white text-base mb-4 line-clamp-2">{{ event.description }}</p>
               <div class="flex justify-between items-center mb-4">
-                <span class="text-black font-bold">Data: {{ event.date }}</span>
-                <span class="text-black font-bold">Hora: {{ event.time }}h</span>
+                <span class="text-black  dark:text-white font-bold">Data: {{ event.date }}</span>
+                <span class="text-black  dark:text-white font-bold">Hora: {{ event.time }}h</span>
               </div>
               </Link>
-              <div class="mt-2 flex items-center justify-between text-sm text-gray-500">
+              <div class="mt-2 flex items-center justify-between text-sm text-gray-500 dark:text-white">
                 <div class="flex items-center">
                   <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   </svg>
-                  <span class="text-gray-800">{{ locations[event.id] || 'Ubicación no disponible' }}</span>
-                  <span class="mx-2 text-gray-800">•</span>
-                  <span class="text-gray-800">{{ timeAgo(event.created_at) }}</span>
+                  <span class="text-gray-800 dark:text-white">{{ locations[event.id] || 'Ubicación no disponible' }}</span>
+                  <span class="mx-2 text-gray-800 dark:text-white">•</span>
+                  <span class="text-gray-800 dark:text-white">{{ timeAgo(event.created_at) }}</span>
                 </div>
               </div>
 
@@ -138,10 +138,10 @@ const navigateToEvent = (event) => { //Navigate to event
           </div>
         </div>
       </div>
-      <div v-else class="text-center text-gray-600 text-xl font-semibold mt-20">
+      <div v-else class="text-center text-gray-600 dark:text-white text-xl font-semibold mt-20">
         No hi ha esdeveniments disponibles
       </div>
-
+      
       <div class="fixed bottom-8 right-8 flex space-x-4">
         <template v-if="$page.props.auth.user && $page.props.auth.user.role <= 1">
           <Link aria-label="addEvent Page" href="/addEvent"

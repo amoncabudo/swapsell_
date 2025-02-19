@@ -189,16 +189,16 @@ const isBasket = (product) => {
 
   <Head title="Producte Ampliat"></Head>
   <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
-    <div class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 py-12 text-black">
+    <div class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 dark:from-[#1b2e37] dark:to-[#224466] py-12 text-black">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Main container with glass effect -->
-        <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 mb-8">
+        <div class="bg-white/80 dark:bg-gray-800 backdrop-blur-sm rounded-2xl shadow-xl p-8 mb-8">
           <div class="flex flex-col lg:flex-row gap-8">
 
             <!-- Section of image and buttons -->
             <div class="w-full lg:w-1/2">
-              <div class="bg-white rounded-xl shadow-lg p-4">
-                <h1 class="text-2xl font-bold text-black mb-4 text-center">{{ product.name }}</h1>
+              <div class="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-4">
+                <h1 class="text-2xl font-bold text-black dark:text-white mb-4 text-center">{{ product.name }}</h1>
                 <div class="relative group">
                   <img :src="`/storage/${product.image}`" :alt="product.name"
                     class="w-full h-[286px] object-cover rounded-lg transition-transform duration-300 group-hover:scale-105">
@@ -210,7 +210,7 @@ const isBasket = (product) => {
                 <!-- Buttons of action -->
                 <div class="flex justify-center space-x-4 mt-6">
                   <button v-if="!product.bid" @click="toggleBasket(product)"
-                    class="flex items-center space-x-2 bg-SubastaButton1 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-all duration-300 transform hover:-translate-y-1">
+                    class="flex items-center space-x-2 bg-SubastaButton1 dark:text-white dark:bg-gray-950 dark:hover:bg-white dark:hover:text-black  text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-all duration-300 transform hover:-translate-y-1">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -227,13 +227,13 @@ const isBasket = (product) => {
             <div class="w-full lg:w-1/2 space-y-6">
               <!-- Información del vendedor -->
               <Link :href="route('profile.getUserById', props.user.id)">
-              <div class="bg-white rounded-xl shadow-lg p-6">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">Informació del venedor</h2>
+              <div class="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">Informació del venedor</h2>
                 <div class="flex items-center space-x-4">
                   <img :src="`/storage/${user.image}`" alt="User" class="w-16 h-16 rounded-full border-2 border-gray-200">
                   <div>
-                    <p class="font-semibold text-lg">{{ product.user.name }} {{ product.user.surname }}</p>
-                    <div class="flex items-center space-x-2 text-sm text-gray-500">
+                    <p class="font-semibold text-lg dark:text-white">{{ product.user.name }} {{ product.user.surname }}</p>
+                    <div class="flex items-center space-x-2 text-sm text-gray-500 dark:text-white">
                       <span>⭐ {{ props.mediaReview }}</span>
                       <span>•</span>
                       <span>Membre desde</span><span>{{ miembroDesde }}</span>
@@ -244,20 +244,20 @@ const isBasket = (product) => {
               </div>
               </Link>
               <!-- Detalles del producto -->
-              <div class="bg-white rounded-xl shadow-lg p-6">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">Detalls del producte</h2>
+              <div class="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">Detalls del producte</h2>
                 <div class="space-y-4">
                   <div class="flex justify-between items-center py-2 border-b">
-                    <span class="text-black">Nom:</span>
-                    <span class="font-semibold text-black">{{ product.name }}</span>
+                    <span class="text-black dark:text-white">Nom:</span>
+                    <span class="font-semibold text-black dark:text-white">{{ product.name }}</span>
                   </div>
                   <div class="flex justify-between items-center py-2 border-b">
-                    <span class="text-black">Preu:</span>
-                    <span class="font-semibold text-xl text-green-600">{{ product.price }}€</span>
+                    <span class="text-black dark:text-white">Preu:</span>
+                    <span class="font-semibold text-xl text-green-600 dark:text-white">{{ product.price }}€</span>
                   </div>
                   <div class="flex justify-between items-center py-2">
-                    <span class="text-black">Descripció:</span>
-                    <span class="text-black">{{ product.description }}</span>
+                    <span class="text-black dark:text-white">Descripció:</span>
+                    <span class="text-black dark:text-white">{{ product.description }}</span>
                   </div>
                 </div>
               </div>
@@ -266,8 +266,8 @@ const isBasket = (product) => {
         </div>
 
         <!-- New section of comments -->
-        <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 mt-8">
-          <h2 class="text-2xl font-bold text-gray-800 mb-6">Comentaris</h2>
+        <div class="bg-white/80 dark:bg-gray-900 backdrop-blur-sm rounded-2xl shadow-xl p-8 mt-8">
+          <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Comentaris</h2>
 
           <!-- Form for new comment -->
           <div class="mb-8">
@@ -279,11 +279,11 @@ const isBasket = (product) => {
               >
               <div class="flex-1">
                 <textarea aria-label="Comments TextArea"
-                  class="w-full p-4 border rounded-lg focus:ring-2 focus:ring-blue-500 text-black focus:border-blue-500"
+                  class="w-full p-4 border rounded-lg focus:ring-2 focus:ring-blue-500 text-black dark:bg-gray-950 dark:text-white focus:border-blue-500"
                   placeholder="Escriu el teu comentari..." rows="3" id="description" name="description" required
                   v-model="form.message"></textarea>
                 <button type="submit" @click="submitData"
-                  class="mt-2 bg-SubastaButton1 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-all duration-300">
+                  class="mt-2 bg-SubastaButton1 dark:bg-black dark:hover:bg-white dark:text-white dark:hover:text-black text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-all duration-300">
                   Publicar comentari
                 </button>
 
@@ -298,20 +298,20 @@ const isBasket = (product) => {
                 <img :src="`/storage/${comentario.user.image}`" alt="User" class="w-10 h-10 rounded-full">
                 <div class="flex-1">
                   <div
-                    class="bg-white/80 backdrop-blur-sm rounded-lg p-4 shadow-sm hover:shadow-md transition-all duration-300">
+                    class="bg-white/80 dark:bg-gray-950 backdrop-blur-sm rounded-lg p-4 shadow-sm hover:shadow-md transition-all duration-300">
                     <div class="flex justify-between items-center mb-2">
-                      <p class="font-semibold text-gray-800">{{ comentario.user.name }} </p>
-                      <span class="text-sm text-gray-500">{{ comentario.tiempo_transcurrido }}</span>
+                      <p class="font-semibold text-gray-800 dark:text-white">{{ comentario.user.name }} </p>
+                      <span class="text-sm text-gray-500 dark:text-white">{{ comentario.tiempo_transcurrido }}</span>
                     </div>
-                    <p class="text-black"> {{ comentario.description }}</p>
+                    <p class="text-black dark:text-white"> {{ comentario.description }}</p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 mt-8">
-          <h2 class="text-2xl font-bold text-gray-800 mb-6">Ubicació del producte</h2>
+        <div class="bg-white/80 dark:bg-gray-900 backdrop-blur-sm rounded-2xl shadow-xl p-8 mt-8">
+          <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Ubicació del producte</h2>
           <div id="map" class="h-[400px] w-full rounded-lg"></div>
         </div>
       </div>
