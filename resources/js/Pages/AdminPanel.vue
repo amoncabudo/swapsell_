@@ -82,11 +82,12 @@ const form = useForm({ //Form for add user
     surname: '',
     email: '',
     password: '',
-    role: 2,
+    role: '',
     image: null
 });
 const closeModalU = () => { //Close modal for add user
     isModalUserOpen.value = false;
+    form.reset();
 };
 
 //Function for add user
@@ -1070,7 +1071,7 @@ const viewEventDetails = (eventId) => {
 
                             <div class="form-group">
                                 <label for="role" class="block text-sm font-medium text-gray-700 mb-2">Rol</label>
-                                <select id="role" v-model="editUserForm.role"
+                                <select id="role" v-model="form.role"
                                     class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 text-gray-800"
                                     required>
                                     <option v-for="role in roles" :key="role.id" :value="role.id">
@@ -1309,7 +1310,7 @@ const viewEventDetails = (eventId) => {
                                                 <label for="image"
                                                     class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
                                                     <span>Pujar un arxiu</span>
-                                                    <input id="image" type="file" @change="handleFileUpload"
+                                                    <input id="image" type="file" @change="handleProductImageUpload"
                                                         class="sr-only" accept="image/*" />
                                                 </label>
                                                 <p class="pl-1">o arrossega i deixa anar</p>
