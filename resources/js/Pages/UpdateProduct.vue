@@ -41,9 +41,9 @@ const handleImageChange = (e) => {
 <template>
   <Head title = "Editar producte"></Head>
   <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
-  <div id="app" class="p-8 bg-gray-100 min-h-screen flex items-center justify-center">
-    <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
-      <h1 class="text-2xl font-bold mb-6 text-center text-black">Formulario de Registro</h1>
+  <div id="app" class="p-8 from-indigo-100 to-blue-200 dark:from-[#1b2e37] dark:to-[#224466] min-h-screen flex items-center justify-center">
+    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md w-full max-w-md">
+      <h1 class="text-2xl font-bold mb-6 text-center text-black dark:text-white">Formulario de Registro</h1>
       <form @submit.prevent="form.post(route('updateProduct', { id: form.id }), {
         forceFormData: true,
         preserveScroll: true,
@@ -61,74 +61,74 @@ const handleImageChange = (e) => {
         </div>
         
         <div class="mb-4">
-          <label for="name" class="block text-black font-medium mb-2">Nombre:</label>
+          <label for="name" class="block text-black dark:text-white font-medium mb-2">Nombre:</label>
           <input
             type="text"
             id="name"
             name="name"
             v-model="form.name"
-            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200 text-black"
+            class="dark:bg-gray-950 dark:text-white w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200 text-black"
             required
           />
         </div>
 
         <div class="mb-4">
-          <label for="description" class="block text-black font-medium mb-2">Descripción:</label>
+          <label for="description" class="block text-black dark:text-white font-medium mb-2">Descripción:</label>
           <textarea
             id="description"
             name="description"
             v-model="form.description"
-            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200 text-black"
+            class="dark:bg-gray-950 dark:text-white w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200 text-black"
             required
           ></textarea>
         </div>
 
         <div class="mb-4">
-          <label for="price" class="block text-black font-medium mb-2">Precio:</label>
+          <label for="price" class="block text-black dark:text-white font-medium mb-2">Precio:</label>
           <input
             type="number"
             id="price"
             name="price"
             v-model="form.price"
-            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200 text-black"
+            class="dark:bg-gray-950 dark:text-white w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200 text-black"
             required
           />
         </div>
 
         <div class="mb-4">
-          <label for="latitude" class="block text-black font-medium mb-2">Latitud:</label>
+          <label for="latitude" class="block text-black dark:text-white font-medium mb-2">Latitud:</label>
           <input
             type="number"
             step="any"
             id="latitude"
             name="latitude"
             v-model="form.latitude"
-            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200 text-black"
+            class="dark:bg-gray-950 dark:text-white w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200 text-black"
             required
           />
         </div>
 
         <div class="mb-4">
-          <label for="longitude" class="block text-black font-medium mb-2">Longitud:</label>
+          <label for="longitude" class="block text-black dark:text-white font-medium mb-2">Longitud:</label>
           <input
             type="number"
             step="any"
             id="longitude"
             name="longitude"
             v-model="form.longitude"
-            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200 text-black"
+            class="dark:bg-gray-950 dark:text-white w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200 text-black"
             required
           />
         </div>
 
         <div class="mb-4">
-          <label for="image" class="block text-black font-medium mb-2">Imatge:</label>
+          <label for="image" class="block text-black dark:text-white font-medium mb-2">Imatge:</label>
           <input
             type="file"
             id="image"
             @change="handleImageChange"
             accept="image/*"
-            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200 text-black"
+            class="dark:text-white w-full rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200 text-black"
           />
           
           <div v-if="imagePreview" class="mt-4">
@@ -140,7 +140,7 @@ const handleImageChange = (e) => {
           </div>
           
           <div v-else-if="props.product.image" class="mt-4">
-            <p class="text-sm text-gray-600 mb-2">Imatge actual:</p>
+            <p class="text-sm text-gray-600 dark:text-white mb-2">Imatge actual:</p>
             <img 
               :src="`/storage/${props.product.image}`" 
               alt="Imagen actual" 
@@ -150,26 +150,26 @@ const handleImageChange = (e) => {
         </div>
 
         <div class="mb-4">
-          <label for="status" class="block text-black font-medium mb-2">Categoria</label>
+          <label for="status" class="block text-black dark:text-white font-medium mb-2">Categoria</label>
           <select
             id="category_id"
             name="category_id"
             v-model="form.category_id"
-            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200 text-black"
+            class="dark:bg-gray-950 dark:text-white w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200 text-black"
             required
           >
-            <option value="1" class="text-black">Hogar</option>
-            <option value="2" class="text-black">Tecnologia</option>
-            <option value="3" class="text-black">Deportes</option>
-            <option value="4" class="text-black">Moda</option>
-            <option value="5" class="text-black">Salud y belleza</option>
-            <option value="6" class="text-black">Juguetes</option>
+            <option value="1" class="text-black dark:text-white">Hogar</option>
+            <option value="2" class="text-black dark:text-white">Tecnologia</option>
+            <option value="3" class="text-black dark:text-white">Deportes</option>
+            <option value="4" class="text-black dark:text-white">Moda</option>
+            <option value="5" class="text-black dark:text-white">Salud y belleza</option>
+            <option value="6" class="text-black dark:text-white">Juguetes</option>
           </select>
         </div>
 
         <button
           type="submit"
-          class="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300"
+          class="w-full bg-gradient-to-r from-blue-500 to-indigo-600 dark:from-[#006699] dark:to-[#004266] text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300"
         >
           Enviar
         </button>

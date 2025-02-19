@@ -225,8 +225,10 @@ class ProductController extends Controller
         if (!$product) {
             return redirect()->route('Products')->with('error', 'Producte no trobat');
         }
-    
-        return Inertia::render('UpdateProduct', ['product' => $product]);
+        $isAuthenticated = Auth::check();
+        return Inertia::render('UpdateProduct',
+         ['product' => $product,
+         'isAuthenticated' => $isAuthenticated]);
     }
 
     public function getAvailableProducts()
