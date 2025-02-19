@@ -14,11 +14,21 @@ const submit = () => {
         onFinish: () => form.reset('password'),
     });
 };
+
+
+
 </script>
 
 <template>
   <Head title = "Iniciar sessio"></Head>
   <div class="wave-bg min-h-screen">
+    <Link aria-label="Volver" href="/"
+    class="bg-white rounded-full w-12 h-12 shadow-md transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center absolute top-4 left-4 z-10">
+  <svg class="h-6 w-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" role="img" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+  </svg>
+</Link>
+
     <section class="min-h-screen flex items-center justify-center p-4 relative">
       <div class="glass-effect rounded-3xl w-full max-w-md p-8 space-y-8">
         <!-- Logo estàtic -->
