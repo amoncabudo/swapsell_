@@ -19,7 +19,7 @@ console.log(showingNavigationDropdown.value);
 <template>
   
     <div>
-      <div class="min-h-screen bg-gray-100 ">
+      <div class="min-h-screen bg-gradient-to-r  dark:from-[#1b2e37] dark:to-[#224466]">
         <nav class="w-full z-50 bg-white shadow-md dark:bg-black">
           <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">

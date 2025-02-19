@@ -93,8 +93,8 @@ const navigateToEvent = (event) => { //Navigate to event
 
   <Head title="Events"></Head>
   <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
-    <div class="min-h-screen bg-gray-50 p-8">
-      <h1 class="text-4xl font-bold text-center mb-12 text-black">Esdeveniments</h1>
+    <div class="min-h-screen bg-gradient-to-r from-[#ffffff] to-[#ffffff] dark:from-[#1b2e37] dark:to-[#224466] p-8">
+      <h1 class="text-4xl font-bold text-center mb-12 text-black dark:text-white">Esdeveniments</h1>
 
       <!-- Events List -->
       <div v-if="events.length" class="max-w-5xl mx-auto space-y-4">
@@ -138,7 +138,7 @@ const navigateToEvent = (event) => { //Navigate to event
           </div>
         </div>
       </div>
-      <div v-else class="text-center text-gray-600 text-xl font-semibold mt-20">
+      <div v-else class="text-center text-gray-600 dark:text-white text-xl font-semibold mt-20">
         No hi ha esdeveniments disponibles
       </div>
 
