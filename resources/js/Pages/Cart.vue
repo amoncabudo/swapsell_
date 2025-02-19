@@ -54,7 +54,7 @@ onMounted(() => {
     window.paypal.Buttons({
       fundingSource: paypal.FUNDING.PAYPAL, //Funding source
       style: {
-        color: 'black', //Color
+        color: 'blue', //Color
         shape: 'rect', //Shape
         layout: 'vertical', //Layout
         label: 'paypal' //Label
@@ -124,29 +124,31 @@ onMounted(() => {
 </script>
 
 <template>
-    <Head title = "Carret"></Head>
+    <Head title="Carret"></Head>
     <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
-        <div class="flex flex-col lg:flex-row min-h-screen bg-gray-100 p-4">
+        <div class="flex flex-col lg:flex-row min-h-[calc(100vh-4rem)] bg-gradient-to-r from-[#ffffff] to-[#ffffff] dark:from-[#1b2e37] dark:to-[#224466] p-4">
             <!-- Summary of the purchase -->
             <div class="w-full lg:w-2/3 pr-4">
-                <div class="bg-white rounded-lg shadow-lg p-6">
-                    <h2 class="text-2xl font-bold mb-6 text-gray-800">El meu carret</h2>
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                    <h2 class="text-2xl font-bold mb-6 text-gray-800 dark:text-white">El meu carret</h2>
                     <div v-if="!products_baskets || products_baskets.length === 0" class="text-center py-8">
-                        <p class="text-gray-500">No hi ha productes al carret</p>
+                        <p class="text-gray-500 dark:text-white">No hi ha productes al carret</p>
                     </div>
                     <div v-else class="space-y-6">
-                        <div v-for="product in products_baskets" :key="product.id" 
-                            class="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                        <div v-for="product in products_baskets" :key="product.id"
+                            class="flex items-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 transition-colors">
                             <img :src="`/storage/${product.image}`" :alt="product.name"
                                 class="w-24 h-24 object-cover rounded-lg">
                             <div class="ml-6 flex-grow">
-                                <Link :href="route('product.show', product.id)" class="text-lg font-semibold text-gray-800 hover:text-blue-600">
+                                <Link :href="route('product.show', product.id)"
+                                    class="text-lg font-semibold text-gray-800 dark:text-white hover:text-blue-600">
                                     {{ product.name }}
                                 </Link>
-                                <p class="text-gray-600 mt-1">{{ product.description }}</p>
-                                <p class="text-blue-600 font-bold mt-2">{{ formatPrice(product.price) }}</p>
+                                <p class="text-gray-600 dark:text-white mt-1">{{ product.description }}</p>
+                                <p class="text-blue-600 dark:text-white font-bold mt-2">{{ formatPrice(product.price) }}</p>
                             </div>
-                            <button @click="removeFromBasket(product)" class="ml-4 text-red-500 hover:text-red-700" aria-label="Delete product from basket">
+                            <button @click="removeFromBasket(product)" class="ml-4 text-red-500 hover:text-red-700"
+                                aria-label="Delete product from basket">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -160,25 +162,25 @@ onMounted(() => {
 
             <!-- Summary of the purchase -->
             <div class="w-full lg:w-1/3 mt-6 lg:mt-0">
-                <div class="bg-white rounded-lg shadow-lg p-6">
-                    <h2 class="text-xl font-bold mb-4 text-gray-800">Resum de la compra</h2>
+                <div class="bg-white dark:bg-gray-800  rounded-lg shadow-lg p-6">
+                    <h2 class="text-xl font-bold mb-4 text-gray-800 dark:text-white">Resum de la compra</h2>
                     <div class="border-t border-gray-200 pt-4">
                         <div class="flex justify-between items-center mb-2">
-                            <span class="text-gray-600">Subtotal</span>
-                            <span class="text-black font-semibold">{{ formatPrice(total) }}</span>
+                            <span class="text-gray-600 dark:text-white">Subtotal</span>
+                            <span class="text-black dark:text-white font-semibold">{{ formatPrice(total) }}</span>
                         </div>
                         <div class="flex justify-between items-center mb-2">
-                            <span class="text-gray-600">IVA (21%)</span>
-                            <span class="text-black font-semibold">{{ formatPrice(total * 0.21) }}</span>
+                            <span class="text-gray-600 dark:text-white">IVA (21%)</span>
+                            <span class="text-black dark:text-white font-semibold">{{ formatPrice(total * 0.21) }}</span>
                         </div>
                         <div class="border-t border-gray-200 pt-4 mt-2">
                             <div class="flex justify-between items-center">
-                                <span class="text-lg font-bold text-gray-800">Total</span>
-                                <span class="text-lg font-bold text-blue-600">{{ formatPrice(total * 1.21) }}</span>
+                                <span class="text-lg font-bold text-gray-800 dark:text-white">Total</span>
+                                <span class="text-lg font-bold text-blue-600 dark:text-white">{{ formatPrice(total * 1.21) }}</span>
                             </div>
                         </div>
                         <div class="w-full mt-6">
-                            <div id="paypal-button-container" class="w-full"></div>
+                            <div id="paypal-button-container" class="w-full min-h-[45px]"></div>
                         </div>
                     </div>
                 </div>
@@ -187,24 +189,4 @@ onMounted(() => {
     </component>
 
     <Cookies />
-
 </template>
-
-<style scoped>
-.bg-gray-100 {
-    min-height: calc(100vh - 4rem);
-}
-
-#paypal-button-container {
-  min-height: 45px;
-  width: 100%;
-}
-
-.paypal-buttons {
-    display: block !important;
-}
-
-.paypal-button-number-2 {
-    display: none !important;
-}
-</style>

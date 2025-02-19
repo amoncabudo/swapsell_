@@ -643,20 +643,20 @@ function handleEditProductImageUpload(event) {
 
     <Head title="Adminpanel"></Head>
     <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
-        <div class="min-h-screen bg-white">
+        <div class="min-h-screen bg-gradient-to-r from-[#ffffff] to-[#ffffff] dark:from-[#1b2e37] dark:to-[#224466]">
             <div class="container mx-auto p-4 md:p-8">
                 <!-- Header Section -->
                 <div class="text-center mb-16" data-aos="fade-down">
-                    <h1 class="text-5xl md:text-6xl font-bold text-gray-800 mb-4 tracking-tight">
+                    <h1 class="text-5xl md:text-6xl font-bold text-gray-800 dark:text-white mb-4 tracking-tight">
                         PANELL D'ADMINISTRADOR
                     </h1>
-                    <p class="text-gray-600 text-xl font-light">Gestiona usuaris, esdeveniments i productes</p>
+                    <p class="text-gray-600 dark:text-white text-xl font-light">Gestiona usuaris, esdeveniments i productes</p>
                 </div>
 
                 <!-- Cards Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
                     <!-- User Card -->
-                    <div class="bg-white rounded-2xl shadow-xl p-8 transform hover:scale-105 transition-all duration-300 border border-gray-100"
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 transform hover:scale-105 transition-all duration-300 border border-gray-100 dark:border-gray-950"
                         data-aos="fade-right">
                         <div
                             class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6 shadow-lg">
@@ -667,8 +667,8 @@ function handleEditProductImageUpload(event) {
                                     clip-rule="evenodd" />
                             </svg>
                         </div>
-                        <h2 class="text-3xl font-bold mb-4 text-gray-800 text-center">Usuaris</h2>
-                        <p class="text-gray-600 text-center mb-8">Gestiona els usuaris del sistema</p>
+                        <h2 class="text-3xl font-bold mb-4 text-gray-800 dark:text-white text-center">Usuaris</h2>
+                        <p class="text-gray-600 dark:text-white text-center mb-8">Gestiona els usuaris del sistema</p>
                         <button @click="openModalU"
                             class="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white py-4 rounded-xl hover:shadow-lg flex items-center justify-center gap-3 group transition-all duration-300 hover:-translate-y-1">
                             <span class="text-lg">Afegir Usuari</span>
@@ -681,7 +681,7 @@ function handleEditProductImageUpload(event) {
                     </div>
 
                     <!-- Event Card -->
-                    <div class="bg-white rounded-2xl shadow-xl p-8 transform hover:scale-105 transition-all duration-300 border border-gray-100"
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 transform hover:scale-105 transition-all duration-300 border border-gray-100 dark:border-gray-950"
                         data-aos="fade-up">
                         <div
                             class="bg-gradient-to-r from-green-500 to-green-600 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6 shadow-lg">
@@ -692,8 +692,8 @@ function handleEditProductImageUpload(event) {
                                     clip-rule="evenodd" />
                             </svg>
                         </div>
-                        <h2 class="text-3xl font-bold mb-4 text-gray-800 text-center">Esdeveniments</h2>
-                        <p class="text-gray-600 text-center mb-8">Gestiona els esdeveniments del sistema</p>
+                        <h2 class="text-3xl font-bold mb-4 text-gray-800 dark:text-white text-center">Esdeveniments</h2>
+                        <p class="text-gray-600 dark:text-white text-center mb-8">Gestiona els esdeveniments del sistema</p>
                         <button @click="openModalE"
                             class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 rounded-xl hover:shadow-lg flex items-center justify-center gap-3 group transition-all duration-300 hover:-translate-y-1">
                             <span class="text-lg">Afegir Esdeveniment</span>
@@ -706,7 +706,7 @@ function handleEditProductImageUpload(event) {
                     </div>
 
                     <!-- Product Card -->
-                    <div class="bg-white rounded-2xl shadow-xl p-8 transform hover:scale-105 transition-all duration-300 border border-gray-100"
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 transform hover:scale-105 transition-all duration-300 border border-gray-100 dark:border-gray-950"
                         data-aos="fade-left">
                         <div
                             class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6 shadow-lg">
@@ -717,8 +717,8 @@ function handleEditProductImageUpload(event) {
                                     clip-rule="evenodd" />
                             </svg>
                         </div>
-                        <h2 class="text-3xl font-bold mb-4 text-gray-800 text-center">Productes</h2>
-                        <p class="text-gray-600 text-center mb-8">Gestiona els productes del sistema</p>
+                        <h2 class="text-3xl font-bold mb-4 text-gray-800 dark:text-white text-center">Productes</h2>
+                        <p class="text-gray-600 dark:text-white text-center mb-8">Gestiona els productes del sistema</p>
                         <button @click="openModalP"
                             class="w-full bg-gradient-to-r from-purple-500 to-purple-600 text-white py-4 rounded-xl hover:shadow-lg flex items-center justify-center gap-3 group transition-all duration-300 hover:-translate-y-1">
                             <span class="text-lg">Afegir Producte</span>
@@ -733,19 +733,19 @@ function handleEditProductImageUpload(event) {
 
                 <!-- Users List Section -->
                 <div class="mt-16" data-aos="fade-up">
-                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-950">
                         <!-- Header de la sección -->
                         <div class="p-8 border-b border-gray-100 flex justify-between items-center">
                             <div>
-                                <h2 class="text-3xl font-bold text-gray-800">Llista d'Usuaris</h2>
-                                <p class="text-gray-600 mt-1">Gestiona els usuaris del sistema</p>
+                                <h2 class="text-3xl font-bold text-gray-800 dark:text-white">Llista d'Usuaris</h2>
+                                <p class="text-gray-600 dark:text-white mt-1">Gestiona els usuaris del sistema</p>
                             </div>
-                            <div class="flex gap-4">
+                            <div class="flex gap-4  ">
                                 <div class="relative">
                                     <label for="search-users" class="sr-only">Cercar usuaris</label>
                                     <input id="search-users" type="text" placeholder="Cercar usuaris..."
                                         v-model="searchQuery"
-                                        class="pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-800"
+                                        class="pl-10 pr-4 py-2 border border-gray-200 dark:border-gray-950 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-white focus:border-blue-500 text-gray-800"
                                         aria-label="Cercar usuaris">
                                     <svg class="w-5 h-5 text-gray-500 absolute left-3 top-1/2 transform -translate-y-1/2"
                                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -759,42 +759,42 @@ function handleEditProductImageUpload(event) {
                         <!-- Users table -->
                         <div class="overflow-x-auto">
                             <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-gray-50">
+                                <thead class="bg-gray-50 dark:bg-gray-800">
                                     <tr>
                                         <th
-                                            class="px-8 py-5 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                                            class="px-8 py-5 text-left text-sm font-semibold text-gray-700 dark:text-white uppercase tracking-wider">
                                             Usuari</th>
                                         <th
-                                            class="px-8 py-5 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                                            class="px-8 py-5 text-left text-sm font-semibold text-gray-700 dark:text-white uppercase tracking-wider">
                                             Email</th>
                                         <th
-                                            class="px-8 py-5 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                                            class="px-8 py-5 text-left text-sm font-semibold text-gray-700 dark:text-white uppercase tracking-wider">
                                             Rol</th>
                                         <th
-                                            class="px-8 py-5 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                                            class="px-8 py-5 text-left text-sm font-semibold text-gray-700 dark:text-white uppercase tracking-wider">
                                             Estat</th>
                                         <th
-                                            class="px-8 py-5 text-right text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                                            class="px-8 py-5 text-right text-sm font-semibold text-gray-700 dark:text-white uppercase tracking-wider">
                                             Accions</th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-gray-200 bg-white">
+                                <tbody class="divide-y divide-gray-200 bg-white dark:bg-gray-800">
                                     <tr v-for="user in searchedUsers" :key="user.id"
-                                        class="hover:bg-gray-50 transition-colors duration-200">
+                                        class="transition-colors duration-200">
                                         <td class="px-8 py-5 whitespace-nowrap">
                                             <div class="flex items-center space-x-4">
                                                 <img :src="user.image ? `/storage/${user.image}` : '/images/default-avatar.png'"
                                                     :alt="user.name"
                                                     class="h-10 w-10 rounded-full object-cover border-2 border-gray-200">
                                                 <div>
-                                                    <p class="font-semibold text-gray-800">{{ user.name }} {{
+                                                    <p class="font-semibold text-gray-800 dark:text-white">{{ user.name }} {{
                                                         user.surname }}</p>
-                                                    <p class="text-sm text-gray-600">{{ user.email }}</p>
+                                                    <p class="text-sm text-gray-600 dark:text-white">{{ user.email }}</p>
                                                 </div>
                                             </div>
                                         </td>
                                         <td class="px-8 py-5 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">{{ user.email }}</div>
+                                            <div class="text-sm text-gray-900 dark:text-white">{{ user.email }}</div>
                                         </td>
                                         <td class="px-8 py-5 whitespace-nowrap">
                                             <span
@@ -848,45 +848,45 @@ function handleEditProductImageUpload(event) {
                 </div>
                 <!-- Products List Section -->
                 <div class="mt-16" data-aos="fade-up">
-                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-950">
                         <div class="p-8 border-b border-gray-100">
-                            <h2 class="text-3xl font-bold text-gray-800">Llista de Productes</h2>
+                            <h2 class="text-3xl font-bold text-gray-800 dark:text-white">Llista de Productes</h2>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-gray-50">
+                                <thead class="bg-gray-50 dark:bg-gray-800">
                                     <tr>
                                         <th
-                                            class="px-8 py-5 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                                            class="px-8 py-5 text-left text-sm font-semibold text-gray-700 dark:text-white uppercase tracking-wider">
                                             Nom</th>
                                         <th
-                                            class="px-8 py-5 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                                            class="px-8 py-5 text-left text-sm font-semibold text-gray-700 dark:text-white uppercase tracking-wider">
                                             Descripció</th>
                                         <th
-                                            class="px-8 py-5 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                                            class="px-8 py-5 text-left text-sm font-semibold text-gray-700 dark:text-white uppercase tracking-wider">
                                             Preu</th>
                                         <th
-                                            class="px-8 py-5 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                                            class="px-8 py-5 text-left text-sm font-semibold text-gray-700 dark:text-white uppercase tracking-wider">
                                             Estat</th>
                                         <th
-                                            class="px-8 py-5 text-right text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                                            class="px-8 py-5 text-right text-sm font-semibold text-gray-700 dark:text-white uppercase tracking-wider">
                                             Accions</th>
 
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-200">
                                     <tr v-for="product in products" :key="product.id"
-                                        class="hover:bg-gray-50 transition-colors">
+                                        class="transition-colors">
                                         <td class="px-8 py-5">
-                                            <div class="text-sm font-medium text-gray-800">{{ product.name }}</div>
+                                            <div class="text-sm font-medium text-gray-800 dark:text-white">{{ product.name }}</div>
                                         </td>
                                         <td class="px-8 py-5">
-                                            <div class="text-sm text-gray-800">
+                                            <div class="text-sm text-gray-800 dark:text-white">
                                                 <p class="truncate w-60">{{ product.description }}</p>
                                             </div>
                                         </td>
                                         <td class="px-8 py-5">
-                                            <div class="text-sm text-gray-800">{{ product.price }} €</div>
+                                            <div class="text-sm text-gray-800 dark:text-white">{{ product.price }} €</div>
                                         </td>
                                         <td class="px-8 py-5 whitespace-nowrap">
                                             <span
@@ -945,45 +945,45 @@ function handleEditProductImageUpload(event) {
 
                 <!-- Events List Section -->
                 <div class="mt-16" data-aos="fade-up">
-                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:boder-gray-950">
                         <div class="p-8 border-b border-gray-100">
-                            <h2 class="text-3xl font-bold text-gray-800">Llista d'Esdeveniments</h2>
+                            <h2 class="text-3xl font-bold text-gray-800 dark:text-white">Llista d'Esdeveniments</h2>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-gray-50">
+                                <thead class="bg-gray-50 dark:bg-gray-800">
                                     <tr>
                                         <th
-                                            class="px-8 py-5 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                                            class="px-8 py-5 text-left text-sm font-semibold text-gray-700 dark:text-white uppercase tracking-wider">
                                             Titol</th>
                                         <th
-                                            class="px-8 py-5 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                                            class="px-8 py-5 text-left text-sm font-semibold text-gray-700 dark:text-white uppercase tracking-wider">
                                             Descripció</th>
                                         <th
-                                            class="px-8 py-5 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                                            class="px-8 py-5 text-left text-sm font-semibold text-gray-700 dark:text-white uppercase tracking-wider">
                                             Data Esdeveniment</th>
                                         <th
-                                            class="px-8 py-5 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                                            class="px-8 py-5 text-left text-sm font-semibold text-gray-700 dark:text-white uppercase tracking-wider">
                                             Hora Esdeveniment</th>
                                         <th
-                                            class="px-8 py-5 text-right text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                                            class="px-8 py-5 text-right text-sm font-semibold text-gray-700 dark:text-white uppercase tracking-wider">
                                             Accions</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-200">
                                     <tr v-for="event in events" :key="event.id"
-                                        class="hover:bg-gray-50 transition-colors">
+                                        class="transition-colors">
                                         <td class="px-8 py-5">
-                                            <div class="text-sm font-medium text-gray-800">{{ event.title }}</div>
+                                            <div class="text-sm font-medium text-gray-800 dark:text-white">{{ event.title }}</div>
                                         </td>
                                         <td class="px-8 py-5">
-                                            <div class="text-sm text-gray-800">{{ event.description }}</div>
+                                            <div class="text-sm text-gray-800 dark:text-white">{{ event.description }}</div>
                                         </td>
                                         <td class="px-8 py-5">
-                                            <div class="text-sm text-gray-800">{{ event.date }}</div>
+                                            <div class="text-sm text-gray-800 dark:text-white">{{ event.date }}</div>
                                         </td>
                                         <td class="px-8 py-5">
-                                            <div class="text-sm text-gray-800">{{ event.time }}</div>
+                                            <div class="text-sm text-gray-800 dark:text-white">{{ event.time }}</div>
                                         </td>
                                         <td class="px-8 py-5 whitespace-nowrap text-right text-sm font-medium">
                                             <div class="flex justify-end space-x-3">

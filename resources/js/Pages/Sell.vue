@@ -57,67 +57,64 @@ const generateDescription = async () => { // Generate the description of the pro
 </script>
 
 <template>
-  <Head title = "Vendre"></Head>
+  <Head title="Vendre"></Head>
   <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
-    <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="min-h-screen bg-gradient-to-br from-blue-50 dark:from-[#1b2e37] dark:to-[#224466] to-indigo-50 py-12 px-4 sm:px-6 lg:px-8">
       <div class="max-w-2xl mx-auto">
         <!-- Header of the form -->
         <div class="text-center mb-8">
-          <h1 class="text-3xl font-extrabold text-gray-900 mb-2">
+          <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-2">
             Publica el teu Producte
           </h1>
-          <p class="text-gray-600">
+          <p class="text-gray-600 dark:text-white">
             Completa els detalls del teu producte:
           </p>
         </div>
 
         <!-- Form Card -->
-        <div class="bg-white rounded-2xl shadow-xl p-8">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
           <form @submit.prevent="form.post(route('sell'))" enctype="multipart/form-data" class="space-y-6">
             <!-- Name field -->
-            <div class="form-group">
-              <label for="name" class="form-label">Nom del Producte</label>
-              <div class="relative">
-                <input type="text" id="name" v-model="form.name" class="form-input pl-10" required />
-                <span class="form-icon">
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+            <div>
+              <label for="name" class="block text-sm font-medium text-gray-700 dark:text-white">Nom del Producte</label>
+              <div class="relative mt-1"> 
+                <input type="text" id="name" v-model="form.name" placeholder="Nom del producte"class="dark:bg-black dark:text-white dark:placeholder-gray-200 block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required />
+                <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <svg class="w-5 h-5 text-gray-400 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                   </svg>
                 </span>
               </div>
             </div>
 
             <!-- Description field -->
-            <div class="form-group">
-              <label for="description" class="form-label">Descripció</label>
-              <div class="relative">
-                <textarea id="description" v-model="form.description" rows="4" class="form-input" required></textarea>
-                <ProgressSpinner v-if="loading" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px;" />
+            <div>
+              <label for="description" class="block text-sm font-medium text-gray-700 dark:text-white">Descripció</label>
+              <div class="relative mt-1">
+                <textarea id="description" v-model="form.description" rows="4" placeholder="Afegeix una descripció"class="dark:placeholder-gray-200 dark:text-white dark:bg-black block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required></textarea>
+                <ProgressSpinner v-if="loading" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-15 h-15" />
               </div>
-              <button type="button" @click="generateDescription"
-                class="mt-2 w-full bg-blue-500 text-white font-bold py-2 rounded">
+              <button type="button" @click="generateDescription" class="mt-2 w-full bg-blue-500 dark:bg-gray-950 text-white font-bold py-2 rounded hover:bg-blue-600">
                 Generar Descripció
               </button>
             </div>
 
             <!-- Image field -->
-            <div class="form-group">
-              <label for="image" class="form-label">Imatge del Producte</label>
-              <div class="relative">
-                <input type="file" id="image" @change="handleFileUpload" required />
+            <div>
+              <label for="image" class="block text-sm font-medium text-gray-700 dark:text-white">Imatge del Producte</label>
+              <div class="relative mt-1">
+                <input type="file" id="image" @change="handleFileUpload" class="dark:text-white block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" required />
               </div>
             </div>
 
             <!-- Price field -->
-            <div class="form-group">
-              <label for="price" class="form-label">Preu (€)</label>
-              <div class="relative">
-                <input type="number" id="price" v-model="form.price" class="form-input pl-10" required />
-                <span class="form-icon">
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <div>
+              <label for="price" class="block text-sm font-medium text-gray-700 dark:text-white">Preu (€)</label>
+              <div class="relative mt-1">
+                <input type="number" id="price" v-model="form.price" placeholder="Preu aproximat" class="dark:placeholder-gray-200 dark:text-white dark:bg-black block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required />
+                <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <svg class="w-5 h-5 text-gray-400 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </span>
               </div>
@@ -125,43 +122,36 @@ const generateDescription = async () => { // Generate the description of the pro
 
             <!-- Location fields -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-              <div class="form-group">
-                <label for="latitude" class="form-label">Latitud</label>
-                <div class="relative">
-                  <input type="number" step="any" id="latitude" v-model="form.latitude" class="form-input pl-10"
-                    required />
-                  <span class="form-icon">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <div>
+                <label for="latitude" class="block text-sm font-medium text-gray-700 dark:text-white">Latitud</label>
+                <div class="relative mt-1">
+                  <input type="number" step="any" id="latitude" v-model="form.latitude" placeholder="Afageix una latitud"class="dark:placeholder-gray-200 dark:text-white dark:bg-black block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required />
+                  <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg class="w-5 h-5 text-gray-400 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     </svg>
                   </span>
                 </div>
               </div>
               
-              <div class="form-group">
-                <label for="longitude" class="form-label">Longitud</label>
-                <div class="relative">
-                  <input type="number" step="any" id="longitude" v-model="form.longitude" class="form-input pl-10"
-                    required />
-                  <span class="form-icon">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <div>
+                <label for="longitude" class="block text-sm font-medium text-gray-700 dark:text-white">Longitud</label>
+                <div class="relative mt-1">
+                  <input type="number" step="any" id="longitude" v-model="form.longitude" placeholder="Afageix una latitud" class="dark:placeholder-gray-200 dark:text-white dark:bg-black block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required />
+                  <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg class="w-5 h-5 text-gray-400 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     </svg>
                   </span>
                 </div>
               </div>
-
-              
             </div>
 
             <!-- Category field -->
-            <div class="form-group">
-              <label for="category" class="form-label">Categoria</label>
-              <div class="relative">
-                <select id="category_id" v-model="form.category_id" class="form-input pl-10" required>
+            <div>
+              <label for="category" class="block text-sm font-medium text-gray-700 dark:text-white">Categoria</label>
+              <div class="relative mt-1">
+                <select id="category_id" v-model="form.category_id" class="dark:placeholder-gray-200 dark:text-white dark:bg-black block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required>
                   <option value="1">Llar</option>
                   <option value="2">Tecnologia</option>
                   <option value="3">Esports</option>
@@ -169,19 +159,17 @@ const generateDescription = async () => { // Generate the description of the pro
                   <option value="5">Salut i Bellesa</option>
                   <option value="6">Joguines</option>
                 </select>
-                <span class="form-icon">
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <svg class="w-5 h-5 text-gray-400 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </span>
               </div>
             </div>
+
             <!-- Submit button -->
             <div class="mt-8">
-              <button type="submit" class="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold py-3 px-4 rounded-xl
-                       hover:from-blue-600 hover:to-indigo-700 transform hover:-translate-y-0.5 transition-all duration-150
-                       focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+              <button type="submit" class="dark:from-[#006699] to-[#004266] w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold py-3 px-4 rounded-xl hover:from-blue-600 hover:to-indigo-700 transform hover:-translate-y-0.5 transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                 Publicar Producte
               </button>
             </div>
@@ -192,122 +180,3 @@ const generateDescription = async () => { // Generate the description of the pro
   </component>
   <Cookies />
 </template>
-
-<style scoped>
-/* Form styles */
-.form-group {
-  margin-top: 0.25rem;
-}
-
-.form-label {
-  display: block;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: rgb(55, 65, 81);
-}
-
-.form-input {
-  display: block;
-  width: 100%;
-  border-radius: 0.5rem;
-  border-color: rgb(209, 213, 219);
-  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  padding-left: 3rem;
-  color: rgb(17, 24, 39);
-  transition-property: color, background-color, border-color;
-  transition-duration: 200ms;
-}
-
-.form-input:focus {
-  border-color: rgb(59, 130, 246);
-  outline: 2px solid rgb(59, 130, 246);
-}
-
-.form-icon {
-  position: absolute;
-  left: 0.75rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: rgb(156, 163, 175);
-  pointer-events: none;
-  border-right: 1px solid rgb(209, 213, 219);
-  padding-right: 0.75rem;
-}
-
-/* Specific styles for the textarea */
-textarea.form-input {
-  padding-left: 3rem;
-  resize: none;
-  color: rgb(17, 24, 39);
-}
-
-/* Disable arrows in numeric inputs */
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Effects and animations */
-.wave-bg {
-  background: linear-gradient(45deg, #004266, #006699);
-  background-size: 400% 400%;
-  animation: gradient 15s ease infinite;
-}
-
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-/* Glass effect */
-.glass-effect {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px 0 rgba(0, 66, 102, 0.2);
-}
-
-/* Custom colors */
-.bg-custom-blue {
-  background-color: #004266;
-}
-
-.text-custom-blue {
-  color: #004266;
-}
-
-/* Styles for the submit button */
-.submit-button {
-  width: 100%;
-  background: linear-gradient(to right, #004266, #006699);
-  color: white;
-  font-weight: bold;
-  padding: 0.75rem 1rem;
-  border-radius: 0.75rem;
-  transition: background 0.15s ease-in-out;
-}
-
-.submit-button:hover {
-  background: linear-gradient(to right, #00334d, #00527a);
-  transform: translateY(-0.25rem);
-}
-
-.submit-button:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
-}
-
-.relative {
-  position: relative; /* Ensure the container is relative */
-}
-</style>

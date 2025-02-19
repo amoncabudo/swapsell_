@@ -25,10 +25,10 @@ console.log(props)
 
   <Head title="Perfil"></Head>
   <component :is="isAuthenticated ? AuthenticatedLayout : NavbarS">
-    <div class="bg-gray-50 min-h-screen">
+    <div class="bg-gradient-to-r from-[#ffffff] to-[#ffffff] dark:from-[#1b2e37] dark:to-[#224466] min-h-screen">
       <div class="container mx-auto p-6">
         <!-- Header of the profile -->
-        <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 mb-8">
           <div class="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-8">
             <!-- Profile image with border and shadow -->
             <div class="relative">
@@ -42,19 +42,18 @@ console.log(props)
             <!-- Information of the user -->
             <div class="flex-1">
               <!--Pop-->
-              <h1 class="text-3xl font-bold text-gray-800 mb-2">{{ user.name }}</h1>
-              <p class="text-gray-600 mb-4">{{ user.surname }}</p>
+              <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-2">{{ user.name }}</h1>
               <div class="flex flex-wrap gap-4 mb-4">
-                <div class="flex items-center space-x-2 text-gray-600">
+                <div class="flex items-center space-x-2 text-gray-600 dark:text-white">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <span>Membre desde {{ props.formattedDate }}</span>
+                  <span class="dark:text-white">Membre desde {{ props.formattedDate }}</span>
                 </div>
               </div>
               <div class="flex space-x-4">
                 <Link :href="route('profile.edit')"
-                  class="bg-blue-800 text-white px-6 py-2 rounded-lg hover:bg-blue-900 transition">
+                  class="bg-blue-800 dark:bg-black text-white px-6 py-2 rounded-lg hover:bg-blue-900 dark:hover:bg-white dark:hover:text-black transition">
                 Editar Perfil
                 </Link>
               </div>
@@ -65,24 +64,24 @@ console.log(props)
         <!-- Estadísticas -->
          <div v-if="props.products">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div class="bg-white p-6 rounded-xl shadow-lg text-center">
-            <div class="text-3xl font-bold text-blue-800 mb-2">{{ props.products.length }}</div>
-            <div class="text-gray-600">Productes</div>
+          <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg text-center">
+            <div class="text-3xl font-bold text-blue-800 dark:text-yellow-300 mb-2">{{ props.products.length }}</div>
+            <div class="text-gray-600 dark:text-white">Productes</div>
           </div>
-          <div class="bg-white p-6 rounded-xl shadow-lg text-center">
-            <div class="text-3xl font-bold text-green-800 mb-2">{{ props.soldProducts }}</div>
-            <div class="text-gray-600">Ventes</div>
+          <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg text-center">
+            <div class="text-3xl font-bold text-green-800 dark:text-yellow-300 mb-2">{{ props.soldProducts }}</div>
+            <div class="text-gray-600 dark:text-white">Ventes</div>
           </div>
-          <div class="bg-white p-6 rounded-xl shadow-lg text-center">
-            <div class="text-3xl font-bold text-yellow-800 mb-2">{{ props.mediaReview }}</div>
-            <div class="text-gray-600">Valoració</div>
+          <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg text-center">
+            <div class="text-3xl font-bold text-yellow-800 dark:text-yellow-300 mb-2">{{ props.mediaReview }}</div>
+            <div class="text-gray-600 dark:text-white">Valoració</div>
           </div>
         </div>
         
         <!-- Productos -->
-        <div class="bg-white rounded-xl shadow-lg p-8">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
           <div class="flex justify-between items-center mb-6">
-            <h2 class="text-2xl font-bold text-gray-800">Els meus Productes</h2>
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Els meus Productes</h2>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -94,8 +93,8 @@ console.log(props)
               </div>
               <div class="mt-4">
 
-                <h3 class="text-lg font-semibold text-gray-800">{{ product.name }}</h3>
-                <p class="text-gray-600">{{ product.price }}€</p>
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-white">{{ product.name }}</h3>
+                <p class="text-gray-600 dark:text-white">{{ product.price }}€</p>
 
               </div>
               </Link>
@@ -121,9 +120,9 @@ console.log(props)
         </div>
         </div>
         <!-- Subastas -->
-        <div class="bg-white rounded-xl shadow-lg p-8 mt-8">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 mt-8">
           <div class="flex justify-between items-center mb-6">
-            <h2 class="text-2xl font-bold text-gray-800">Les meves Subhastes</h2>
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Les meves Subhastes</h2>
 
           </div>
           <div v-if="props.auction">
@@ -135,8 +134,8 @@ console.log(props)
                   class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
               </div>
               <div class="mt-4">
-                <h3 class="text-lg font-bold text-gray-800">{{ auction.product.name }}</h3>
-                <p class="text-gray-600">Preu actual: {{ auction.product.price }}€</p>
+                <h3 class="text-lg font-bold text-gray-800 dark:text-white">{{ auction.product.name }}</h3>
+                <p class="text-gray-600 dark:text-white">Preu actual: {{ auction.product.price }}€</p>
               </div>
               </Link>
 

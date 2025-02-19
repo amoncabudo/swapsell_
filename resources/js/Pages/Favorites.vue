@@ -132,7 +132,7 @@ const isFavorite = (product) => {
             <main class="container mx-auto px-4 py-8">
                 <div class="max-w-7xl mx-auto">
                     <Breadcrumb :model="items" class="mb-8" />
-                    <h1 class="text-4xl font-bold text-center mb-12 text-gray-800">Favorits</h1>
+                    <h1 class="text-4xl font-bold text-center mb-12 text-gray-800 dark:text-white">Favorits</h1>
 
                     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div v-if="loading" class="flex justify-center items-center py-12">
@@ -141,25 +141,25 @@ const isFavorite = (product) => {
                         <!-- Removed the extra wrapping div and moved v-if to the grid container -->
                         <div v-if="products_favs && products_favs.length" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                             <div v-for="products_favs in products_favs" :key="products_favs.id"
-                                class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                                class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
                                 <div class="relative">
                                     <img :src="`/storage/${products_favs.image}`" :alt="products_favs.name" class="w-full h-56 object-cover">
                                 </div>
                                 <div class="p-6">
                                     <Link :href="route('product.show', products_favs.id)" class="block">
-                                    <h2 class="text-xl font-semibold text-gray-900 mb-3">{{ products_favs.name }}
+                                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">{{ products_favs.name }}
                                     </h2>
-                                    <p class="text-gray-800 text-base mb-4 line-clamp-2">{{
+                                    <p class="text-gray-800 dark:text-white text-base mb-4 line-clamp-2">{{
                                         products_favs.description }}
                                     </p>
                                     <div class="flex justify-between items-center mb-4">
-                                        <span class="text-blue-800 font-bold text-lg">{{
+                                        <span class="text-blue-800 dark:text-white font-bold text-lg">{{
                                             formatCurrency(products_favs.price) }}</span>
-                                        <span class="text-sm text-gray-800">{{ products_favs.category.name }}</span>
+                                        <span class="text-sm text-gray-800 dark:text-white">{{ products_favs.category.name }}</span>
                                     </div>
                                     </Link>
 
-                                    <div class="mt-2 flex items-center justify-between text-sm text-gray-500">
+                                    <div class="mt-2 flex items-center justify-between text-sm text-gray-500 dark:text-white">
                                         <div class="flex items-center">
                                             <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor"
                                                 viewBox="0 0 24 24">
@@ -167,9 +167,9 @@ const isFavorite = (product) => {
                                                     stroke-width="2"
                                                     d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                             </svg>
-                                            <span class="text-gray-800">{{ locations[products_favs.id] || 'Ubicación no disponible' }}</span>
-                                            <span class="mx-2 text-gray-800">•</span>
-                                            <span class="text-gray-800">{{ timeAgo(products_favs.created_at) }}</span>
+                                            <span class="text-gray-800 dark:text-white">{{ locations[products_favs.id] || 'Ubicación no disponible' }}</span>
+                                            <span class="mx-2 text-gray-800 dark:text-white">•</span>
+                                            <span class="text-gray-800 dark:text-white">{{ timeAgo(products_favs.created_at) }}</span>
                                         </div>
                                         <form @submit.prevent>
                                             <button @click="toggleFavorite(products_favs)"
@@ -188,7 +188,7 @@ const isFavorite = (product) => {
                                 </div>
                             </div>
                         </div>
-                        <p v-else class="text-center text-gray-500 mt-4">No hi han favorits ara mateix</p>
+                        <p v-else class="text-center text-gray-500 dark:text-white mt-4">No hi han favorits ara mateix</p>
                     </div>
                 </div>
             </main>
