@@ -5,30 +5,33 @@ import Cookies from "@/Components/Cookies.vue";
 import NavbarS from '@/Layouts/NavbarS.vue';
 import { ref, computed } from 'vue';
 import { Head } from '@inertiajs/vue3';
+
 defineProps({
     isAuthenticated: Boolean
 })
-const teamMembers = ref([
-    { id: 1, name: 'Arnau', surname: 'Garcia', role: 'Programador Backend', rank: '', image: '/images/logo1.png' },
+const teamMembers = ref([  //Array of team members
+    { id: 1, name: 'Arnau', surname: 'Garcia', role: 'Programador Backend', rank: '', image: '/images/logo1.png' }, //id, name, surname, role, rank, image
     { id: 2, name: 'Marc', surname: 'Cufí', role: 'Programador Backend', rank: '', image: '/images/logo2.png' },
     { id: 3, name: 'Alex', surname: 'Moncayo', role: 'Programador Full Stack', rank: '', image: '/images/logo3.png' },
-    { id: 4, name: 'Joel', surname: 'Pages', role: 'Programador Backend', rank: 'Scrum Master', image: '/images/logo4.png' },
+    { id: 4, name: 'Joel', surname: 'Pages', role: 'Programador Backend', rank: 'Scrum Manager', image: '/images/logo4.png' },
     { id: 5, name: 'Carla', surname: 'De Caprio', role: 'Programador Frontend', rank: '', image: '/images/logo5.png' },
     { id: 6, name: 'Jhosep', surname: 'Espinoza ', role: 'Programador Full Stack', rank: '', image: '/images/logo6.png' },
 ]);
-
+//First row of team members
 const firstRow = computed(() => teamMembers.value.slice(0, 3));
+//Second row of team members
 const secondRow = computed(() => teamMembers.value.slice(3, 6));
 
+//Scroll to team section
 const scrollToTeam = () => {
-    const teamSection = document.querySelector('#team-section');
+    const teamSection = document.querySelector('#team-section'); //Get the team section
     if (teamSection) {
-        teamSection.scrollIntoView({ behavior: 'smooth' });
+        teamSection.scrollIntoView({ behavior: 'smooth' }); //Scroll to the team section
     }
 };
 const items = ref([
-    { label: 'Inici', url: '/' },
-    { label: 'Sobre Nosaltres' }
+    { label: 'Inici', url: '/' }, //Label and url of the first item
+    { label: 'Sobre Nosaltres' } //Label of the second item
 ]);
 
 </script>
