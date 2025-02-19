@@ -86,6 +86,9 @@ Route::post('adminpanel/products', [AdminPanelController::class, 'AdminAddProduc
 //Route CreateEvent
 Route::post('/adminpanel/events', [AdminPanelController::class, 'AdminAddEvent'])->middleware(AdminMiddleware::class)->name('event.addEvent');
 
+//Route CreateUsers
+Route::post('/adminpanel/users', [AdminPanelController::class, "AdminAddUser"])->name("users");
+
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
 //Routes Events
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -163,7 +166,6 @@ Route::middleware(['auth'])->group(function () {
 
 //Route AddUser
 
-Route::post('/users', [UserController::class, "addUser"])->name("users");
 Route::get('/users', [UserController::class, "index"])->name("Addusers");
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------

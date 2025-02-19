@@ -42,7 +42,7 @@ class AdminPanelController extends Controller
         } else {
             $product->image = 'default.jpg'; //Set the image
         }   
-                
+        
         $product->save(); //Save the product
         return redirect()->route('Products')->with('success', 'Producte publicat correctament'); //Redirect to the products page
     }
@@ -88,13 +88,15 @@ class AdminPanelController extends Controller
             'surname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'role' => 'required|numeric|between:0,2',
         ]);
 
         $user = new User([
             'name' => $request->name,
             'surname' => $request->surname,
             'email' => $request->email,
+            'role' => $request->role,
             'password' => bcrypt($request->password),
         ]);
 
