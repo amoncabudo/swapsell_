@@ -112,19 +112,13 @@ class AdminPanelController extends Controller
 
 
     //update product
-    public function AdminUpdateProduct(Request $request, $id){
+    public function AdminUpdateProduct(Request $request, $id)
+    {
         $product = Product::find($id);
     
         if (!$product) {
-            return redirect()->route('Products')->with('error', 'Producte no trobat');
+            return response()->json(['error' => 'Producte no trobat'], 404);
         }
-    
-        $name = $request->get("name");
-        $description = $request->get("description");
-        $price = $request->get("price");
-        $longitude = $request->get("longitude");
-        $latitude = $request->get("latitude");
-        $category = $request->get("category");
     
         $product->name = $request->get("name", $product->name);
         $product->description = $request->get("description", $product->description);
@@ -132,12 +126,24 @@ class AdminPanelController extends Controller
         $product->longitude = $request->get("longitude", $product->longitude);
         $product->latitude = $request->get("latitude", $product->latitude);
         $product->category_id = $request->get("category_id", $product->category_id);
-        
-    
         $product->user_id = Auth::id();
-        $product->image = 'default.jpg';
-        
+    
+        if ($request->hasFile('image')) {
+            // Eliminar la imagen anterior si no es la default
+            if ($product->image && $product->image !== 'default.jpg') {
+                Storage::delete('public/' . $product->image);
+            }
+            
+            // Generar un nombre único para la imagen
+            $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
+            
+            // Guardar la nueva imagen
+            $request->file('image')->storeAs('public', $imageName);
+            $product->image = $imageName;
+        }
+    
         $product->save();
+        
         return response()->json(['message' => 'Producte actualitzat correctament']);
     }
 

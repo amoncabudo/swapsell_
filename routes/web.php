@@ -75,7 +75,7 @@ Route::delete('adminpanel/events/{id}', [AdminPanelController::class, 'AdminDele
 Route::put('/users/{id}', [AdminPanelController::class, 'AdminUpdateUser'])->middleware(AdminMiddleware::class)->name('users.update');
 
 //Route UpdateProduct
-Route::put('adminpanel/products/{id}', [AdminPanelController::class, 'AdminUpdateProduct'])->middleware(AdminMiddleware::class)->name('products.update');
+Route::post('/admin/products/{id}', [AdminPanelController::class, 'AdminUpdateProduct'])->middleware(AdminMiddleware::class)->name('products.adminUpdate');
 
 //Route UpdateEvent
 Route::put('adminpanel/events/{id}', [AdminPanelController::class, 'AdminUpdateEvent'])->middleware(AdminMiddleware::class)->name('events.update');
