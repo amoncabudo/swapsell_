@@ -54,7 +54,7 @@ onMounted(() => {
     window.paypal.Buttons({
       fundingSource: paypal.FUNDING.PAYPAL, //Funding source
       style: {
-        color: 'black', //Color
+        color: 'blue', //Color
         shape: 'rect', //Shape
         layout: 'vertical', //Layout
         label: 'paypal' //Label
