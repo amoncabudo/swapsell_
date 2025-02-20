@@ -100,7 +100,7 @@ function addUser() {
             axios.get(route('users.list'))
                 .then(response => {
                     users.value = response.data;
-                    toastMessage.value = 'Usuario creado correctamente';
+                    toastMessage.value = 'Usuari creat correctament';
                     toastType.value = 'success';
                     showToast.value = true;
                 })
@@ -112,7 +112,7 @@ function addUser() {
             }, 3000);
         },
         onError: () => {
-            toastMessage.value = 'Error al crear el usuario';
+            toastMessage.value = 'Error al crear l\'usuari';
             toastType.value = 'error';
             showToast.value = true;
             setTimeout(() => {
@@ -147,7 +147,7 @@ function addEvent() { //Add event
             axios.get(route('users.list'))
                 .then(response => {
                     users.value = response.data;
-                    toastMessage.value = 'Usuario creado correctamente';
+                    toastMessage.value = 'Esdeveniment creat correctament';
                     toastType.value = 'success';
                     showToast.value = true;
                 })
@@ -159,7 +159,7 @@ function addEvent() { //Add event
             }, 3000);
         },
         onError: () => {
-            toastMessage.value = 'Error al crear esdeveniment'; //Toast message for add event
+            toastMessage.value = 'Error al crear l\'esdeveniment'; //Toast message for add event
             toastType.value = 'error'; //Toast type for add event
             showToast.value = true; //Show toast for add event
             setTimeout(() => {
@@ -554,7 +554,7 @@ const deleteProduct = async (productId) => { //Delete product
     }
 };
 
-// Función para abrir el modal de edición
+// Function to open the edit product modal
 const openEditProductModal = (product) => {
     editProductForm.id = product.id;
     editProductForm.name = product.name;
@@ -1343,7 +1343,7 @@ function handleEditProductImageUpload(event) {
                                     </button>
                                     <button type="submit"
                                         class="px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200">
-                                        Crear Esdeveniment
+                                        Crear Producte
                                     </button>
                                 </div>
                             </div>
