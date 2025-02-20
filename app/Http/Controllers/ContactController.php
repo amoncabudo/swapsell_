@@ -70,18 +70,18 @@ class ContactController extends Controller
         return Inertia::render('Contact');
     }
 
-    public function sendContact(Request $request)
+    public function sendContact(Request $request) //Function to send a contact message
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'cognom' => 'required|string|max:255',
-            'email' => 'required|email',
-            'subject' => 'required|string|max:255',
-            'message' => 'required|string',
+        $request->validate([ //Validate the request
+            'name' => 'required|string|max:255', //Validate the name
+            'cognom' => 'required|string|max:255', //Validate the surname
+            'email' => 'required|email', //Validate the email
+            'subject' => 'required|string|max:255', //Validate the subject
+            'message' => 'required|string', //Validate the message
         ]);
 
-        Mail::to('swapsell6@gmail.com')->send(new ContactMail($request->all()));
+        Mail::to('swapsell6@gmail.com')->send(new ContactMail($request->all())); //Send the email to the admin
 
-        return redirect()->route('contact')->with('message', 'Missatge enviat amb èxit!');
+        return redirect()->route('contact')->with('message', 'Missatge enviat amb èxit!'); //Redirect to the contact page with the next message
     }
 }

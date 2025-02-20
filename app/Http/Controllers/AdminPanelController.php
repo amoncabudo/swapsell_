@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\Storage;
 
 class AdminPanelController extends Controller
 {
-    //add product
-    public function AdminAddProduct(Request $request){ 
+    //Function to add a product
+    public function AdminAddProduct(Request $request){  
         $name = $request->get("name"); //Get the name
         $description = $request->get("description"); //Get the description
         $price = $request->get("price"); //Get the price
@@ -129,15 +129,14 @@ class AdminPanelController extends Controller
         $product->user_id = Auth::id();
     
         if ($request->hasFile('image')) {
-            // Eliminar la imagen anterior si no es la default
-            if ($product->image && $product->image !== 'default.jpg') {
+            if ($product->image && $product->image !== 'default.jpg') { //delete the previous image if it is not the default image
                 Storage::delete('public/' . $product->image);
             }
             
-            // Generar un nombre único para la imagen
+            // Generate a unique name for the image
             $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
             
-            // Guardar la nueva imagen
+            // Save the new image
             $request->file('image')->storeAs('public', $imageName);
             $product->image = $imageName;
         }
