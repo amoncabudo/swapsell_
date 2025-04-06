@@ -2,6 +2,11 @@
 
 <h1 align="center">SwapSell 🔄🛒</h1>
 
+## 🎥 Demo
+
+Pots veure una demostració en viu de Swapsell aquí:
+- [Demo de Swapsell](https://swapsell.cat)
+
 <h2>Català</h2>
 
 ## 🌍 Descripció
@@ -36,7 +41,7 @@ Segueix aquests passos per instal·lar i executar el projecte:
 
 1. Clona el repositori:
    ```sh
-   git clone https://github.com/cdecaprio/4-WALLAS.git
+   git clone https://github.com/your-username/Swapsell
    ```
 2. Accedeix al directori del projecte:
    ```sh
@@ -54,10 +59,6 @@ Segueix aquests passos per instal·lar i executar el projecte:
    ```sh
    npm run build
    ```
-
-<p align="center"><img src="storage/app/public/logo.png" width="400" alt="Laravel Logo"></p>
-
-<h1 align="center">SwapSell 🔄🛒</h1>
 
 <h2>English</h2>
 
@@ -94,7 +95,7 @@ Follow these steps to install and run the project:
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/your-username/swapsell.git
+   git clone https://github.com/your-username/Swapsell
    ```
 2. Navigate to the project directory:
    ```sh
@@ -112,6 +113,11 @@ Follow these steps to install and run the project:
    ```sh
    npm run build
    ```
+
+## 🎥 Demo
+
+You can see a live demonstration of Swapsell here:
+- [Swapsell Demo](https://swapsell-demo.com)
 
 
 
